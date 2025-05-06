@@ -9,125 +9,123 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = AnastasiiaPortfolio
 build_property.RootNamespace = AnastasiiaPortfolio
-build_property.ProjectDir = C:\Users\anast\OneDrive - NC\Anastasiia\AnastasiiaPortfolio\
+build_property.ProjectDir = C:\Users\nasta\OneDrive\projdect\AnastasiiaPortfolio\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\anast\OneDrive - NC\Anastasiia\AnastasiiaPortfolio
+build_property.MSBuildProjectDirectory = C:\Users\nasta\OneDrive\projdect\AnastasiiaPortfolio
 build_property._RazorSourceGeneratorDebug = 
-build_property.EffectiveAnalysisLevelStyle = 8.0
-build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Pages/PlayZone.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Pages/PlayZone.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGxheVpvbmUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/Account/Login.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/Home/Contact.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/Home/Contact.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDb250YWN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/Home/Details.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/Home/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/Home/Index.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/Home/PlayZone.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/Home/PlayZone.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQbGF5Wm9uZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/Home/Portfolio.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/Home/Portfolio.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQb3J0Zm9saW8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/Home/Privacy.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/Home/Resume.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/Home/Resume.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZXN1bWUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/Home/SnakeGame.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/Home/SnakeGame.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTbmFrZUdhbWUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/PlayZone/Index.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/PlayZone/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxheVpvbmVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/Projects/Create.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/Projects/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdHNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/Projects/Delete.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/Projects/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdHNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/Projects/Details.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/Projects/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdHNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/Projects/Edit.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/Projects/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdHNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/Projects/Index.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/Projects/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdHNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/Rate/Index.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/Rate/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmF0ZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/Rate/_ReviewPartial.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/Rate/_ReviewPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmF0ZVxfUmV2aWV3UGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/Reviews/Admin.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/Reviews/Admin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3c1xBZG1pbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/Review/AdminIndex.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/Review/AdminIndex.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3XEFkbWluSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/Review/Create.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/Review/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3XENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/Shared/Error.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/Shared/_ContactInfoPartial.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/Shared/_ContactInfoPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Db250YWN0SW5mb1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/Shared/_LoginPartial.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/Shared/_LoginPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/_ViewImports.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/_ViewStart.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/anast/OneDrive - NC/Anastasiia/AnastasiiaPortfolio/Views/Shared/_Layout.cshtml]
+[C:/Users/nasta/OneDrive/projdect/AnastasiiaPortfolio/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-43w7g3s0zq

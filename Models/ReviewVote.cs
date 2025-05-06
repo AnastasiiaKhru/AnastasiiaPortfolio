@@ -1,28 +1,30 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace AnastasiiaPortfolio.Models
 {
     public class ReviewVote
     {
-        public int Id { get; set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; } = string.Empty;
 
-        [Required]
-        public int ReviewId { get; set; }
+        [BsonElement("reviewId")]
+        public string ReviewId { get; set; } = string.Empty;
 
-        [Required]
+        [BsonElement("userId")]
         public string UserId { get; set; } = string.Empty;
 
-        [Required]
+        [BsonElement("isHelpful")]
         public bool IsHelpful { get; set; }
 
+        [BsonElement("createdAt")]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        [ForeignKey("ReviewId")]
-        public virtual Review Review { get; set; } = null!;
+        [BsonElement("review")]
+        public Review? Review { get; set; }
 
-        [ForeignKey("UserId")]
-        public virtual ApplicationUser User { get; set; } = null!;
+        [BsonElement("user")]
+        public ApplicationUser? User { get; set; }
     }
 } 

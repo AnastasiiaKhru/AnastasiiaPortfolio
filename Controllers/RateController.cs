@@ -1,59 +1,64 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using AnastasiiaPortfolio.Models;
-using AnastasiiaPortfolio.Data;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+using AnastasiiaPortfolio.Services;
 
 namespace AnastasiiaPortfolio.Controllers
 {
     public class RateController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly MongoDBService _mongoDBService;
 
-        public RateController(ApplicationDbContext context)
+        public RateController(MongoDBService mongoDBService)
         {
-            _context = context;
+            _mongoDBService = mongoDBService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var reviews = await _context.Reviews
-                .OrderByDescending(r => r.CreatedAt)
-                .ToListAsync();
+            var reviews = await _mongoDBService.GetReviewsAsync();
             return View(reviews);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Review review)
         {
             if (ModelState.IsValid)
             {
-                review.CreatedAt = DateTime.UtcNow;
-                _context.Add(review);
-                await _context.SaveChangesAsync();
-
-                // Return the new review as a partial view
-                return PartialView("_ReviewPartial", review);
+                await _mongoDBService.CreateReviewAsync(review);
+                return RedirectToAction(nameof(Index));
             }
-            return BadRequest(ModelState);
+            return View(review);
         }
 
-        // POST: Rate/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Edit(string id)
         {
-            var review = await _context.Reviews.FindAsync(id);
+            var review = await _mongoDBService.GetReviewAsync(id);
             if (review == null)
             {
                 return NotFound();
             }
+            return View(review);
+        }
 
-            _context.Reviews.Remove(review);
-            await _context.SaveChangesAsync();
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id, Review review)
+        {
+            if (id != review.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                await _mongoDBService.UpdateReviewAsync(id, review);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(review);
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            await _mongoDBService.DeleteReviewAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }

@@ -1,88 +1,74 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using AnastasiiaPortfolio.Data;
 using AnastasiiaPortfolio.Models;
-using System.Security.Claims;
+using AnastasiiaPortfolio.Services;
 
 namespace AnastasiiaPortfolio.Controllers
 {
-    [Authorize]
     public class ReviewsController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly MongoDBService _mongoDBService;
 
-        public ReviewsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public ReviewsController(MongoDBService mongoDBService)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
-            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
+            _mongoDBService = mongoDBService;
         }
 
-        // GET: Reviews/Admin
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Admin(string? userId = null, bool showHidden = false)
+        // GET: Reviews
+        public async Task<IActionResult> Index(ReviewSortOption sortOption = ReviewSortOption.Newest)
         {
-            var query = _context.Reviews
-                .Include(r => r.User)
-                .Include(r => r.Project)
-                .AsQueryable();
-
-            if (!string.IsNullOrEmpty(userId))
-            {
-                query = query.Where(r => r.UserId == userId);
-            }
-
-            if (!showHidden)
-            {
-                query = query.Where(r => !r.IsHidden);
-            }
-
-            var reviews = await query.OrderByDescending(r => r.CreatedAt).ToListAsync();
-            var users = await _userManager.Users.ToListAsync();
-
-            ViewBag.Users = users;
-            ViewBag.SelectedUserId = userId;
-            ViewBag.ShowHidden = showHidden;
-
+            var reviews = await _mongoDBService.GetReviewsAsync(sortOption);
             return View(reviews);
         }
 
-        // GET: Reviews/Create
-        [Authorize]
-        public async Task<IActionResult> Create(int projectId)
+        // GET: Reviews/Details/5
+        public async Task<IActionResult> Details(string id)
         {
-            var project = await _context.Projects.FindAsync(projectId);
-            if (project == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var model = new Review
+            var review = await _mongoDBService.GetReviewAsync(id);
+            if (review == null)
             {
-                ProjectId = projectId,
-                UserId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? throw new InvalidOperationException("User ID not found."),
-                Name = User.Identity?.Name ?? "Anonymous",
-                Comment = string.Empty
-            };
+                return NotFound();
+            }
 
-            return View(model);
+            return View(review);
+        }
+
+        // GET: Reviews/Create
+        public IActionResult Create()
+        {
+            return View();
         }
 
         // POST: Reviews/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
-        public async Task<IActionResult> Create(Review review)
+        public async Task<IActionResult> Create([Bind("Name,Email,Rating,Comment")] Review review)
         {
             if (ModelState.IsValid)
             {
-                review.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? throw new InvalidOperationException("User ID not found.");
-                review.CreatedAt = DateTime.UtcNow;
-                _context.Add(review);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Details", "Projects", new { id = review.ProjectId });
+                await _mongoDBService.CreateReviewAsync(review);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(review);
+        }
+
+        // GET: Reviews/Edit/5
+        public async Task<IActionResult> Edit(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var review = await _mongoDBService.GetReviewAsync(id);
+            if (review == null)
+            {
+                return NotFound();
             }
             return View(review);
         }
@@ -90,158 +76,66 @@ namespace AnastasiiaPortfolio.Controllers
         // POST: Reviews/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ProjectId,Rating,Comment")] Review review)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Email,Rating,Comment,IsHidden")] Review review)
         {
             if (id != review.Id)
             {
                 return NotFound();
             }
 
-            var existingReview = await _context.Reviews.FindAsync(id);
-            if (existingReview == null)
+            if (ModelState.IsValid)
+            {
+                await _mongoDBService.UpdateReviewAsync(id, review);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(review);
+        }
+
+        // GET: Reviews/Delete/5
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (id == null)
             {
                 return NotFound();
             }
 
-            // Check if the current user is the review owner
-            if (existingReview.UserId != _userManager.GetUserId(User))
-            {
-                return Forbid();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    existingReview.Rating = review.Rating;
-                    existingReview.Comment = review.Comment;
-                    existingReview.UpdatedAt = DateTime.UtcNow;
-                    _context.Update(existingReview);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ReviewExists(review.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction("Details", "Projects", new { id = review.ProjectId });
-            }
-            return RedirectToAction("Details", "Projects", new { id = review.ProjectId });
-        }
-
-        // POST: Reviews/Hide/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Hide(int id)
-        {
-            var review = await _context.Reviews.FindAsync(id);
+            var review = await _mongoDBService.GetReviewAsync(id);
             if (review == null)
             {
                 return NotFound();
             }
 
-            review.IsHidden = true;
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Details", "Projects", new { id = review.ProjectId });
+            return View(review);
         }
 
         // POST: Reviews/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Delete(int id, int projectId)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var review = await _context.Reviews.FindAsync(id);
-            if (review == null)
-            {
-                return NotFound();
-            }
-
-            _context.Reviews.Remove(review);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Details", "Projects", new { id = projectId });
+            await _mongoDBService.DeleteReviewAsync(id);
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Vote(int reviewId, bool isHelpful)
+        public async Task<IActionResult> ToggleVerification(string id)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userId == null)
-            {
-                return Unauthorized();
-            }
-
-            var review = await _context.Reviews.FindAsync(reviewId);
-            if (review == null)
-            {
-                return NotFound();
-            }
-
-            var existingVote = await _context.ReviewVotes
-                .FirstOrDefaultAsync(v => v.ReviewId == reviewId && v.UserId == userId);
-
-            if (existingVote != null)
-            {
-                if (existingVote.IsHelpful == isHelpful)
-                {
-                    _context.ReviewVotes.Remove(existingVote);
-                    if (isHelpful)
-                        review.HelpfulCount--;
-                    else
-                        review.NotHelpfulCount--;
-                }
-                else
-                {
-                    existingVote.IsHelpful = isHelpful;
-                    if (isHelpful)
-                    {
-                        review.HelpfulCount++;
-                        review.NotHelpfulCount--;
-                    }
-                    else
-                    {
-                        review.HelpfulCount--;
-                        review.NotHelpfulCount++;
-                    }
-                }
-            }
-            else
-            {
-                _context.ReviewVotes.Add(new ReviewVote
-                {
-                    ReviewId = reviewId,
-                    UserId = userId,
-                    IsHelpful = isHelpful,
-                    CreatedAt = DateTime.UtcNow
-                });
-
-                if (isHelpful)
-                    review.HelpfulCount++;
-                else
-                    review.NotHelpfulCount++;
-            }
-
-            await _context.SaveChangesAsync();
-
-            return Json(new
-            {
-                helpfulCount = review.HelpfulCount,
-                notHelpfulCount = review.NotHelpfulCount
-            });
+            await _mongoDBService.ToggleReviewVerificationAsync(id);
+            return RedirectToAction(nameof(Index));
         }
 
-        private bool ReviewExists(int id)
+        [HttpPost]
+        public async Task<IActionResult> ToggleFeatured(string id)
         {
-            return _context.Reviews.Any(e => e.Id == id);
+            await _mongoDBService.ToggleReviewFeaturedAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateHelpfulCount(string id, bool isHelpful)
+        {
+            await _mongoDBService.UpdateReviewHelpfulCountAsync(id, isHelpful);
+            return RedirectToAction(nameof(Index));
         }
     }
 } 

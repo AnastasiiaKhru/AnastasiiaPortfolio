@@ -1,28 +1,22 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using AnastasiiaPortfolio.Models;
-using AnastasiiaPortfolio.Data;
-using System.Linq;
+using AnastasiiaPortfolio.Services;
 using System.Threading.Tasks;
 
 namespace AnastasiiaPortfolio.Controllers
 {
     public class PlayZoneController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly MongoDBService _mongoDBService;
 
-        public PlayZoneController(ApplicationDbContext context)
+        public PlayZoneController(MongoDBService mongoDBService)
         {
-            _context = context;
+            _mongoDBService = mongoDBService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var topScores = await _context.PlayerScores
-                .OrderByDescending(s => s.Score)
-                .Take(3)
-                .ToListAsync();
-            
+            var topScores = await _mongoDBService.GetTopPlayerScoresAsync(3);
             ViewBag.TopScores = topScores;
             return View();
         }
@@ -36,14 +30,9 @@ namespace AnastasiiaPortfolio.Controllers
             }
 
             score.PlayedAt = DateTime.UtcNow;
-            _context.PlayerScores.Add(score);
-            await _context.SaveChangesAsync();
+            await _mongoDBService.CreatePlayerScoreAsync(score);
 
-            var topScores = await _context.PlayerScores
-                .OrderByDescending(s => s.Score)
-                .Take(3)
-                .ToListAsync();
-
+            var topScores = await _mongoDBService.GetTopPlayerScoresAsync(3);
             return Json(new { success = true, topScores });
         }
     }

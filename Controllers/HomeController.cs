@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using AnastasiiaPortfolio.Services;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 
 namespace AnastasiiaPortfolio.Controllers;
 
@@ -13,12 +15,14 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly IWebHostEnvironment _environment;
     private readonly IEmailService _emailService;
+    private readonly MongoDBService _mongoDBService;
 
-    public HomeController(ILogger<HomeController> logger, IWebHostEnvironment environment, IEmailService emailService)
+    public HomeController(ILogger<HomeController> logger, IWebHostEnvironment environment, IEmailService emailService, MongoDBService mongoDBService)
     {
         _logger = logger;
         _environment = environment;
         _emailService = emailService;
+        _mongoDBService = mongoDBService;
     }
 
     public IActionResult Index()
@@ -30,7 +34,7 @@ public class HomeController : Controller
             {
                 new Project
                 {
-                    Id = 1,
+                    Id = "1",
                     Title = "E-Commerce Platform",
                     Description = "A full-stack e-commerce solution built with ASP.NET Core MVC",
                     ImageUrl = "/images/projects/ecommerce.jpg",
@@ -54,7 +58,7 @@ public class HomeController : Controller
         {
             new Project
             {
-                Id = 1,
+                Id = "1",
                 Title = "E-Commerce Platform",
                 Description = "A full-stack e-commerce solution built with ASP.NET Core MVC",
                 ImageUrl = "/images/projects/ecommerce.jpg",
@@ -157,6 +161,64 @@ public class HomeController : Controller
 
         // If we get here, something failed, redisplay form with errors
         return View("Index", model);
+    }
+
+    public async Task<IActionResult> TestMongoDB()
+    {
+        try
+        {
+            // Test Projects Collection
+            var project = new Project
+            {
+                Title = "Test Project",
+                Description = "Test Description",
+                ImageUrl = "/images/test.jpg",
+                Category = "Test",
+                Technologies = "Test Tech"
+            };
+            await _mongoDBService.CreateProjectAsync(project);
+            var projects = await _mongoDBService.GetProjectsAsync();
+            await _mongoDBService.DeleteProjectAsync(project.Id);
+
+            // Test Reviews Collection
+            var review = new Review
+            {
+                Name = "Test User",
+                Email = "test@test.com",
+                Rating = 5,
+                Comment = "Test Comment"
+            };
+            await _mongoDBService.CreateReviewAsync(review);
+            var reviews = await _mongoDBService.GetReviewsAsync();
+            await _mongoDBService.DeleteReviewAsync(review.Id);
+
+            return Json(new { success = true, message = "MongoDB connection and operations successful!" });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, message = $"Error: {ex.Message}" });
+        }
+    }
+
+    public async Task<IActionResult> TestConnection()
+    {
+        try
+        {
+            // Test the connection by listing database names
+            var client = _mongoDBService.GetMongoClient();
+            var dbList = await client.ListDatabaseNames().ToListAsync();
+            return Json(new { success = true, message = "Connection successful", databases = dbList });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "MongoDB connection test failed");
+            return Json(new { success = false, error = ex.Message });
+        }
+    }
+
+    public IActionResult Privacy()
+    {
+        return View();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
