@@ -25,20 +25,21 @@ namespace AnastasiiaPortfolio.Services
             return IdentityResult.Success;
         }
 
-        public async Task<ApplicationUser?> FindByIdAsync(string userId, CancellationToken cancellationToken)
+        public async Task<ApplicationUser> FindByIdAsync(string userId, CancellationToken cancellationToken)
         {
-            return await _mongoDBService.GetUserAsync(userId);
+            var user = await _mongoDBService.GetUserAsync(userId);
+            return user ?? new ApplicationUser();
         }
 
-        public async Task<ApplicationUser?> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
+        public async Task<ApplicationUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
         {
             var users = await _mongoDBService.GetUsersAsync();
-            return users.FirstOrDefault(u => u.NormalizedUserName == normalizedUserName);
+            return users.FirstOrDefault(u => u.NormalizedUserName == normalizedUserName) ?? new ApplicationUser();
         }
 
-        public Task<string?> GetNormalizedUserNameAsync(ApplicationUser user, CancellationToken cancellationToken)
+        public Task<string> GetNormalizedUserNameAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
-            return Task.FromResult<string?>(user.NormalizedUserName);
+            return Task.FromResult(user.NormalizedUserName ?? string.Empty);
         }
 
         public Task<string> GetUserIdAsync(ApplicationUser user, CancellationToken cancellationToken)
@@ -46,9 +47,9 @@ namespace AnastasiiaPortfolio.Services
             return Task.FromResult(user.Id);
         }
 
-        public Task<string?> GetUserNameAsync(ApplicationUser user, CancellationToken cancellationToken)
+        public Task<string> GetUserNameAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
-            return Task.FromResult<string?>(user.UserName);
+            return Task.FromResult(user.UserName ?? string.Empty);
         }
 
         public Task SetNormalizedUserNameAsync(ApplicationUser user, string? normalizedName, CancellationToken cancellationToken)
@@ -75,9 +76,9 @@ namespace AnastasiiaPortfolio.Services
             return Task.CompletedTask;
         }
 
-        public Task<string?> GetPasswordHashAsync(ApplicationUser user, CancellationToken cancellationToken)
+        public Task<string> GetPasswordHashAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
-            return Task.FromResult(user.PasswordHash);
+            return Task.FromResult(user.PasswordHash ?? string.Empty);
         }
 
         public Task<bool> HasPasswordAsync(ApplicationUser user, CancellationToken cancellationToken)
@@ -85,15 +86,15 @@ namespace AnastasiiaPortfolio.Services
             return Task.FromResult(!string.IsNullOrEmpty(user.PasswordHash));
         }
 
-        public async Task<ApplicationUser?> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
+        public async Task<ApplicationUser> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
         {
             var users = await _mongoDBService.GetUsersAsync();
-            return users.FirstOrDefault(u => u.NormalizedEmail == normalizedEmail);
+            return users.FirstOrDefault(u => u.NormalizedEmail == normalizedEmail) ?? new ApplicationUser();
         }
 
-        public Task<string?> GetEmailAsync(ApplicationUser user, CancellationToken cancellationToken)
+        public Task<string> GetEmailAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
-            return Task.FromResult<string?>(user.Email);
+            return Task.FromResult(user.Email ?? string.Empty);
         }
 
         public Task<bool> GetEmailConfirmedAsync(ApplicationUser user, CancellationToken cancellationToken)
@@ -101,9 +102,9 @@ namespace AnastasiiaPortfolio.Services
             return Task.FromResult(user.EmailConfirmed);
         }
 
-        public Task<string?> GetNormalizedEmailAsync(ApplicationUser user, CancellationToken cancellationToken)
+        public Task<string> GetNormalizedEmailAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
-            return Task.FromResult<string?>(user.NormalizedEmail);
+            return Task.FromResult(user.NormalizedEmail ?? string.Empty);
         }
 
         public Task SetEmailAsync(ApplicationUser user, string? email, CancellationToken cancellationToken)

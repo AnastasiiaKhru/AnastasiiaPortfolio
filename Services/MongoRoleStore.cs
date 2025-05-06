@@ -23,19 +23,19 @@ namespace AnastasiiaPortfolio.Services
             return Task.FromResult(IdentityResult.Success);
         }
 
-        public Task<IdentityRole?> FindByIdAsync(string roleId, CancellationToken cancellationToken)
+        public Task<IdentityRole> FindByIdAsync(string roleId, CancellationToken cancellationToken)
         {
-            return Task.FromResult<IdentityRole?>(new IdentityRole { Id = roleId, Name = "Admin" });
+            return Task.FromResult(new IdentityRole { Id = roleId, Name = "Admin" });
         }
 
-        public Task<IdentityRole?> FindByNameAsync(string normalizedRoleName, CancellationToken cancellationToken)
+        public Task<IdentityRole> FindByNameAsync(string normalizedRoleName, CancellationToken cancellationToken)
         {
-            return Task.FromResult<IdentityRole?>(new IdentityRole { Id = "1", Name = normalizedRoleName });
+            return Task.FromResult(new IdentityRole { Id = "1", Name = normalizedRoleName });
         }
 
-        public Task<string?> GetNormalizedRoleNameAsync(IdentityRole role, CancellationToken cancellationToken)
+        public Task<string> GetNormalizedRoleNameAsync(IdentityRole role, CancellationToken cancellationToken)
         {
-            return Task.FromResult(role.NormalizedName ?? role.Name?.ToUpperInvariant());
+            return Task.FromResult(role.NormalizedName ?? role.Name?.ToUpperInvariant() ?? string.Empty);
         }
 
         public Task<string> GetRoleIdAsync(IdentityRole role, CancellationToken cancellationToken)
@@ -43,9 +43,9 @@ namespace AnastasiiaPortfolio.Services
             return Task.FromResult(role.Id);
         }
 
-        public Task<string?> GetRoleNameAsync(IdentityRole role, CancellationToken cancellationToken)
+        public Task<string> GetRoleNameAsync(IdentityRole role, CancellationToken cancellationToken)
         {
-            return Task.FromResult(role.Name);
+            return Task.FromResult(role.Name ?? string.Empty);
         }
 
         public Task SetNormalizedRoleNameAsync(IdentityRole role, string? normalizedName, CancellationToken cancellationToken)
