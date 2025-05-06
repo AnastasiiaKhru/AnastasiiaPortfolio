@@ -20,14 +20,30 @@ namespace AnastasiiaPortfolio.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Review review)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+            {
+                return Json(new { success = false, message = "Please fill in all required fields correctly." });
+            }
+
+            try
             {
                 await _mongoDBService.CreateReviewAsync(review);
+                
+                // Return the partial view for the new review
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return Json(new { success = true });
+                }
+                
                 return RedirectToAction(nameof(Index));
             }
-            return View(review);
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred while saving your review. Please try again." });
+            }
         }
 
         public async Task<IActionResult> Edit(string id)

@@ -16,10 +16,17 @@
 
             <div class="card mb-5">
                 <div class="card-body">
+                    <div id="reviewAlert" class="alert" style="display: none;"></div>
                     <form id="reviewForm" asp-action="Create" method="post">
+                        @Html.AntiForgeryToken()
                         <div class="mb-3">
                             <label for="Name" class="form-label">Your Name</label>
                             <input type="text" class="form-control" id="Name" name="Name" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Email" class="form-label">Your Email</label>
+                            <input type="email" class="form-control" id="Email" name="Email" required>
                         </div>
 
                         <div class="mb-3">
@@ -125,27 +132,46 @@
         $(document).ready(function() {
             $('#reviewForm').on('submit', function(e) {
                 e.preventDefault();
+                var form = $(this);
+                var submitButton = form.find('button[type="submit"]');
+                var alert = $('#reviewAlert');
+                
+                // Disable submit button and show loading state
+                submitButton.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Submitting...');
                 
                 $.ajax({
-                    url: $(this).attr('action'),
+                    url: form.attr('action'),
                     type: 'POST',
-                    data: $(this).serialize(),
+                    data: form.serialize(),
                     success: function(response) {
-                        // Prepend the new review to the container
-                        $('#reviewsContainer').prepend(response);
-                        
-                        // Clear the form
-                        $('#reviewForm')[0].reset();
-                        
-                        // Remove the "no reviews" message if it exists
-                        $('#reviewsContainer .text-center.text-muted').remove();
-                        
-                        // Show success modal
-                        var modal = new bootstrap.Modal(document.getElementById('thankYouModal'));
-                        modal.show();
+                        if (response.success) {
+                            // Show success message
+                            alert.removeClass('alert-danger').addClass('alert-success')
+                                .html('Thank you for your review! Your feedback has been submitted successfully.')
+                                .show();
+                            
+                            // Clear the form
+                            form[0].reset();
+                            
+                            // Reload the page after a short delay
+                            setTimeout(function() {
+                                window.location.reload();
+                            }, 2000);
+                        } else {
+                            // Show error message
+                            alert.removeClass('alert-success').addClass('alert-danger')
+                                .html(response.message || 'There was an error submitting your review. Please try again.')
+                                .show();
+                        }
                     },
                     error: function() {
-                        alert('There was an error submitting your review. Please try again.');
+                        alert.removeClass('alert-success').addClass('alert-danger')
+                            .html('There was an error submitting your review. Please try again.')
+                            .show();
+                    },
+                    complete: function() {
+                        // Re-enable submit button
+                        submitButton.prop('disabled', false).html('Submit Review');
                     }
                 });
             });
@@ -350,6 +376,22 @@
         .modal.show .modal-dialog {
             transform: scale(1) translateY(0);
             opacity: 1;
+        }
+
+        #reviewAlert {
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            position: relative;
+        }
+
+        .btn-primary:disabled {
+            cursor: not-allowed;
+        }
+
+        .spinner-border {
+            margin-right: 8px;
         }
     </style>
 } 
