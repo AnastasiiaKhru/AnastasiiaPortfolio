@@ -6,10 +6,13 @@
 
 @section Styles {
     <style>
+        /* Base styles */
+
         .hero-section {
             padding: 4rem 0;
             margin-bottom: 3rem;
             position: relative;
+            background-color: transparent;
         }
 
         .hero-content {
@@ -37,6 +40,33 @@
             color: #B3B3B3;
             font-size: 1.2rem;
             margin-bottom: 2rem;
+        }
+
+        .hero-image {
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            background-color: transparent;
+            width: 100%;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-image {
+            max-width: 60%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            position: relative;
+            z-index: 1;
+            transform: none !important;
+            transition: none !important;
+            will-change: auto;
         }
 
         .deployment-section {
@@ -204,15 +234,6 @@
             text-align: left;
         }
 
-        .profile-image {
-            max-width: 60%; /* Restore relative width */
-            height: auto;
-            display: block; /* Restore display block */
-            margin: 0 auto; /* Restore auto margin */
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
-        }
-
         #skills {
             background-color: var(--lsalt);
             padding: 2rem;
@@ -306,6 +327,7 @@
             text-align: center;
         }
 
+        /* Media queries for responsive design */
         @@media (max-width: 768px) {
             .education-card {
                 padding: 1.5rem;
@@ -337,6 +359,41 @@
 
             .skill-list li {
                 font-size: 0.9rem;
+            }
+
+            .hero-image {
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
+                transform: none !important;
+            }
+
+            .profile-image {
+                max-width: 100%;
+                transform: none !important;
+                transition: none !important;
+            }
+        }
+
+        @@media (min-width: 769px) {
+            .hero-image {
+                transform: none !important;
+            }
+
+            .profile-image {
+                transform: none !important;
+                transition: none !important;
+            }
+        }
+
+        /* Fix for iOS devices */
+        @@supports (-webkit-overflow-scrolling: touch) {
+            .hero-image,
+            .profile-image {
+                transform: none !important;
+                transition: none !important;
+                -webkit-transform: none !important;
+                -webkit-transition: none !important;
             }
         }
 
