@@ -41,6 +41,9 @@ namespace AnastasiiaPortfolio.Services
             {
                 _logger.LogInformation("Attempting to send email. From: {From}, To: {To}, Subject: {Subject}", 
                     _fromEmail, recipient, subject);
+                
+                _logger.LogInformation("SMTP Settings: Server={Server}, Port={Port}, Username={Username}, SSL=Enabled", 
+                    _smtpServer, _smtpPort, _smtpUsername);
 
                 using (var client = new SmtpClient())
                 {
@@ -52,6 +55,8 @@ namespace AnastasiiaPortfolio.Services
                     client.Credentials = new NetworkCredential(_smtpUsername, _smtpPassword);
                     client.Timeout = 30000; // 30 seconds timeout
 
+                    _logger.LogInformation("SMTP client configured. Preparing to send message...");
+
                     var mailMessage = new MailMessage
                     {
                         From = new MailAddress(_fromEmail, "Portfolio Contact Form"),
@@ -61,14 +66,15 @@ namespace AnastasiiaPortfolio.Services
                     };
                     mailMessage.To.Add(recipient);
 
-                    _logger.LogInformation("Sending email...");
+                    _logger.LogInformation("Mail message prepared. Attempting to send...");
                     await client.SendMailAsync(mailMessage);
                     _logger.LogInformation("Email sent successfully!");
                 }
             }
             catch (SmtpException ex)
             {
-                _logger.LogError(ex, "SMTP error occurred while sending email: {Message}", ex.Message);
+                _logger.LogError(ex, "SMTP error occurred while sending email. Status Code: {Code}, Message: {Message}, StackTrace: {StackTrace}", 
+                    ex.StatusCode, ex.Message, ex.StackTrace);
                 throw;
             }
             catch (Exception ex)
