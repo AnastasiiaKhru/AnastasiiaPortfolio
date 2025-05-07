@@ -1,6 +1,6 @@
 [build]
 builder = "nixpacks"
-buildCommand = "dotnet publish -c Release -o out"
+buildCommand = "dotnet publish AnastasiiaPortfolio.csproj -c Release -o out"
 
 [deploy]
 startCommand = "dotnet out/AnastasiiaPortfolio.dll"
