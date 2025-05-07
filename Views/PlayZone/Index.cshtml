@@ -1070,12 +1070,48 @@
 
             function gameOver() {
                 isGameRunning = false;
-            clearInterval(gameLoop);
+                clearInterval(gameLoop);
                 document.body.classList.remove('game-active');
+                
+                // Save score to database
+                const playerName = localStorage.getItem('playerName');
+                if (playerName && score > 0) {
+                    fetch('/PlayZone/SaveScore', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: JSON.stringify({
+                            playerName: playerName,
+                            score: score
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Update leaderboard with new top scores
+                            const leaderboardGrid = document.querySelector('.leaderboard-grid');
+                            leaderboardGrid.innerHTML = '';
+                            
+                            data.topScores.forEach((score, index) => {
+                                const playerCard = document.createElement('div');
+                                playerCard.className = 'player-card';
+                                playerCard.innerHTML = `
+                                    <div class="player-rank">${index + 1}</div>
+                                    <div class="player-name">${score.playerName}</div>
+                                    <div class="player-score">${score.score}</div>
+                                `;
+                                leaderboardGrid.appendChild(playerCard);
+                            });
+                        }
+                    })
+                    .catch(error => console.error('Error saving score:', error));
+                }
                 
                 // Show game over screen
                 if (gameOverDialog) {
-            document.getElementById('finalScore').textContent = score;
+                    document.getElementById('finalScore').textContent = score;
                     gameOverDialog.style.display = 'block';
                 }
             }

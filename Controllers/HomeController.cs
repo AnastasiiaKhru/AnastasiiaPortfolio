@@ -148,6 +148,11 @@ public class HomeController : Controller
                     model.ContactForm.Message
                 );
 
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return Json(new { success = true });
+                }
+
                 TempData["MessageSent"] = "Thank you for your message! I'll get back to you soon.";
                 return RedirectToAction(nameof(Index));
             }
@@ -155,8 +160,19 @@ public class HomeController : Controller
             {
                 _logger.LogError(ex, "Failed to send contact form email from {Name} ({Email})", 
                     model.ContactForm.Name, model.ContactForm.Email);
+                
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return Json(new { success = false, message = "Sorry, there was an error sending your message. Please try again later." });
+                }
+
                 ModelState.AddModelError("", "Sorry, there was an error sending your message. Please try again later.");
             }
+        }
+
+        if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+        {
+            return Json(new { success = false, message = "Please check your input and try again." });
         }
 
         // If we get here, something failed, redisplay form with errors

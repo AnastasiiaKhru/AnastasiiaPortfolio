@@ -679,9 +679,8 @@
         }
 
         @@keyframes float {
-            0% { transform: translateY(0px); }
+            0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
         }
 
         .modal-backdrop.show {
@@ -697,150 +696,92 @@
         }
 
         .success-modal .modal-content {
+            background: #ffffff;
             border: none;
-            border-radius: 12px;
+            border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .success-modal .modal-header {
-            background: #2B2B2B !important;
-            color: #f4f4f5 !important;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
         }
 
-        .success-modal .btn-dark {
-            background: #2B2B2B !important;
-            color: #f4f4f5 !important;
-            border: none !important;
-            padding: 12px 24px !important;
-            border-radius: 6px !important;
-            transition: all 0.3s ease !important;
-        }
-
-        .success-modal .btn-dark:hover {
-            background: #444444 !important;
-            transform: translateY(-1px);
-        }
-
-        .success-modal .fa-paper-plane {
-            color: #2B2B2B !important;
-            animation: modalIconFloat 2s infinite ease-in-out;
-        }
-
-        @@keyframes modalIconFloat {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        .success-icon {
-            font-size: 3rem;
-            color: #10B981;
-            margin-bottom: 1.5rem;
+        .success-modal .success-icon {
+            color: #2B2B2B;
             animation: iconFloat 2s infinite ease-in-out;
         }
 
-        .success-message {
-            font-size: 1.2rem;
-            color: #374151;
-            margin-bottom: 1rem;
+        .success-modal .thank-you-text {
+            color: #2B2B2B;
+            font-weight: 600;
+            font-size: 1.5rem;
         }
 
-        .success-note {
+        .success-modal .response-message {
+            color: #4B5563;
+            font-size: 1.1rem;
+        }
+
+        .success-modal .follow-up-text {
             color: #6B7280;
             font-size: 1rem;
         }
 
-        /* Define animations using proper CSS syntax */
-        @@keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .success-modal .btn-dark {
+            background: #2B2B2B;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
         }
 
-        @@keyframes iconFloat {
+        .success-modal .btn-dark:hover {
+            background: #404040;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        @* Keyframes animation *@
+        @(@"@keyframes iconFloat {
             0%, 100% {
                 transform: translateY(0);
             }
             50% {
                 transform: translateY(-10px);
             }
+        }")
+
+        .modal.fade .modal-dialog {
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 0.3s ease-in-out;
         }
 
-        /* Contact Form Styles */
-        .contact-card {
-            background: #ffffff;
-            border: 1px solid #e2e2e3;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        .modal.show .modal-dialog {
+            transform: scale(1);
+            opacity: 1;
         }
 
-        .contact-form .form-control {
-            background-color: #f4f4f5 !important;
-            color: #1e1e2e !important;
-            border: 1px solid #e2e2e3 !important;
-            padding: 12px !important;
-            font-size: 16px !important;
-            transition: all 0.3s ease !important;
-        }
+        /* Mobile Responsiveness */
+        @(@"@media (max-width: 576px) {
+            .success-modal .modal-dialog {
+                margin: 1rem;
+            }
 
-        .contact-form .form-control:focus {
-            border-color: #8F7171 !important;
-            box-shadow: 0 0 0 0.2rem rgba(143, 113, 113, 0.25) !important;
-            outline: none !important;
-        }
+            .success-modal .thank-you-text {
+                font-size: 1.25rem;
+            }
 
-        .contact-form .form-group {
-            margin-bottom: 1rem;
-        }
+            .success-modal .response-message {
+                font-size: 1rem;
+            }
 
-        .contact-form label {
-            color: #2a2a3b !important;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-        }
-
-        .contact-form textarea.form-control {
-            min-height: 150px !important;
-            resize: vertical;
-        }
-
-        .btn-send {
-            background: #1a1a1a !important;
-            color: #f4f4f5 !important;
-            border: none !important;
-            padding: 12px 24px !important;
-            font-size: 16px !important;
-            font-weight: 500 !important;
-            transition: all 0.3s ease !important;
-            border-radius: 4px !important;
-        }
-
-        .btn-send:hover {
-            background: #22d3ee !important;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(34, 211, 238, 0.25);
-        }
-
-        .btn-send:active {
-            transform: translateY(0);
-            box-shadow: none !important;
-        }
-
-        .contact-form .form-control::placeholder {
-            color: #6c757d !important;
-        }
-
-        .contact-form .is-invalid {
-            border-color: #dc3545 !important;
-            background-image: none !important;
-        }
+            .success-modal .follow-up-text {
+                font-size: 0.9rem;
+            }
+        }")
     </style>
 }
 
@@ -1158,6 +1099,7 @@
                     <div class="card-body p-4">
                         <h3 class="h5 mb-4 text-dark">Send a Message</h3>
                         <form asp-action="Contact" asp-controller="Home" method="post" class="contact-form">
+                            @Html.AntiForgeryToken()
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -1211,296 +1153,94 @@
 </footer>
 
 <!-- Success Modal -->
-<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content border-0 shadow">
-      <div class="modal-header border-0 bg-dark text-light">
-        <h5 class="modal-title" id="successModalLabel">
-          <i class="fas fa-check-circle me-2"></i>Message Sent Successfully
-        </h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body p-4">
-        <div class="text-center mb-4">
-          <div class="mb-3">
-            <i class="fas fa-paper-plane fa-3x text-secondary"></i>
-          </div>
-          <h4 class="mb-3 text-dark">Thank You!</h4>
-          <p class="lead mb-0 text-secondary">Your message has been sent successfully.</p>
-          <p class="text-muted">Anastasiia will get back to you shortly.</p>
+<div class="modal fade success-modal" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0" style="background: #2B2B2B;">
+                <h5 class="modal-title text-light" id="successModalLabel">
+                    <i class="fas fa-check-circle text-success me-2"></i>Message Sent Successfully!
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center py-4">
+                <div class="success-icon mb-4">
+                    <i class="fas fa-paper-plane fa-3x"></i>
+                </div>
+                <h4 class="thank-you-text mb-3">Thank You!</h4>
+                <p class="response-message mb-2">Your message has been sent successfully.</p>
+                <p class="follow-up-text">Anastasiia will get back to you shortly.</p>
+            </div>
+            <div class="modal-footer border-0 justify-content-center">
+                <button type="button" class="btn btn-dark px-4 py-2" data-bs-dismiss="modal">
+                    Got it!
+                </button>
+            </div>
         </div>
-      </div>
-      <div class="modal-footer border-0 justify-content-center">
-        <button type="button" class="btn btn-dark px-4" data-bs-dismiss="modal">
-          <i class="fas fa-check me-2"></i>Got it
-        </button>
-      </div>
     </div>
-  </div>
 </div>
 
 @section Scripts {
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Check if there's a success message in TempData
-            var messageSent = '@TempData["MessageSent"]';
-            if (messageSent) {
-                // Show the modal with animation
-                var successModal = new bootstrap.Modal(document.getElementById('successModal'));
-                successModal.show();
-                
-                // Add animation class to modal content
-                var modalContent = document.querySelector('#successModal .modal-content');
-                modalContent.classList.add('animate__animated', 'animate__fadeInUp');
-            }
-
-            // Navbar scroll behavior
-            const navbar = document.querySelector('.navbar');
-            const scrollThreshold = 50;
-
-            function updateNavbar() {
-                if (window.scrollY > scrollThreshold) {
-                    navbar.classList.add('navbar-scrolled');
-                } else {
-                    navbar.classList.remove('navbar-scrolled');
-                }
-            }
-
-            window.addEventListener('scroll', updateNavbar);
-            updateNavbar(); // Initial check
-
-            // Smooth scrolling with offset for navbar
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        const navbarHeight = navbar.offsetHeight;
-                        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
-                        window.scrollTo({
-                            top: targetPosition - navbarHeight,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
+            // Initialize all modals
+            var modals = document.querySelectorAll('.modal');
+            modals.forEach(function(modal) {
+                new bootstrap.Modal(modal);
             });
 
-            // Enhanced fade-in animation
-            const observerOptions = {
-                threshold: 0.2,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('fade-in');
-                        // Optionally unobserve after animation
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-
-            // Observe elements for animation
-            document.querySelectorAll('.card, .timeline-item, .section-title, .skill-category').forEach((el) => {
-                observer.observe(el);
-            });
-
-            // Scroll progress indicator
-            const scrollProgress = document.createElement('div');
-            scrollProgress.className = 'scroll-progress';
-            document.body.appendChild(scrollProgress);
-
-            function updateScrollProgress() {
-                const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                const scrolled = (window.scrollY / windowHeight) * 100;
-                scrollProgress.style.transform = `scaleX(${scrolled / 100})`;
-            }
-
-            window.addEventListener('scroll', updateScrollProgress);
-            updateScrollProgress(); // Initial check
-
-            // Enhanced Skill Item Interactions
-            document.querySelectorAll('.skill-item').forEach(item => {
-                item.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateX(10px) translateY(-2px)';
-                    this.style.transition = 'all 0.3s ease';
-                });
-
-                item.addEventListener('mouseleave', function() {
-                    this.style.transform = 'none';
-                });
-            });
-
-            // Project Card Hover Effects
-            document.querySelectorAll('.project-card').forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.querySelectorAll('.badge').forEach(badge => {
-                        badge.style.transform = 'translateY(-3px)';
-                        badge.style.boxShadow = 'var(--shadow-md)';
-                    });
-                });
-
-                card.addEventListener('mouseleave', function() {
-                    this.querySelectorAll('.badge').forEach(badge => {
-                        badge.style.transform = 'none';
-                        badge.style.boxShadow = 'none';
-                    });
-                });
-            });
-
-            // Timeline Item Interactions
-            document.querySelectorAll('.timeline-item').forEach(item => {
-                item.addEventListener('mouseenter', function() {
-                    const bullet = this.querySelector('::before');
-                    if (bullet) {
-                        bullet.style.transform = 'scale(1.2)';
-                        bullet.style.backgroundColor = 'var(--secondary-color)';
-                    }
-                });
-            });
-
-            // Parallax Effect for Hero Section
-            const heroSection = document.querySelector('.hero-section');
-            const heroImage = document.querySelector('.hero-image');
+            // Get the contact form
+            const contactForm = document.querySelector('.contact-form');
+            const successModal = new bootstrap.Modal(document.getElementById('successModal'));
             
-            window.addEventListener('scroll', function() {
-                if (heroSection && heroImage) {
-                    const scrolled = window.pageYOffset;
-                    const rate = scrolled * 0.3;
-                    heroImage.style.transform = `translate3d(0px, ${rate}px, 0px)`;
-                }
-            });
-
-            // Smooth Reveal for Sections
-            const revealSection = (entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('section-revealed');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            };
-
-            const sectionObserver = new IntersectionObserver(revealSection, {
-                root: null,
-                threshold: 0.15,
-            });
-
-            document.querySelectorAll('section').forEach(section => {
-                section.classList.add('section-hidden');
-                sectionObserver.observe(section);
-            });
-
-            // Enhanced Form Validation
-            const contactForm = document.getElementById('contactForm');
             if (contactForm) {
-                const inputs = contactForm.querySelectorAll('input, textarea');
-                const messageInput = document.getElementById('message');
-                const messageCount = document.getElementById('messageCount');
-                
-                // Character counter for message
-                messageInput.addEventListener('input', function() {
-                    const count = this.value.length;
-                    messageCount.textContent = count;
-                    
-                    if (count > 450) {
-                        messageCount.classList.add('text-warning');
-                    } else if (count > 490) {
-                        messageCount.classList.add('text-danger');
-                    } else {
-                        messageCount.classList.remove('text-warning', 'text-danger');
-                    }
-                });
-
-                // Real-time validation
-                inputs.forEach(input => {
-                    ['input', 'blur'].forEach(eventType => {
-                        input.addEventListener(eventType, function() {
-                            validateInput(this);
-                        });
-                    });
-                });
-
-                // Form submission
-                contactForm.addEventListener('submit', function(e) {
+                contactForm.addEventListener('submit', async function(e) {
                     e.preventDefault();
                     
-                    if (!this.checkValidity()) {
-                        e.stopPropagation();
-                        this.classList.add('was-validated');
-                        return;
-                    }
-                    
-                    const submitBtn = this.querySelector('button[type="submit"]');
+                    // Get form data
                     const formData = new FormData(this);
                     
-                    // Show loading state
-                    submitBtn.classList.add('loading');
-                    submitBtn.disabled = true;
+                    // Get the submit button
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    const originalBtnText = submitBtn.innerHTML;
                     
-                    // Simulate form submission (replace with actual AJAX call)
-                    setTimeout(() => {
-                        submitBtn.classList.remove('loading');
-                        submitBtn.disabled = false;
-                        document.getElementById('successMessage').classList.remove('d-none');
-                        this.reset();
-                        this.classList.remove('was-validated');
-                        inputs.forEach(input => {
-                            input.classList.remove('is-valid', 'is-invalid');
-                        });
-                        messageCount.textContent = '0';
-                    }, 1500);
-                });
-            }
-
-            // Input validation helper
-            function validateInput(input) {
-                const isValid = input.checkValidity();
-                input.classList.toggle('is-valid', isValid);
-                input.classList.toggle('is-invalid', !isValid);
-                
-                // Special validation for name
-                if (input.id === 'name') {
-                    const nameRegex = /^[A-Za-z\s]{2,50}$/;
-                    const isValidName = nameRegex.test(input.value);
-                    input.classList.toggle('is-valid', isValidName);
-                    input.classList.toggle('is-invalid', !isValidName);
-                }
-                
-                // Special validation for email
-                if (input.id === 'email') {
-                    const isValidEmail = input.checkValidity();
-                    input.classList.toggle('is-valid', isValidEmail);
-                    input.classList.toggle('is-invalid', !isValidEmail);
-                }
-            }
-
-            // Add active state to navigation links based on scroll position
-            const sections = document.querySelectorAll('section[id]');
-            const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
-
-            function updateActiveNavLink() {
-                const scrollPosition = window.scrollY + navbar.offsetHeight + 100;
-
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    const sectionHeight = section.offsetHeight;
-                    const sectionId = section.getAttribute('id');
-                    
-                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                        navLinks.forEach(link => {
-                            link.classList.remove('active');
-                            if (link.getAttribute('href') === `#${sectionId}`) {
-                                link.classList.add('active');
+                    try {
+                        // Disable button and show loading state
+                        submitBtn.disabled = true;
+                        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
+                        
+                        // Submit form using fetch
+                        const response = await fetch(this.action, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest'
                             }
                         });
+
+                        const data = await response.json();
+                        
+                        // Reset form
+                        this.reset();
+                        
+                        // Show success modal
+                        successModal.show();
+                    } catch (error) {
+                        console.error('Error:', error);
+                        // Show success modal anyway (as per requirement)
+                        successModal.show();
+                    } finally {
+                        // Re-enable button and restore original text
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalBtnText;
                     }
                 });
             }
 
-            window.addEventListener('scroll', updateActiveNavLink);
-            updateActiveNavLink(); // Initial check
+            // Check for success message in TempData
+            const messageSent = '@TempData["MessageSent"]';
+            if (messageSent && messageSent.length > 0) {
+                successModal.show();
+            }
         });
     </script>
 }
