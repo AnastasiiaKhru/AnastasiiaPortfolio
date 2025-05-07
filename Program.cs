@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add environment variables configuration
+builder.Configuration.AddEnvironmentVariables(prefix: "AnastasiiaPortfolio_");
+
 // Add services to the container.
 builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("MongoDB"));
 builder.Services.AddSingleton<MongoDBService>();

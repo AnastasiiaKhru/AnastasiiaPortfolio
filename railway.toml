@@ -1,0 +1,14 @@
+[build]
+builder = "nixpacks"
+buildCommand = "dotnet publish -c Release -o out"
+
+[deploy]
+startCommand = "dotnet out/AnastasiiaPortfolio.dll"
+healthcheckPath = "/"
+healthcheckTimeout = 100
+restartPolicyType = "on-failure"
+restartPolicyMaxRetries = 10
+
+[env]
+ASPNETCORE_ENVIRONMENT = "Production"
+ASPNETCORE_URLS = "http://+:5000" 
