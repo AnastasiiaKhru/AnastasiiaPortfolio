@@ -1,46 +1,57 @@
 @using System.Linq
 @model List<PlayerScore>
 @{
-    ViewData["Title"] = "Play Zone";
+    ViewData["Title"] = "Snake Game";
     var topScores = (ViewBag.TopScores as IEnumerable<PlayerScore>)?.ToList() ?? new List<PlayerScore>();
     var displayScores = topScores.OrderByDescending(s => s.Score).Take(3).ToList();
 }
 
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
 @section Styles {
     <style>
         :root {
-            --primary: #2C3E50;
-            --primary-dark: #1A252F;
-            --secondary: #34495E;
-            --dark: #1F2937;
-            --light: #F9FAFB;
-            --gray: #6B7280;
-            --success: #27AE60;
-            --warning: #F39C12;
-            --glass-bg: rgba(248, 249, 254, 0.95);
-            --glass-border: rgba(44, 62, 80, 0.1);
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            --gradient-welcome: linear-gradient(135deg, #3498DB 0%, #2980B9 100%);
-            --gradient-primary: linear-gradient(135deg, #2C3E50 0%, #1A252F 100%);
-            --gradient-secondary: linear-gradient(135deg, #34495E 0%, #2C3E50 100%);
+            --neon-blue: #00f3ff;
+            --neon-pink: #ff00ff;
+            --neon-green: #39ff14;
+            --neon-yellow: #ffff00;
+            --dark-bg: #0a0a1f;
+            --game-border: #2d2d6c;
+            --glass-bg: rgba(10, 10, 31, 0.95);
+            --glass-border: rgba(0, 243, 255, 0.2);
+            --shadow-glow: 0 0 20px rgba(0, 243, 255, 0.3);
+            --text-shadow-neon: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+        }
+
+        body {
+            background: var(--dark-bg);
+            color: var(--neon-blue);
+            font-family: 'Press Start 2P', monospace;
         }
 
         .playzone-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0.15rem;
+            padding: 1rem;
             background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--glass-border);
+            border: 2px solid var(--neon-blue);
+            border-radius: 8px;
+            box-shadow: var(--shadow-glow);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            gap: 0.15rem;
-            height: 98vh;
-            overflow: hidden;
+        }
+
+        .game-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+            padding: 1rem;
+            width: 100%;
+            height: 100vh;
+            overflow-y: auto;
         }
 
         .welcome-section {
@@ -126,17 +137,16 @@
 
         .game-container {
             width: 100%;
-            max-width: 600px; /* Slightly reduced */
-            height: auto; /* Changed to auto */
-            margin: 0 auto;
-            position: relative;
-            touch-action: none;
-            overflow: visible; /* Changed from hidden */
-            background: rgba(30, 30, 46, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            height: auto;
+            margin: 1rem auto;
+            background: rgba(10, 10, 31, 0.98);
+            border: 3px solid var(--neon-blue);
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.2);
             padding: 12px;
-            border: 1px solid rgba(244, 244, 245, 0.1);
+            position: relative;
+            overflow: visible;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -144,13 +154,15 @@
 
         #gameCanvas {
             width: 100%;
+            height: 100%;
+            max-width: 580px;
+            max-height: 580px;
             aspect-ratio: 1;
-            max-width: 580px; /* Slightly less than container */
             display: block;
-            background-color: #1e1e2e;
-            border-radius: 8px;
-            touch-action: none;
-            margin: auto;
+            background-color: var(--dark-bg);
+            border: 2px solid var(--neon-blue);
+            border-radius: 4px;
+            box-shadow: inset 0 0 20px rgba(0, 243, 255, 0.1);
         }
 
         .score-section {
@@ -159,126 +171,147 @@
             justify-content: center;
             gap: 2rem;
             padding: 10px 0;
+            margin-top: 1rem;
         }
 
         .score-card {
             text-align: center;
             padding: 10px 20px;
-            background: rgba(30, 30, 46, 0.9);
-            border-radius: 8px;
-            border: 1px solid rgba(74, 222, 128, 0.2);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background: var(--dark-bg);
+            border: 2px solid var(--neon-pink);
+            border-radius: 4px;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.2);
         }
 
         .score-label {
-            color: #f4f4f5;
-            font-size: 0.9rem;
+            color: var(--neon-pink);
+            font-size: 0.8rem;
             margin-bottom: 5px;
-            opacity: 0.8;
+            text-shadow: 0 0 5px var(--neon-pink);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .score-value {
-            color: #4ade80;
+            color: var(--neon-green);
             font-size: 1.5rem;
             font-weight: bold;
-            text-shadow: 0 0 10px rgba(74, 222, 128, 0.3);
+            text-shadow: 0 0 10px var(--neon-green);
         }
 
         .leaderboard {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            margin-top: 3rem;
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--glass-border);
+            background: transparent;
+            padding: 1rem;
+            margin: 2rem auto;
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .leaderboard h2 {
-            color: var(--dark);
-            font-size: 1.8rem;
-            margin-bottom: 2rem;
+            color: var(--neon-yellow);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
             text-align: center;
-            font-weight: 600;
+            text-shadow: 0 0 10px var(--neon-yellow);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            width: 100%;
         }
 
         .leaderboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            justify-content: center;
         }
 
         .player-card {
-            background: var(--light);
-            border-radius: 16px;
+            background: var(--dark-bg);
+            border: 2px solid var(--neon-blue);
+            border-radius: 8px;
             padding: 1.5rem;
             text-align: center;
             position: relative;
-            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
             transition: all 0.3s ease;
-            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 150px;
         }
 
         .player-card:hover {
             transform: translateY(-5px);
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.4);
         }
 
         .player-rank {
             position: absolute;
-            top: 1rem;
-            left: 1rem;
-            background: var(--gradient-secondary);
-            color: white;
+            top: 0.5rem;
+            left: 0.5rem;
+            background: var(--neon-pink);
+            color: var(--dark-bg);
             width: 30px;
             height: 30px;
-            border-radius: 50%;
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 600;
+            font-weight: bold;
             font-size: 0.9rem;
+            box-shadow: 0 0 10px var(--neon-pink);
         }
 
         .player-name {
-            color: var(--dark);
-            font-size: 1.2rem;
-            font-weight: 600;
+            color: var(--neon-blue);
+            font-size: 1.1rem;
             margin: 1rem 0;
+            text-shadow: 0 0 5px var(--neon-blue);
         }
 
         .player-score {
-            color: var(--primary);
-            font-size: 2rem;
-            font-weight: 700;
+            color: var(--neon-green);
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-shadow: 0 0 10px var(--neon-green);
         }
 
         .game-over {
             position: fixed;
-            top: 20%;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(15, 23, 42, 0.95);
-            padding: 20px;
-            border-radius: 15px;
+            background: rgba(10, 10, 31, 0.98);
+            padding: 2rem;
+            border: 3px solid var(--neon-pink);
+            border-radius: 8px;
             text-align: center;
             z-index: 1000;
-            border: 1px solid rgba(74, 222, 128, 0.3);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            display: none;
+            box-shadow: 0 0 40px rgba(255, 0, 255, 0.3);
             min-width: 300px;
         }
 
         .game-over h2 {
-            color: #f87171;
-            margin-bottom: 20px;
+            color: var(--neon-pink);
             font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 15px var(--neon-pink);
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .game-over p {
-            color: #f4f4f5;
-            margin-bottom: 25px;
+            color: var(--neon-blue);
             font-size: 1.2rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 8px var(--neon-blue);
         }
 
         .btn-group {
@@ -288,81 +321,257 @@
         }
 
         .btn-restart, .btn-new {
+            background: var(--dark-bg);
+            color: var(--neon-green);
+            border: 2px solid var(--neon-green);
             padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 500;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: #4ade80;
-            color: #1e1e2e;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px var(--neon-green);
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.2);
         }
 
         .btn-restart:hover, .btn-new:hover {
+            background: var(--neon-green);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px var(--neon-green);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(74, 222, 128, 0.3);
         }
 
-        @@media (max-width: 768px) {
+        /* Mobile Adjustments - Added separately without modifying desktop view */
+        @(@"@media (max-width: 768px) {
             .playzone-container {
-                margin: 0;
-                padding: 0.15rem;
-                gap: 0.15rem;
-                height: 95vh;
+                padding: 0.5rem;
+                border-width: 1px;
+            }
+
+            .game-section {
+                padding: 0.5rem;
+                gap: 0.5rem;
+                height: auto;
+                min-height: 100vh;
             }
 
             .game-container {
-                max-width: 95vw;
                 padding: 8px;
-                margin: 0 auto;
+                margin: 0.5rem auto;
+                border-width: 2px;
+                width: 95vw;
+                max-width: 95vw;
             }
 
             #gameCanvas {
                 width: 100%;
-                max-width: 100%;
+                height: 100%;
+                max-width: none;
+                max-height: none;
+                margin: 0 auto;
+                touch-action: none;
             }
 
-            .welcome-section {
-                margin: 0 0.25rem 0.25rem;
-                padding: 0.25rem;
+            .score-section {
+                gap: 0.5rem;
+                padding: 8px;
+                margin-top: 0.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
             }
 
-            .welcome-section h2 {
-                font-size: 1.2rem; /* Smaller font on mobile */
+            .score-card {
+                padding: 8px 12px;
+                min-width: 110px;
+                flex: 0 1 auto;
+            }
+
+            .score-label {
+                font-size: 0.6rem;
+            }
+
+            .score-value {
+                font-size: 1rem;
             }
 
             .text-center.mb-4 {
-                font-size: 0.9rem;
-                padding: 4px 0;
+                margin: 0.5rem 0 !important;
             }
-        }
 
-        /* Landscape mode adjustments */
-        @@media (max-width: 768px) and (orientation: landscape) {
+            .text-center.mb-4 p {
+                font-size: 0.7rem;
+                padding: 4px 8px;
+                margin: 0;
+                line-height: 1.3;
+            }
+
+            .leaderboard {
+                padding: 0.5rem;
+                margin: 1rem auto;
+            }
+
+            .leaderboard h2 {
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+            }
+
+            .leaderboard-grid {
+                grid-template-columns: repeat(1, 1fr);
+                gap: 1rem;
+                max-width: 300px;
+            }
+
+            .player-card {
+                padding: 1rem;
+                min-width: unset;
+            }
+
+            .player-name {
+                font-size: 0.9rem;
+                margin: 0.75rem 0;
+            }
+
+            .player-score {
+                font-size: 1.4rem;
+            }
+
+            .game-over {
+                width: 90%;
+                max-width: 300px;
+                padding: 1.5rem;
+            }
+
+            .game-over h2 {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .game-over p {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn-restart, .btn-new {
+                width: 100%;
+                padding: 10px;
+                font-size: 0.9rem;
+                min-height: 44px;
+            }
+        }")
+
+        /* Landscape mode specific adjustments */
+        @(@"@media (max-width: 768px) and (orientation: landscape) {
             .playzone-container {
-                height: 100vh;
-                padding: 0.1rem;
+                padding: 0.25rem;
+            }
+
+            .game-section {
+                flex-direction: row;
+                align-items: flex-start;
+                padding: 0.25rem;
+                gap: 1rem;
             }
 
             .game-container {
-                height: 90vh;
-                padding: 4px;
-                max-width: 90vh;
-            }
-
-            #gameCanvas {
-                max-height: 90vh;
-            }
-
-            .welcome-section {
-                padding: 0.1rem;
-            }
-
-            .welcome-section h2 {
-                font-size: 0.9rem;
+                flex: 0 0 auto;
+                width: 80vh;
+                height: 80vh;
                 margin: 0;
+                max-width: none;
             }
-        }
+
+            .leaderboard {
+                flex: 1;
+                margin: 0;
+                overflow-y: auto;
+                max-height: 80vh;
+            }
+
+            .score-section {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                background: rgba(10, 10, 31, 0.9);
+                border-bottom: 1px solid var(--neon-blue);
+                margin: 0;
+                padding: 4px;
+                z-index: 2;
+            }
+        }")
+
+        /* Small phones */
+        @(@"@media (max-width: 360px) {
+            .playzone-container {
+                padding: 0.25rem;
+            }
+
+            .game-container {
+                padding: 4px;
+                margin: 0.25rem auto;
+                width: 98vw;
+                max-width: 98vw;
+            }
+
+            .score-card {
+                padding: 6px 10px;
+                min-width: 100px;
+            }
+
+            .score-label {
+                font-size: 0.5rem;
+            }
+
+            .score-value {
+                font-size: 0.9rem;
+            }
+
+            .leaderboard h2 {
+                font-size: 1rem;
+            }
+
+            .player-card {
+                padding: 0.5rem;
+            }
+
+            .player-name {
+                font-size: 0.8rem;
+            }
+
+            .player-score {
+                font-size: 1.2rem;
+            }
+        }")
+
+        /* Touch-friendly styles */
+        @(@"@media (hover: none) and (pointer: coarse) {
+            #gameCanvas {
+                touch-action: none;
+            }
+
+            .btn-restart, .btn-new, .start-game-btn {
+                min-height: 44px;
+                font-size: 1rem;
+            }
+
+            #playerNameInput {
+                min-height: 44px;
+                font-size: 16px;
+            }
+
+            * {
+                user-select: none;
+                -webkit-user-select: none;
+                -webkit-touch-callout: none;
+            }
+        }")
 
         /* Name Input Dialog Styles */
         .name-dialog {
@@ -371,7 +580,7 @@
             left: 0;
             width: 100%;
             height: 100vh;
-            background-color: rgba(15, 23, 42, 0.95);
+            background-color: rgba(10, 10, 31, 0.98);
             display: none;
             justify-content: center;
             align-items: flex-start;
@@ -382,17 +591,11 @@
         }
 
         .name-dialog-content {
-            background: linear-gradient(145deg, #2a2a3b, #1e1d2b);
-            padding: 2.5rem;
-            border-radius: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5),
-                        0 0 0 1px rgba(255, 255, 255, 0.1);
-            text-align: center;
-            width: 90%;
-            max-width: 400px;
-            transform: translateY(0);
-            -webkit-animation: dialogFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            animation: dialogFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            background: var(--dark-bg);
+            border: 3px solid var(--neon-blue);
+            border-radius: 8px;
+            box-shadow: 0 0 40px rgba(0, 243, 255, 0.3);
+            padding: 2rem;
         }
 
         .dialog-header {
@@ -407,15 +610,10 @@
         }
 
         .name-dialog-content h2 {
-            color: #22d3ee;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #22d3ee, #0ea5e9);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.2;
+            color: var(--neon-blue);
+            text-shadow: 0 0 15px var(--neon-blue);
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .dialog-body {
@@ -423,7 +621,7 @@
         }
 
         .name-dialog-content p {
-            color: #94a3b8;
+            color: var(--neon-blue);
             margin-bottom: 2rem;
             font-size: 1.2rem;
             line-height: 1.5;
@@ -435,49 +633,39 @@
         }
 
         #playerNameInput {
-            width: 100%;
-            padding: 1rem 1.5rem;
-            font-size: 1.1rem;
-            background-color: rgba(15, 23, 42, 0.6);
-            border: 2px solid rgba(74, 93, 143, 0.3);
-            border-radius: 12px;
-            color: #f4f4f5;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            outline: none;
+            background: rgba(10, 10, 31, 0.8);
+            border: 2px solid var(--neon-blue);
+            color: var(--neon-blue);
+            border-radius: 4px;
+            padding: 12px 20px;
+            font-size: 1rem;
+            text-shadow: 0 0 5px var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
         }
 
         #playerNameInput:focus {
-            border-color: #22d3ee;
-            box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.2);
-            background-color: rgba(15, 23, 42, 0.8);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+            border-color: var(--neon-pink);
         }
 
         #playerNameInput::placeholder {
-            color: #64748b;
+            color: var(--neon-blue);
         }
 
         .start-game-btn {
-            background: linear-gradient(135deg, #22d3ee, #0ea5e9);
-            color: #f4f4f5;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            position: relative;
-            overflow: hidden;
+            background: var(--dark-bg);
+            border: 2px solid var(--neon-green);
+            color: var(--neon-green);
+            text-shadow: 0 0 5px var(--neon-green);
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.2);
+            border-radius: 4px;
+            transition: all 0.3s ease;
         }
 
         .start-game-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(34, 211, 238, 0.25);
+            background: var(--neon-green);
+            color: var(--dark-bg);
+            box-shadow: 0 0 25px var(--neon-green);
         }
 
         .start-game-btn:active {
@@ -524,36 +712,6 @@
             100% {
                 opacity: 1;
                 transform: translateY(0);
-            }
-        }
-
-        /* Mobile adjustments */
-        @@media (max-width: 768px) {
-            .name-dialog {
-                padding-top: 5vh;
-            }
-            
-            .name-dialog-content {
-                padding: 2rem;
-                margin: 1rem;
-            }
-
-            .name-dialog-content h2 {
-                font-size: 2rem;
-            }
-
-            .dialog-body {
-                padding: 0;
-            }
-
-            #playerNameInput {
-                padding: 0.875rem 1.25rem;
-                font-size: 1rem;
-            }
-
-            .start-game-btn {
-                padding: 0.875rem 1.5rem;
-                font-size: 1rem;
             }
         }
 
@@ -620,9 +778,11 @@
         }
 
         .text-center.mb-4 {
-            margin-bottom: 0.5rem !important;
-            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1rem !important;
+            color: var(--neon-blue);
             padding: 8px 0;
+            position: relative;
+            z-index: 1;
         }
     </style>
 }
@@ -653,39 +813,43 @@
     </div>
     </div>
 
-    <!-- Game Content -->
-    <div class="game-container">
-        <div class="text-center mb-4">
-            <p class="text-muted">Use arrow keys to control the snake. Collect food to grow!</p>
+    <div class="game-section">
+        <!-- Game Content -->
+        <div class="game-container">
+            <div class="text-center mb-4">
+                <p class="text-muted">Use arrow keys to control the snake. Collect food to grow!</p>
+            </div>
+            <div class="d-flex justify-content-center">
+                <canvas id="gameCanvas"></canvas>
+            </div>
+            <div class="score-section">
+                <div class="score-card">
+                    <div class="score-label">Current Score</div>
+                    <div id="score" class="score-value">0</div>
+                </div>
+                <div class="score-card">
+                    <div class="score-label">Best Score</div>
+                    <div id="bestScore" class="score-value">0</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="d-flex justify-content-center">
-            <canvas id="gameCanvas"></canvas>
-        </div>
-    <div class="score-section">
-        <div class="score-card">
-            <div class="score-label">Current Score</div>
-            <div id="score" class="score-value">0</div>
-        </div>
-        <div class="score-card">
-            <div class="score-label">Best Score</div>
-            <div id="bestScore" class="score-value">0</div>
+
+        <!-- Leaderboard -->
+        <div class="leaderboard">
+            <h2>Top Players</h2>
+            <div class="leaderboard-grid">
+                @foreach (var score in displayScores)
+                {
+                    <div class="player-card">
+                        <div class="player-rank">@(displayScores.IndexOf(score) + 1)</div>
+                        <div class="player-name">@score.PlayerName</div>
+                        <div class="player-score">@score.Score</div>
+                    </div>
+                }
             </div>
         </div>
     </div>
-
-    <div class="leaderboard">
-        <h2>Top Players</h2>
-        <div class="leaderboard-grid">
-            @foreach (var score in displayScores)
-            {
-                <div class="player-card">
-                    <div class="player-rank">@(displayScores.IndexOf(score) + 1)</div>
-                    <div class="player-name">@score.PlayerName</div>
-                    <div class="player-score">@score.Score</div>
-                </div>
-            }
-    </div>
-</div>
 
     <!-- Game Over Dialog -->
     <div class="game-over" id="gameOver" style="display: none;">
