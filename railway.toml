@@ -1,9 +1,9 @@
 [build]
 builder = "nixpacks"
-buildCommand = "dotnet publish AnastasiiaPortfolio.csproj -c Release -o out"
+buildCommand = "dotnet publish AnastasiiaPortfolio.csproj -c Release -o publish"
 
 [deploy]
-startCommand = "dotnet out/AnastasiiaPortfolio.dll"
+startCommand = "dotnet publish/AnastasiiaPortfolio.dll"
 healthcheckPath = "/"
 healthcheckTimeout = 100
 
