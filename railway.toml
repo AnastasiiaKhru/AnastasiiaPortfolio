@@ -1,6 +1,6 @@
 [build]
-builder = "nixpacks"
-buildCommand = "dotnet publish AnastasiiaPortfolio.csproj -c Release -o publish"
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
 
 [deploy]
 startCommand = "dotnet publish/AnastasiiaPortfolio.dll"
