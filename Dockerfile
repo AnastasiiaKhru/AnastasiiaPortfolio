@@ -1,13 +1,17 @@
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /src
-COPY ["AnastasiiaPortfolio.csproj", "./"]
+WORKDIR /app
+
+COPY *.csproj ./
 RUN dotnet restore
-COPY . .
-RUN dotnet publish "AnastasiiaPortfolio.csproj" -c Release -o /app/publish
+
+COPY . ./
+RUN dotnet publish -c Release -o out
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
-COPY --from=build /app/publish .
-EXPOSE 8080
-ENV ASPNETCORE_URLS=http://+:8080
+COPY --from=build /app/out .
+ENV PORT=8080
+ENV ASPNETCORE_URLS=http://+:${PORT}
+EXPOSE ${PORT}
+
 ENTRYPOINT ["dotnet", "AnastasiiaPortfolio.dll"] 
