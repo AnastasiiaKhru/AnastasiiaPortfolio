@@ -816,40 +816,40 @@
     <div class="game-section">
         <!-- Game Content -->
         <div class="game-container">
-            <div class="text-center mb-4">
-                <p class="text-muted">Use arrow keys to control the snake. Collect food to grow!</p>
-            </div>
-            <div class="d-flex justify-content-center">
-                <canvas id="gameCanvas"></canvas>
-            </div>
-            <div class="score-section">
-                <div class="score-card">
-                    <div class="score-label">Current Score</div>
-                    <div id="score" class="score-value">0</div>
-                </div>
-                <div class="score-card">
-                    <div class="score-label">Best Score</div>
-                    <div id="bestScore" class="score-value">0</div>
-                    </div>
-                </div>
-            </div>
+        <div class="text-center mb-4">
+            <p class="text-muted">Use arrow keys to control the snake. Collect food to grow!</p>
         </div>
-
-        <!-- Leaderboard -->
-        <div class="leaderboard">
-            <h2>Top Players</h2>
-            <div class="leaderboard-grid">
-                @foreach (var score in displayScores)
-                {
-                    <div class="player-card">
-                        <div class="player-rank">@(displayScores.IndexOf(score) + 1)</div>
-                        <div class="player-name">@score.PlayerName</div>
-                        <div class="player-score">@score.Score</div>
+        <div class="d-flex justify-content-center">
+            <canvas id="gameCanvas"></canvas>
+        </div>
+    <div class="score-section">
+        <div class="score-card">
+            <div class="score-label">Current Score</div>
+            <div id="score" class="score-value">0</div>
+        </div>
+        <div class="score-card">
+            <div class="score-label">Best Score</div>
+            <div id="bestScore" class="score-value">0</div>
                     </div>
-                }
-            </div>
+                </div>
         </div>
     </div>
+
+        <!-- Leaderboard -->
+    <div class="leaderboard">
+        <h2>Top Players</h2>
+        <div class="leaderboard-grid">
+            @foreach (var score in displayScores)
+            {
+                <div class="player-card">
+                    <div class="player-rank">@(displayScores.IndexOf(score) + 1)</div>
+                    <div class="player-name">@score.PlayerName</div>
+                    <div class="player-score">@score.Score</div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
 
     <!-- Game Over Dialog -->
     <div class="game-over" id="gameOver" style="display: none;">
@@ -1070,25 +1070,25 @@
 
             function gameOver() {
                 isGameRunning = false;
-                clearInterval(gameLoop);
+            clearInterval(gameLoop);
                 document.body.classList.remove('game-active');
                 
                 // Save score to database
                 const playerName = localStorage.getItem('playerName');
                 if (playerName && score > 0) {
-                    fetch('/PlayZone/SaveScore', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
+            fetch('/PlayZone/SaveScore', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
                             'X-Requested-With': 'XMLHttpRequest'
-                        },
-                        body: JSON.stringify({
-                            playerName: playerName,
-                            score: score
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
+                },
+                body: JSON.stringify({
+                    playerName: playerName,
+                    score: score
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
                         if (data.success) {
                             // Update leaderboard with new top scores
                             const leaderboardGrid = document.querySelector('.leaderboard-grid');
@@ -1104,11 +1104,11 @@
                                 `;
                                 leaderboardGrid.appendChild(playerCard);
                             });
-                        }
-                    })
-                    .catch(error => console.error('Error saving score:', error));
                 }
-                
+            })
+            .catch(error => console.error('Error saving score:', error));
+        }
+
                 // Show game over screen
                 if (gameOverDialog) {
                     document.getElementById('finalScore').textContent = score;
