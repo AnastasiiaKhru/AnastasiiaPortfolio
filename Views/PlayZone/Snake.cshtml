@@ -538,6 +538,27 @@
             50% { transform: translateY(-8px) scale(1.1); }
         }
 
+        .dialog-back-link {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.4rem 0.8rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .dialog-back-link:hover {
+            color: #00ff88;
+            background: rgba(0, 255, 136, 0.1);
+        }
+
         .dialog-title {
             font-family: 'Orbitron', sans-serif;
             font-size: 1.6rem;
@@ -677,6 +698,26 @@
             margin-top: 1.5rem;
         }
 
+        .back-to-menu {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.25rem;
+            padding: 0.6rem 1rem;
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .back-to-menu:hover {
+            color: #00ff88;
+            background: rgba(0, 255, 136, 0.1);
+        }
+
         .btn-restart {
             flex: 1;
             background: linear-gradient(135deg, #00ff88, #22c55e);
@@ -771,6 +812,9 @@
 <!-- Name Dialog -->
 <div class="name-dialog" id="nameDialog">
     <div class="dialog-content">
+        <a href="/PlayZone" class="dialog-back-link">
+            <i class="fas fa-arrow-left"></i> Back to Games
+        </a>
         <div class="snake-animation">
             <div class="snake-dot"></div>
             <div class="snake-dot"></div>
@@ -804,6 +848,9 @@
                 <i class="fas fa-user"></i> New Player
             </button>
         </div>
+        <a href="/PlayZone" class="back-to-menu">
+            <i class="fas fa-th-large"></i> Back to Games Menu
+        </a>
     </div>
 </div>
 

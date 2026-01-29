@@ -1924,14 +1924,14 @@ a:hover {
     background-position: center;
     background-repeat: no-repeat;
     background-color: #1e293b;
-    filter: none;
+    image-rendering: -webkit-optimize-contrast;
 }
 
 .page-header::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.05);
     pointer-events: none;
     z-index: 0;
 }
@@ -1942,8 +1942,8 @@ a:hover {
     margin-left: auto;
     margin-right: auto;
     background: rgba(140, 145, 155, 0.82);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border-radius: var(--radius-2xl);
     border: 1px solid rgba(255, 255, 255, 0.18);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);

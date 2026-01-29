@@ -161,40 +161,135 @@
             100% { opacity: 0; }
         }
 
-        /* Heartbeat pulse */
+        /* Heartbeat pulse - more intense */
         .heartbeat {
             position: absolute;
             inset: 0;
-            background: radial-gradient(ellipse at center, rgba(139, 0, 0, 0.15) 0%, transparent 70%);
-            animation: heartbeat 1.2s ease-in-out infinite;
+            background: radial-gradient(ellipse at center, rgba(139, 0, 0, 0.25) 0%, transparent 60%);
+            animation: heartbeat 0.9s ease-in-out infinite;
+            pointer-events: none;
         }
 
         @@keyframes heartbeat {
             0%, 100% { opacity: 0; transform: scale(1); }
-            15% { opacity: 1; transform: scale(1.02); }
-            30% { opacity: 0.3; transform: scale(1); }
-            45% { opacity: 0.8; transform: scale(1.01); }
-            60% { opacity: 0; }
+            10% { opacity: 1; transform: scale(1.03); }
+            20% { opacity: 0.2; transform: scale(1); }
+            30% { opacity: 0.9; transform: scale(1.02); }
+            50% { opacity: 0; }
         }
 
-        /* Jump scare flash */
+        /* Breathing effect overlay */
+        .breathing {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 30%, rgba(0, 0, 0, 0.4) 100%);
+            animation: breathing 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @@keyframes breathing {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Shadow figure that appears randomly */
+        .shadow-figure {
+            position: absolute;
+            width: 100px;
+            height: 200px;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.9) 0%, transparent 70%);
+            opacity: 0;
+            pointer-events: none;
+            filter: blur(3px);
+            transition: opacity 0.3s;
+        }
+
+        .shadow-figure.visible {
+            opacity: 0.7;
+            animation: shadowAppear 2s ease-out forwards;
+        }
+
+        @@keyframes shadowAppear {
+            0% { opacity: 0; transform: scale(0.8); }
+            20% { opacity: 0.7; transform: scale(1); }
+            80% { opacity: 0.7; transform: scale(1); }
+            100% { opacity: 0; transform: scale(1.1); }
+        }
+
+        /* Screen distortion */
+        .distortion {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .distortion.active {
+            animation: distort 0.5s ease;
+        }
+
+        @@keyframes distort {
+            0%, 100% { opacity: 0; filter: none; }
+            25% { opacity: 1; filter: blur(2px) contrast(1.5) saturate(0); }
+            50% { opacity: 1; filter: blur(0) contrast(2) saturate(0.5); }
+            75% { opacity: 1; filter: blur(1px) contrast(1.2) saturate(0); }
+        }
+
+        /* Jump scare flash - more intense */
         .jumpscare {
             position: absolute;
             inset: 0;
-            background: #fff;
+            background: radial-gradient(ellipse at center, #ff0000 0%, #000 100%);
             opacity: 0;
             display: none;
+            pointer-events: none;
         }
 
         .jumpscare.active {
             display: block;
-            animation: jumpscareFlash 0.15s ease;
+            animation: jumpscareFlash 0.2s ease;
         }
 
         @@keyframes jumpscareFlash {
-            0% { opacity: 0; }
-            50% { opacity: 0.9; }
-            100% { opacity: 0; }
+            0% { opacity: 0; transform: scale(1); }
+            30% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 0; transform: scale(1); }
+        }
+
+        /* Intense screen shake */
+        .intense-shake {
+            animation: intenseShake 0.3s ease;
+        }
+
+        @@keyframes intenseShake {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            10% { transform: translate(-5px, -3px) rotate(-1deg); }
+            20% { transform: translate(5px, 2px) rotate(1deg); }
+            30% { transform: translate(-3px, 4px) rotate(0deg); }
+            40% { transform: translate(4px, -2px) rotate(1deg); }
+            50% { transform: translate(-4px, 3px) rotate(-1deg); }
+            60% { transform: translate(3px, -4px) rotate(0deg); }
+            70% { transform: translate(-2px, 2px) rotate(1deg); }
+            80% { transform: translate(2px, -1px) rotate(-1deg); }
+            90% { transform: translate(-1px, 1px) rotate(0deg); }
+        }
+
+        /* Red flash warning */
+        .red-flash {
+            position: absolute;
+            inset: 0;
+            background: rgba(139, 0, 0, 0);
+            pointer-events: none;
+            transition: background 0.1s;
+        }
+
+        .red-flash.active {
+            animation: redPulse 0.5s ease;
+        }
+
+        @@keyframes redPulse {
+            0%, 100% { background: rgba(139, 0, 0, 0); }
+            50% { background: rgba(139, 0, 0, 0.4); }
         }
 
         /* Chromatic aberration on edges */
@@ -596,12 +691,16 @@
 <div class="horror-overlay">
     <div class="vignette"></div>
     <div class="heartbeat"></div>
+    <div class="breathing"></div>
     <div class="scanlines"></div>
     <div class="chromatic"></div>
     <div class="fog"></div>
     <div class="blood-drips" id="bloodDrips"></div>
     <div class="glitch-overlay" id="glitchOverlay"></div>
     <div class="jumpscare" id="jumpscare"></div>
+    <div class="distortion" id="distortion"></div>
+    <div class="red-flash" id="redFlash"></div>
+    <div class="shadow-figure" id="shadowFigure"></div>
 </div>
 
 <!-- Navigation -->
@@ -757,6 +856,13 @@
     }
 
     // === HORROR EFFECTS ===
+    const distortion = document.getElementById('distortion');
+    const redFlash = document.getElementById('redFlash');
+    const shadowFigure = document.getElementById('shadowFigure');
+    let audioContext;
+    let lastShadowTime = 0;
+    let lastAmbientTime = 0;
+
     function triggerGlitch() {
         glitchOverlay.classList.add('active');
         setTimeout(() => glitchOverlay.classList.remove('active'), 300);
@@ -765,23 +871,121 @@
     function triggerJumpscare() {
         jumpscare.classList.add('active');
         gameContainer.classList.add('shake');
+        playScarySound('jumpscare');
         setTimeout(() => {
             jumpscare.classList.remove('active');
             gameContainer.classList.remove('shake');
-        }, 150);
+        }, 200);
+    }
+
+    function triggerDistortion() {
+        if (distortion) {
+            distortion.classList.add('active');
+            setTimeout(() => distortion.classList.remove('active'), 500);
+        }
+    }
+
+    function triggerRedFlash() {
+        if (redFlash) {
+            redFlash.classList.add('active');
+            setTimeout(() => redFlash.classList.remove('active'), 500);
+        }
+    }
+
+    function triggerShadowFigure() {
+        if (shadowFigure) {
+            const x = Math.random() * (window.innerWidth - 150);
+            const y = Math.random() * (window.innerHeight - 250);
+            shadowFigure.style.left = x + 'px';
+            shadowFigure.style.top = y + 'px';
+            shadowFigure.classList.add('visible');
+            playScarySound('whisper');
+            setTimeout(() => shadowFigure.classList.remove('visible'), 2000);
+        }
+    }
+
+    // Scary sound effects using Web Audio API
+    function initAudio() {
+        try {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        } catch (e) {
+            console.log('Audio not supported');
+        }
+    }
+
+    function playScarySound(type) {
+        if (!audioContext) return;
+        try {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            if (type === 'jumpscare') {
+                oscillator.frequency.setValueAtTime(150, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(50, audioContext.currentTime + 0.2);
+                gainNode.gain.setValueAtTime(0.25, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                oscillator.type = 'sawtooth';
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 0.3);
+            } else if (type === 'whisper') {
+                oscillator.frequency.setValueAtTime(80, audioContext.currentTime);
+                oscillator.frequency.linearRampToValueAtTime(50, audioContext.currentTime + 1.5);
+                gainNode.gain.setValueAtTime(0.08, audioContext.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + 1.5);
+                oscillator.type = 'sine';
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 1.5);
+            } else if (type === 'ambient') {
+                oscillator.frequency.setValueAtTime(35 + Math.random() * 25, audioContext.currentTime);
+                gainNode.gain.setValueAtTime(0.04, audioContext.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + 2);
+                oscillator.type = 'triangle';
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 2);
+            }
+        } catch (e) {}
     }
 
     function startHorrorEffects() {
+        // Initialize audio on game start
+        if (!audioContext) initAudio();
+
         horrorEffectsInterval = setInterval(() => {
+            if (!gameRunning) return;
             const now = Date.now();
-            // Random glitch every 5-15 seconds
-            if (now - lastGlitchTime > 5000 + Math.random() * 10000) {
+            
+            // Random glitch every 4-10 seconds
+            if (now - lastGlitchTime > 4000 + Math.random() * 6000) {
                 triggerGlitch();
                 lastGlitchTime = now;
-                // 20% chance of mini jumpscare with glitch
-                if (Math.random() < 0.2) {
+                
+                // 35% chance of jumpscare with glitch
+                if (Math.random() < 0.35) {
                     setTimeout(triggerJumpscare, 100);
                 }
+                // 45% chance of distortion
+                if (Math.random() < 0.45) {
+                    triggerDistortion();
+                }
+            }
+
+            // Random shadow figure every 12-25 seconds
+            if (now - lastShadowTime > 12000 + Math.random() * 13000) {
+                triggerShadowFigure();
+                lastShadowTime = now;
+            }
+
+            // Random red flash (5% chance per second)
+            if (Math.random() < 0.05) {
+                triggerRedFlash();
+            }
+
+            // Ambient scary sounds every 6-12 seconds
+            if (now - lastAmbientTime > 6000 + Math.random() * 6000) {
+                playScarySound('ambient');
+                lastAmbientTime = now;
             }
         }, 1000);
     }
@@ -1089,31 +1293,31 @@
     // === COLLISION ===
     function canMoveTo(newX, newZ) {
         // Check outer bounds
-        const margin = 0.1;
+        const margin = 0.2;
         if (newX < margin || newX > MAZE_SIZE * CELL_SIZE - margin) return false;
         if (newZ < margin || newZ > MAZE_SIZE * CELL_SIZE - margin) return false;
 
+        // Get current and target cells
         const cellX = Math.floor(newX / CELL_SIZE);
         const cellZ = Math.floor(newZ / CELL_SIZE);
         
         if (cellX < 0 || cellX >= MAZE_SIZE || cellZ < 0 || cellZ >= MAZE_SIZE) return false;
 
+        const cell = maze[cellZ][cellX];
         const localX = newX - cellX * CELL_SIZE;
         const localZ = newZ - cellZ * CELL_SIZE;
-        const cell = maze[cellZ][cellX];
         
-        // Wall thickness in the 3D world
-        const w = 0.05;
+        // Check if trying to cross a wall boundary
+        const edgeDist = 0.3; // Distance from cell edge that triggers wall check
         
-        // Only block movement if hitting a wall that actually exists
-        // Left wall - blocks if player is at left edge AND wall exists
-        if (localX < w && cell.walls.left) return false;
-        // Right wall
-        if (localX > CELL_SIZE - w && cell.walls.right) return false;
-        // Top wall (north, -Z direction)
-        if (localZ < w && cell.walls.top) return false;
-        // Bottom wall (south, +Z direction)
-        if (localZ > CELL_SIZE - w && cell.walls.bottom) return false;
+        // Near left edge - check if left wall exists
+        if (localX < edgeDist && cell.walls.left) return false;
+        // Near right edge
+        if (localX > CELL_SIZE - edgeDist && cell.walls.right) return false;
+        // Near top edge (north)
+        if (localZ < edgeDist && cell.walls.top) return false;
+        // Near bottom edge (south)
+        if (localZ > CELL_SIZE - edgeDist && cell.walls.bottom) return false;
 
         return true;
     }
