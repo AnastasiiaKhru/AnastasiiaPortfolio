@@ -1,5 +1,6 @@
 using AnastasiiaPortfolio.Models;
 using AnastasiiaPortfolio.Services;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,15 @@ builder.Configuration.AddUserSecrets<Program>(optional: true);
 // Keys live in /root/.aspnet/DataProtection-Keys; they are lost on redeploy. Fine for this app.
 if (!builder.Environment.IsDevelopment())
 	builder.Logging.AddFilter("Microsoft.AspNetCore.DataProtection", LogLevel.Error);
+
+// Ensure MongoDB config in Production (Railway) — avoid cryptic crashes.
+if (builder.Environment.IsProduction())
+{
+	var conn = builder.Configuration["MongoDB:ConnectionString"]?.Trim();
+	if (string.IsNullOrEmpty(conn))
+		throw new InvalidOperationException(
+			"MongoDB:ConnectionString is missing. Set MongoDB__ConnectionString (and MongoDB__DatabaseName, etc.) in Railway → Variables. See RAILWAY_DEPLOY.md.");
+}
 
 // Add services to the container.
 builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("MongoDB"));
@@ -43,6 +53,14 @@ if (!app.Environment.IsDevelopment())
 {
 	app.UseExceptionHandler("/Home/Error");
 	app.UseHsts();
+	// Trust X-Forwarded-* from Railway’s reverse proxy (scheme, host, etc.).
+	var fwd = new ForwardedHeadersOptions
+	{
+		ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost
+	};
+	fwd.KnownNetworks.Clear();
+	fwd.KnownProxies.Clear();
+	app.UseForwardedHeaders(fwd);
 }
 
 app.UseHttpsRedirection();
@@ -52,6 +70,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapGet("/health", () => Results.Ok("ok"));
 
 app.MapControllerRoute(
 	name: "default",
