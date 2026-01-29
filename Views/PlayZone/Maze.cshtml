@@ -1,0 +1,1577 @@
+@using System.Linq
+@model List<MazeScore>
+@{
+    ViewData["Title"] = "3D Maze - HORROR";
+    Layout = null;
+    var topScores = (ViewBag.TopScores as IEnumerable<MazeScore>)?.ToList() ?? new List<MazeScore>();
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>ESCAPE - Horror Maze</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+            color: #f1f5f9;
+        }
+
+        /* Game Nav */
+        .game-nav {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            background: rgba(20, 0, 0, 0.95);
+            backdrop-filter: blur(16px);
+            border-radius: 0 0 1rem 1rem;
+            border: 1px solid rgba(139, 0, 0, 0.5);
+            border-top: none;
+            z-index: 200;
+        }
+
+        .game-nav__link {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            background: rgba(80, 0, 0, 0.3);
+            color: #666;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .game-nav__link:hover {
+            background: rgba(139, 0, 0, 0.4);
+            color: #ff4444;
+        }
+
+        .game-nav__link--active {
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.5), rgba(80, 0, 0, 0.4));
+            color: #ff0000;
+            border: 1px solid rgba(139, 0, 0, 0.6);
+        }
+
+        /* Canvas container */
+        #game-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* HORROR EFFECTS OVERLAY */
+        .horror-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        /* Vignette */
+        .vignette {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 0%, transparent 40%, rgba(0,0,0,0.4) 70%, rgba(0,0,0,0.95) 100%);
+        }
+
+        /* Blood drip effect */
+        .blood-drips {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            opacity: 0.6;
+        }
+
+        .blood-drip {
+            position: absolute;
+            top: -50px;
+            width: 8px;
+            background: linear-gradient(180deg, #8b0000, #4a0000, transparent);
+            border-radius: 0 0 50% 50%;
+            animation: drip 8s ease-in infinite;
+        }
+
+        @@keyframes drip {
+            0% { transform: translateY(-50px); height: 0; opacity: 0; }
+            10% { opacity: 0.8; }
+            100% { transform: translateY(110vh); height: 200px; opacity: 0; }
+        }
+
+        /* Scanlines */
+        .scanlines {
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.15) 2px,
+                rgba(0, 0, 0, 0.15) 4px
+            );
+            animation: scanMove 0.1s linear infinite;
+        }
+
+        @@keyframes scanMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(4px); }
+        }
+
+        /* Glitch effect */
+        .glitch-overlay {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            mix-blend-mode: overlay;
+        }
+
+        .glitch-overlay.active {
+            animation: glitch 0.3s ease;
+        }
+
+        @@keyframes glitch {
+            0% { opacity: 0; }
+            10% { opacity: 1; background: rgba(255, 0, 0, 0.2); transform: translateX(-5px); }
+            20% { opacity: 1; background: rgba(0, 255, 255, 0.2); transform: translateX(5px); }
+            30% { opacity: 0; transform: translateX(0); }
+            40% { opacity: 1; background: rgba(255, 0, 0, 0.3); transform: skewX(2deg); }
+            50% { opacity: 0; transform: skewX(0); }
+            60% { opacity: 1; background: rgba(0, 0, 255, 0.2); transform: translateY(-3px); }
+            70% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        /* Heartbeat pulse */
+        .heartbeat {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, rgba(139, 0, 0, 0.15) 0%, transparent 70%);
+            animation: heartbeat 1.2s ease-in-out infinite;
+        }
+
+        @@keyframes heartbeat {
+            0%, 100% { opacity: 0; transform: scale(1); }
+            15% { opacity: 1; transform: scale(1.02); }
+            30% { opacity: 0.3; transform: scale(1); }
+            45% { opacity: 0.8; transform: scale(1.01); }
+            60% { opacity: 0; }
+        }
+
+        /* Jump scare flash */
+        .jumpscare {
+            position: absolute;
+            inset: 0;
+            background: #fff;
+            opacity: 0;
+            display: none;
+        }
+
+        .jumpscare.active {
+            display: block;
+            animation: jumpscareFlash 0.15s ease;
+        }
+
+        @@keyframes jumpscareFlash {
+            0% { opacity: 0; }
+            50% { opacity: 0.9; }
+            100% { opacity: 0; }
+        }
+
+        /* Chromatic aberration on edges */
+        .chromatic {
+            position: absolute;
+            inset: 0;
+            background: 
+                linear-gradient(90deg, rgba(255,0,0,0.1) 0%, transparent 5%, transparent 95%, rgba(0,255,255,0.1) 100%);
+        }
+
+        /* Fog particles */
+        .fog {
+            position: absolute;
+            inset: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="rgba(50,50,50,0.03)"/></svg>');
+            background-size: 200px 200px;
+            animation: fogMove 20s linear infinite;
+            opacity: 0.5;
+        }
+
+        @@keyframes fogMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-200px, -200px); }
+        }
+
+        /* HUD - Horror style */
+        .hud {
+            position: fixed;
+            top: 4rem;
+            left: 1rem;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .hud-item {
+            background: rgba(20, 0, 0, 0.9);
+            backdrop-filter: blur(12px);
+            padding: 0.7rem 1.2rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(139, 0, 0, 0.5);
+            color: #ff6666;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            box-shadow: 0 4px 20px rgba(139, 0, 0, 0.3), inset 0 0 20px rgba(139, 0, 0, 0.1);
+        }
+
+        .hud-item i { color: #8b0000; font-size: 1.1rem; }
+
+        .hud-timer {
+            font-variant-numeric: tabular-nums;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #ff0000;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        /* Minimap - darker */
+        .minimap-container {
+            position: fixed;
+            top: 4rem;
+            right: 1rem;
+            z-index: 100;
+        }
+
+        #minimap {
+            border-radius: 0.5rem;
+            border: 2px solid rgba(200, 100, 100, 0.7);
+            box-shadow: 0 4px 24px rgba(139, 0, 0, 0.4);
+            background: rgba(20, 10, 10, 0.95);
+            width: 140px;
+            height: 140px;
+        }
+
+        /* Crosshair - creepy */
+        .crosshair {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 50;
+            pointer-events: none;
+        }
+
+        .crosshair svg {
+            width: 40px;
+            height: 40px;
+            filter: drop-shadow(0 0 8px rgba(139, 0, 0, 0.8));
+        }
+
+        /* Mobile controls */
+        .mobile-controls {
+            display: none;
+            position: fixed;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+        }
+
+        .joystick-base {
+            width: 120px;
+            height: 120px;
+            background: rgba(20, 0, 0, 0.8);
+            border: 2px solid rgba(139, 0, 0, 0.5);
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .joystick-knob {
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle at 30% 30%, #4a0000, #2a0000);
+            border: 2px solid #8b0000;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
+        }
+
+        /* Instructions */
+        .instructions {
+            position: fixed;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(20, 0, 0, 0.9);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(139, 0, 0, 0.4);
+            font-size: 0.8rem;
+            color: #aa4444;
+            z-index: 100;
+            text-align: center;
+        }
+
+        .instructions kbd {
+            background: rgba(139, 0, 0, 0.3);
+            padding: 0.15rem 0.4rem;
+            border-radius: 0.25rem;
+            margin: 0 0.1rem;
+            color: #ff4444;
+        }
+
+        /* START DIALOG - HORROR */
+        .start-dialog {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.98);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 500;
+        }
+
+        .start-dialog.hidden { display: none; }
+
+        .start-content {
+            background: linear-gradient(180deg, #1a0000 0%, #0a0000 100%);
+            border: 2px solid #4a0000;
+            border-radius: 1rem;
+            padding: 2.5rem;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 0 100px rgba(139, 0, 0, 0.4), inset 0 0 50px rgba(139, 0, 0, 0.1);
+            animation: dialogPulse 2s ease-in-out infinite;
+        }
+
+        @@keyframes dialogPulse {
+            0%, 100% { box-shadow: 0 0 100px rgba(139, 0, 0, 0.4), inset 0 0 50px rgba(139, 0, 0, 0.1); }
+            50% { box-shadow: 0 0 150px rgba(139, 0, 0, 0.6), inset 0 0 80px rgba(139, 0, 0, 0.2); }
+        }
+
+        .horror-icon {
+            font-size: 4rem;
+            color: #8b0000;
+            margin-bottom: 1rem;
+            animation: iconFlicker 3s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(139, 0, 0, 0.8);
+        }
+
+        @@keyframes iconFlicker {
+            0%, 100% { opacity: 1; }
+            92% { opacity: 1; }
+            93% { opacity: 0.3; }
+            94% { opacity: 1; }
+            96% { opacity: 0.5; }
+            97% { opacity: 1; }
+        }
+
+        .start-title {
+            font-family: 'Creepster', cursive;
+            font-size: 2.5rem;
+            color: #8b0000;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px rgba(139, 0, 0, 0.8), 0 0 40px rgba(139, 0, 0, 0.4);
+            letter-spacing: 0.1em;
+        }
+
+        .start-subtitle {
+            color: #664444;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .warning-text {
+            color: #ff4444;
+            font-size: 0.8rem;
+            margin-bottom: 1.5rem;
+            padding: 0.75rem;
+            background: rgba(139, 0, 0, 0.2);
+            border: 1px solid rgba(139, 0, 0, 0.4);
+            border-radius: 0.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-label {
+            display: block;
+            text-align: left;
+            color: #884444;
+            font-size: 0.85rem;
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .name-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #4a0000;
+            color: #ff6666;
+            border-radius: 0.5rem;
+            padding: 0.85rem 1rem;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .name-input:focus {
+            outline: none;
+            border-color: #8b0000;
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.4);
+        }
+
+        .name-input::placeholder { color: #442222; }
+
+        .btn-start {
+            width: 100%;
+            background: linear-gradient(180deg, #4a0000, #2a0000);
+            color: #ff4444;
+            border: 2px solid #8b0000;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            font-family: 'Creepster', cursive;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        .btn-start:hover {
+            background: linear-gradient(180deg, #6a0000, #4a0000);
+            box-shadow: 0 0 30px rgba(139, 0, 0, 0.6);
+            transform: scale(1.02);
+        }
+
+        /* Leaderboard in start */
+        .leaderboard-mini {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(139, 0, 0, 0.3);
+        }
+
+        .leaderboard-mini h4 {
+            color: #664444;
+            font-size: 0.85rem;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .leader-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.4rem 0;
+            font-size: 0.85rem;
+            color: #884444;
+            border-bottom: 1px solid rgba(139, 0, 0, 0.15);
+        }
+
+        .leader-row:last-child { border-bottom: none; }
+        .leader-time { color: #ff4444; font-weight: 600; }
+
+        /* WIN DIALOG */
+        .win-dialog {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 500;
+        }
+
+        .win-dialog.active { display: flex; }
+
+        .win-content {
+            background: linear-gradient(180deg, #001a00 0%, #000a00 100%);
+            border: 2px solid #004a00;
+            border-radius: 1rem;
+            padding: 2.5rem;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 0 100px rgba(0, 139, 0, 0.3);
+        }
+
+        .win-title {
+            font-family: 'Creepster', cursive;
+            font-size: 2rem;
+            color: #00aa00;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+
+        .win-time {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #00ff00;
+            margin: 1rem 0;
+            text-shadow: 0 0 30px rgba(0, 255, 0, 0.6);
+        }
+
+        .btn-play-again {
+            background: linear-gradient(180deg, #004a00, #002a00);
+            color: #00ff00;
+            border: 2px solid #008800;
+            padding: 0.85rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .btn-play-again:hover {
+            background: linear-gradient(180deg, #006a00, #004a00);
+            box-shadow: 0 0 25px rgba(0, 139, 0, 0.5);
+        }
+
+        /* Screen shake */
+        .shake {
+            animation: screenShake 0.5s ease;
+        }
+
+        @@keyframes screenShake {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-5px, -3px); }
+            20% { transform: translate(5px, 3px); }
+            30% { transform: translate(-4px, 2px); }
+            40% { transform: translate(4px, -2px); }
+            50% { transform: translate(-3px, 3px); }
+            60% { transform: translate(3px, -3px); }
+            70% { transform: translate(-2px, 2px); }
+            80% { transform: translate(2px, -1px); }
+            90% { transform: translate(-1px, 1px); }
+        }
+
+        /* Mobile */
+        @@media (hover: none) and (pointer: coarse) {
+            .mobile-controls { display: block; }
+            .instructions { display: none; }
+        }
+
+        @@media (max-width: 600px) {
+            .hud { top: 3.5rem; left: 0.5rem; }
+            .hud-item { padding: 0.5rem 0.8rem; font-size: 0.85rem; }
+            .minimap-container { top: 3.5rem; right: 0.5rem; }
+            #minimap { width: 80px !important; height: 80px !important; }
+        }
+
+        /* FormatTime helper - done in JavaScript */
+    </style>
+</head>
+<body>
+
+<!-- Horror overlay effects -->
+<div class="horror-overlay">
+    <div class="vignette"></div>
+    <div class="heartbeat"></div>
+    <div class="scanlines"></div>
+    <div class="chromatic"></div>
+    <div class="fog"></div>
+    <div class="blood-drips" id="bloodDrips"></div>
+    <div class="glitch-overlay" id="glitchOverlay"></div>
+    <div class="jumpscare" id="jumpscare"></div>
+</div>
+
+<!-- Navigation -->
+<div class="game-nav">
+    <a href="/PlayZone" class="game-nav__link"><i class="fas fa-th-large"></i> Games</a>
+    <a href="/PlayZone/Snake" class="game-nav__link"><i class="fas fa-gamepad"></i> Snake</a>
+    <a href="/PlayZone/Maze" class="game-nav__link game-nav__link--active"><i class="fas fa-ghost"></i> Horror Maze</a>
+</div>
+
+<!-- Game container -->
+<div id="game-container"></div>
+
+<!-- HUD -->
+<div class="hud" id="hud" style="display: none;">
+    <div class="hud-item">
+        <i class="fas fa-skull"></i>
+        <span class="hud-timer" id="timer">00:00</span>
+    </div>
+</div>
+
+<!-- Minimap -->
+<div class="minimap-container" id="minimapContainer" style="display: none;">
+    <canvas id="minimap" width="140" height="140"></canvas>
+</div>
+
+<!-- Crosshair -->
+<div class="crosshair" id="crosshair" style="display: none;">
+    <svg viewBox="0 0 40 40">
+        <circle cx="20" cy="20" r="18" fill="none" stroke="#8b0000" stroke-width="1" opacity="0.5"/>
+        <line x1="20" y1="5" x2="20" y2="15" stroke="#ff0000" stroke-width="2"/>
+        <line x1="20" y1="25" x2="20" y2="35" stroke="#ff0000" stroke-width="2"/>
+        <line x1="5" y1="20" x2="15" y2="20" stroke="#ff0000" stroke-width="2"/>
+        <line x1="25" y1="20" x2="35" y2="20" stroke="#ff0000" stroke-width="2"/>
+        <circle cx="20" cy="20" r="3" fill="#ff0000"/>
+    </svg>
+</div>
+
+<!-- Mobile joystick -->
+<div class="mobile-controls" id="mobileControls" style="display: none;">
+    <div class="joystick-base" id="joystickBase">
+        <div class="joystick-knob" id="joystickKnob"></div>
+    </div>
+</div>
+
+<!-- Instructions -->
+<div class="instructions" id="instructions" style="display: none;">
+    <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or <kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> to move • Mouse to look • Find the exit... if you can
+</div>
+
+<!-- START DIALOG -->
+<div class="start-dialog" id="startDialog">
+    <div class="start-content">
+        <div class="horror-icon"><i class="fas fa-skull-crossbones"></i></div>
+        <h1 class="start-title">ESCAPE</h1>
+        <p class="start-subtitle">Can you find your way out... alive?</p>
+        <div class="warning-text">
+            <i class="fas fa-exclamation-triangle"></i> 
+            Warning: Contains flashing lights and horror elements
+        </div>
+        <div class="input-group">
+            <label class="input-label">Enter your name, victim...</label>
+            <input type="text" id="playerNameInput" class="name-input" placeholder="Your last name..." maxlength="20" autocomplete="off" />
+        </div>
+        <button class="btn-start" id="startBtn">
+            <i class="fas fa-door-open"></i> Enter the Darkness
+        </button>
+        <div class="leaderboard-mini">
+            <h4><i class="fas fa-trophy"></i> Survivors</h4>
+            @foreach (var score in topScores.Take(5))
+            {
+                <div class="leader-row">
+                    <span>@score.PlayerName</span>
+                    <span class="leader-time">@(score.TimeSeconds / 60):@((score.TimeSeconds % 60).ToString("00"))</span>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- WIN DIALOG -->
+<div class="win-dialog" id="winDialog">
+    <div class="win-content">
+        <h2 class="win-title">YOU ESCAPED!</h2>
+        <p style="color: #66aa66;">You survived the nightmare...</p>
+        <div class="win-time" id="winTime">00:00</div>
+        <div class="leaderboard-mini" id="winLeaderboard" style="border-color: rgba(0, 139, 0, 0.3);">
+            <h4 style="color: #446644;"><i class="fas fa-trophy"></i> Survivors</h4>
+        </div>
+        <button class="btn-play-again" id="playAgainBtn">
+            <i class="fas fa-redo"></i> Face Your Fears Again
+        </button>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+    // === CONFIG ===
+    const MAZE_SIZE = 10;
+    const CELL_SIZE = 4;
+    const WALL_HEIGHT = 3.5;
+    const PLAYER_HEIGHT = 1.6;
+    const MOVE_SPEED = 0.12;
+    const LOOK_SPEED = 0.002;
+    const COLLISION_RADIUS = 0.05; // Tiny for maximum corridor navigation
+
+    // === STATE ===
+    let playerName = '';
+    let scene, camera, renderer;
+    let maze = [];
+    let startTime = 0;
+    let elapsedSeconds = 0;
+    let gameRunning = false;
+    let goalPosition = { x: 0, z: 0 };
+    let goalMesh, goalLight;
+    let playerLight, playerLight2, flickerLight;
+    let animationTime = 0;
+    let playerX = CELL_SIZE / 2;
+    let playerZ = CELL_SIZE / 2;
+    let yaw = 0;
+    let pitch = 0;
+    let keys = { w: false, a: false, s: false, d: false, up: false, down: false, left: false, right: false };
+    let joystickActive = false;
+    let joystickDx = 0;
+    let joystickDy = 0;
+    let horrorEffectsInterval;
+    let lastGlitchTime = 0;
+
+    // DOM elements
+    const startDialog = document.getElementById('startDialog');
+    const winDialog = document.getElementById('winDialog');
+    const playerNameInput = document.getElementById('playerNameInput');
+    const startBtn = document.getElementById('startBtn');
+    const playAgainBtn = document.getElementById('playAgainBtn');
+    const timerEl = document.getElementById('timer');
+    const hudEl = document.getElementById('hud');
+    const minimapContainer = document.getElementById('minimapContainer');
+    const crosshair = document.getElementById('crosshair');
+    const instructions = document.getElementById('instructions');
+    const mobileControls = document.getElementById('mobileControls');
+    const glitchOverlay = document.getElementById('glitchOverlay');
+    const jumpscare = document.getElementById('jumpscare');
+    const gameContainer = document.getElementById('game-container');
+
+    // Create blood drips
+    const bloodDrips = document.getElementById('bloodDrips');
+    for (let i = 0; i < 15; i++) {
+        const drip = document.createElement('div');
+        drip.className = 'blood-drip';
+        drip.style.left = Math.random() * 100 + '%';
+        drip.style.animationDelay = Math.random() * 8 + 's';
+        drip.style.height = (50 + Math.random() * 100) + 'px';
+        bloodDrips.appendChild(drip);
+    }
+
+    // === HORROR EFFECTS ===
+    function triggerGlitch() {
+        glitchOverlay.classList.add('active');
+        setTimeout(() => glitchOverlay.classList.remove('active'), 300);
+    }
+
+    function triggerJumpscare() {
+        jumpscare.classList.add('active');
+        gameContainer.classList.add('shake');
+        setTimeout(() => {
+            jumpscare.classList.remove('active');
+            gameContainer.classList.remove('shake');
+        }, 150);
+    }
+
+    function startHorrorEffects() {
+        horrorEffectsInterval = setInterval(() => {
+            const now = Date.now();
+            // Random glitch every 5-15 seconds
+            if (now - lastGlitchTime > 5000 + Math.random() * 10000) {
+                triggerGlitch();
+                lastGlitchTime = now;
+                // 20% chance of mini jumpscare with glitch
+                if (Math.random() < 0.2) {
+                    setTimeout(triggerJumpscare, 100);
+                }
+            }
+        }, 1000);
+    }
+
+    function stopHorrorEffects() {
+        if (horrorEffectsInterval) clearInterval(horrorEffectsInterval);
+    }
+
+    // === THREE.JS SETUP ===
+    function initThree() {
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x120808);
+        scene.fog = new THREE.FogExp2(0x0a0000, 0.025); // Red fog - lighter for visibility
+
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.y = PLAYER_HEIGHT;
+
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.8; // Brighter for better visibility
+        document.getElementById('game-container').appendChild(renderer.domElement);
+
+        // Ambient light - visible walls and corridors
+        const ambient = new THREE.AmbientLight(0x442222, 0.8);
+        scene.add(ambient);
+
+        // Player flashlight (flickering) - brighter and wider
+        playerLight = new THREE.SpotLight(0xffccaa, 4.5, CELL_SIZE * 12, Math.PI / 3, 0.2, 1.2);
+        playerLight.castShadow = true;
+        playerLight.shadow.mapSize.width = 512;
+        playerLight.shadow.mapSize.height = 512;
+        scene.add(playerLight);
+        scene.add(playerLight.target);
+
+        // Flicker light (random)
+        flickerLight = new THREE.PointLight(0xff2200, 0, CELL_SIZE * 2);
+        scene.add(flickerLight);
+
+        // Secondary eerie glow - brighter for visibility
+        playerLight2 = new THREE.PointLight(0x884444, 1.5, CELL_SIZE * 6);
+        playerLight2.position.set(0, PLAYER_HEIGHT - 0.5, 0);
+        scene.add(playerLight2);
+
+        window.addEventListener('resize', onResize);
+    }
+
+    function onResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    // === MAZE GENERATION ===
+    function generateMaze(size) {
+        const grid = [];
+        for (let y = 0; y < size; y++) {
+            grid[y] = [];
+            for (let x = 0; x < size; x++) {
+                grid[y][x] = { visited: false, walls: { top: true, right: true, bottom: true, left: true } };
+            }
+        }
+
+        const stack = [];
+        let current = { x: 0, y: 0 };
+        grid[0][0].visited = true;
+
+        function getUnvisitedNeighbors(x, y) {
+            const neighbors = [];
+            if (y > 0 && !grid[y - 1][x].visited) neighbors.push({ x, y: y - 1, dir: 'top' });
+            if (x < size - 1 && !grid[y][x + 1].visited) neighbors.push({ x: x + 1, y, dir: 'right' });
+            if (y < size - 1 && !grid[y + 1][x].visited) neighbors.push({ x, y: y + 1, dir: 'bottom' });
+            if (x > 0 && !grid[y][x - 1].visited) neighbors.push({ x: x - 1, y, dir: 'left' });
+            return neighbors;
+        }
+
+        while (true) {
+            const neighbors = getUnvisitedNeighbors(current.x, current.y);
+            if (neighbors.length > 0) {
+                const next = neighbors[Math.floor(Math.random() * neighbors.length)];
+                stack.push(current);
+
+                if (next.dir === 'top') {
+                    grid[current.y][current.x].walls.top = false;
+                    grid[next.y][next.x].walls.bottom = false;
+                } else if (next.dir === 'right') {
+                    grid[current.y][current.x].walls.right = false;
+                    grid[next.y][next.x].walls.left = false;
+                } else if (next.dir === 'bottom') {
+                    grid[current.y][current.x].walls.bottom = false;
+                    grid[next.y][next.x].walls.top = false;
+                } else if (next.dir === 'left') {
+                    grid[current.y][current.x].walls.left = false;
+                    grid[next.y][next.x].walls.right = false;
+                }
+
+                current = { x: next.x, y: next.y };
+                grid[current.y][current.x].visited = true;
+            } else if (stack.length > 0) {
+                current = stack.pop();
+            } else {
+                break;
+            }
+        }
+
+        return grid;
+    }
+
+    // === HORROR TEXTURES ===
+    function createWallTexture() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 256;
+        canvas.height = 256;
+        const ctx = canvas.getContext('2d');
+
+        // Dark bloody wall
+        ctx.fillStyle = '#0a0505';
+        ctx.fillRect(0, 0, 256, 256);
+
+        // Blood stains
+        ctx.fillStyle = 'rgba(80, 0, 0, 0.3)';
+        for (let i = 0; i < 8; i++) {
+            ctx.beginPath();
+            ctx.arc(Math.random() * 256, Math.random() * 256, 10 + Math.random() * 30, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Scratches
+        ctx.strokeStyle = 'rgba(40, 0, 0, 0.5)';
+        ctx.lineWidth = 2;
+        for (let i = 0; i < 5; i++) {
+            ctx.beginPath();
+            const x = Math.random() * 256;
+            ctx.moveTo(x, Math.random() * 100);
+            ctx.lineTo(x + (Math.random() - 0.5) * 50, 256);
+            ctx.stroke();
+        }
+
+        // Cracks
+        ctx.strokeStyle = 'rgba(20, 0, 0, 0.8)';
+        ctx.lineWidth = 1;
+        for (let i = 0; i < 10; i++) {
+            ctx.beginPath();
+            const startX = Math.random() * 256;
+            const startY = Math.random() * 256;
+            ctx.moveTo(startX, startY);
+            for (let j = 0; j < 5; j++) {
+                ctx.lineTo(startX + (Math.random() - 0.5) * 60, startY + j * 20 + Math.random() * 20);
+            }
+            ctx.stroke();
+        }
+
+        // Creepy symbols occasionally
+        if (Math.random() < 0.3) {
+            ctx.fillStyle = 'rgba(100, 0, 0, 0.4)';
+            ctx.font = '48px serif';
+            ctx.fillText(['⛧', '☠', '✞', '◯'][Math.floor(Math.random() * 4)], 80 + Math.random() * 80, 150);
+        }
+
+        const texture = new THREE.CanvasTexture(canvas);
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+        texture.repeat.set(1, 1);
+        return texture;
+    }
+
+    function createFloorTexture() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 256;
+        canvas.height = 256;
+        const ctx = canvas.getContext('2d');
+
+        // Dark dirty floor
+        ctx.fillStyle = '#050303';
+        ctx.fillRect(0, 0, 256, 256);
+
+        // Dirt and grime
+        for (let i = 0; i < 100; i++) {
+            ctx.fillStyle = `rgba(${20 + Math.random() * 20}, ${Math.random() * 10}, ${Math.random() * 10}, ${0.1 + Math.random() * 0.2})`;
+            ctx.beginPath();
+            ctx.arc(Math.random() * 256, Math.random() * 256, 2 + Math.random() * 8, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Blood puddles
+        ctx.fillStyle = 'rgba(60, 0, 0, 0.4)';
+        for (let i = 0; i < 3; i++) {
+            ctx.beginPath();
+            ctx.ellipse(Math.random() * 256, Math.random() * 256, 20 + Math.random() * 40, 10 + Math.random() * 20, Math.random() * Math.PI, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        const texture = new THREE.CanvasTexture(canvas);
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+        texture.repeat.set(MAZE_SIZE, MAZE_SIZE);
+        return texture;
+    }
+
+    // === BUILD MAZE ===
+    function buildMaze() {
+        // Clear scene except lights
+        const toRemove = [];
+        scene.traverse((obj) => {
+            if (obj.isMesh) toRemove.push(obj);
+        });
+        toRemove.forEach(obj => scene.remove(obj));
+
+        maze = generateMaze(MAZE_SIZE);
+
+        const wallTexture = createWallTexture();
+        const floorTexture = createFloorTexture();
+
+        // Floor
+        const floorGeo = new THREE.PlaneGeometry(MAZE_SIZE * CELL_SIZE + CELL_SIZE, MAZE_SIZE * CELL_SIZE + CELL_SIZE);
+        const floorMat = new THREE.MeshStandardMaterial({ 
+            map: floorTexture,
+            roughness: 0.85,
+            metalness: 0.1,
+            emissive: 0x110505,
+            emissiveIntensity: 0.1
+        });
+        const floor = new THREE.Mesh(floorGeo, floorMat);
+        floor.rotation.x = -Math.PI / 2;
+        floor.position.set((MAZE_SIZE - 1) * CELL_SIZE / 2, 0, (MAZE_SIZE - 1) * CELL_SIZE / 2);
+        floor.receiveShadow = true;
+        scene.add(floor);
+
+        // Ceiling (dark, oppressive)
+        const ceilingGeo = new THREE.PlaneGeometry(MAZE_SIZE * CELL_SIZE + CELL_SIZE, MAZE_SIZE * CELL_SIZE + CELL_SIZE);
+        const ceilingMat = new THREE.MeshStandardMaterial({ 
+            color: 0x020101,
+            roughness: 1,
+            metalness: 0
+        });
+        const ceiling = new THREE.Mesh(ceilingGeo, ceilingMat);
+        ceiling.rotation.x = Math.PI / 2;
+        ceiling.position.set((MAZE_SIZE - 1) * CELL_SIZE / 2, WALL_HEIGHT, (MAZE_SIZE - 1) * CELL_SIZE / 2);
+        scene.add(ceiling);
+
+        // Wall material - clearly visible corridors
+        const wallMat = new THREE.MeshStandardMaterial({ 
+            map: wallTexture,
+            roughness: 0.8,
+            metalness: 0.2,
+            emissive: 0x331111,
+            emissiveIntensity: 0.35
+        });
+
+        // Build walls
+        for (let y = 0; y < MAZE_SIZE; y++) {
+            for (let x = 0; x < MAZE_SIZE; x++) {
+                const cell = maze[y][x];
+                const cx = x * CELL_SIZE;
+                const cz = y * CELL_SIZE;
+
+                if (cell.walls.top) addWall(cx, cz - CELL_SIZE / 2, CELL_SIZE, 0, wallMat);
+                if (cell.walls.bottom) addWall(cx, cz + CELL_SIZE / 2, CELL_SIZE, 0, wallMat);
+                if (cell.walls.left) addWall(cx - CELL_SIZE / 2, cz, CELL_SIZE, Math.PI / 2, wallMat);
+                if (cell.walls.right) addWall(cx + CELL_SIZE / 2, cz, CELL_SIZE, Math.PI / 2, wallMat);
+            }
+        }
+
+        // Goal - eerie exit portal
+        goalPosition = { x: (MAZE_SIZE - 1) * CELL_SIZE, z: (MAZE_SIZE - 1) * CELL_SIZE };
+        
+        // Create creepy exit door
+        const doorGeo = new THREE.BoxGeometry(0.1, WALL_HEIGHT * 0.8, CELL_SIZE * 0.6);
+        const doorMat = new THREE.MeshStandardMaterial({ 
+            color: 0x001100,
+            emissive: 0x003300,
+            emissiveIntensity: 0.5,
+            transparent: true,
+            opacity: 0.8
+        });
+        goalMesh = new THREE.Mesh(doorGeo, doorMat);
+        goalMesh.position.set(goalPosition.x, WALL_HEIGHT * 0.4, goalPosition.z);
+        scene.add(goalMesh);
+
+        // Exit light (green, salvation)
+        goalLight = new THREE.PointLight(0x00ff00, 1, CELL_SIZE * 3);
+        goalLight.position.set(goalPosition.x, WALL_HEIGHT * 0.5, goalPosition.z);
+        scene.add(goalLight);
+
+        // Reset player position
+        playerX = CELL_SIZE / 2;
+        playerZ = CELL_SIZE / 2;
+        yaw = Math.PI / 4;
+        pitch = 0;
+    }
+
+    function addWall(x, z, length, rotation, material) {
+        const geo = new THREE.BoxGeometry(length, WALL_HEIGHT, 0.2);
+        const wall = new THREE.Mesh(geo, material);
+        wall.position.set(x, WALL_HEIGHT / 2, z);
+        wall.rotation.y = rotation;
+        wall.castShadow = true;
+        wall.receiveShadow = true;
+        scene.add(wall);
+    }
+
+    // === COLLISION ===
+    function canMoveTo(newX, newZ) {
+        // Check outer bounds
+        const margin = 0.1;
+        if (newX < margin || newX > MAZE_SIZE * CELL_SIZE - margin) return false;
+        if (newZ < margin || newZ > MAZE_SIZE * CELL_SIZE - margin) return false;
+
+        const cellX = Math.floor(newX / CELL_SIZE);
+        const cellZ = Math.floor(newZ / CELL_SIZE);
+        
+        if (cellX < 0 || cellX >= MAZE_SIZE || cellZ < 0 || cellZ >= MAZE_SIZE) return false;
+
+        const localX = newX - cellX * CELL_SIZE;
+        const localZ = newZ - cellZ * CELL_SIZE;
+        const cell = maze[cellZ][cellX];
+        
+        // Wall thickness in the 3D world
+        const w = 0.05;
+        
+        // Only block movement if hitting a wall that actually exists
+        // Left wall - blocks if player is at left edge AND wall exists
+        if (localX < w && cell.walls.left) return false;
+        // Right wall
+        if (localX > CELL_SIZE - w && cell.walls.right) return false;
+        // Top wall (north, -Z direction)
+        if (localZ < w && cell.walls.top) return false;
+        // Bottom wall (south, +Z direction)
+        if (localZ > CELL_SIZE - w && cell.walls.bottom) return false;
+
+        return true;
+    }
+
+    // === GAME LOOP ===
+    function gameLoop() {
+        if (!gameRunning) return;
+        requestAnimationFrame(gameLoop);
+
+        animationTime += 0.016;
+
+        // Movement - standard FPS controls
+        let dx = 0, dz = 0;
+
+        // Forward/backward (relative to camera facing direction)
+        if (keys.w || keys.up) dz -= 1;    // Forward
+        if (keys.s || keys.down) dz += 1;  // Backward
+        // Strafe left/right
+        if (keys.a || keys.left) dx -= 1;  // Strafe left
+        if (keys.d || keys.right) dx += 1; // Strafe right
+
+        if (joystickActive) {
+            dx += joystickDx;
+            dz -= joystickDy;
+        }
+
+        if (dx !== 0 || dz !== 0) {
+            const len = Math.sqrt(dx * dx + dz * dz);
+            dx /= len;
+            dz /= len;
+
+            // Rotate movement by yaw angle
+            const sin = Math.sin(yaw);
+            const cos = Math.cos(yaw);
+            const moveX = dx * cos + dz * sin;
+            const moveZ = -dx * sin + dz * cos;
+
+            const newX = playerX + moveX * MOVE_SPEED;
+            const newZ = playerZ + moveZ * MOVE_SPEED;
+
+            if (canMoveTo(newX, playerZ)) playerX = newX;
+            if (canMoveTo(playerX, newZ)) playerZ = newZ;
+        }
+
+        // Update camera
+        camera.position.x = playerX;
+        camera.position.z = playerZ;
+        camera.rotation.order = 'YXZ';
+        camera.rotation.y = yaw;
+        camera.rotation.x = pitch;
+
+        // Update flashlight with flicker
+        const flickerIntensity = 1.2 + Math.sin(animationTime * 15) * 0.15 + Math.random() * 0.1;
+        playerLight.intensity = flickerIntensity;
+        playerLight.position.copy(camera.position);
+        const dir = new THREE.Vector3(0, 0, -1);
+        dir.applyQuaternion(camera.quaternion);
+        playerLight.target.position.copy(camera.position).add(dir.multiplyScalar(5));
+
+        playerLight2.position.copy(camera.position);
+        playerLight2.position.y -= 0.5;
+
+        // Random flicker light
+        if (Math.random() < 0.02) {
+            flickerLight.position.set(
+                Math.random() * MAZE_SIZE * CELL_SIZE,
+                WALL_HEIGHT * 0.7,
+                Math.random() * MAZE_SIZE * CELL_SIZE
+            );
+            flickerLight.intensity = 0.5 + Math.random() * 0.5;
+            setTimeout(() => { flickerLight.intensity = 0; }, 100 + Math.random() * 200);
+        }
+
+        // Goal animation
+        if (goalMesh) {
+            goalMesh.rotation.y = animationTime * 0.5;
+            goalLight.intensity = 0.8 + Math.sin(animationTime * 3) * 0.4;
+        }
+
+        // Check win
+        const distToGoal = Math.sqrt(
+            Math.pow(playerX - goalPosition.x, 2) + 
+            Math.pow(playerZ - goalPosition.z, 2)
+        );
+        if (distToGoal < CELL_SIZE * 0.6) {
+            winGame();
+            return;
+        }
+
+        // Draw minimap
+        drawMinimap();
+
+        renderer.render(scene, camera);
+    }
+
+    // === MINIMAP ===
+    function drawMinimap() {
+        const canvas = document.getElementById('minimap');
+        const ctx = canvas.getContext('2d');
+        const size = canvas.width;
+        const cellSize = size / MAZE_SIZE;
+
+        // Background - dark
+        ctx.fillStyle = '#0a0505';
+        ctx.fillRect(0, 0, size, size);
+
+        // Draw floor (corridors) first - lighter color to show paths
+        ctx.fillStyle = '#1a0a0a';
+        for (let y = 0; y < MAZE_SIZE; y++) {
+            for (let x = 0; x < MAZE_SIZE; x++) {
+                const cx = x * cellSize + 1;
+                const cy = y * cellSize + 1;
+                ctx.fillRect(cx, cy, cellSize - 2, cellSize - 2);
+            }
+        }
+
+        // Draw walls - brighter and thicker
+        ctx.strokeStyle = '#882222';
+        ctx.lineWidth = 3;
+        ctx.lineCap = 'round';
+        for (let y = 0; y < MAZE_SIZE; y++) {
+            for (let x = 0; x < MAZE_SIZE; x++) {
+                const cell = maze[y][x];
+                const cx = x * cellSize;
+                const cy = y * cellSize;
+
+                if (cell.walls.top) { ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + cellSize, cy); ctx.stroke(); }
+                if (cell.walls.bottom) { ctx.beginPath(); ctx.moveTo(cx, cy + cellSize); ctx.lineTo(cx + cellSize, cy + cellSize); ctx.stroke(); }
+                if (cell.walls.left) { ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx, cy + cellSize); ctx.stroke(); }
+                if (cell.walls.right) { ctx.beginPath(); ctx.moveTo(cx + cellSize, cy); ctx.lineTo(cx + cellSize, cy + cellSize); ctx.stroke(); }
+            }
+        }
+
+        // Goal - bright green
+        const gx = (goalPosition.x / CELL_SIZE) * cellSize + cellSize / 2;
+        const gz = (goalPosition.z / CELL_SIZE) * cellSize + cellSize / 2;
+        ctx.fillStyle = '#00ff44';
+        ctx.shadowColor = '#00ff44';
+        ctx.shadowBlur = 12;
+        ctx.beginPath();
+        ctx.arc(gx, gz, 5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // Player position - red dot
+        const px = (playerX / CELL_SIZE) * cellSize + cellSize / 2;
+        const pz = (playerZ / CELL_SIZE) * cellSize + cellSize / 2;
+        ctx.fillStyle = '#ff3333';
+        ctx.shadowColor = '#ff3333';
+        ctx.shadowBlur = 10;
+        ctx.beginPath();
+        ctx.arc(px, pz, 5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // Direction arrow - shows where player is looking
+        const dirLen = 12;
+        const dirX = px + Math.sin(yaw) * dirLen;
+        const dirZ = pz - Math.cos(yaw) * dirLen;
+        
+        ctx.strokeStyle = '#ffaa00';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(px, pz);
+        ctx.lineTo(dirX, dirZ);
+        ctx.stroke();
+        
+        // Arrow head
+        ctx.fillStyle = '#ffaa00';
+        ctx.beginPath();
+        ctx.arc(dirX, dirZ, 3, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    // === TIMER ===
+    let timerInterval;
+    function startTimer() {
+        startTime = Date.now();
+        timerInterval = setInterval(() => {
+            elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+            timerEl.textContent = formatTime(elapsedSeconds);
+        }, 100);
+    }
+
+    function stopTimer() {
+        if (timerInterval) clearInterval(timerInterval);
+    }
+
+    function formatTime(seconds) {
+        const m = Math.floor(seconds / 60);
+        const s = seconds % 60;
+        return m.toString().padStart(2, '0') + ':' + s.toString().padStart(2, '0');
+    }
+
+    // === WIN ===
+    function winGame() {
+        gameRunning = false;
+        stopTimer();
+        stopHorrorEffects();
+        
+        document.exitPointerLock();
+        
+        hudEl.style.display = 'none';
+        minimapContainer.style.display = 'none';
+        crosshair.style.display = 'none';
+        instructions.style.display = 'none';
+        mobileControls.style.display = 'none';
+
+        document.getElementById('winTime').textContent = formatTime(elapsedSeconds);
+        winDialog.classList.add('active');
+
+        saveScore();
+    }
+
+    // === SAVE SCORE ===
+    async function saveScore() {
+        try {
+            const response = await fetch('/PlayZone/SaveMazeScore', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    playerName: playerName,
+                    timeSeconds: elapsedSeconds,
+                    mazeSize: MAZE_SIZE
+                })
+            });
+            const data = await response.json();
+            if (data.success && data.topScores) {
+                updateWinLeaderboard(data.topScores);
+            }
+        } catch (e) {
+            console.error('Save error:', e);
+        }
+    }
+
+    function updateWinLeaderboard(scores) {
+        const container = document.getElementById('winLeaderboard');
+        container.innerHTML = '<h4 style="color: #446644;"><i class="fas fa-trophy"></i> Survivors</h4>';
+        scores.forEach(s => {
+            const row = document.createElement('div');
+            row.className = 'leader-row';
+            row.style.color = '#448844';
+            const name = s.playerName || s.PlayerName || '';
+            const time = s.timeSeconds ?? s.TimeSeconds ?? 0;
+            row.innerHTML = `<span>${name}</span><span class="leader-time" style="color: #00ff00;">${formatTime(time)}</span>`;
+            container.appendChild(row);
+        });
+    }
+
+    // === CONTROLS ===
+    function resetAllKeys() {
+        keys.w = false;
+        keys.a = false;
+        keys.s = false;
+        keys.d = false;
+        keys.up = false;
+        keys.down = false;
+        keys.left = false;
+        keys.right = false;
+    }
+
+    function setupControls() {
+        // Prevent arrow keys from scrolling page
+        window.addEventListener('keydown', (e) => {
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        // Reset keys when window loses focus (prevents stuck keys)
+        window.addEventListener('blur', resetAllKeys);
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) resetAllKeys();
+        });
+        
+        // Reset keys when pointer lock is lost
+        document.addEventListener('pointerlockchange', () => {
+            if (!document.pointerLockElement) resetAllKeys();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!gameRunning) return;
+            
+            const key = e.key;
+            // WASD keys
+            if (key === 'w' || key === 'W') keys.w = true;
+            if (key === 's' || key === 'S') keys.s = true;
+            if (key === 'a' || key === 'A') keys.a = true;
+            if (key === 'd' || key === 'D') keys.d = true;
+            // Arrow keys (check original case)
+            if (key === 'ArrowUp') keys.up = true;
+            if (key === 'ArrowDown') keys.down = true;
+            if (key === 'ArrowLeft') keys.left = true;
+            if (key === 'ArrowRight') keys.right = true;
+        });
+
+        document.addEventListener('keyup', (e) => {
+            const key = e.key;
+            // WASD keys
+            if (key === 'w' || key === 'W') keys.w = false;
+            if (key === 's' || key === 'S') keys.s = false;
+            if (key === 'a' || key === 'A') keys.a = false;
+            if (key === 'd' || key === 'D') keys.d = false;
+            // Arrow keys
+            if (key === 'ArrowUp') keys.up = false;
+            if (key === 'ArrowDown') keys.down = false;
+            if (key === 'ArrowLeft') keys.left = false;
+            if (key === 'ArrowRight') keys.right = false;
+        });
+
+        // Mouse look
+        document.addEventListener('mousemove', (e) => {
+            if (document.pointerLockElement === renderer.domElement) {
+                yaw -= e.movementX * LOOK_SPEED;
+                pitch -= e.movementY * LOOK_SPEED;
+                pitch = Math.max(-Math.PI / 2 + 0.1, Math.min(Math.PI / 2 - 0.1, pitch));
+            }
+        });
+
+        renderer.domElement.addEventListener('click', () => {
+            if (gameRunning) renderer.domElement.requestPointerLock();
+        });
+
+        // Touch look
+        let touchStartX = 0, touchStartY = 0;
+        renderer.domElement.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+            }
+        });
+
+        renderer.domElement.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 1 && gameRunning) {
+                const dx = e.touches[0].clientX - touchStartX;
+                const dy = e.touches[0].clientY - touchStartY;
+                yaw -= dx * 0.005;
+                pitch -= dy * 0.005;
+                pitch = Math.max(-Math.PI / 2 + 0.1, Math.min(Math.PI / 2 - 0.1, pitch));
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+            }
+        });
+
+        // Joystick
+        const joystickBase = document.getElementById('joystickBase');
+        const joystickKnob = document.getElementById('joystickKnob');
+        let joystickTouchId = null;
+
+        joystickBase.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const touch = e.changedTouches[0];
+            joystickTouchId = touch.identifier;
+            joystickActive = true;
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!joystickActive) return;
+            for (let i = 0; i < e.changedTouches.length; i++) {
+                const touch = e.changedTouches[i];
+                if (touch.identifier === joystickTouchId) {
+                    const rect = joystickBase.getBoundingClientRect();
+                    const centerX = rect.left + rect.width / 2;
+                    const centerY = rect.top + rect.height / 2;
+                    let dx = touch.clientX - centerX;
+                    let dy = touch.clientY - centerY;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const maxDist = rect.width / 2 - 25;
+                    if (dist > maxDist) {
+                        dx = (dx / dist) * maxDist;
+                        dy = (dy / dist) * maxDist;
+                    }
+                    joystickKnob.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
+                    joystickDx = dx / maxDist;
+                    joystickDy = dy / maxDist;
+                }
+            }
+        });
+
+        document.addEventListener('touchend', (e) => {
+            for (let i = 0; i < e.changedTouches.length; i++) {
+                if (e.changedTouches[i].identifier === joystickTouchId) {
+                    joystickActive = false;
+                    joystickDx = 0;
+                    joystickDy = 0;
+                    joystickKnob.style.transform = 'translate(-50%, -50%)';
+                    joystickTouchId = null;
+                }
+            }
+        });
+    }
+
+    // === START GAME ===
+    function startGame() {
+        playerName = playerNameInput.value.trim();
+        if (!playerName) {
+            playerNameInput.style.borderColor = '#ff0000';
+            playerNameInput.style.boxShadow = '0 0 20px rgba(255, 0, 0, 0.5)';
+            return;
+        }
+
+        startDialog.classList.add('hidden');
+        hudEl.style.display = 'flex';
+        minimapContainer.style.display = 'block';
+        crosshair.style.display = 'block';
+        instructions.style.display = 'block';
+
+        if ('ontouchstart' in window) {
+            mobileControls.style.display = 'block';
+            instructions.style.display = 'none';
+        }
+
+        buildMaze();
+        gameRunning = true;
+        startTimer();
+        startHorrorEffects();
+        gameLoop();
+
+        // Request pointer lock on desktop
+        if (!('ontouchstart' in window)) {
+            renderer.domElement.requestPointerLock();
+        }
+    }
+
+    function playAgain() {
+        winDialog.classList.remove('active');
+        buildMaze();
+        gameRunning = true;
+        elapsedSeconds = 0;
+        timerEl.textContent = '00:00';
+        
+        hudEl.style.display = 'flex';
+        minimapContainer.style.display = 'block';
+        crosshair.style.display = 'block';
+        instructions.style.display = 'block';
+        
+        if ('ontouchstart' in window) {
+            mobileControls.style.display = 'block';
+            instructions.style.display = 'none';
+        }
+
+        startTimer();
+        startHorrorEffects();
+        gameLoop();
+
+        if (!('ontouchstart' in window)) {
+            renderer.domElement.requestPointerLock();
+        }
+    }
+
+    // === INIT ===
+    initThree();
+    setupControls();
+
+    startBtn.addEventListener('click', startGame);
+    playerNameInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') startGame(); });
+    playAgainBtn.addEventListener('click', playAgain);
+</script>
+
+</body>
+</html>

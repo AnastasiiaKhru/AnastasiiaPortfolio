@@ -5,6 +5,10 @@ using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Listen on 0.0.0.0 and PORT (Railway injects PORT at runtime).
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+
 // Add environment variables configuration
 builder.Configuration.AddEnvironmentVariables(prefix: "AnastasiiaPortfolio_");
 // User Secrets (optional): dotnet user-secrets set "EmailSettings:SmtpPassword" "your-gmail-app-password"

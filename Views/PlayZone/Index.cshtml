@@ -1,1245 +1,642 @@
-@using System.Linq
-@model List<PlayerScore>
 @{
-    ViewData["Title"] = "Snake Game";
-    var topScores = (ViewBag.TopScores as IEnumerable<PlayerScore>)?.ToList() ?? new List<PlayerScore>();
-    var displayScores = topScores.OrderByDescending(s => s.Score).Take(3).ToList();
+    ViewData["Title"] = "PlayZone";
+    Layout = null;
 }
-
-@section Styles {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PlayZone - Game Arcade | Anastasiia Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* PlayZone – modern, fun snake game. Navbar unchanged. */
-
-        @@keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20% { transform: translateX(-6px); }
-            40% { transform: translateX(6px); }
-            60% { transform: translateX(-4px); }
-            80% { transform: translateX(4px); }
-        }
-        @@keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.08); opacity: 0.9; }
-        }
-        @@keyframes pop {
-            0% { transform: scale(0.5); opacity: 0; }
-            50% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        body {
-            background: linear-gradient(165deg, #0c1222 0%, #1a2744 35%, #0d1525 100%) !important;
-            color: #f1f5f9;
-            font-family: var(--font-family-base, 'Plus Jakarta Sans'), system-ui, sans-serif !important;
-        }
-
-        .playzone-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 1.5rem;
-            background: rgba(12, 18, 34, 0.75);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 1.5rem;
-            box-shadow: 0 12px 48px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            border: 1px solid rgba(255,255,255,0.06);
-        }
-
-        .playzone-main {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            gap: 1rem;
-            width: 100%;
-        }
-
-        .game-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.25rem;
-            flex: 1;
-            padding: 1rem 0;
-            width: 100%;
-            overflow-y: auto;
-        }
-
-        .game-container {
-            width: 100%;
-            max-width: 560px;
-            margin: 0 auto;
-            background: linear-gradient(180deg, rgba(20, 30, 48, 0.6) 0%, rgba(12, 18, 30, 0.7) 100%);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 1.25rem;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.04);
-        }
-
-        .game-toolbar {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-            width: 100%;
-        }
-
-        .game-help {
-            font-size: 0.85rem;
-            color: #94a3b8;
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .game-help kbd {
-            background: rgba(255,255,255,0.1);
-            padding: 0.15rem 0.4rem;
-            border-radius: 0.25rem;
-            font-size: 0.8em;
-        }
-        .game-help--mobile { display: none; }
-        .game-help--desktop { display: inline; }
-
-        .btn-pause {
-            background: rgba(255,255,255,0.1);
+        html, body {
+            min-height: 100vh;
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+            background: #050508;
             color: #f1f5f9;
-            border: 1px solid rgba(255,255,255,0.2);
-            width: 40px;
-            height: 40px;
-            border-radius: 0.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.2s;
-        }
-        .btn-pause:hover {
-            background: rgba(255,255,255,0.2);
-            transform: scale(1.05);
+            overflow-x: hidden;
         }
 
-        .canvas-wrap {
-            position: relative;
-            width: 100%;
-            max-width: 520px;
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2), 0 12px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04);
-        }
-
-        #gameCanvas {
-            width: 100%;
-            max-width: 520px;
-            max-height: 520px;
-            aspect-ratio: 1;
-            display: block;
-            background: #0a0f1a;
-            border-radius: 1rem;
-        }
-
-        .pause-overlay {
-            position: absolute;
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
             inset: 0;
-            background: rgba(10, 15, 28, 0.9);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-        }
-        .pause-overlay__text {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #f1f5f9;
-            margin: 0;
-        }
-        .btn-resume {
-            background: #22c55e;
-            color: #fff;
-            border: none;
-            padding: 0.6rem 1.25rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.2s;
-        }
-        .btn-resume:hover {
-            background: #16a34a;
-            transform: scale(1.05);
-        }
-
-        .d-pad {
-            display: none;
-            width: 160px;
-            height: 160px;
-            position: relative;
-            margin-top: 1rem;
-            grid-template-columns: 1fr 1fr 1fr;
-            grid-template-rows: 1fr 1fr 1fr;
-            gap: 4px;
-        }
-        .d-pad--mobile { display: none; }
-        .d-pad-up { grid-column: 2; grid-row: 1; }
-        .d-pad-left { grid-column: 1; grid-row: 2; }
-        .d-pad-right { grid-column: 3; grid-row: 2; }
-        .d-pad-down { grid-column: 2; grid-row: 3; }
-        .d-pad-btn {
-            width: 100%;
-            min-height: 52px;
-            background: rgba(255,255,255,0.12);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 0.5rem;
-            color: #f1f5f9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.15s;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .d-pad-btn:active {
-            background: rgba(34, 197, 94, 0.4);
-            transform: scale(0.95);
-        }
-
-        .score-section {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            gap: 0.75rem;
-            padding: 0.75rem 0;
-            flex-wrap: wrap;
-        }
-
-        .score-card {
-            text-align: center;
-            padding: 0.85rem 1.1rem;
-            background: linear-gradient(180deg, rgba(30, 45, 70, 0.7) 0%, rgba(18, 28, 45, 0.8) 100%);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 0.75rem;
-            min-width: 92px;
-            transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
-        }
-        .score-card:hover {
-            border-color: rgba(34, 197, 94, 0.35);
-            box-shadow: 0 0 20px rgba(34, 197, 94, 0.12);
-        }
-        .score-card--level { border-color: rgba(59, 130, 246, 0.25); }
-        .score-card--combo {
-            border-color: rgba(251, 146, 60, 0.4);
-            animation: pulse 0.8s ease-in-out infinite;
-        }
-
-        .score-label {
-            display: block;
-            color: #94a3b8;
-            font-size: 0.7rem;
-            font-weight: 600;
-            margin-bottom: 0.2rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .score-value {
-            color: #f1f5f9;
-            font-size: 1.35rem;
-            font-weight: 700;
-        }
-
-        .playzone-sidebar {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            padding: 0 0 1rem;
-        }
-
-        .leaderboard {
-            padding: 1.5rem 0;
-            margin: 0 auto;
-            width: 100%;
-            max-width: 560px;
-        }
-
-        .leaderboard h2 {
-            color: #f1f5f9;
-            font-size: 1.125rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-
-        .leaderboard-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.75rem;
-            margin: 0 auto;
-        }
-
-        .player-card {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 0.5rem;
-            padding: 1rem;
-            text-align: center;
-            position: relative;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-        .player-card:hover {
-            border-color: rgba(34, 197, 94, 0.3);
-            box-shadow: 0 0 12px rgba(34, 197, 94, 0.1);
-        }
-
-        .player-rank {
-            position: absolute;
-            top: 0.5rem;
-            left: 0.5rem;
-            width: 24px;
-            height: 24px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.75rem;
-            background: rgba(255,255,255,0.15);
-            color: #f1f5f9;
-        }
-        .leaderboard-grid .player-card:nth-child(1) .player-rank { background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; }
-        .leaderboard-grid .player-card:nth-child(2) .player-rank { background: linear-gradient(135deg, #64748b, #475569); color: #fff; }
-        .leaderboard-grid .player-card:nth-child(3) .player-rank { background: linear-gradient(135deg, #b45309, #92400e); color: #fff; }
-
-        .player-name { color: #e2e8f0; font-size: 0.9rem; font-weight: 600; margin: 0.5rem 0 0.15rem; }
-        .player-score { color: #22c55e; font-size: 1.25rem; font-weight: 700; }
-
-        .game-over {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(180deg, #1e2d47 0%, #0f172a 100%);
-            padding: 2rem;
-            border-radius: 1.25rem;
-            text-align: center;
-            z-index: 1000;
-            box-shadow: 0 32px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06), 0 0 60px rgba(34, 197, 94, 0.06);
-            min-width: 320px;
-            border: 1px solid rgba(255,255,255,0.08);
-            animation: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .game-over h2 { color: #f1f5f9; font-size: 1.35rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .game-over__score { color: #94a3b8; font-size: 1rem; margin-bottom: 0.5rem; }
-        .game-over__high {
-            color: #22c55e;
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .btn-group { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
-
-        .btn-restart {
-            background: #22c55e !important;
-            color: #fff !important;
-            border: none !important;
-            padding: 0.6rem 1rem;
-            border-radius: 0.5rem;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.2s;
-        }
-        .btn-restart:hover { background: #16a34a !important; transform: translateY(-1px); }
-
-        .btn-new {
-            background: transparent !important;
-            color: #f1f5f9 !important;
-            border: 1px solid rgba(255,255,255,0.3) !important;
-            padding: 0.6rem 1rem;
-            border-radius: 0.5rem;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s, border-color 0.2s, transform 0.2s;
-        }
-        .btn-new:hover {
-            background: rgba(255,255,255,0.1) !important;
-            border-color: rgba(255,255,255,0.5) !important;
-            transform: translateY(-1px);
-        }
-
-        @@keyframes nameDialogIn {
-            0% { opacity: 0; transform: scale(0.9) translateY(10px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        @@keyframes nameDialogBgIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-        @@keyframes snakeDots {
-            0%, 100% { transform: scale(1); opacity: 0.7; }
-            50% { transform: scale(1.15); opacity: 1; }
-        }
-        @@keyframes btnPulse {
-            0%, 100% { box-shadow: 0 4px 20px rgba(34, 197, 94, 0.35); }
-            50% { box-shadow: 0 6px 28px rgba(34, 197, 94, 0.5); }
-        }
-        @@keyframes barShimmer {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
-        }
-
-        .name-dialog {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            width: 100%;
-            min-height: 100vh;
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            animation: nameDialogBgIn 0.25s ease;
-        }
-
-        .name-dialog-content {
-            background: linear-gradient(165deg, #1e293b 0%, #0f172a 55%);
-            border-radius: 1.25rem;
-            box-shadow: 0 24px 56px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.08), 0 0 40px rgba(34, 197, 94, 0.08);
-            padding: 2rem;
-            max-width: 400px;
-            width: 90%;
-            border: 1px solid rgba(255,255,255,0.1);
-            animation: nameDialogIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
+            z-index: 0;
             overflow: hidden;
         }
-        .name-dialog-content::before {
+
+        .bg-animation::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #22c55e, #4ade80, #16a34a, #22c55e);
-            background-size: 200% 100%;
-            animation: barShimmer 3s linear infinite;
-            border-radius: 1.25rem 1.25rem 0 0;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
+            animation: bgRotate 30s linear infinite;
         }
 
-        .name-dialog__snake-dots {
+        @@keyframes bgRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Grid pattern overlay */
+        .grid-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            background-image: 
+                linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        /* Main container */
+        .playzone-select {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
-            gap: 0.35rem;
-            margin-bottom: 1.25rem;
+            flex-direction: column;
         }
-        .name-dialog__snake-dots span {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-            box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
-        }
-        .name-dialog__snake-dots span:nth-child(1) { animation: snakeDots 1.2s ease-in-out infinite; }
-        .name-dialog__snake-dots span:nth-child(2) { animation: snakeDots 1.2s ease-in-out 0.15s infinite; }
-        .name-dialog__snake-dots span:nth-child(3) { animation: snakeDots 1.2s ease-in-out 0.3s infinite; }
-        .name-dialog__snake-dots span:nth-child(4) { animation: snakeDots 1.2s ease-in-out 0.45s infinite; }
-        .name-dialog__snake-dots span:nth-child(5) { animation: snakeDots 1.2s ease-in-out 0.6s infinite; }
 
-        .name-dialog__title {
-            color: #f1f5f9;
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin: 0 0 0.25rem;
-            letter-spacing: -0.02em;
+        /* Header */
+        .playzone-header {
             text-align: center;
+            padding: 3rem 1.5rem 2rem;
         }
-        .name-dialog__sub {
+
+        .playzone-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            background: linear-gradient(135deg, #00d4ff 0%, #a855f7 50%, #00ff88 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 4s ease infinite;
+            text-shadow: 0 0 60px rgba(0, 212, 255, 0.3);
+            margin-bottom: 0.5rem;
+        }
+
+        @@keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .playzone-subtitle {
+            font-size: 1.1rem;
+            color: #64748b;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* Games container */
+        .games-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            padding: 1rem 1.5rem 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        @@media (min-width: 900px) {
+            .games-container {
+                flex-direction: row;
+                padding: 2rem;
+                gap: 2rem;
+            }
+        }
+
+        /* Game card */
+        .game-card {
+            flex: 1;
+            position: relative;
+            background: linear-gradient(165deg, rgba(15, 20, 35, 0.9), rgba(5, 8, 18, 0.95));
+            border-radius: 1.5rem;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .game-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(0, 212, 255, 0.3);
+            box-shadow: 
+                0 30px 80px rgba(0, 0, 0, 0.5),
+                0 0 60px rgba(0, 212, 255, 0.15);
+        }
+
+        .game-card--snake:hover {
+            border-color: rgba(0, 255, 136, 0.4);
+            box-shadow: 
+                0 30px 80px rgba(0, 0, 0, 0.5),
+                0 0 60px rgba(0, 255, 136, 0.2);
+        }
+
+        .game-card--maze:hover {
+            border-color: rgba(168, 85, 247, 0.4);
+            box-shadow: 
+                0 30px 80px rgba(0, 0, 0, 0.5),
+                0 0 60px rgba(168, 85, 247, 0.2);
+        }
+
+        /* Card preview area */
+        .game-preview {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @@media (min-width: 900px) {
+            .game-preview {
+                height: 280px;
+            }
+        }
+
+        /* Snake preview */
+        .snake-preview {
+            background: linear-gradient(180deg, #0a1a0a 0%, #051505 100%);
+        }
+
+        .snake-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(0, 255, 136, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.08) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .snake-body {
+            display: flex;
+            gap: 4px;
+            transform: rotate(-15deg);
+        }
+
+        .snake-segment {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            border-radius: 6px;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+            animation: snakeMove 2s ease-in-out infinite;
+        }
+
+        .snake-segment:nth-child(1) { animation-delay: 0s; }
+        .snake-segment:nth-child(2) { animation-delay: 0.1s; }
+        .snake-segment:nth-child(3) { animation-delay: 0.2s; }
+        .snake-segment:nth-child(4) { animation-delay: 0.3s; }
+        .snake-segment:nth-child(5) { animation-delay: 0.4s; }
+        .snake-segment:nth-child(6) { animation-delay: 0.5s; }
+
+        .snake-segment.head {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .snake-segment.head::before,
+        .snake-segment.head::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            top: 6px;
+        }
+
+        .snake-segment.head::before { left: 5px; }
+        .snake-segment.head::after { right: 5px; }
+
+        .snake-food {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: radial-gradient(circle at 30% 30%, #ff6b6b, #cc0000);
+            border-radius: 50%;
+            right: 25%;
+            top: 30%;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.5);
+            animation: foodPulse 1.5s ease-in-out infinite;
+        }
+
+        @@keyframes snakeMove {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        @@keyframes foodPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.15); opacity: 0.8; }
+        }
+
+        /* Maze preview */
+        .maze-preview {
+            background: linear-gradient(180deg, #0a0a1a 0%, #05050f 100%);
+            perspective: 800px;
+        }
+
+        .maze-3d {
+            width: 200px;
+            height: 200px;
+            transform: rotateX(60deg) rotateZ(45deg);
+            position: relative;
+        }
+
+        .maze-wall {
+            position: absolute;
+            background: linear-gradient(180deg, rgba(168, 85, 247, 0.3), rgba(0, 212, 255, 0.2));
+            border: 1px solid rgba(168, 85, 247, 0.5);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+        }
+
+        .maze-wall.h { width: 40px; height: 6px; }
+        .maze-wall.v { width: 6px; height: 40px; }
+
+        .maze-wall:nth-child(1) { top: 0; left: 0; }
+        .maze-wall:nth-child(2) { top: 0; left: 50px; }
+        .maze-wall:nth-child(3) { top: 0; left: 100px; }
+        .maze-wall:nth-child(4) { top: 40px; left: 30px; }
+        .maze-wall:nth-child(5) { top: 40px; left: 80px; }
+        .maze-wall:nth-child(6) { top: 80px; left: 0; }
+        .maze-wall:nth-child(7) { top: 80px; left: 60px; }
+        .maze-wall:nth-child(8) { top: 120px; left: 20px; }
+        .maze-wall:nth-child(9) { top: 120px; left: 90px; }
+
+        .maze-player {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: #00d4ff;
+            border-radius: 50%;
+            bottom: 20px;
+            left: 20px;
+            box-shadow: 0 0 20px #00d4ff;
+            animation: mazeGlow 2s ease-in-out infinite;
+        }
+
+        .maze-goal {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: #00ff88;
+            border-radius: 50%;
+            top: 15px;
+            right: 15px;
+            box-shadow: 0 0 25px #00ff88;
+            animation: goalPulse 1.5s ease-in-out infinite;
+        }
+
+        @@keyframes mazeGlow {
+            0%, 100% { box-shadow: 0 0 20px #00d4ff; }
+            50% { box-shadow: 0 0 35px #00d4ff, 0 0 50px rgba(0, 212, 255, 0.3); }
+        }
+
+        @@keyframes goalPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 25px #00ff88; }
+            50% { transform: scale(1.2); box-shadow: 0 0 40px #00ff88; }
+        }
+
+        /* Card content */
+        .game-content {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .game-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.8rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+            width: fit-content;
+        }
+
+        .game-card--snake .game-badge {
+            color: #00ff88;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .game-card--maze .game-badge {
+            color: #a855f7;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        .game-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .game-card--snake .game-title {
+            color: #00ff88;
+        }
+
+        .game-card--maze .game-title {
+            color: #a855f7;
+        }
+
+        .game-description {
             color: #94a3b8;
             font-size: 0.95rem;
-            margin: 0 0 1.5rem;
-            text-align: center;
-            line-height: 1.4;
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
         }
 
-        .dialog-header { margin-bottom: 0; }
-        .dialog-body { padding: 0; }
-        .name-dialog__label {
-            display: block;
-            color: #cbd5e1;
-            font-size: 0.85rem;
+        /* Rules */
+        .game-rules {
+            margin-bottom: 1.5rem;
+        }
+
+        .game-rules h4 {
+            font-size: 0.8rem;
             font-weight: 600;
-            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #64748b;
+            margin-bottom: 0.75rem;
         }
-        .name-input-container { margin-bottom: 1.25rem; }
 
-        #playerNameInput {
-            width: 100%;
-            background: rgba(15, 23, 42, 0.7);
-            border: 2px solid rgba(255,255,255,0.15);
-            color: #f1f5f9;
-            border-radius: 0.6rem;
-            padding: 0.75rem 1rem;
-            font-size: 1rem;
-            box-sizing: border-box;
-            transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+        .game-rules ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
-        #playerNameInput:hover {
-            border-color: rgba(255,255,255,0.25);
-        }
-        #playerNameInput:focus {
-            outline: none;
-            border-color: #22c55e;
-            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2);
-        }
-        #playerNameInput::placeholder { color: #64748b; }
 
-        .start-game-btn {
-            width: 100%;
-            background: linear-gradient(135deg, #22c55e, #16a34a) !important;
-            color: #fff !important;
-            border: none !important;
-            padding: 0.75rem 1.25rem;
-            border-radius: 0.6rem;
+        .game-rules li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+
+        .game-rules li i {
+            margin-top: 0.2rem;
+            font-size: 0.7rem;
+        }
+
+        .game-card--snake .game-rules li i { color: #00ff88; }
+        .game-card--maze .game-rules li i { color: #a855f7; }
+
+        /* Controls */
+        .game-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .control-tag {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.35rem 0.7rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 0.4rem;
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        .control-tag kbd {
+            background: rgba(0, 212, 255, 0.15);
+            padding: 0.15rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: 'Consolas', monospace;
+            font-size: 0.75rem;
+            color: #00d4ff;
+        }
+
+        /* Play button */
+        .play-btn {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-family: 'Orbitron', sans-serif;
             font-size: 1rem;
             font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: none;
             cursor: pointer;
-            margin-top: 0;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 20px rgba(34, 197, 94, 0.35);
+            transition: all 0.3s;
         }
-        .start-game-btn:hover {
+
+        .game-card--snake .play-btn {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #050508;
+            box-shadow: 0 4px 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .game-card--snake:hover .play-btn {
+            box-shadow: 0 8px 30px rgba(0, 255, 136, 0.5);
             transform: translateY(-2px);
-            box-shadow: 0 6px 28px rgba(34, 197, 94, 0.5);
-        }
-        .start-game-btn:active {
-            transform: translateY(0);
         }
 
-        .game-icon { width: 40px; height: 40px; margin-bottom: 0.5rem; }
-        .error-shake { animation: shake 0.4s ease both; }
-        .btn-text, .btn-icon { display: inline; }
-        body.game-active { overflow: hidden; position: fixed; width: 100%; height: 100%; }
-
-        /* Desktop: game left, score + top players right; smaller canvas */
-        @@media (min-width: 769px) {
-            .playzone-main {
-                flex-direction: row;
-                align-items: flex-start;
-                gap: 1.5rem;
-            }
-            .game-section {
-                flex: 0 0 auto;
-                padding: 0;
-                width: auto;
-            }
-            .game-container {
-                max-width: 440px;
-                padding: 1.25rem;
-            }
-            .canvas-wrap {
-                max-width: 400px;
-            }
-            #gameCanvas {
-                max-width: 400px;
-                max-height: 400px;
-            }
-            .playzone-sidebar {
-                flex: 1;
-                min-width: 240px;
-                max-width: 280px;
-                padding: 0.5rem 0 1rem;
-                position: sticky;
-                top: 1rem;
-            }
-            .score-section {
-                flex-direction: column;
-                padding: 0.5rem 0;
-                gap: 0.5rem;
-                width: 100%;
-            }
-            .score-card {
-                width: 100%;
-                min-width: 0;
-                padding: 0.7rem 1rem;
-            }
-            .leaderboard {
-                padding: 1rem 0;
-                margin: 0;
-                max-width: none;
-            }
-            .leaderboard h2 {
-                text-align: left;
-                font-size: 1rem;
-                margin-bottom: 0.75rem;
-            }
-            .leaderboard-grid {
-                grid-template-columns: 1fr;
-                gap: 0.5rem;
-            }
+        .game-card--maze .play-btn {
+            background: linear-gradient(135deg, #a855f7, #7c3aed);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
         }
 
-        @@media (max-width: 768px) {
-            .playzone-container { padding: 1rem; }
-            .game-section { gap: 0.75rem; padding: 0.5rem 0; }
-            .game-container { padding: 1rem; width: 95%; max-width: 95%; }
-            .game-help { font-size: 0.8rem; }
-            .canvas-wrap { max-width: 100%; }
-            #gameCanvas { max-width: 100%; touch-action: none; }
-            .d-pad-btn { min-height: 44px; }
-            .score-section { gap: 0.5rem; }
-            .score-card { padding: 0.6rem 0.75rem; min-width: 80px; }
-            .score-label { font-size: 0.65rem; }
-            .score-value { font-size: 1.15rem; }
-            .leaderboard { padding: 1rem 0; }
-            .leaderboard h2 { font-size: 1rem; }
-            .leaderboard-grid { grid-template-columns: 1fr; max-width: 260px; }
-            .player-card { padding: 0.875rem; }
-            .player-name { font-size: 0.9rem; }
-            .player-score { font-size: 1.15rem; }
-            .game-over { width: 90%; padding: 1.5rem; }
-            .game-over h2 { font-size: 1.2rem; }
-            .btn-group { flex-direction: column; }
-            .btn-restart, .btn-new { width: 100%; min-height: 48px; }
-            .name-dialog-content { padding: 1.5rem; }
-            .name-dialog__title { font-size: 1.3rem; }
-            .name-dialog__sub { font-size: 0.9rem; margin-bottom: 1.25rem; }
+        .game-card--maze:hover .play-btn {
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.5);
+            transform: translateY(-2px);
         }
 
-        @@media (max-width: 768px) and (orientation: landscape) {
-            .playzone-main { flex-direction: row; align-items: flex-start; flex-wrap: wrap; }
-            .game-section { flex: 0 0 auto; }
-            .game-container { flex: 0 0 auto; width: 70vmin; max-width: 70vmin; }
-            .d-pad--mobile { display: none; }
-            .playzone-sidebar { flex: 1; min-width: 200px; max-height: 80vh; overflow-y: auto; }
+        /* Back link */
+        .back-link {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            background: rgba(5, 5, 8, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.2s;
         }
 
-        @@media (max-width: 360px) {
-            .playzone-container { padding: 0.75rem; }
-            .score-card { min-width: 72px; padding: 0.5rem 0.6rem; }
-            .score-label { font-size: 0.6rem; }
-            .score-value { font-size: 1rem; }
-            .leaderboard h2 { font-size: 0.95rem; }
-            .player-name { font-size: 0.85rem; }
-            .player-score { font-size: 1.1rem; }
+        .back-link:hover {
+            color: #f1f5f9;
+            border-color: rgba(0, 212, 255, 0.3);
         }
 
-        @@media (hover: none) and (pointer: coarse) {
-            #gameCanvas { touch-action: none; }
-            .btn-restart, .btn-new, .start-game-btn { min-height: 48px; }
-            #playerNameInput { min-height: 48px; font-size: 16px; }
-            .d-pad.d-pad--mobile { display: grid !important; width: 140px; height: 140px; }
-            .game-help--mobile { display: inline; }
-            .game-help--desktop { display: none; }
+        /* Footer */
+        .playzone-footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: #475569;
+            font-size: 0.85rem;
         }
 
-        @@media (prefers-reduced-motion: reduce) {
-            .name-dialog-content,
-            .name-dialog__snake-dots span,
-            .name-dialog-content::before { animation: none; }
+        .playzone-footer a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+
+        .playzone-footer a:hover {
+            text-decoration: underline;
         }
     </style>
-}
+</head>
+<body>
 
-<!-- Welcome dialog: outside playzone-container so fixed positioning is viewport-relative -->
-<div class="name-dialog" id="nameInputDialog">
-    <div class="name-dialog-content">
-        <div class="name-dialog__snake-dots" aria-hidden="true">
-            <span></span><span></span><span></span><span></span><span></span>
-        </div>
-        <div class="dialog-header">
-            <h2 class="name-dialog__title">Welcome to Snake!</h2>
-            <p class="name-dialog__sub">Enter your name to start the adventure 🎮</p>
-        </div>
-        <div class="dialog-body">
-            <div class="name-input-container">
-                <label class="name-dialog__label" for="playerNameInput">Your name</label>
-                <input type="text" id="playerNameInput" placeholder="e.g. Snake Master" maxlength="20" autocomplete="off" autofocus />
+<div class="bg-animation"></div>
+<div class="grid-overlay"></div>
+
+<a href="/" class="back-link">
+    <i class="fas fa-arrow-left"></i>
+    Back to Portfolio
+</a>
+
+<div class="playzone-select">
+    <header class="playzone-header">
+        <h1 class="playzone-logo">PlayZone</h1>
+        <p class="playzone-subtitle">Game Arcade</p>
+    </header>
+
+    <main class="games-container">
+        <!-- Snake Game Card -->
+        <a href="/PlayZone/Snake" class="game-card game-card--snake">
+            <div class="game-preview snake-preview">
+                <div class="snake-grid"></div>
+                <div class="snake-body">
+                    <div class="snake-segment head"></div>
+                    <div class="snake-segment"></div>
+                    <div class="snake-segment"></div>
+                    <div class="snake-segment"></div>
+                    <div class="snake-segment"></div>
+                    <div class="snake-segment"></div>
+                </div>
+                <div class="snake-food"></div>
             </div>
-            <button type="button" class="start-game-btn" id="startGameButton">
-                <span class="btn-text">Start adventure</span>
-                <span class="btn-icon">→</span>
-            </button>
-        </div>
-    </div>
+            <div class="game-content">
+                <span class="game-badge"><i class="fas fa-gamepad"></i> Classic</span>
+                <h2 class="game-title">Snake</h2>
+                <p class="game-description">
+                    The classic arcade game reimagined with modern graphics. Guide your snake, eat food to grow longer, and avoid hitting walls or yourself. How long can you survive?
+                </p>
+                <div class="game-rules">
+                    <h4>How to Play</h4>
+                    <ul>
+                        <li><i class="fas fa-circle"></i> Control the snake to eat the red food</li>
+                        <li><i class="fas fa-circle"></i> Each food makes the snake grow longer</li>
+                        <li><i class="fas fa-circle"></i> Don't hit the walls or your own tail</li>
+                        <li><i class="fas fa-circle"></i> Build combos for bonus points</li>
+                    </ul>
+                </div>
+                <div class="game-controls">
+                    <span class="control-tag"><kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Move</span>
+                    <span class="control-tag"><kbd>P</kbd> Pause</span>
+                    <span class="control-tag"><i class="fas fa-hand-pointer"></i> Swipe</span>
+                </div>
+                <button class="play-btn">
+                    <i class="fas fa-play"></i>
+                    Play Snake
+                </button>
+            </div>
+        </a>
+
+        <!-- 3D Maze Card -->
+        <a href="/PlayZone/Maze" class="game-card game-card--maze">
+            <div class="game-preview maze-preview">
+                <div class="maze-3d">
+                    <div class="maze-wall h" style="top: 0; left: 0;"></div>
+                    <div class="maze-wall h" style="top: 0; left: 60px;"></div>
+                    <div class="maze-wall h" style="top: 0; left: 120px;"></div>
+                    <div class="maze-wall v" style="top: 0; left: 0;"></div>
+                    <div class="maze-wall v" style="top: 50px; left: 40px;"></div>
+                    <div class="maze-wall h" style="top: 50px; left: 80px;"></div>
+                    <div class="maze-wall v" style="top: 100px; left: 20px;"></div>
+                    <div class="maze-wall h" style="top: 100px; left: 60px;"></div>
+                    <div class="maze-wall v" style="top: 0; right: 0;"></div>
+                    <div class="maze-player"></div>
+                    <div class="maze-goal"></div>
+                </div>
+            </div>
+            <div class="game-content">
+                <span class="game-badge"><i class="fas fa-cube"></i> 3D Adventure</span>
+                <h2 class="game-title">3D Maze</h2>
+                <p class="game-description">
+                    Immersive first-person maze escape. Navigate through neon-lit corridors with your flashlight, find the glowing portal, and escape as fast as possible. Can you beat the clock?
+                </p>
+                <div class="game-rules">
+                    <h4>How to Play</h4>
+                    <ul>
+                        <li><i class="fas fa-circle"></i> Navigate the 3D maze in first-person view</li>
+                        <li><i class="fas fa-circle"></i> Find the glowing green portal to escape</li>
+                        <li><i class="fas fa-circle"></i> Race against time for the best score</li>
+                        <li><i class="fas fa-circle"></i> Use the minimap to track your position</li>
+                    </ul>
+                </div>
+                <div class="game-controls">
+                    <span class="control-tag"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> Move</span>
+                    <span class="control-tag"><i class="fas fa-mouse"></i> Look</span>
+                    <span class="control-tag"><i class="fas fa-hand-pointer"></i> Touch</span>
+                </div>
+                <button class="play-btn">
+                    <i class="fas fa-play"></i>
+                    Play Maze
+                </button>
+            </div>
+        </a>
+    </main>
+
+    <footer class="playzone-footer">
+        Built with Three.js & Canvas | <a href="/">Anastasiia Portfolio</a>
+    </footer>
 </div>
 
-<div class="playzone-container">
-    <div class="playzone-main">
-        <div class="game-section">
-            <div class="game-container">
-                <div class="game-toolbar">
-                    <p class="game-help"><span class="game-help--desktop">Arrow keys or swipe</span><span class="game-help--mobile">Swipe or D-pad below</span> • <kbd>P</kbd> pause</p>
-                    <button type="button" class="btn-pause" id="btnPause" aria-label="Pause" style="display: none;"><i class="fas fa-pause"></i></button>
-                </div>
-                <div class="canvas-wrap">
-                    <canvas id="gameCanvas"></canvas>
-                    <div class="pause-overlay" id="pauseOverlay" style="display: none;">
-                        <p class="pause-overlay__text">Paused</p>
-                        <button type="button" class="btn-resume" id="btnResume">Resume</button>
-                    </div>
-                </div>
-                <div class="d-pad d-pad--mobile" id="dpad" aria-hidden="true">
-                    <button type="button" class="d-pad-btn d-pad-up" data-dir="up" aria-label="Up"><i class="fas fa-chevron-up"></i></button>
-                    <button type="button" class="d-pad-btn d-pad-left" data-dir="left" aria-label="Left"><i class="fas fa-chevron-left"></i></button>
-                    <button type="button" class="d-pad-btn d-pad-right" data-dir="right" aria-label="Right"><i class="fas fa-chevron-right"></i></button>
-                    <button type="button" class="d-pad-btn d-pad-down" data-dir="down" aria-label="Down"><i class="fas fa-chevron-down"></i></button>
-                </div>
-            </div>
-        </div>
-
-        <aside class="playzone-sidebar">
-            <div class="score-section">
-                <div class="score-card">
-                    <span class="score-label">Score</span>
-                    <span id="score" class="score-value">0</span>
-                </div>
-                <div class="score-card">
-                    <span class="score-label">Best</span>
-                    <span id="bestScore" class="score-value">0</span>
-                </div>
-                <div class="score-card score-card--level">
-                    <span class="score-label">Level</span>
-                    <span id="level" class="score-value">1</span>
-                </div>
-                <div class="score-card score-card--combo" id="comboCard" style="display: none;">
-                    <span class="score-label">Combo</span>
-                    <span id="combo" class="score-value">×2</span>
-                </div>
-            </div>
-            <div class="leaderboard">
-                <h2>Top Players</h2>
-                <div class="leaderboard-grid">
-                    @foreach (var score in displayScores)
-                    {
-                        <div class="player-card">
-                            <div class="player-rank">@(displayScores.IndexOf(score) + 1)</div>
-                            <div class="player-name">@score.PlayerName</div>
-                            <div class="player-score">@score.Score</div>
-                        </div>
-                    }
-                </div>
-            </div>
-        </aside>
-    </div>
-</div>
-
-    <!-- Game Over Dialog -->
-    <div class="game-over" id="gameOver" style="display: none;">
-        <h2>Game Over!</h2>
-        <p class="game-over__score">Your score: <span id="finalScore">0</span></p>
-        <p class="game-over__high" id="newHighScore" style="display: none;">🎉 New high score!</p>
-        <div class="btn-group">
-            <button type="button" class="btn-restart" onclick="restartGame()"><i class="fas fa-redo me-2"></i>Play Again</button>
-            <button type="button" class="btn-new" onclick="newGame()"><i class="fas fa-user me-2"></i>New Player</button>
-        </div>
-    </div>
-</div>
-
-@section Scripts {
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const nameDialog = document.getElementById('nameInputDialog');
-            const playerNameInput = document.getElementById('playerNameInput');
-            const startGameBtn = document.getElementById('startGameButton');
-            const gameOverDialog = document.getElementById('gameOver');
-            const pauseOverlay = document.getElementById('pauseOverlay');
-            const btnPause = document.getElementById('btnPause');
-            const btnResume = document.getElementById('btnResume');
-            const comboCard = document.getElementById('comboCard');
-            const newHighEl = document.getElementById('newHighScore');
-            const canvas = document.getElementById('gameCanvas');
-            const ctx = canvas.getContext('2d');
-
-            const tileCount = 20;
-            let tileSize;
-            let snake = [];
-            let food = {};
-            let dx = 0, dy = 0;
-            let score = 0;
-            let bestScore = parseInt(localStorage.getItem('playzoneBest') || '0', 10);
-            let gameSpeed = 150;
-            let gameLoop;
-            let isGameRunning = false;
-            let isPaused = false;
-            let comboCount = 0;
-            let lastEatTime = 0;
-            const COMBO_WINDOW_MS = 1200;
-            const COMBO_CAP = 5;
-            let particles = [];
-            let scorePops = [];
-            let foodPhase = 0;
-            let displayXs = [];
-            let displayYs = [];
-            let rafId = 0;
-            const LERP = 0.22;
-
-            nameDialog.style.display = 'flex';
-            setTimeout(function() { playerNameInput.focus(); }, 400);
-
-            startGameBtn.addEventListener('click', startGameWithName);
-            playerNameInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') startGameWithName();
-            });
-            playerNameInput.addEventListener('input', function() {
-                this.style.borderColor = 'rgba(255,255,255,0.2)';
-            });
-
-            function startGameWithName() {
-                var name = playerNameInput.value.trim();
-                if (!name) {
-                    playerNameInput.style.borderColor = '#ef4444';
-                    playerNameInput.classList.add('error-shake');
-                    setTimeout(function() { playerNameInput.classList.remove('error-shake'); }, 500);
-                    return;
-                }
-                localStorage.setItem('playerName', name);
-                nameDialog.style.display = 'none';
-                initGame();
-            }
-
-            function initGame() {
-                resizeCanvas();
-                snake = [{ x: Math.floor(tileCount / 2), y: Math.floor(tileCount / 2) }];
-                displayXs = [snake[0].x];
-                displayYs = [snake[0].y];
-                dx = 1; dy = 0;
-                score = 0;
-                gameSpeed = 150;
-                comboCount = 0;
-                lastEatTime = 0;
-                particles = [];
-                scorePops = [];
-                isGameRunning = true;
-                isPaused = false;
-                document.body.classList.add('game-active');
-                if (gameOverDialog) gameOverDialog.style.display = 'none';
-                if (pauseOverlay) pauseOverlay.style.display = 'none';
-                if (newHighEl) newHighEl.style.display = 'none';
-                if (comboCard) comboCard.style.display = 'none';
-                if (btnPause) { btnPause.style.display = 'flex'; btnPause.querySelector('i').className = 'fas fa-pause'; }
-                generateFood();
-                updateUI();
-                if (gameLoop) clearInterval(gameLoop);
-                gameLoop = setInterval(tick, gameSpeed);
-                if (!rafId) (function renderLoop() {
-                    var i;
-                    if (isGameRunning && displayXs.length === snake.length) {
-                        for (i = 0; i < snake.length; i++) {
-                            displayXs[i] += (snake[i].x - displayXs[i]) * LERP;
-                            displayYs[i] += (snake[i].y - displayYs[i]) * LERP;
-                        }
-                    }
-                    draw();
-                    rafId = requestAnimationFrame(renderLoop);
-                })();
-            }
-
-            function resizeCanvas() {
-                var wrap = canvas.parentElement;
-                var size = Math.min(wrap.clientWidth, wrap.clientHeight || 520, 520);
-                canvas.width = size;
-                canvas.height = size;
-                tileSize = size / tileCount;
-            }
-
-            function generateFood() {
-                do {
-                    food = { x: Math.floor(Math.random() * tileCount), y: Math.floor(Math.random() * tileCount) };
-                } while (snake.some(function(s) { return s.x === food.x && s.y === food.y; }));
-            }
-
-            function updateUI() {
-                var scoreEl = document.getElementById('score');
-                var bestEl = document.getElementById('bestScore');
-                var levelEl = document.getElementById('level');
-                var comboEl = document.getElementById('combo');
-                if (scoreEl) scoreEl.textContent = score;
-                if (bestEl) bestEl.textContent = bestScore;
-                var level = 1 + Math.max(0, Math.floor((150 - gameSpeed) / 25));
-                if (levelEl) levelEl.textContent = level;
-                if (comboCard && comboEl) {
-                    if (comboCount > 1) {
-                        comboCard.style.display = 'block';
-                        comboEl.textContent = '×' + (comboCount + 1);
-                    } else {
-                        comboCard.style.display = 'none';
-                    }
-                }
-            }
-
-            function spawnParticles(x, y) {
-                var cx = (x + 0.5) * tileSize, cy = (y + 0.5) * tileSize;
-                for (var i = 0; i < 8; i++) {
-                    var a = (i / 8) * Math.PI * 2 + Math.random() * 0.5;
-                    var v = 2 + Math.random() * 2;
-                    particles.push({
-                        x: cx, y: cy,
-                        vx: Math.cos(a) * v, vy: Math.sin(a) * v,
-                        life: 1, r: 3 + Math.random() * 3
-                    });
-                }
-            }
-
-            function spawnScorePop(x, y, value) {
-                scorePops.push({
-                    x: (x + 0.5) * tileSize, y: (y + 0.5) * tileSize,
-                    value: '+' + value, life: 1
-                });
-            }
-
-            function tick() {
-                if (!isGameRunning || isPaused) return;
-                foodPhase = (foodPhase + 0.08) % (Math.PI * 2);
-
-                var head = { x: snake[0].x + dx, y: snake[0].y + dy };
-                if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) {
-                    gameOver();
-                    return;
-                }
-                if (snake.some(function(s) { return s.x === head.x && s.y === head.y; })) {
-                    gameOver();
-                    return;
-                }
-                var oldHead = { x: snake[0].x, y: snake[0].y };
-                snake.unshift(head);
-                displayXs.unshift(oldHead.x);
-                displayYs.unshift(oldHead.y);
-
-                if (head.x === food.x && head.y === food.y) {
-                    var now = Date.now();
-                    if (now - lastEatTime < COMBO_WINDOW_MS) {
-                        comboCount = Math.min(comboCount + 1, COMBO_CAP - 1);
-                    } else {
-                        comboCount = 0;
-                    }
-                    lastEatTime = now;
-                    var pts = 10 * (1 + comboCount);
-                    score += pts;
-                    if (score > bestScore) {
-                        bestScore = score;
-                        try { localStorage.setItem('playzoneBest', String(bestScore)); } catch (e) {}
-                    }
-                    spawnParticles(food.x, food.y);
-                    spawnScorePop(food.x, food.y, pts);
-                    if (navigator.vibrate) navigator.vibrate(10);
-                    generateFood();
-                    if (gameSpeed > 50) {
-                        gameSpeed -= 4;
-                        clearInterval(gameLoop);
-                        gameLoop = setInterval(tick, gameSpeed);
-                    }
-                } else {
-                    snake.pop();
-                    displayXs.pop();
-                    displayYs.pop();
-                }
-
-                particles = particles.filter(function(p) {
-                    p.x += p.vx; p.y += p.vy; p.life -= 0.04;
-                    return p.life > 0;
-                });
-                scorePops = scorePops.filter(function(s) {
-                    s.y -= 1.2; s.life -= 0.03;
-                    return s.life > 0;
-                });
-
-                updateUI();
-            }
-
-            function draw() {
-                var w = canvas.width, h = canvas.height;
-                var i, sx, sy, r, seg, dxDir, dyDir, eyeOff, ex, ey;
-
-                // Arena – organic gradient + subtle vignette
-                var bg = ctx.createRadialGradient(w/2, h/2, 0, w/2, h/2, w * 0.75);
-                bg.addColorStop(0, '#0d1525');
-                bg.addColorStop(0.5, '#0a1322');
-                bg.addColorStop(1, '#061018');
-                ctx.fillStyle = bg;
-                ctx.fillRect(0, 0, w, h);
-
-                // Very subtle grid
-                ctx.strokeStyle = 'rgba(255,255,255,0.025)';
-                ctx.lineWidth = 1;
-                for (i = 0; i <= tileCount; i++) {
-                    var p = i * tileSize;
-                    ctx.beginPath();
-                    ctx.moveTo(p, 0); ctx.lineTo(p, h);
-                    ctx.stroke();
-                    ctx.beginPath();
-                    ctx.moveTo(0, p); ctx.lineTo(w, p);
-                    ctx.stroke();
-                }
-
-                // Snake – smooth body with scales, head with eyes
-                r = tileSize * 0.44;
-                var bodyG = ctx.createLinearGradient(0, 0, w, h);
-                bodyG.addColorStop(0, '#2dd36f');
-                bodyG.addColorStop(0.4, '#22c55e');
-                bodyG.addColorStop(0.7, '#16a34a');
-                bodyG.addColorStop(1, '#15803d');
-                var headG = ctx.createLinearGradient(0, 0, w, 0);
-                headG.addColorStop(0, '#4ade80');
-                headG.addColorStop(0.5, '#22c55e');
-                headG.addColorStop(1, '#16a34a');
-
-                for (i = snake.length - 1; i >= 0; i--) {
-                    seg = snake[i];
-                    sx = (typeof displayXs[i] !== 'undefined' ? displayXs[i] : seg.x) * tileSize + tileSize / 2;
-                    sy = (typeof displayYs[i] !== 'undefined' ? displayYs[i] : seg.y) * tileSize + tileSize / 2;
-                    var isHead = i === 0;
-                    var rad = isHead ? r * 1.05 : r - (i % 2) * 2;
-
-                    ctx.save();
-                    if (isHead) {
-                        ctx.fillStyle = headG;
-                        ctx.shadowColor = 'rgba(34, 197, 94, 0.5)';
-                        ctx.shadowBlur = 14;
-                    } else {
-                        ctx.fillStyle = bodyG;
-                        ctx.shadowColor = 'rgba(21, 128, 61, 0.35)';
-                        ctx.shadowBlur = 6;
-                    }
-                    ctx.beginPath();
-                    ctx.arc(sx, sy, Math.max(4, rad - 1), 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.shadowBlur = 0;
-
-                    if (!isHead && rad > 6) {
-                        ctx.fillStyle = 'rgba(0,0,0,0.12)';
-                        ctx.beginPath();
-                        ctx.ellipse(sx, sy + rad * 0.25, rad * 0.5, rad * 0.2, 0, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-                    ctx.restore();
-                }
-
-                // Head eyes (direction-aware)
-                if (snake.length > 0) {
-                    seg = snake[0];
-                    sx = (typeof displayXs[0] !== 'undefined' ? displayXs[0] : seg.x) * tileSize + tileSize / 2;
-                    sy = (typeof displayYs[0] !== 'undefined' ? displayYs[0] : seg.y) * tileSize + tileSize / 2;
-                    dxDir = dx || (snake.length > 1 ? snake[0].x - snake[1].x : 1);
-                    dyDir = dy || (snake.length > 1 ? snake[0].y - snake[1].y : 0);
-                    eyeOff = r * 0.5;
-                    ctx.fillStyle = '#fff';
-                    ctx.strokeStyle = 'rgba(0,0,0,0.35)';
-                    ctx.lineWidth = 1;
-                    ex = sx + dyDir * eyeOff;
-                    ey = sy - dxDir * eyeOff;
-                    ctx.beginPath();
-                    ctx.arc(ex, ey, r * 0.22, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.stroke();
-                    ctx.fillStyle = '#0f172a';
-                    ctx.beginPath();
-                    ctx.arc(ex + dxDir * 2, ey + dyDir * 2, r * 0.1, 0, Math.PI * 2);
-                    ctx.fill();
-                    ex = sx - dyDir * eyeOff;
-                    ey = sy + dxDir * eyeOff;
-                    ctx.fillStyle = '#fff';
-                    ctx.beginPath();
-                    ctx.arc(ex, ey, r * 0.22, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.stroke();
-                    ctx.fillStyle = '#0f172a';
-                    ctx.beginPath();
-                    ctx.arc(ex + dxDir * 2, ey + dyDir * 2, r * 0.1, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-
-                // Food – apple-like with highlight & stem
-                var fx = (food.x + 0.5) * tileSize, fy = (food.y + 0.5) * tileSize;
-                var pulse = 1 + 0.06 * Math.sin(foodPhase);
-                var fr = (tileSize / 2.4) * pulse;
-                var fg = ctx.createRadialGradient(fx - fr * 0.4, fy - fr * 0.5, 0, fx, fy, fr);
-                fg.addColorStop(0, '#fca5a5');
-                fg.addColorStop(0.35, '#ef4444');
-                fg.addColorStop(0.8, '#b91c1c');
-                fg.addColorStop(1, '#991b1b');
-                ctx.fillStyle = fg;
-                ctx.shadowColor = 'rgba(185, 28, 28, 0.5)';
-                ctx.shadowBlur = 12;
-                ctx.beginPath();
-                ctx.arc(fx, fy, fr, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.shadowBlur = 0;
-                ctx.fillStyle = 'rgba(255,255,255,0.4)';
-                ctx.beginPath();
-                ctx.ellipse(fx - fr * 0.35, fy - fr * 0.3, fr * 0.25, fr * 0.15, -0.4, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.strokeStyle = 'rgba(34, 197, 94, 0.9)';
-                ctx.lineWidth = Math.max(1, fr * 0.15);
-                ctx.lineCap = 'round';
-                ctx.beginPath();
-                ctx.moveTo(fx + fr * 0.5, fy - fr * 0.6);
-                ctx.lineTo(fx + fr * 0.75, fy - fr * 1.1);
-                ctx.stroke();
-
-                // Particles
-                particles.forEach(function(p) {
-                    ctx.fillStyle = 'rgba(74, 222, 128, ' + p.life + ')';
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                    ctx.fill();
-                });
-
-                // Score pops
-                ctx.font = '600 15px Plus Jakarta Sans, system-ui, sans-serif';
-                ctx.textAlign = 'center';
-                scorePops.forEach(function(s) {
-                    ctx.fillStyle = 'rgba(255, 255, 255, ' + s.life + ')';
-                    ctx.fillText(s.value, s.x, s.y);
-                });
-            }
-
-            function gameOver() {
-                isGameRunning = false;
-                isPaused = false;
-                clearInterval(gameLoop);
-                document.body.classList.remove('game-active');
-                if (btnPause) btnPause.style.display = 'none';
-                if (pauseOverlay) pauseOverlay.style.display = 'none';
-
-                var playerName = localStorage.getItem('playerName');
-                if (playerName && score > 0) {
-                    fetch('/PlayZone/SaveScore', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-                        body: JSON.stringify({ playerName: playerName, score: score })
-                    })
-                    .then(function(r) { return r.json(); })
-                    .then(function(data) {
-                        if (data.success && data.topScores) {
-                            var grid = document.querySelector('.leaderboard-grid');
-                            if (grid) {
-                                grid.innerHTML = '';
-                                data.topScores.forEach(function(s, i) {
-                                    var card = document.createElement('div');
-                                    card.className = 'player-card';
-                                    var name = s.playerName || s.PlayerName || '';
-                                    var sc = s.score ?? s.Score ?? 0;
-                                    card.innerHTML = '<div class="player-rank">' + (i + 1) + '</div><div class="player-name">' + name + '</div><div class="player-score">' + sc + '</div>';
-                                    grid.appendChild(card);
-                                });
-                            }
-                        }
-                    })
-                    .catch(function(e) { console.error('Save score:', e); });
-                }
-
-                var finalEl = document.getElementById('finalScore');
-                if (finalEl) finalEl.textContent = score;
-                if (newHighEl && score >= bestScore && score > 0) newHighEl.style.display = 'block';
-                if (gameOverDialog) gameOverDialog.style.display = 'block';
-            }
-
-            function setDirection(nx, ny) {
-                if (nx === -dx && ny === -dy) return;
-                dx = nx;
-                dy = ny;
-            }
-
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'p' || e.key === 'P') {
-                    if (!isGameRunning) return;
-                    isPaused = !isPaused;
-                    if (pauseOverlay) pauseOverlay.style.display = isPaused ? 'flex' : 'none';
-                    if (btnPause) {
-                        var icon = btnPause.querySelector('i');
-                        if (icon) icon.className = isPaused ? 'fas fa-play' : 'fas fa-pause';
-                    }
-                    e.preventDefault();
-                    return;
-                }
-                if (!isGameRunning || isPaused) return;
-                switch (e.key) {
-                    case 'ArrowUp': if (dy !== 1) setDirection(0, -1); break;
-                    case 'ArrowDown': if (dy !== -1) setDirection(0, 1); break;
-                    case 'ArrowLeft': if (dx !== 1) setDirection(-1, 0); break;
-                    case 'ArrowRight': if (dx !== -1) setDirection(1, 0); break;
-                    default: return;
-                }
-                e.preventDefault();
-            });
-
-            if (btnResume) {
-                btnResume.addEventListener('click', function() {
-                    isPaused = false;
-                    if (pauseOverlay) pauseOverlay.style.display = 'none';
-                    if (btnPause) { var icon = btnPause.querySelector('i'); if (icon) icon.className = 'fas fa-pause'; }
-                });
-            }
-
-            document.querySelectorAll('.d-pad-btn').forEach(function(btn) {
-                var dir = btn.getAttribute('data-dir');
-                function go() {
-                    if (!isGameRunning || isPaused) return;
-                    if (dir === 'up' && dy !== 1) setDirection(0, -1);
-                    else if (dir === 'down' && dy !== -1) setDirection(0, 1);
-                    else if (dir === 'left' && dx !== 1) setDirection(-1, 0);
-                    else if (dir === 'right' && dx !== -1) setDirection(1, 0);
-                }
-                btn.addEventListener('click', go);
-                btn.addEventListener('touchend', function(e) { e.preventDefault(); go(); }, { passive: false });
-            });
-
-            var touchStartX = 0, touchStartY = 0;
-            canvas.addEventListener('touchstart', function(e) {
-                e.preventDefault();
-                touchStartX = e.touches[0].clientX;
-                touchStartY = e.touches[0].clientY;
-            }, { passive: false });
-            canvas.addEventListener('touchmove', function(e) {
-                e.preventDefault();
-                if (!isGameRunning || isPaused || !touchStartX) return;
-                var tx = e.touches[0].clientX, ty = e.touches[0].clientY;
-                var dX = tx - touchStartX, dY = ty - touchStartY;
-                if (Math.abs(dX) < 24 && Math.abs(dY) < 24) return;
-                if (Math.abs(dX) > Math.abs(dY)) {
-                    if (dX > 0 && dx !== -1) setDirection(1, 0);
-                    else if (dX < 0 && dx !== 1) setDirection(-1, 0);
-                } else {
-                    if (dY > 0 && dy !== -1) setDirection(0, 1);
-                    else if (dY < 0 && dy !== 1) setDirection(0, -1);
-                }
-                touchStartX = tx;
-                touchStartY = ty;
-            }, { passive: false });
-            canvas.addEventListener('touchend', function(e) {
-                e.preventDefault();
-                touchStartX = 0;
-                touchStartY = 0;
-            }, { passive: false });
-
-            window.addEventListener('resize', function() {
-                resizeCanvas();
-                if (isGameRunning) draw();
-            });
-
-            window.restartGame = function() {
-                initGame();
-            };
-            window.newGame = function() {
-                nameDialog.style.display = 'flex';
-                setTimeout(function() { playerNameInput.focus(); }, 400);
-                if (gameOverDialog) gameOverDialog.style.display = 'none';
-            };
-        });
-    </script>
-} 
+</body>
+</html>

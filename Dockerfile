@@ -11,7 +11,5 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY --from=build /app/out .
 ENV PORT=8080
-ENV ASPNETCORE_URLS=http://+:${PORT}
-EXPOSE ${PORT}
-
+EXPOSE 8080
 ENTRYPOINT ["dotnet", "AnastasiiaPortfolio.dll"] 

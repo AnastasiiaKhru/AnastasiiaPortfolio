@@ -13,6 +13,7 @@ namespace AnastasiiaPortfolio.Services
         private readonly IMongoCollection<Rating> _ratingsCollection;
         private readonly IMongoCollection<PlayerScore> _playerScoresCollection;
         private readonly IMongoCollection<ReviewVote> _reviewVotesCollection;
+        private readonly IMongoCollection<MazeScore> _mazeScoresCollection;
         private readonly IMongoDatabase _database;
         private readonly MongoClient _client;
         private readonly ILogger<MongoDBService> _logger;
@@ -44,6 +45,7 @@ namespace AnastasiiaPortfolio.Services
                 _ratingsCollection = _database.GetCollection<Rating>(mongoDBSettings.Value.RatingsCollectionName);
                 _playerScoresCollection = _database.GetCollection<PlayerScore>(mongoDBSettings.Value.PlayerScoresCollectionName);
                 _reviewVotesCollection = _database.GetCollection<ReviewVote>(mongoDBSettings.Value.ReviewVotesCollectionName);
+                _mazeScoresCollection = _database.GetCollection<MazeScore>("MazeScores");
                 
                 _logger.LogInformation("Successfully connected to MongoDB and initialized all collections");
             }
@@ -243,5 +245,18 @@ namespace AnastasiiaPortfolio.Services
 
         public async Task DeleteReviewVoteAsync(string id) =>
             await _reviewVotesCollection.DeleteOneAsync(x => x.Id == id);
+
+        // MazeScores (fastest times first)
+        public async Task<List<MazeScore>> GetTopMazeScoresAsync(int count) =>
+            await _mazeScoresCollection.Find(_ => true)
+                .SortBy(x => x.TimeSeconds)
+                .Limit(count)
+                .ToListAsync();
+
+        public async Task CreateMazeScoreAsync(MazeScore score)
+        {
+            score.PlayedAt = DateTime.UtcNow;
+            await _mazeScoresCollection.InsertOneAsync(score);
+        }
     }
 } 

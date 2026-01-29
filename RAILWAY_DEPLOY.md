@@ -23,7 +23,7 @@ Use **double underscore** `__` for nested keys (e.g. `MongoDB__ConnectionString`
 
 ## 3. Port
 
-The Dockerfile sets `ASPNETCORE_URLS=http://+:${PORT}`. Railway injects `PORT` at runtime; no extra config needed.
+The app listens on **0.0.0.0** and the **PORT** that Railway injects at runtime (default 8080). In Railway → **Settings** → **Networking** / your domain, ensure the **target port** matches (e.g. 8080).
 
 ## 4. Optional: custom domain
 
@@ -51,3 +51,6 @@ In your Railway service → **Settings** → **Domains**, add a custom domain or
 4. **Logs**  
    In Railway → **Deployments** → your deployment → **Deploy Logs** and **HTTP Logs**.  
    Reproduce the error (visit the site), then check for exception stack traces or 500 responses.
+
+5. **"Application Failed to Respond" (502)**  
+   The app must listen on **0.0.0.0** and the **PORT** Railway injects. This project does that in code. In Railway → **Settings** → your **domain**, set the **target port** to match (e.g. **8080**). If it was 3000 or something else, change it to 8080.

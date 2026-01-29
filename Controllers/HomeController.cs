@@ -56,6 +56,10 @@ public class HomeController : Controller
     public IActionResult Skills() => View();
     public IActionResult Experience() => View();
     public IActionResult Education() => View();
+    
+    // Demo websites
+    public IActionResult CakeShopDemo() => View();
+    public IActionResult GymCrmDemo() => View();
 
     public IActionResult Portfolio()
     {
