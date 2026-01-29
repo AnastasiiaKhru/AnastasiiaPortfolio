@@ -104,14 +104,8 @@ public class HomeController : Controller
             return NotFound("Resume file not found.");
         }
 
-        var memory = new MemoryStream();
-        using (var stream = new FileStream(resumePath, FileMode.Open))
-        {
-            stream.CopyTo(memory);
-        }
-        memory.Position = 0;
-
-        return File(memory, "application/pdf", "Anastasiia_Resume.pdf");
+        // Return file inline for browser preview (no download prompt)
+        return PhysicalFile(resumePath, "application/pdf");
     }
 
     public IActionResult DownloadReferences()
@@ -123,14 +117,8 @@ public class HomeController : Controller
             return NotFound("References file not found.");
         }
 
-        var memory = new MemoryStream();
-        using (var stream = new FileStream(referencesPath, FileMode.Open))
-        {
-            stream.CopyTo(memory);
-        }
-        memory.Position = 0;
-
-        return File(memory, "application/pdf", "Anastasiia_References.pdf");
+        // Return file inline for browser preview (no download prompt)
+        return PhysicalFile(referencesPath, "application/pdf");
     }
 
     [HttpGet]
