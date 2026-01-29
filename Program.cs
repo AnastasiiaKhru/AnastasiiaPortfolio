@@ -9,6 +9,11 @@ builder.Configuration.AddEnvironmentVariables(prefix: "AnastasiiaPortfolio_");
 // User Secrets (optional): dotnet user-secrets set "EmailSettings:SmtpPassword" "your-gmail-app-password"
 builder.Configuration.AddUserSecrets<Program>(optional: true);
 
+// Reduce DataProtection warnings in Production (ephemeral container filesystem).
+// Keys live in /root/.aspnet/DataProtection-Keys; they are lost on redeploy. Fine for this app.
+if (!builder.Environment.IsDevelopment())
+	builder.Logging.AddFilter("Microsoft.AspNetCore.DataProtection", LogLevel.Error);
+
 // Add services to the container.
 builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("MongoDB"));
 builder.Services.AddSingleton<MongoDBService>();
