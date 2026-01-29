@@ -1,0 +1,8 @@
+Contact form – no password required
+====================================
+
+The contact form uses mailto: when you click "Send Message". It opens the visitor's
+email client with a draft to nastiakhru@gmail.com. The visitor clicks Send there
+to deliver the message. No SMTP or app password is used.
+
+All messages are addressed to nastiakhru@gmail.com.

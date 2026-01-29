@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using AnastasiiaPortfolio.Services;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
@@ -14,15 +15,15 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly IWebHostEnvironment _environment;
-    private readonly IEmailService _emailService;
     private readonly MongoDBService _mongoDBService;
+    private readonly IConfiguration _configuration;
 
-    public HomeController(ILogger<HomeController> logger, IWebHostEnvironment environment, IEmailService emailService, MongoDBService mongoDBService)
+    public HomeController(ILogger<HomeController> logger, IWebHostEnvironment environment, MongoDBService mongoDBService, IConfiguration configuration)
     {
         _logger = logger;
         _environment = environment;
-        _emailService = emailService;
         _mongoDBService = mongoDBService;
+        _configuration = configuration;
     }
 
     public IActionResult Index()
@@ -50,6 +51,11 @@ public class HomeController : Controller
         };
         return View(viewModel);
     }
+
+    public IActionResult Projects() => View();
+    public IActionResult Skills() => View();
+    public IActionResult Experience() => View();
+    public IActionResult Education() => View();
 
     public IActionResult Portfolio()
     {
@@ -126,57 +132,7 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Contact()
     {
-        return View();
-    }
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Contact(HomeViewModel model)
-    {
-        if (ModelState.IsValid)
-        {
-            try
-            {
-                _logger.LogInformation("Contact form submitted by {Name} ({Email})", 
-                    model.ContactForm.Name, model.ContactForm.Email);
-
-                await _emailService.SendContactFormEmailAsync(
-                    "anastasiiakhru@gmail.com",  // recipient
-                    $"Portfolio Contact Form: {model.ContactForm.Name}",  // subject
-                    model.ContactForm.Name,
-                    model.ContactForm.Email,
-                    model.ContactForm.Message
-                );
-
-                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-                {
-                    return Json(new { success = true });
-                }
-
-                TempData["MessageSent"] = "Thank you for your message! I'll get back to you soon.";
-                return RedirectToAction(nameof(Index));
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Failed to send contact form email from {Name} ({Email})", 
-                    model.ContactForm.Name, model.ContactForm.Email);
-                
-                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-                {
-                    return Json(new { success = false, message = "Sorry, there was an error sending your message. Please try again later." });
-                }
-
-                ModelState.AddModelError("", "Sorry, there was an error sending your message. Please try again later.");
-            }
-        }
-
-        if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-        {
-            return Json(new { success = false, message = "Please check your input and try again." });
-        }
-
-        // If we get here, something failed, redisplay form with errors
-        return View("Index", model);
+        return View(new HomeViewModel());
     }
 
     public async Task<IActionResult> TestMongoDB()

@@ -22,28 +22,40 @@ namespace AnastasiiaPortfolio.Services
             
             _smtpServer = _configuration["EmailSettings:SmtpServer"] ?? "smtp.gmail.com";
             _smtpPort = int.Parse(_configuration["EmailSettings:SmtpPort"] ?? "587");
-            _smtpUsername = _configuration["EmailSettings:SmtpUsername"] ?? "anastasiiakhru@gmail.com";
+            _smtpUsername = _configuration["EmailSettings:SmtpUsername"] ?? "nastiakhru@gmail.com";
             _smtpPassword = _configuration["EmailSettings:SmtpPassword"] ?? "";
-            _fromEmail = _configuration["EmailSettings:FromEmail"] ?? "anastasiiakhru@gmail.com";
+            _fromEmail = _configuration["EmailSettings:FromEmail"] ?? "nastiakhru@gmail.com";
 
             _logger.LogInformation("EmailService initialized with settings: Server={Server}, Port={Port}, Username={Username}", 
                 _smtpServer, _smtpPort, _smtpUsername);
-                
-            if (string.IsNullOrEmpty(_smtpPassword))
+
+            if (IsPlaceholderOrMissing(_smtpPassword))
             {
-                _logger.LogError("SMTP Password is empty or not configured!");
+                _logger.LogWarning("SMTP Password not set. Add your Gmail App Password to appsettings.Development.json (EmailSettings:SmtpPassword) or run: dotnet user-secrets set \"EmailSettings:SmtpPassword\" \"your-16-char-app-password\"");
             }
+        }
+
+        private static bool IsPlaceholderOrMissing(string? value)
+        {
+            if (string.IsNullOrWhiteSpace(value)) return true;
+            var v = value.Trim();
+            return string.Equals(v, "your_password_here", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(v, "PASTE_YOUR_GMAIL_APP_PASSWORD_HERE", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(v, "your_app_password", StringComparison.OrdinalIgnoreCase);
         }
 
         public async Task SendContactFormEmailAsync(string recipient, string subject, string name, string email, string message)
         {
+            if (IsPlaceholderOrMissing(_smtpPassword))
+            {
+                _logger.LogError("Cannot send email: SMTP password not configured. Set EmailSettings:SmtpPassword in appsettings.Development.json or User Secrets.");
+                throw new InvalidOperationException("SMTP password is not configured. Set EmailSettings:SmtpPassword to a Gmail App Password via appsettings.Development.json or User Secrets.");
+            }
+
             try
             {
                 _logger.LogInformation("Attempting to send email. From: {From}, To: {To}, Subject: {Subject}", 
                     _fromEmail, recipient, subject);
-                
-                _logger.LogInformation("SMTP Settings: Server={Server}, Port={Port}, Username={Username}, SSL=Enabled", 
-                    _smtpServer, _smtpPort, _smtpUsername);
 
                 using (var client = new SmtpClient())
                 {
@@ -73,13 +85,12 @@ namespace AnastasiiaPortfolio.Services
             }
             catch (SmtpException ex)
             {
-                _logger.LogError(ex, "SMTP error occurred while sending email. Status Code: {Code}, Message: {Message}, StackTrace: {StackTrace}", 
-                    ex.StatusCode, ex.Message, ex.StackTrace);
+                _logger.LogError(ex, "SMTP error while sending email. StatusCode={StatusCode}, Message={Message}", ex.StatusCode, ex.Message);
                 throw;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Unexpected error occurred while sending email: {Message}", ex.Message);
+                _logger.LogError(ex, "Unexpected error while sending email: {Message}", ex.Message);
                 throw;
             }
         }

@@ -1,4 +1,4 @@
-﻿using AnastasiiaPortfolio.Models;
+using AnastasiiaPortfolio.Models;
 using AnastasiiaPortfolio.Services;
 using Microsoft.AspNetCore.Identity;
 
@@ -6,6 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add environment variables configuration
 builder.Configuration.AddEnvironmentVariables(prefix: "AnastasiiaPortfolio_");
+// User Secrets (optional): dotnet user-secrets set "EmailSettings:SmtpPassword" "your-gmail-app-password"
+builder.Configuration.AddUserSecrets<Program>(optional: true);
 
 // Add services to the container.
 builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("MongoDB"));

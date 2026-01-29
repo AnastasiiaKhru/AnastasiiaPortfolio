@@ -22,13 +22,20 @@ namespace AnastasiiaPortfolio.Controllers
         }
 
         [HttpPost]
+        [Produces("application/json")]
         public async Task<IActionResult> SaveScore([FromBody] PlayerScore score)
         {
-            if (!ModelState.IsValid)
-            {
-                return Json(new { success = false });
-            }
+            if (score == null)
+                return Json(new { success = false, error = "Invalid payload" });
 
+            var name = (score.PlayerName ?? "").Trim();
+            if (name.Length == 0 || name.Length > 50)
+                return Json(new { success = false, error = "Name required (max 50 chars)" });
+
+            if (score.Score < 0 || score.Score > 999999)
+                return Json(new { success = false, error = "Score out of range" });
+
+            score.PlayerName = name;
             score.PlayedAt = DateTime.UtcNow;
             await _mongoDBService.CreatePlayerScoreAsync(score);
 

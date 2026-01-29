@@ -1,4 +1,4 @@
-﻿@model AnastasiiaPortfolio.Models.HomeViewModel
+@model AnastasiiaPortfolio.Models.HomeViewModel
 
 @{
     ViewData["Title"] = "Home";
@@ -6,1241 +6,180 @@
 
 @section Styles {
     <style>
-        /* Base styles */
+        /* Hero: attached image as background; name + photo + buttons in glass panel */
 
         .hero-section {
-            padding: 4rem 0;
-            margin-bottom: 3rem;
+            padding: var(--spacing-16) 0;
+            margin-bottom: var(--spacing-12);
             position: relative;
-            background-color: transparent;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background-color: #1e293b;
         }
 
-        .hero-content {
-            background-color: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(5px);
-            border-radius: 15px;
-            padding: 2rem;
-            border: 1px solid #D4D4D4;
-            box-shadow: 0 4px 12px rgba(43, 43, 43, 0.1);
-            text-align: center;
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .hero-title, .section-title, .h5, h1, h2, h3 {
-            font-family: 'Roboto', sans-serif;
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(51, 55, 61, 0.4);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .hero-section .container {
+            position: relative;
+            z-index: 1;
+            background: rgba(55, 60, 68, 0.18);
+            border-radius: var(--radius-2xl);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+            padding: var(--spacing-10) var(--spacing-6);
+        }
+
+        .hero-section .display-4 {
+            font-size: var(--font-size-hero);
             font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.03em;
+            margin-bottom: var(--spacing-4);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
         }
 
-        .hero-title {
-            color: #2B2B2B;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .hero-subtitle {
-            color: #B3B3B3;
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
+        .hero-section .lead {
+            font-size: var(--font-size-lg);
+            color: #e2e8f0;
+            line-height: 1.65;
+            max-width: 540px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
         }
 
         .hero-image {
             position: relative;
             overflow: hidden;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
-            background-color: transparent;
-            width: 100%;
-            height: auto;
+            border-radius: var(--radius-2xl);
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
         .profile-image {
-            max-width: 60%;
+            max-width: 85%;
             height: auto;
             display: block;
             margin: 0 auto;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
-            position: relative;
-            z-index: 1;
-            transform: none !important;
-            transition: none !important;
-            will-change: auto;
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-xl);
+            object-fit: cover;
+            border: 3px solid rgba(255,255,255,0.12);
         }
 
-        .deployment-section {
-            background-color: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(5px);
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            border: 1px solid #D4D4D4;
-            text-align: center;
-        }
-
-        .deployment-link {
-            color: #B3B3B3;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        .deployment-link:hover {
-            color: #2B2B2B;
-            text-decoration: underline;
-        }
-
-        .login-info {
-            margin-top: 1rem;
-            color: #2B2B2B;
-        }
-
-        .section-container {
-            background-color: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(5px);
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            border: 1px solid #D4D4D4;
-        }
-
-        .section-title {
-            color: var(--pepper);
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .skill-card {
-            background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            height: 100%;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .skill-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        .skill-icon {
-            font-size: 2.5rem;
-            color: #2B2B2B;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .skill-card h3 {
-            color: #2B2B2B;
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .skill-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .skill-list li {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.75rem;
-            color: #444;
-            font-size: 1rem;
-        }
-
-        .skill-list li i {
-            margin-right: 0.75rem;
-            color: #2B2B2B;
-            font-size: 0.9rem;
-        }
-
-        .experience-item {
-            border-left: 3px solid var(--pepper);
-            padding-left: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .experience-title {
-            color: var(--pepper);
-            margin-bottom: 0.5rem;
-        }
-
-        .experience-company {
-            color: var(--mid-grey);
-            font-weight: 500;
-        }
-
-        .project-card {
-            background-color: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(5px);
-            border: 1px solid #D4D4D4;
-            border-radius: 10px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .project-card:hover {
-            border-color: #2B2B2B;
-            transform: translateY(-5px);
-            box-shadow: 0 4px 12px rgba(43, 43, 43, 0.1);
-            background-color: rgba(255, 255, 255, 0.95);
-        }
-
-        .project-title {
-            color: #2B2B2B;
-            margin-bottom: 1rem;
-        }
-
-        .contact-section {
-            padding: 0;
-            margin-top: 0;
-        }
-
-        .contact-form {
-            background-color: transparent;
-            backdrop-filter: none;
-            border-radius: 0;
-            padding: 0;
+        /* Hero buttons unchanged – scoped for dark background */
+        .hero-section .hero-btn-group .btn-primary {
+            background: #ffffff;
+            color: #0f172a;
             border: none;
-            box-shadow: none;
         }
-
-        .form-control {
-            /* General form-control reset or override if needed, else handled by #contact .form-control */
+        .hero-section .hero-btn-group .btn-primary:hover {
+            background: #e2e8f0;
+            color: #0f172a;
         }
-
-        .btn-send {
-            /* Reset styles */
+        .hero-section .hero-btn-group .btn-outline-primary {
+            background: transparent;
+            color: #f1f5f9;
+            border: 2px solid rgba(255,255,255,0.7);
         }
-
-        .timeline-container {
-            background-color: var(--lsalt);
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--light-grey);
+        .hero-section .hero-btn-group .btn-outline-primary:hover {
+            background: rgba(255,255,255,0.15);
+            color: #ffffff;
+            border-color: #ffffff;
         }
-
-        .timeline-item {
-            margin-bottom: 2rem;
-            text-align: left;
+        .hero-section .hero-btn-group .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: #ffffff;
+            border: 1px solid rgba(255,255,255,0.4);
         }
-
-        #skills {
-            background-color: var(--lsalt);
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--light-grey);
-            margin-bottom: 3rem;
+        .hero-section .hero-btn-group .btn-secondary:hover {
+            background: rgba(255,255,255,0.3);
+            color: #ffffff;
+            border-color: rgba(255,255,255,0.6);
         }
-
-        #education {
-            background-color: var(--lsalt);
-            padding: 4rem 0;
-            margin-bottom: 3rem;
+        .hero-section .social-link {
+            background: transparent;
+            color: #f1f5f9;
+            border: 2px solid rgba(255,255,255,0.7);
         }
-
-        .education-card {
-            background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            padding: 2.5rem;
-            height: 100%;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .education-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-        }
-
-        .education-header {
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .diploma-title {
-            color: #2B2B2B;
-            font-size: 1.75rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .education-meta {
-            color: #666;
-            font-size: 1.1rem;
-        }
-
-        .education-meta .separator {
-            margin: 0 0.75rem;
-            color: #999;
-        }
-
-        .education-content {
-            padding: 0 0.5rem;
-        }
-
-        .expertise-section, .achievements-section {
-            margin-bottom: 2rem;
-        }
-
-        .expertise-section h4, .achievements-section h4 {
-            color: #2B2B2B;
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 1.25rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .expertise-list, .achievements-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .expertise-list li, .achievements-list li {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.75rem;
-            color: #444;
-            font-size: 1rem;
-            line-height: 1.5;
-        }
-
-        .expertise-list li i, .achievements-list li i {
-            margin-right: 1rem;
-            color: #2B2B2B;
-            font-size: 1.1rem;
-            min-width: 1.5rem;
-            text-align: center;
-        }
-
-        /* Media queries for responsive design */
-        @@media (max-width: 768px) {
-            .education-card {
-                padding: 1.5rem;
-            }
-
-            .diploma-title {
-                font-size: 1.5rem;
-            }
-
-            .education-meta {
-                font-size: 1rem;
-            }
-
-            .expertise-list li, .achievements-list li {
-                font-size: 0.95rem;
-            }
-
-            .skill-card {
-                padding: 1.5rem;
-            }
-
-            .skill-icon {
-                font-size: 2rem;
-            }
-
-            .skill-card h3 {
-                font-size: 1.3rem;
-            }
-
-            .skill-list li {
-                font-size: 0.9rem;
-            }
-
-            .hero-image {
-                width: 100%;
-                max-width: 300px;
-                margin: 0 auto;
-                transform: none !important;
-            }
-
-            .profile-image {
-                max-width: 100%;
-                transform: none !important;
-                transition: none !important;
-            }
+        .hero-section .social-link:hover {
+            background: rgba(255,255,255,0.15);
+            color: #ffffff;
+            border-color: #ffffff;
         }
 
         @@media (min-width: 769px) {
-            .hero-image {
-                transform: none !important;
-            }
-
-            .profile-image {
-                transform: none !important;
-                transition: none !important;
-            }
+            .hero-section { min-height: 85vh; }
         }
 
-        /* Fix for iOS devices */
-        @@supports (-webkit-overflow-scrolling: touch) {
-            .hero-image,
-            .profile-image {
-                transform: none !important;
-                transition: none !important;
-                -webkit-transform: none !important;
-                -webkit-transition: none !important;
-            }
+        @@media (max-width: 768px) {
+            .hero-section { min-height: 60vh; padding: var(--spacing-10) 0; }
+            .hero-section .container { padding: var(--spacing-6) var(--spacing-4); }
+            .hero-section .display-4 { font-size: clamp(1.5rem, 4vw, 2rem); }
+            .hero-section .lead { font-size: var(--font-size-base); }
+            .hero-image { max-width: 280px; margin: 0 auto; }
+            .profile-image { max-width: 100%; }
         }
-
-        .separator {
-            margin: 0 0.5rem;
-            color: #999;
-        }
-
-        .expertise-section {
-            margin-bottom: 2rem;
-        }
-
-        .expertise-section h3 {
-            color: #2B2B2B;
-            font-size: 1.4rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .expertise-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-            padding: 0.75rem;
-            background-color: rgba(255, 255, 255, 0.7);
-            border-radius: 8px;
-            transition: background-color 0.3s ease;
-        }
-
-        .expertise-item:hover {
-            background-color: rgba(255, 255, 255, 0.9);
-        }
-
-        .expertise-icon {
-            font-size: 1.2rem;
-            margin-right: 1rem;
-            color: #2B2B2B;
-        }
-
-        .expertise-text {
-            font-size: 1rem;
-            color: #444;
-        }
-
-        .achievements-section {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .achievements-section h3,
-        .achievements-section h4 {
-            color: #2B2B2B;
-            font-size: 1.4rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .achievements-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .achievements-list li,
-        .achievement-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-            padding: 0.75rem;
-            background-color: rgba(255, 255, 255, 0.7);
-            border-radius: 8px;
-            transition: background-color 0.3s ease;
-        }
-
-        .achievements-list li:hover,
-        .achievement-item:hover {
-            background-color: rgba(255, 255, 255, 0.9);
-        }
-
-        .achievements-list li i,
-        .achievement-icon {
-            margin-right: 1rem;
-            font-size: 1.1rem;
-            color: #2B2B2B;
-        }
-
-        .achievement-text {
-            color: #444;
-        }
-
-        /* Footer Styles */
-        .site-footer {
-            /* Remove max-width and centering for the block */
-            /* max-width: 900px; */
-            /* margin-left: auto; */
-            /* margin-right: auto; */
-            border-radius: 0; /* Remove border-radius for full-width */
-            background-color: #f8f9fa; /* Light background */
-            padding: 1rem 0; /* Reduce vertical padding for skinny footer */
-            margin-top: 4rem;
-            border-top: 1px solid #e7e7e7;
-            text-align: center;
-            color: #6c757d; /* Subtle text color */
-            box-shadow: none; /* Remove shadow for full-width */
-        }
-
-        .footer-content {
-            max-width: 900px; /* Constrain the content width */
-            margin: 0 auto; /* Center the content */
-            display: flex;
-            flex-direction: column; /* Stack socials and copyright */
-            align-items: center; /* Center items horizontally */
-            /* Optional: Use row for side-by-side on larger screens */
-            /* @@media (min-width: 768px) { */ /* Escaped */
-            /*    flex-direction: row; */
-            /*    justify-content: space-between; */
-            /* } */
-        }
-
-        .footer-socials {
-            margin-bottom: 0.5rem; /* Further reduce margin */
-            display: flex;
-            gap: 1.5rem;
-            /* Optional: Add margin-top on small screens if stacked */
-            /* @@media (max-width: 767px) { */ /* Escaped */
-            /*     margin-top: 0.5rem; */
-            /* } */
-        }
-
-        .social-icon {
-            color: #6c757d;
-            font-size: 1.2rem; /* Even smaller icons */
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-
-        .social-icon:hover {
-            color: #2B2B2B; /* Use primary dark color on hover */
-            transform: translateY(-2px);
-        }
-
-        .footer-copyright {
-            font-size: 0.8rem; /* Even smaller text */
-        }
-
-        /* Contact Section Styles */
-        #contact {
-            background-color: var(--lsalt);
-            padding: 3rem 2rem;
-            border-radius: 15px;
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--light-grey);
-            margin-top: 3rem;
-            margin-bottom: 3rem;
-        }
-
-        #contact h2 {
-            color: var(--pepper);
-            margin-bottom: 2.5rem;
-            text-align: center;
-        }
-
-        #contact h4 {
-            color: #2B2B2B;
-            font-weight: 600;
-            margin-bottom: 1.25rem; /* Increased spacing below heading */
-        }
-
-        #contact .col-md-6 p {
-            line-height: 1.6; /* Improve readability of paragraph */
-            margin-bottom: 1.5rem;
-        }
-
-        .contact-info {
-            margin-top: 2rem; /* Added more space above contact items */
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1.25rem; /* Increased spacing between items */
-            color: #444;
-            font-size: 1rem; /* Ensure consistent font size */
-        }
-
-        .contact-item i {
-            color: var(--pepper);
-            font-size: 1.1rem; /* Slightly reduced icon size */
-            margin-right: 1.25rem; /* Increased space after icon */
-            width: 20px; /* Ensure consistent icon spacing */
-            text-align: center;
-            flex-shrink: 0; /* Prevent icon from shrinking */
-        }
-
-        .contact-item a,
-        .contact-item span {
-            color: #444;
-            text-decoration: none;
-            transition: color 0.3s ease;
-            line-height: 1.5; /* Ensure consistent line height */
-        }
-
-        .contact-item a:hover {
-            color: var(--pepper);
-            text-decoration: underline;
-        }
-
-        /* Form Styling */
-        #contact .form-label {
-            font-weight: 500;
-            color: #333;
-            margin-bottom: 0.5rem;
-        }
-
-        #contact .form-control {
-            background-color: #fff;
-            border: 1px solid #ced4da;
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
-            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-        }
-
-        #contact .form-control:focus {
-            border-color: var(--pepper);
-            outline: 0;
-            box-shadow: 0 0 0 0.2rem rgba(193, 118, 109, 0.25); /* Using pepper color with alpha */
-        }
-
-        #contact textarea.form-control {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        #contact .btn-primary {
-            background-color: var(--pepper);
-            border-color: var(--pepper);
-            padding: 0.75rem 1.5rem;
-            font-weight: 500;
-            border-radius: 8px;
-            transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
-        }
-
-        #contact .btn-primary:hover {
-            background-color: #a55e54; /* Darker pepper */
-            border-color: #a55e54;
-            transform: translateY(-2px);
-        }
-
-        #contact .alert-success {
-            background-color: #d1e7dd;
-            border-color: #badbcc;
-            color: #0f5132;
-            border-radius: 8px;
-        }
-
-        .modal-content {
-            border-radius: 15px;
-        }
-
-        .modal-header {
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
-            padding: 1.5rem;
-        }
-
-        .btn-success {
-            background-color: #28a745;
-            border-color: #28a745;
-            padding: 0.75rem 2rem;
-            font-weight: 500;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-        }
-
-        .btn-success:hover {
-            background-color: #218838;
-            border-color: #1e7e34;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
-        }
-
-        .modal .fa-paper-plane {
-            color: #28a745;
-            animation: float 2s ease-in-out infinite;
-        }
-
-        @@keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .modal-backdrop.show {
-            opacity: 0.7;
-        }
-
-        .modal.fade .modal-dialog {
-            transition: transform 0.3s ease-out;
-        }
-
-        .modal.show .modal-dialog {
-            transform: none;
-        }
-
-        .success-modal .modal-content {
-            background: #ffffff;
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .success-modal .modal-header {
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
-        }
-
-        .success-modal .success-icon {
-            color: #2B2B2B;
-            animation: iconFloat 2s infinite ease-in-out;
-        }
-
-        .success-modal .thank-you-text {
-            color: #2B2B2B;
-            font-weight: 600;
-            font-size: 1.5rem;
-        }
-
-        .success-modal .response-message {
-            color: #4B5563;
-            font-size: 1.1rem;
-        }
-
-        .success-modal .follow-up-text {
-            color: #6B7280;
-            font-size: 1rem;
-        }
-
-        .success-modal .btn-dark {
-            background: #2B2B2B;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .success-modal .btn-dark:hover {
-            background: #404040;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        @* Keyframes animation *@
-        @(@"@keyframes iconFloat {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }")
-
-        .modal.fade .modal-dialog {
-            transform: scale(0.8);
-            opacity: 0;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .modal.show .modal-dialog {
-            transform: scale(1);
-            opacity: 1;
-        }
-
-        /* Mobile Responsiveness */
-        @(@"@media (max-width: 576px) {
-            .success-modal .modal-dialog {
-                margin: 1rem;
-            }
-
-            .success-modal .thank-you-text {
-                font-size: 1.25rem;
-            }
-
-            .success-modal .response-message {
-                font-size: 1rem;
-            }
-
-            .success-modal .follow-up-text {
-                font-size: 0.9rem;
-            }
-        }")
     </style>
 }
 
 <div id="home" class="hero-section">
+    <div class="hero-bg" aria-hidden="true">
+        <img src="/images/hero-bg.png" alt="">
+    </div>
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6 order-lg-1">
                 <h1 class="display-4 fw-bold">Anastasiia Khrustaleva</h1>
-                <p class="lead">Full-Stack Developer and IT Support Specialist located in Canada. Passionate about creating efficient software solutions and providing exceptional technical support.</p>
+                <p class="lead">Transforming complex ideas into elegant, high-performance web solutions.</p>
+                <p class="lead mb-0">Full-stack developer with 5+ years of experience and a foundation in leadership, operations, and customer-centric design.</p>
                 <div class="hero-btn-group">
-                    <a href="#projects" class="btn btn-primary">
+                    <a asp-controller="Home" asp-action="Projects" class="btn btn-primary">
                         <i class="fas fa-code"></i>View My Work
                     </a>
-                    <a href="#contact" class="btn btn-outline-primary">
+                    <a asp-controller="Home" asp-action="Contact" class="btn btn-outline-primary">
                         <i class="fas fa-envelope"></i>Contact Me
                     </a>
-                    <a asp-action="DownloadResume" asp-controller="Home" class="btn btn-secondary">
+                    <a asp-action="DownloadResume" asp-controller="Home" class="btn btn-secondary" target="_blank" rel="noopener">
                         <i class="fas fa-download"></i>Download Resume
                     </a>
-                    <a asp-action="DownloadReferences" asp-controller="Home" class="btn btn-secondary">
+                    <a asp-action="DownloadReferences" asp-controller="Home" class="btn btn-secondary" target="_blank" rel="noopener">
                         <i class="fas fa-download"></i>Download References
                     </a>
-                    <a href="https://www.linkedin.com/in/anastasiia-khrustaleva-29a180100/" target="_blank" class="social-link">
+                    <a href="https://www.linkedin.com/in/anastasiia-khrustaleva-29a180100/" target="_blank" rel="noopener" class="social-link">
                         <i class="fab fa-linkedin"></i>Connect on LinkedIn
                     </a>
                 </div>
             </div>
             <div class="col-lg-6 order-lg-2">
                 <div class="hero-image">
-                    <img src="/images/hero-image.jpeg" alt="Anastasiia Khrustaleva" class="profile-image">
+                    <img src="/images/hero-image.png" alt="Anastasiia Khrustaleva" class="profile-image">
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<!-- Skills & Expertise Section -->
-<section id="skills" class="py-5">
-    <div class="container">
-        <h2 class="text-center mb-5">Skills & Expertise</h2>
-        <div class="row">
-            <!-- Programming & Development -->
-            <div class="col-md-4 mb-4">
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>Programming & Development</h3>
-                    <ul class="skill-list">
-                        <li><i class="fas fa-chevron-right"></i> C# & .NET Core</li>
-                        <li><i class="fas fa-chevron-right"></i> ASP.NET MVC</li>
-                        <li><i class="fas fa-chevron-right"></i> Entity Framework</li>
-                        <li><i class="fas fa-chevron-right"></i> SQL Server</li>
-                        <li><i class="fas fa-chevron-right"></i> HTML5 & CSS3</li>
-                        <li><i class="fas fa-chevron-right"></i> JavaScript & jQuery</li>
-                        <li><i class="fas fa-chevron-right"></i> Bootstrap</li>
-                        <li><i class="fas fa-chevron-right"></i> Git Version Control</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Hospitality Management -->
-            <div class="col-md-4 mb-4">
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <i class="fas fa-hotel"></i>
-                    </div>
-                    <h3>Hospitality Management</h3>
-                    <ul class="skill-list">
-                        <li><i class="fas fa-chevron-right"></i> Front Office Operations</li>
-                        <li><i class="fas fa-chevron-right"></i> Revenue Management</li>
-                        <li><i class="fas fa-chevron-right"></i> Guest Relations</li>
-                        <li><i class="fas fa-chevron-right"></i> Housekeeping Management</li>
-                        <li><i class="fas fa-chevron-right"></i> Event Planning</li>
-                        <li><i class="fas fa-chevron-right"></i> Food & Beverage Service</li>
-                        <li><i class="fas fa-chevron-right"></i> Quality Assurance</li>
-                        <li><i class="fas fa-chevron-right"></i> Staff Training</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Soft Skills -->
-            <div class="col-md-4 mb-4">
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3>Soft Skills</h3>
-                    <ul class="skill-list">
-                        <li><i class="fas fa-chevron-right"></i> Leadership</li>
-                        <li><i class="fas fa-chevron-right"></i> Team Collaboration</li>
-                        <li><i class="fas fa-chevron-right"></i> Problem Solving</li>
-                        <li><i class="fas fa-chevron-right"></i> Time Management</li>
-                        <li><i class="fas fa-chevron-right"></i> Communication</li>
-                        <li><i class="fas fa-chevron-right"></i> Adaptability</li>
-                        <li><i class="fas fa-chevron-right"></i> Customer Service</li>
-                        <li><i class="fas fa-chevron-right"></i> Multitasking</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Work Experience -->
-<section id="experience" class="section-padding">
-    <div class="container">
-        <h2 class="section-title text-center mb-5">Work Experience</h2>
-        <div class="timeline-container">
-            <div class="timeline-item fade-in">
-                <h3 class="h5">IT Support & Software Technician</h3>
-                <p class="text-secondary mb-2">Niagara College | Jan 2024 – Present</p>
-                <ul class="mb-0">
-                    <li>Provide front-line technical support to students and faculty</li>
-                    <li>Assist in maintaining college-wide applications</li>
-                    <li>Develop solutions to optimize system performance</li>
-                </ul>
-            </div>
-            <div class="timeline-item fade-in">
-                <h3 class="h5">Machine Learning Content Analyst</h3>
-                <p class="text-secondary mb-2">Outlier | October 2024 – Present</p>
-                <ul class="mb-0">
-                    <li>Collaborate with AI developers on content generation models</li>
-                    <li>Provide feedback for improving writing clarity</li>
-                    <li>Ensure content quality standards</li>
-                </ul>
-            </div>
-            <div class="timeline-item fade-in">
-                <h3 class="h5">Operations Manager</h3>
-                <p class="text-secondary mb-2">LA Fitness | Mar 2024 – Sep 2024</p>
-                <ul class="mb-0">
-                    <li>Managed daily operations and business processes</li>
-                    <li>Handled scheduling, budgeting, and facility improvements</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
-<section id="education" class="education-section">
-    <div class="container">
-        <h2 class="section-title text-center mb-5">Education</h2>
-        <div class="row">
-            <!-- Computer Programming Diploma -->
-            <div class="col-md-6 mb-4">
-                <div class="education-card">
-                    <div class="education-header">
-                        <h3 class="diploma-title">Diploma in Computer Programming</h3>
-                        <div class="education-meta">
-                            <span class="institution">Niagara College</span>
-                            <span class="separator">|</span>
-                            <span class="date">Expected April 2025</span>
-                        </div>
-                    </div>
-                    
-                    <div class="education-content">
-                        <div class="expertise-section">
-                            <h4>Technical Expertise</h4>
-                            <ul class="expertise-list">
-                                <li><i class="fas fa-code"></i> Advanced Object-Oriented Programming (C#)</li>
-                                <li><i class="fas fa-laptop-code"></i> Full-Stack Web Development</li>
-                                <li><i class="fas fa-database"></i> Database Design & Management</li>
-                                <li><i class="fas fa-cloud"></i> Cloud Computing & Azure Services</li>
-                                <li><i class="fab fa-github"></i> Version Control & Collaboration</li>
-                            </ul>
-                        </div>
-
-                        <div class="achievements-section">
-                            <h4>Key Achievements</h4>
-                            <ul class="achievements-list">
-                                <li><i class="fas fa-trophy"></i> Hired as a Campus IT Support Technician </li>
-                                <li><i class="fas fa-star"></i> Project Graded with Honors for Excellence </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Hospitality Management Diploma -->
-            <div class="col-md-6 mb-4">
-                <div class="education-card">
-                    <div class="education-header">
-                        <h3 class="diploma-title">Diploma in Hospitality Management</h3>
-                        <div class="education-meta">
-                            <span class="institution">Niagara College</span>
-                            <span class="separator">|</span>
-                            <span class="date">2017</span>
-                        </div>
-                    </div>
-
-                    <div class="education-content">
-                        <div class="expertise-section">
-                            <h4>Professional Development</h4>
-                            <ul class="expertise-list">
-                                <li><i class="fas fa-user-tie"></i> Customer Service Excellence</li>
-                                <li><i class="fas fa-handshake"></i> Client Relationship Management</li>
-                                <li><i class="fas fa-lightbulb"></i> Problem Resolution & Decision Making</li>
-                                <li><i class="fas fa-users"></i> Team Leadership & Project Management</li>
-                                <li><i class="fas fa-chart-line"></i> Business Operations & Financial Management</li>
-                            </ul>
-                        </div>
-
-                        <div class="achievements-section">
-                            <h4>Key Achievements</h4>
-                            <ul class="achievements-list">
-                                <li><i class="fas fa-graduation-cap"></i> Graduated with Honours</li>
-                                <li><i class="fas fa-star"></i> Innovative Service Protocol Development</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="projects" class="section-padding">
-    <div class="container">
-        <h2 class="section-title text-center mb-5">Featured Projects</h2>
-        <div class="row g-4">
-            <div class="col-md-6">
-                <div class="project-card card">
-                    <div class="card-body">
-                        <h3 class="h5">Gym Membership Application</h3>
-                        <p class="text-secondary mb-3">Project Manager | Eastern Digital</p>
-                        <p class="mb-3">Led the end-to-end development of a comprehensive gym membership management system. Implemented secure user authentication, membership tracking, payment processing, and class scheduling features.</p>
-                        <div class="badges-container">
-                            <span class="badge">C#</span>
-                            <span class="badge">.NET MVC</span>
-                            <span class="badge">SQL</span>
-                            <span class="badge">Entity Framework</span>
-                            <span class="badge">RESTful API</span>
-                        </div>
-                        <div class="project-details">
-                            <p class="mb-2"><strong>Key Features:</strong></p>
-                            <ul>
-                                <li>Secure user authentication and authorization</li>
-                                <li>Automated payment processing and billing</li>
-                                <li>Real-time class scheduling and attendance tracking</li>
-                                <li>Comprehensive reporting and analytics dashboard</li>
-                                <li>Mobile-responsive design for all devices</li>
-                            </ul>
-                        </div>
-                        <div class="deployment-info mt-3">
-                            <p class="mb-2"><strong>Live Deployment:</strong></p>
-                          
-                           
-                            <a href="https://gymmanagement20241203090503.azurewebsites.net/" class="deployment-link" target="_blank">https://gymmanagement20241203090503.azurewebsites.net/</a>
-                            <p></p>
-                            <div class="login-info mt-2">
-                                <p class="mb-1"><strong>Login credentials:</strong></p>
-                                <p class="mb-1">Email: admin@outlook.com</p>
-                                <p class="mb-0">Password: Pa55w@rd</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="project-card card">
-                    <div class="card-body">
-                        <h3 class="h5">CRM Management System</h3>
-                        <p class="text-secondary mb-3">Project Manager | Eastern Digital</p>
-                        <p class="mb-3">Led the development of a comprehensive CRM system for managing customer relationships and business processes. Implemented advanced features for customer data management, sales tracking, and analytics.</p>
-                        <div class="badges-container">
-                            <span class="badge">C#</span>
-                            <span class="badge">.NET MVC</span>
-                            <span class="badge">SQL</span>
-                            <span class="badge">Entity Framework</span>
-                            <span class="badge">RESTful API</span>
-                        </div>
-                        <div class="project-details">
-                            <p class="mb-2"><strong>Key Features:</strong></p>
-                            <ul>
-                                <li>Customer data management and tracking</li>
-                                <li>Sales pipeline visualization</li>
-                                <li>Automated reporting and analytics</li>
-                                <li>Task and activity management</li>
-                                <li>Role-based access control</li>
-                            </ul>
-                        </div>
-                        <div class="deployment-info mt-3">
-                            <p class="mb-2"><strong>Live Deployment:</strong></p>
-                            <a href="https://nia-a5bmgaebhggncyh5.canadacentral-01.azurewebsites.net/UserManagement" class="deployment-link" target="_blank">https://nia-a5bmgaebhggncyh5.canadacentral-01.azurewebsites.net/UserManagement</a>
-                            <div class="login-info mt-2">
-                                <p class="mb-1"><strong>Login credentials:</strong></p>
-                                <p class="mb-1">Email: admin@admin.ca</p>
-                                <p class="mb-0">Password: admintest</p>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="contact" class="section-padding">
-    <div class="container">
-        <h2 class="section-title text-center mb-5">Contact Me</h2>
-        <div class="row">
-            <!-- Contact Information -->
-            <div class="col-lg-4 mb-4 mb-lg-0">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h3 class="h5 mb-4">Contact Information</h3>
-                        <partial name="_ContactInfoPartial" />
-                    </div>
-                </div>
-            </div>
-
-            <!-- Contact Form -->
-            <div class="col-lg-8">
-                <div class="card contact-card">
-                    <div class="card-body p-4">
-                        <h3 class="h5 mb-4 text-dark">Send a Message</h3>
-                        <form asp-action="Contact" asp-controller="Home" method="post" class="contact-form">
-                            @Html.AntiForgeryToken()
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="name" class="form-label">Your Name</label>
-                                        <input type="text" class="form-control contact-input" id="name" name="ContactForm.Name" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="email" class="form-label">Your Email</label>
-                                        <input type="email" class="form-control contact-input" id="email" name="ContactForm.Email" required>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="message" class="form-label">Your Message</label>
-                                        <textarea class="form-control contact-input" id="message" name="ContactForm.Message" rows="5" required></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-send w-100">
-                                        <i class="fas fa-paper-plane me-2"></i>Send Message
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Footer -->
-<footer class="site-footer">
-    <div class="container">
-        <div class="footer-content">
-            <div class="footer-socials">
-                <a href="https://www.linkedin.com/in/anastasiia-khrustaleva-29a180100/" target="_blank" title="LinkedIn" class="social-icon">
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a href="https://github.com/pewbertable/CrmTechTitans" target="_blank" title="GitHub" class="social-icon">
-                    <i class="fab fa-github"></i>
-                </a>
-            </div>
-            <div class="footer-copyright">
-                &copy; @DateTime.Now.Year Anastasiia Khrustaleva. All Rights Reserved.
-            </div>
-        </div>
-    </div>
-</footer>
-
-<!-- Success Modal -->
-<div class="modal fade success-modal" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header border-0" style="background: #2B2B2B;">
-                <h5 class="modal-title text-light" id="successModalLabel">
-                    <i class="fas fa-check-circle text-success me-2"></i>Message Sent Successfully!
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center py-4">
-                <div class="success-icon mb-4">
-                    <i class="fas fa-paper-plane fa-3x"></i>
-                </div>
-                <h4 class="thank-you-text mb-3">Thank You!</h4>
-                <p class="response-message mb-2">Your message has been sent successfully.</p>
-                <p class="follow-up-text">Anastasiia will get back to you shortly.</p>
-            </div>
-            <div class="modal-footer border-0 justify-content-center">
-                <button type="button" class="btn btn-dark px-4 py-2" data-bs-dismiss="modal">
-                    Got it!
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-@section Scripts {
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize all modals
-            var modals = document.querySelectorAll('.modal');
-            modals.forEach(function(modal) {
-                new bootstrap.Modal(modal);
-            });
-
-            // Get the contact form
-            const contactForm = document.querySelector('.contact-form');
-            const successModal = new bootstrap.Modal(document.getElementById('successModal'));
-            
-            if (contactForm) {
-                contactForm.addEventListener('submit', async function(e) {
-                    e.preventDefault();
-                    
-                    // Get form data
-                    const formData = new FormData(this);
-                    
-                    // Get the submit button
-                    const submitBtn = this.querySelector('button[type="submit"]');
-                    const originalBtnText = submitBtn.innerHTML;
-                    
-                    try {
-                        // Disable button and show loading state
-                        submitBtn.disabled = true;
-                        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
-                        
-                        // Submit form using fetch
-                        const response = await fetch(this.action, {
-                            method: 'POST',
-                            body: formData,
-                            headers: {
-                                'X-Requested-With': 'XMLHttpRequest'
-                            }
-                        });
-
-                        const data = await response.json();
-                        
-                        // Reset form
-                        this.reset();
-                        
-                        // Show success modal
-                        successModal.show();
-                    } catch (error) {
-                        console.error('Error:', error);
-                        // Show success modal anyway (as per requirement)
-                        successModal.show();
-                    } finally {
-                        // Re-enable button and restore original text
-                        submitBtn.disabled = false;
-                        submitBtn.innerHTML = originalBtnText;
-                    }
-                });
-            }
-
-            // Check for success message in TempData
-            const messageSent = '@TempData["MessageSent"]';
-            if (messageSent && messageSent.length > 0) {
-                successModal.show();
-            }
-        });
-    </script>
-}

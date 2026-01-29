@@ -1,73 +1,75 @@
-@model AnastasiiaPortfolio.Models.ContactViewModel
+@model AnastasiiaPortfolio.Models.HomeViewModel
 
 @{
     ViewData["Title"] = "Contact";
 }
 
-<div class="container py-5">
-    <div class="row mb-5">
+<div class="container contact-page py-3 py-md-4">
+    <div class="row mb-3 mb-md-4">
         <div class="col-lg-8 mx-auto text-center">
-            <h1 class="display-4 fw-bold mb-3">Get in Touch</h1>
-            <p class="lead">I'd love to hear from you. Let's discuss your project or just say hello!</p>
+            <h1 class="display-5 fw-bold mb-2">Get in Touch</h1>
+            <p class="lead mb-0" style="font-size: 1rem;">I'd love to hear from you. Let's discuss your project or just say hello!</p>
         </div>
     </div>
 
     <div class="row">
         <!-- Contact Information -->
-        <div class="col-lg-4 mb-4 mb-lg-0">
-            <div class="card h-100" style="background: #2a2a3b; border: 1px solid rgba(244, 244, 245, 0.1);">
-                <div class="card-body">
-                    <h3 class="h5 mb-4" style="color: #f4f4f5;">Contact Information</h3>
+        <div class="col-lg-4 mb-3 mb-lg-0">
+            <div class="card h-100 contact-card" style="background: #2a2a3b; border: 1px solid rgba(244, 244, 245, 0.1);">
+                <div class="card-body p-3 p-md-4">
+                    <h3 class="h5 mb-3" style="color: #f4f4f5;">Contact Information</h3>
                     <partial name="_ContactInfoPartial" />
                 </div>
             </div>
         </div>
 
         <!-- Contact Form -->
-        <div class="col-lg-8 mx-auto">
-            <div class="card" style="background: #2a2a3b; border: 1px solid rgba(244, 244, 245, 0.1);">
-                <div class="card-body p-4">
-                    <h3 class="h5 mb-4" style="color: #f4f4f5;">Send a Message</h3>
+        <div class="col-lg-8">
+            <div class="card contact-form-card" style="background: #2a2a3b; border: 1px solid rgba(244, 244, 245, 0.1);">
+                <div class="card-body p-3 p-md-4">
+                    <h3 class="h5 mb-3" style="color: #f4f4f5;">Send a Message</h3>
                     
-                    @if (!string.IsNullOrEmpty(TempData["Error"] as string))
-                    {
-                        <div class="alert alert-danger">@TempData["Error"]</div>
-                    }
+                    <div id="contactThankYou" class="alert alert-success contact-thank-you" role="alert" style="display: none;">
+                        Thank you! Your email client has opened with a draft to nastiakhru@gmail.com. Please click <strong>Send</strong> there to deliver your message.
+                    </div>
+                    <div id="contactError" class="alert alert-danger" role="alert" style="display: none;"></div>
                     
-                    <form asp-action="Contact" method="post">
-                        <div class="row g-3">
+                    <form id="contactForm" action="#" method="get">
+                        <div class="row g-2 g-md-3">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name" class="form-label text-light">Your Name</label>
-                                    <input type="text" class="form-control contact-input" id="name" name="ContactForm.Name" required 
+                                    <input type="text" class="form-control contact-input" id="name" name="name" required 
+                                           placeholder="Your name"
                                            style="background: #1e1e2e; color: white; border: 2px solid rgba(244, 244, 245, 0.4);">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="email" class="form-label text-light">Your Email</label>
-                                    <input type="email" class="form-control contact-input" id="email" name="ContactForm.Email" required
+                                    <input type="email" class="form-control contact-input" id="email" name="email" required
+                                           placeholder="your@email.com"
                                            style="background: #1e1e2e; color: white; border: 2px solid rgba(244, 244, 245, 0.4);">
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="message" class="form-label text-light">Your Message</label>
-                                    <textarea class="form-control contact-input" 
+                                    <textarea class="form-control contact-input contact-message" 
                                               id="message" 
-                                              name="ContactForm.Message" 
-                                              rows="5" 
+                                              name="message" 
+                                              rows="3" 
                                               required
+                                              placeholder="Your message..."
                                               style="background: #1e1e2e !important; 
                                                      color: white !important; 
                                                      border: 2px solid rgba(244, 244, 245, 0.4) !important;
-                                                     min-height: 150px !important;"></textarea>
-                                    <span class="text-danger field-validation-valid" data-valmsg-for="ContactForm.Message" data-valmsg-replace="true"></span>
+                                                     min-height: 80px !important;"></textarea>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12 mt-1">
                                 <button type="submit" class="btn btn-primary w-100" 
-                                        style="background: #22d3ee; border: none; padding: 12px;">
+                                        style="background: #64748b; border: none; padding: 10px 12px;">
                                     Send Message
                                 </button>
                             </div>
@@ -79,14 +81,14 @@
     </div>
 
     <!-- Social Links -->
-    <div class="row mt-5">
+    <div class="row mt-4">
         <div class="col-12 text-center">
-            <h3 class="h5 mb-4" style="color: #f4f4f5;">Connect With Me</h3>
+            <h3 class="h5 mb-3" style="color: #f4f4f5;">Connect With Me</h3>
             <div class="d-flex justify-content-center gap-4">
-                <a href="https://www.linkedin.com/in/anastasiia-khrustalova/" class="social-link" style="color: #22d3ee;">
+                <a href="https://www.linkedin.com/in/anastasiia-khrustaleva-29a180100/" class="social-link" style="color: #94a3b8;">
                     <i class="fab fa-linkedin fa-2x"></i>
                 </a>
-                <a href="https://github.com/AnastasiiaKhr" class="social-link" style="color: #22d3ee;">
+                <a href="https://github.com/AnastasiiaKhru" class="social-link" style="color: #94a3b8;">
                     <i class="fab fa-github fa-2x"></i>
                 </a>
             </div>
@@ -108,7 +110,7 @@
 
     .card:hover {
         transform: translateY(-2px);
-        box-shadow: 0 0 40px rgba(34, 211, 238, 0.1);
+        box-shadow: 0 0 40px rgba(100, 116, 139, 0.15);
     }
 
     .custom-input {
@@ -120,8 +122,8 @@
 
     .custom-input:focus {
         background: #2a2a3b !important;
-        box-shadow: 0 0 0 0.25rem rgba(34, 211, 238, 0.25) !important;
-        border-color: #22d3ee !important;
+        box-shadow: 0 0 0 0.25rem rgba(100, 116, 139, 0.25) !important;
+        border-color: #94a3b8 !important;
         color: #ffffff !important;
     }
 
@@ -132,7 +134,7 @@
 
     .form-floating > .form-control:focus ~ label,
     .form-floating > .form-control:not(:placeholder-shown) ~ label {
-        color: #22d3ee !important;
+        color: #94a3b8 !important;
         background-color: #2a2a3b !important;
         padding: 0 0.5rem;
         opacity: 1;
@@ -152,7 +154,7 @@
     }
 
     .social-link:hover {
-        color: #0ea5e9 !important;
+        color: #cbd5e1 !important;
         transform: translateY(-2px);
     }
 
@@ -161,15 +163,15 @@
     }
 
     .contact-icon {
-        background: rgba(34, 211, 238, 0.1) !important;
+        background: rgba(100, 116, 139, 0.2) !important;
     }
 
     .contact-icon i {
-        color: #22d3ee !important;
+        color: #94a3b8 !important;
     }
 
     .hover-text-primary:hover {
-        color: #22d3ee !important;
+        color: #94a3b8 !important;
     }
 
     .text-secondary {
@@ -177,8 +179,8 @@
     }
 
     .btn:hover {
-        background-color: rgba(34, 211, 238, 0.1) !important;
-        box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
+        background-color: rgba(100, 116, 139, 0.2) !important;
+        box-shadow: 0 0 20px rgba(100, 116, 139, 0.25);
         transform: translateY(-2px);
     }
 
@@ -194,8 +196,8 @@
     .contact-input:focus {
         background-color: #1e1e2e !important;
         color: white !important;
-        border-color: #22d3ee !important;
-        box-shadow: 0 0 0 0.25rem rgba(34, 211, 238, 0.25) !important;
+        border-color: #94a3b8 !important;
+        box-shadow: 0 0 0 0.25rem rgba(100, 116, 139, 0.25) !important;
         outline: none !important;
     }
 
@@ -205,16 +207,17 @@
     }
 
     .contact-input.is-invalid:focus {
-        border-color: #22d3ee !important;
-        box-shadow: 0 0 0 0.25rem rgba(34, 211, 238, 0.25) !important;
+        border-color: #94a3b8 !important;
+        box-shadow: 0 0 0 0.25rem rgba(100, 116, 139, 0.25) !important;
     }
 
     .field-validation-valid {
         display: none;
     }
 
-    textarea.contact-input {
+    textarea.contact-input.contact-message {
         resize: vertical;
+        max-height: 200px;
     }
 
     .form-label {
@@ -223,12 +226,63 @@
     }
 
     .btn-primary:hover {
-        background: #0ea5e9 !important;
+        background: #475569 !important;
         transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(34, 211, 238, 0.25);
+        box-shadow: 0 4px 12px rgba(100, 116, 139, 0.25);
     }
+
+    .contact-thank-you {
+        background: rgba(34, 197, 94, 0.15) !important;
+        border: 1px solid rgba(34, 197, 94, 0.5);
+        color: #86efac !important;
+    }
+
+    .contact-validation-summary {
+        background: rgba(239, 68, 68, 0.15) !important;
+        border: 1px solid rgba(239, 68, 68, 0.5);
+        color: #fca5a5 !important;
+    }
+
+    .validation-summary-valid { display: none !important; }
 </style>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        (function () {
+            var form = document.getElementById('contactForm');
+            var thankYou = document.getElementById('contactThankYou');
+            var errEl = document.getElementById('contactError');
+            var toEmail = 'nastiakhru@gmail.com';
+
+            if (!form) return;
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                if (thankYou) thankYou.style.display = 'none';
+                if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
+
+                var name = (document.getElementById('name') || {}).value.trim();
+                var email = (document.getElementById('email') || {}).value.trim();
+                var message = (document.getElementById('message') || {}).value.trim();
+
+                if (!name || !email || !message) {
+                    if (errEl) {
+                        errEl.textContent = 'Please fill in your name, email, and message.';
+                        errEl.style.display = 'block';
+                    }
+                    return;
+                }
+
+                var subject = 'Portfolio Contact from ' + name;
+                var body = 'Name: ' + name + '\nEmail: ' + email + '\n\nMessage:\n' + message;
+                var mailto = 'mailto:' + toEmail + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+                window.location.href = mailto;
+
+                if (thankYou) {
+                    thankYou.style.display = 'block';
+                    thankYou.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            });
+        })();
+    </script>
 } 
