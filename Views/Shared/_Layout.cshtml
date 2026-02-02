@@ -33,7 +33,6 @@
     </div>
     <div class="wave-layer wave-layer-1"></div>
     <div class="wave-layer wave-layer-2"></div>
-    <div class="particles-container" id="particlesContainer"></div>
     <div class="ripple-container" id="rippleContainer"></div>
     <div class="mouse-glow" id="mouseGlow"></div>
     
@@ -127,52 +126,12 @@
     <!-- Interactive Background Effects -->
     <script>
         (function() {
-            const particlesContainer = document.getElementById('particlesContainer');
             const rippleContainer = document.getElementById('rippleContainer');
             const mouseGlow = document.getElementById('mouseGlow');
             const orbs = document.querySelectorAll('.orb');
             
             // Skip if elements don't exist (e.g., on game pages)
-            if (!particlesContainer) return;
-
-            // === FLOATING PARTICLES ===
-            const colors = [
-                'rgba(139, 92, 246, 0.6)',   // Purple
-                'rgba(56, 189, 248, 0.5)',   // Blue
-                'rgba(244, 114, 182, 0.5)',  // Pink
-                'rgba(251, 191, 36, 0.4)'    // Amber
-            ];
-
-            function createParticle() {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                const size = 4 + Math.random() * 8;
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                const duration = 8 + Math.random() * 12;
-                const left = Math.random() * 100;
-                
-                particle.style.cssText = `
-                    width: ${size}px;
-                    height: ${size}px;
-                    background: ${color};
-                    left: ${left}%;
-                    animation-duration: ${duration}s;
-                    animation-delay: ${Math.random() * 2}s;
-                    box-shadow: 0 0 ${size * 2}px ${color};
-                `;
-                
-                particlesContainer.appendChild(particle);
-                
-                // Remove after animation
-                setTimeout(() => particle.remove(), (duration + 2) * 1000);
-            }
-
-            // Create particles periodically
-            setInterval(createParticle, 400);
-            // Initial batch
-            for (let i = 0; i < 15; i++) {
-                setTimeout(createParticle, i * 200);
-            }
+            if (!rippleContainer) return;
 
             // === MOUSE-REACTIVE ORBS ===
             let mouseX = window.innerWidth / 2;

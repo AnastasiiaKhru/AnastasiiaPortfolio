@@ -60,6 +60,7 @@ public class HomeController : Controller
     // Demo websites
     public IActionResult CakeShopDemo() => View();
     public IActionResult GymCrmDemo() => View();
+    public IActionResult LiquorStoreDemo() => View();
 
     public IActionResult Portfolio()
     {
