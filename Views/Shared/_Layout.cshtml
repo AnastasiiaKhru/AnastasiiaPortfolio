@@ -23,19 +23,6 @@
     @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
-    <!-- Interactive Wave/Liquid Background Effect -->
-    <div class="animated-bg-mesh"></div>
-    <div class="floating-orbs" id="floatingOrbs">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-        <div class="orb orb-4"></div>
-    </div>
-    <div class="wave-layer wave-layer-1"></div>
-    <div class="wave-layer wave-layer-2"></div>
-    <div class="ripple-container" id="rippleContainer"></div>
-    <div class="mouse-glow" id="mouseGlow"></div>
-    
     <header>
         <nav class="navbar navbar-expand-lg">
             <div class="container navbar-container">
@@ -121,85 +108,6 @@
                 });
             });
         });
-    </script>
-
-    <!-- Interactive Background Effects -->
-    <script>
-        (function() {
-            const rippleContainer = document.getElementById('rippleContainer');
-            const mouseGlow = document.getElementById('mouseGlow');
-            const orbs = document.querySelectorAll('.orb');
-            
-            // Skip if elements don't exist (e.g., on game pages)
-            if (!rippleContainer) return;
-
-            // === MOUSE-REACTIVE ORBS ===
-            let mouseX = window.innerWidth / 2;
-            let mouseY = window.innerHeight / 2;
-            let targetX = mouseX;
-            let targetY = mouseY;
-
-            document.addEventListener('mousemove', (e) => {
-                targetX = e.clientX;
-                targetY = e.clientY;
-                
-                // Update mouse glow
-                if (mouseGlow) {
-                    mouseGlow.style.left = e.clientX + 'px';
-                    mouseGlow.style.top = e.clientY + 'px';
-                    mouseGlow.classList.add('active');
-                }
-            });
-
-            document.addEventListener('mouseleave', () => {
-                if (mouseGlow) mouseGlow.classList.remove('active');
-            });
-
-            // Smooth orb movement
-            function animateOrbs() {
-                mouseX += (targetX - mouseX) * 0.05;
-                mouseY += (targetY - mouseY) * 0.05;
-                
-                const centerX = window.innerWidth / 2;
-                const centerY = window.innerHeight / 2;
-                const offsetX = (mouseX - centerX) / centerX;
-                const offsetY = (mouseY - centerY) / centerY;
-                
-                orbs.forEach((orb, i) => {
-                    const factor = (i + 1) * 15;
-                    const x = offsetX * factor;
-                    const y = offsetY * factor;
-                    orb.style.transform = `translate(${x}px, ${y}px)`;
-                });
-                
-                requestAnimationFrame(animateOrbs);
-            }
-            animateOrbs();
-
-            // === RIPPLE EFFECT ON CLICK ===
-            document.addEventListener('click', (e) => {
-                // Don't create ripples on interactive elements
-                if (e.target.closest('a, button, input, select, textarea, .btn, .nav-link')) return;
-                
-                const ripple = document.createElement('div');
-                ripple.className = 'ripple';
-                ripple.style.left = e.clientX + 'px';
-                ripple.style.top = e.clientY + 'px';
-                
-                // Random color
-                const rippleColors = [
-                    'rgba(139, 92, 246, 0.4)',
-                    'rgba(56, 189, 248, 0.35)',
-                    'rgba(244, 114, 182, 0.35)'
-                ];
-                ripple.style.borderColor = rippleColors[Math.floor(Math.random() * rippleColors.length)];
-                
-                rippleContainer.appendChild(ripple);
-                
-                // Remove after animation
-                setTimeout(() => ripple.remove(), 1500);
-            });
-        })();
     </script>
 </body>
 </html>
