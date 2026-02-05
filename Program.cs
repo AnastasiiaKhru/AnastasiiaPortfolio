@@ -72,6 +72,24 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.Use(async (context, next) =>
+{
+	if (context.Request.Path == "/" || context.Request.Path.Value == "/")
+	{
+		var ua = context.Request.Headers.UserAgent.ToString();
+		if (ua.Contains("LinkedInBot", StringComparison.OrdinalIgnoreCase) ||
+		    ua.Contains("facebookexternalhit", StringComparison.OrdinalIgnoreCase) ||
+		    ua.Contains("Twitterbot", StringComparison.OrdinalIgnoreCase) ||
+		    ua.Contains("Slurp", StringComparison.OrdinalIgnoreCase) ||
+		    ua.Contains("WhatsApp", StringComparison.OrdinalIgnoreCase))
+		{
+			context.Response.Redirect("/Home/Index", permanent: false);
+			return;
+		}
+	}
+	await next();
+});
+
 app.UseAuthentication();
 app.UseAuthorization();
 

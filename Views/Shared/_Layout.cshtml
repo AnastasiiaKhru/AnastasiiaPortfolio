@@ -22,8 +22,9 @@
             baseUrl = "https://" + baseUrl.Replace("http://", "");
         var ogTitle = ViewData["OgTitle"] as string ?? $"{ViewData["Title"]} - Anastasiia Portfolio";
         var ogDescription = ViewData["OgDescription"] as string ?? "Anastasiia Khrustaleva — Full-stack developer portfolio. Skills, projects, experience, and contact.";
-        var ogImage = ViewData["OgImage"] as string ?? $"{baseUrl}{Url.Content("~/images/og-image.png")}";
-        var ogUrl = $"{baseUrl}{Context.Request.Path}{Context.Request.QueryString}";
+        var ogImage = ViewData["OgImage"] as string ?? $"{baseUrl}{Url.Content("~/images/og-image.png")}?v=2";
+        var path = Context.Request.Path.Value ?? "";
+        var ogUrl = ViewData["OgUrl"] as string ?? (path == "" || path == "/" ? baseUrl + "/" : baseUrl + path + Context.Request.QueryString);
     }
     <meta property="og:title" content="@ogTitle" />
     <meta property="og:description" content="@ogDescription" />
