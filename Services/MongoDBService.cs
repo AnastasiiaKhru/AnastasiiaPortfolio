@@ -34,9 +34,7 @@ namespace AnastasiiaPortfolio.Services
                 _logger.LogInformation("Getting database: {DatabaseName}", mongoDBSettings.Value.DatabaseName);
                 _database = _client.GetDatabase(mongoDBSettings.Value.DatabaseName);
                 
-                _logger.LogInformation("Testing connection with ping command...");
-                var pingCommand = new MongoDB.Bson.BsonDocument("ping", 1);
-                _database.RunCommand<MongoDB.Bson.BsonDocument>(pingCommand);
+                _logger.LogInformation("MongoDB client initialized (connection verified on first operation).");
                 
                 _logger.LogInformation("Initializing collections...");
                 _reviewsCollection = _database.GetCollection<Review>(mongoDBSettings.Value.ReviewsCollectionName);

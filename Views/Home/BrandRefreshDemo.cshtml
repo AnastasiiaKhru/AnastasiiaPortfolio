@@ -1,0 +1,446 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Brand Refresh Case Study — Before & After Demo</title>
+    @{
+        var baseUrl = $"{Context.Request.Scheme}://{Context.Request.Host}";
+        var ogImage = $"{baseUrl}{Url.Content("~/images/project-brand-og.png")}?v=1";
+        var ogUrl = $"{baseUrl}{Context.Request.Path}{Context.Request.QueryString}";
+    }
+    <meta property="og:title" content="Brand Refresh Case Study — Before & After" />
+    <meta property="og:description" content="Case study showcasing web presence, messaging, and visual identity redesign. Before/after brand transformation." />
+    <meta property="og:image" content="@ogImage" />
+    <meta property="og:url" content="@ogUrl" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Instrument+Serif&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0d1117; --surface: #161b22; --surface2: #21262d;
+            --accent: #2ea043; --accent-soft: rgba(46, 160, 67, 0.15);
+            --text: #e6edf3; --text-muted: #8b949e; --border: rgba(255,255,255,0.06);
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'IBM Plex Sans', sans-serif; color: var(--text); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+        .brand-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1rem 2.5rem; background: rgba(13, 17, 23, 0.9);
+            backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
+        }
+        .brand-nav__logo { font-family: 'Instrument Serif', serif; font-size: 1.5rem; font-weight: 400; color: var(--text); }
+        .brand-nav__logo span { color: var(--accent); }
+        .brand-nav__links { display: flex; gap: 2rem; list-style: none; }
+        .brand-nav__links a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+        .brand-nav__links a:hover { color: var(--text); }
+
+        .case-header {
+            background: linear-gradient(180deg, rgba(46, 160, 67, 0.06) 0%, transparent 60%);
+            padding: 7rem 2rem 5rem; text-align: center; border-bottom: 1px solid var(--border);
+        }
+        .case-header h1 { font-family: 'Instrument Serif', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; margin-bottom: 0.75rem; letter-spacing: -0.02em; }
+        .case-header p { color: var(--text-muted); font-size: 1.1rem; }
+        .case-meta { display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
+        .case-meta span { color: var(--text-muted); font-size: 0.9rem; }
+
+        .comparison-wrap { max-width: 960px; margin: 0 auto; padding: 5rem 2rem; }
+        .comparison-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
+        .comparison-wrap h2 { font-family: 'Fraunces', serif; font-size: 1.5rem; color: var(--text); }
+        .view-toggles { display: flex; gap: 0.5rem; }
+        .view-toggle {
+            padding: 0.5rem 1rem; border-radius: 10px; border: 1px solid var(--border);
+            background: var(--surface2); color: var(--text-muted); font-size: 0.85rem; font-weight: 500;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .view-toggle:hover { color: var(--text); border-color: rgba(46, 160, 67, 0.3); }
+        .view-toggle.active { background: var(--accent); color: white; border-color: var(--accent); }
+        .slider-container {
+            position: relative; border-radius: 24px; overflow: hidden;
+            border: 1px solid var(--border); box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+        }
+        .slider-container.view-before .slider-after { clip-path: inset(0 100% 0 0); }
+        .slider-container.view-after .slider-after { clip-path: inset(0 0 0 0) !important; }
+        .slider-container.view-after .slider-handle { display: none; }
+        .slider-container.view-before .slider-handle { display: none; }
+        .slider-before, .slider-after {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            padding: 2.5rem; display: flex; flex-direction: column; justify-content: center;
+            transition: clip-path 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .slider-before {
+            background: linear-gradient(180deg, #c5d9f0 0%, #6b9bd1 50%, #2d5a8a 100%);
+            z-index: 1;
+        }
+        .slider-after {
+            background: linear-gradient(160deg, #0f172a 0%, #1e293b 40%, #334155 100%);
+            color: white; z-index: 2;
+            clip-path: inset(0 50% 0 0);
+        }
+        .slider-handle {
+            position: absolute; top: 0; left: 50%; width: 4px; height: 100%;
+            background: white; z-index: 10; cursor: ew-resize;
+            box-shadow: 0 0 24px rgba(0,0,0,0.25);
+            transition: left 0.1s ease-out;
+        }
+        .slider-handle::before {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 48px; height: 48px; border-radius: 14px;
+            background: white; box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            border: 2px solid #0f172a;
+        }
+        .slider-handle::after {
+            content: '\f063'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-90deg);
+            color: #0f172a; font-size: 0.95rem;
+        }
+        .slider-handle:active { cursor: grabbing; }
+        .slider-labels {
+            position: absolute; top: 1.25rem; left: 0; right: 0;
+            display: flex; justify-content: space-between; padding: 0 1.5rem;
+            z-index: 5; pointer-events: none;
+        }
+        .slider-label {
+            font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.12em; padding: 0.4rem 0.9rem; border-radius: 10px;
+        }
+        .slider-label--before { background: #2d5a8a; color: #c5d9f0; }
+        .slider-label--after { background: rgba(15,23,42,0.95); color: white; }
+        .slider-hint { text-align: center; font-size: 0.9rem; color: var(--text-muted); margin-top: 1.25rem; }
+        .slider-aspect { padding-bottom: 72%; position: relative; }
+        .slider-inner { position: absolute; inset: 0; cursor: ew-resize; }
+
+        .mock-old { font-family: Georgia, 'Times New Roman', serif; }
+        .mock-old-nav {
+            display: flex; gap: 0.2rem; flex-wrap: wrap; padding-bottom: 0.9rem;
+            border-bottom: 3px solid #1a3a5c; margin-bottom: 1rem;
+        }
+        .mock-old-nav a { color: #0a1525; text-decoration: underline; font-size: 0.72rem; padding: 0.15rem 0.3rem; font-weight: bold; }
+        .mock-old-logo { font-size: 1.85rem; font-weight: bold; color: #0a1525; text-shadow: 2px 2px 0 rgba(255,255,255,0.6); font-family: 'Impact', Arial Black, sans-serif; letter-spacing: 0.05em; }
+        .mock-old-tagline { font-size: 0.85rem; color: #0d2137; margin: 0.4rem 0 0.8rem; font-style: italic; line-height: 1.4; }
+        .mock-old-badge { display: inline-block; background: linear-gradient(180deg, #ffdd44 0%, #cc9900 100%); color: #333; padding: 0.25rem 0.6rem; font-size: 0.7rem; font-weight: bold; margin-bottom: 0.8rem; border: 1px solid #997700; font-family: Arial, sans-serif; }
+        .mock-old-btn { background: linear-gradient(180deg, #3d6a9a 0%, #1a3a5c 100%); color: #c5d9f0 !important; padding: 0.4rem 1rem; font-size: 0.8rem; border: 2px outset #6b9bd1; font-family: Arial, sans-serif; cursor: pointer; }
+        .mock-old-footer { font-size: 0.65rem; color: #2d5a8a; margin-top: 1.2rem; }
+        .mock-old-counter { font-size: 0.6rem; color: #2d5a8a; margin-top: 0.5rem; }
+
+        .mock-new { font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; justify-content: flex-start; }
+        .mock-new-nav {
+            display: flex; align-items: center; justify-content: space-between; padding-bottom: 1.25rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 1.5rem;
+        }
+        .mock-new-logo { font-family: 'Instrument Serif', serif; font-size: 1.35rem; font-weight: 400; color: #f8fafc; }
+        .mock-new-links { display: flex; gap: 1.25rem; font-size: 0.8rem; color: #94a3b8; }
+        .mock-new-links a { color: #94a3b8; text-decoration: none; }
+        .mock-new-links a:hover { color: #f8fafc; }
+        .mock-new-cta { padding: 0.45rem 0.9rem; border-radius: 8px; font-size: 0.8rem; font-weight: 600; background: #2ea043; color: white; text-decoration: none; }
+        .mock-new-hero { margin-bottom: 0.75rem; }
+        .mock-new-hero h2 { font-family: 'Instrument Serif', serif; font-size: 1.85rem; font-weight: 400; color: #f8fafc; letter-spacing: -0.02em; line-height: 1.2; }
+        .mock-new-tagline { font-size: 0.95rem; color: #94a3b8; margin-bottom: 1.25rem; letter-spacing: 0.01em; line-height: 1.5; max-width: 420px; }
+        .mock-new-btns { display: flex; gap: 0.75rem; }
+        .mock-new-btn { padding: 0.65rem 1.35rem; border-radius: 10px; font-size: 0.85rem; font-weight: 600; transition: all 0.2s; }
+        .mock-new-btn--primary { background: white; color: #0f172a; }
+        .mock-new-btn--secondary { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); }
+        .mock-new-features {
+            display: flex; gap: 1.5rem; margin-top: 1.5rem; padding-top: 1.25rem;
+            border-top: 1px solid rgba(255,255,255,0.06); flex-wrap: wrap;
+        }
+        .mock-new-feature { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: #94a3b8; }
+        .mock-new-feature i { color: #2ea043; font-size: 0.75rem; }
+
+        .process { max-width: 1000px; margin: 0 auto; padding: 4rem 2rem; }
+        .process h2 { font-family: 'Fraunces', serif; font-size: 1.5rem; margin-bottom: 2rem; color: var(--text); }
+        .process-timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+        .process-step {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 20px; padding: 1.75rem;
+            transition: transform 0.25s ease, border-color 0.25s;
+        }
+        .process-step:hover { transform: translateY(-4px); border-color: var(--accent-soft); }
+        .process-step .num { font-size: 2rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; }
+        .process-step h3 { font-size: 1rem; margin-bottom: 0.35rem; color: var(--text); }
+        .process-step p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
+
+        .results { max-width: 1000px; margin: 0 auto; padding: 4rem 2rem; }
+        .results h2 { font-family: 'Fraunces', serif; font-size: 1.5rem; margin-bottom: 2rem; color: var(--text); }
+        .results-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+        .result-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 20px; padding: 2rem; text-align: center;
+            transition: transform 0.25s ease, border-color 0.25s;
+        }
+        .result-card:hover { transform: translateY(-4px); border-color: var(--accent-soft); }
+        .result-card .num { font-size: 2.25rem; font-weight: 700; color: var(--text); display: block; font-variant-numeric: tabular-nums; }
+        .result-card .label { font-size: 0.9rem; color: var(--text-muted); margin-top: 0.25rem; }
+
+        .insights { max-width: 1000px; margin: 0 auto; padding: 4rem 2rem; }
+        .insights h2 { font-family: 'Instrument Serif', serif; font-size: 1.5rem; font-weight: 400; margin-bottom: 2rem; color: var(--text); }
+        .insight-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+        .insight-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 20px; padding: 2rem;
+            transition: transform 0.25s ease, border-color 0.25s;
+        }
+        .insight-card:hover { transform: translateY(-4px); border-color: var(--accent-soft); }
+        .insight-card i { font-size: 1.75rem; color: var(--accent); margin-bottom: 1rem; }
+        .insight-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text); }
+        .insight-card p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
+        .comparison-2 { max-width: 960px; margin: 0 auto; padding: 4rem 2rem; }
+        .comparison-2 h2 { font-family: 'Fraunces', serif; font-size: 1.35rem; margin-bottom: 1.5rem; color: var(--text); }
+        .comparison-2-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .comparison-2-card {
+            border-radius: 16px; overflow: hidden; border: 1px solid var(--border);
+            padding: 1.5rem; min-height: 180px;
+        }
+        .comparison-2-card.before { background: linear-gradient(180deg, #e8eef5 0%, #b8cce0 100%); }
+        .comparison-2-card.after { background: linear-gradient(160deg, #1e293b 0%, #334155 100%); color: white; }
+        .comparison-2-card.before .card-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #2d5a8a; margin-bottom: 0.75rem; }
+        .comparison-2-card.after .card-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #2ea043; margin-bottom: 0.75rem; }
+        .comparison-2-card.before .card-title { font-family: Arial Black, sans-serif; font-size: 1.1rem; color: #0a1525; margin-bottom: 0.5rem; }
+        .comparison-2-card.after .card-title { font-family: 'Instrument Serif', serif; font-size: 1.35rem; color: #f8fafc; margin-bottom: 0.5rem; }
+        .comparison-2-card.before .card-desc { font-size: 0.8rem; color: #1a3a5c; line-height: 1.5; }
+        .comparison-2-card.after .card-desc { font-size: 0.9rem; color: #94a3b8; line-height: 1.5; }
+
+        .testimonial { max-width: 800px; margin: 0 auto; padding: 4rem 2rem; text-align: center; }
+        .testimonial-block {
+            background: var(--surface); border: 1px solid var(--border); border-radius: 24px;
+            padding: 2.5rem; position: relative;
+        }
+        .testimonial-block::before { content: '"'; position: absolute; top: 1rem; left: 1.5rem; font-size: 4rem; font-family: 'Instrument Serif', serif; color: var(--accent-soft); line-height: 1; }
+        .testimonial-quote { font-family: 'Instrument Serif', serif; font-size: 1.4rem; color: var(--text); line-height: 1.6; margin-bottom: 1.5rem; }
+        .testimonial-author { font-size: 0.95rem; color: var(--text-muted); }
+        .testimonial-author strong { color: var(--text); }
+
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        @@media (max-width: 900px) { .results-grid, .process-timeline { grid-template-columns: repeat(2, 1fr); } .comparison-2-grid { grid-template-columns: 1fr; } }
+        @@media (max-width: 600px) { .brand-nav__links { display: none; } .results-grid, .process-timeline { grid-template-columns: 1fr; } .view-toggles { width: 100%; } .comparison-2-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <nav class="brand-nav">
+        <span class="brand-nav__logo">Case<span>Study</span></span>
+        <ul class="brand-nav__links">
+            <li><a href="#comparison">Before & After</a></li>
+            <li><a href="#comparison-2">Messaging</a></li>
+            <li><a href="#process">Process</a></li>
+            <li><a href="#results">Results</a></li>
+            <li><a href="#insights">Improvements</a></li>
+            <li><a href="#testimonial">Feedback</a></li>
+        </ul>
+    </nav>
+
+    <header class="case-header">
+        <h1>Brand Refresh Case Study</h1>
+        <p>Web presence & visual identity transformation</p>
+        <div class="case-meta">
+            <span><i class="fas fa-building" style="margin-right: 0.4rem;"></i> B2B SaaS</span>
+            <span><i class="fas fa-calendar" style="margin-right: 0.4rem;"></i> 2026</span>
+            <span><i class="fas fa-tags" style="margin-right: 0.4rem;"></i> Branding · Web Design · Copy</span>
+        </div>
+    </header>
+
+    <section class="comparison-wrap reveal" id="comparison">
+        <div class="comparison-header">
+            <h2>Before & After</h2>
+            <div class="view-toggles">
+                <button type="button" class="view-toggle active" data-view="compare">Compare</button>
+                <button type="button" class="view-toggle" data-view="before">Before Only</button>
+                <button type="button" class="view-toggle" data-view="after">After Only</button>
+            </div>
+        </div>
+        <div class="slider-container" id="sliderContainer">
+            <div class="slider-aspect">
+                <div class="slider-inner">
+                    <div class="slider-labels">
+                        <span class="slider-label slider-label--before">Before</span>
+                        <span class="slider-label slider-label--after">After</span>
+                    </div>
+                    <div class="slider-before">
+                        <div class="mock-old">
+                            <div class="mock-old-nav">
+                                <a href="#">Home</a> | <a href="#">About Us</a> | <a href="#">Products</a> | <a href="#">Services</a> | <a href="#">Contact</a> | <a href="#">Sitemap</a> | <a href="#">Links</a>
+                            </div>
+                            <div class="mock-old-logo">ACME CORP™</div>
+                            <div class="mock-old-tagline">Welcome to our Website! — Est. 1998 — Solutions for the 21st Century — You are visitor #0047291</div>
+                            <span class="mock-old-badge">★ NEW! Click Here! ★</span>
+                            <div><span class="mock-old-btn">Enter Site</span></div>
+                            <div class="mock-old-footer">Best viewed in 1024×768 • © 1998-2010 • Under Construction</div>
+                            <div class="mock-old-counter">This page last updated: Jan 2009</div>
+                        </div>
+                    </div>
+                    <div class="slider-after" id="sliderAfter">
+                        <div class="mock-new">
+                            <div class="mock-new-nav">
+                                <span class="mock-new-logo">Acme</span>
+                                <div class="mock-new-links">
+                                    <a href="#">Product</a>
+                                    <a href="#">Solutions</a>
+                                    <a href="#">Pricing</a>
+                                    <a href="#">Resources</a>
+                                </div>
+                                <a href="#" class="mock-new-cta">Get started</a>
+                            </div>
+                            <div class="mock-new-hero">
+                                <h2>Built for teams that ship.</h2>
+                            </div>
+                            <div class="mock-new-tagline">Enterprise solutions that scale. Trusted by 2,000+ teams worldwide.</div>
+                            <div class="mock-new-btns">
+                                <span class="mock-new-btn mock-new-btn--primary">Start free trial</span>
+                                <span class="mock-new-btn mock-new-btn--secondary">Book a demo</span>
+                            </div>
+                            <div class="mock-new-features">
+                                <span class="mock-new-feature"><i class="fas fa-check-circle"></i> SOC 2 certified</span>
+                                <span class="mock-new-feature"><i class="fas fa-infinity"></i> 99.9% uptime</span>
+                                <span class="mock-new-feature"><i class="fas fa-users"></i> 2,000+ teams</span>
+                                <span class="mock-new-feature"><i class="fas fa-shield-alt"></i> Enterprise-ready</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slider-handle" id="sliderHandle"></div>
+                </div>
+            </div>
+        </div>
+        <p class="slider-hint"><i class="fas fa-arrows-left-right"></i> Drag, click, or use ← → keys</p>
+    </section>
+
+    <section class="comparison-2 reveal" id="comparison-2">
+        <h2><i class="fas fa-quote-left" style="margin-right: 0.5rem;"></i> Messaging Transformation</h2>
+        <div class="comparison-2-grid">
+            <div class="comparison-2-card before">
+                <div class="card-label">Before</div>
+                <div class="card-title">Welcome! Check Out Our Stuff!</div>
+                <div class="card-desc">We have lots of great products and services. Click the buttons to learn more. Don't forget to bookmark us!</div>
+            </div>
+            <div class="comparison-2-card after">
+                <div class="card-label">After</div>
+                <div class="card-title">Built for teams that ship.</div>
+                <div class="card-desc">Clear value proposition. Confident tone. Focused on outcomes, not features.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="process reveal" id="process">
+        <h2><i class="fas fa-route" style="margin-right: 0.5rem;"></i> Process</h2>
+        <div class="process-timeline">
+            <div class="process-step"><span class="num">01</span><h3>Discovery</h3><p>Audit brand, competitors, and user feedback.</p></div>
+            <div class="process-step"><span class="num">02</span><h3>Strategy</h3><p>Define positioning, voice, and visual direction.</p></div>
+            <div class="process-step"><span class="num">03</span><h3>Design</h3><p>Create identity system, UI, and messaging.</p></div>
+            <div class="process-step"><span class="num">04</span><h3>Launch</h3><p>Implement, test, and roll out across channels.</p></div>
+        </div>
+    </section>
+
+    <section class="results reveal" id="results">
+        <h2><i class="fas fa-chart-line" style="margin-right: 0.5rem;"></i> Results</h2>
+        <div class="results-grid">
+            <div class="result-card" data-target="40" data-prefix="+" data-suffix="%"><span class="num">0</span><span class="label">Engagement</span></div>
+            <div class="result-card" data-target="3" data-suffix="×"><span class="num">0</span><span class="label">Conversion lift</span></div>
+            <div class="result-card" data-target="25" data-prefix="+" data-suffix="%"><span class="num">0</span><span class="label">Brand recall</span></div>
+            <div class="result-card" data-target="8" data-suffix=" wk"><span class="num">0</span><span class="label">Project timeline</span></div>
+        </div>
+    </section>
+
+    <section class="insights reveal" id="insights">
+        <h2><i class="fas fa-lightbulb" style="margin-right: 0.5rem;"></i> Key Improvements</h2>
+        <div class="insight-cards">
+            <div class="insight-card"><i class="fas fa-palette"></i><h3>Visual Identity</h3><p>Updated color palette, typography, and logo treatment for a cohesive, premium brand.</p></div>
+            <div class="insight-card"><i class="fas fa-comment-alt"></i><h3>Messaging</h3><p>Refined value proposition and clearer, more confident copy across the site.</p></div>
+            <div class="insight-card"><i class="fas fa-mobile-alt"></i><h3>Site Redesign</h3><p>Modern, responsive layout with improved UX and conversion paths.</p></div>
+        </div>
+    </section>
+
+    <section class="testimonial reveal" id="testimonial">
+        <h2 style="font-family:'Fraunces',serif;font-size:1.35rem;margin-bottom:2rem;color:var(--text);"><i class="fas fa-quote-right" style="margin-right:0.5rem;"></i> Client Feedback</h2>
+        <div class="testimonial-block">
+            <p class="testimonial-quote">The brand refresh transformed how customers perceive us. We went from looking dated to being seen as a modern, trustworthy partner. The messaging and visual updates had an immediate impact on our pipeline.</p>
+            <p class="testimonial-author"><strong>— Marketing Director</strong>, B2B SaaS</p>
+        </div>
+    </section>
+
+    <div class="demo-badge-brand" style="position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--accent),#238636);color:white;padding:0.6rem 1.5rem;border-radius:30px;font-size:0.85rem;font-weight:600;z-index:1000;box-shadow:0 4px 20px rgba(46,160,67,0.3);"><i class="fas fa-palette"></i> Brand Refresh Demo · Anastasiia</div>
+
+    <script>
+        (function(){
+            var handle = document.getElementById('sliderHandle');
+            var after = document.getElementById('sliderAfter');
+            var inner = document.querySelector('.slider-inner');
+            var container = document.getElementById('sliderContainer');
+            var pos = 50;
+            function setPos(p){
+                pos = Math.max(5, Math.min(95, p));
+                handle.style.left = pos + '%';
+                after.style.clipPath = 'inset(0 ' + (100 - pos) + '% 0 0)';
+            }
+            function getPosFromEvent(clientX){
+                var rect = inner.getBoundingClientRect();
+                return (clientX - rect.left) / rect.width * 100;
+            }
+            document.querySelectorAll('.view-toggle').forEach(function(btn){
+                btn.addEventListener('click', function(){
+                    document.querySelectorAll('.view-toggle').forEach(function(b){ b.classList.remove('active'); });
+                    this.classList.add('active');
+                    var v = this.dataset.view;
+                    container.classList.remove('view-before','view-after');
+                    if(v==='before'){ container.classList.add('view-before'); setPos(0); }
+                    else if(v==='after'){ container.classList.add('view-after'); setPos(100); }
+                    else { setPos(50); }
+                });
+            });
+            handle.addEventListener('mousedown', function(e){ e.preventDefault();
+                function move(ev){ setPos(getPosFromEvent(ev.clientX)); }
+                function up(){ document.removeEventListener('mousemove', move); document.removeEventListener('mouseup', up); }
+                document.addEventListener('mousemove', move); document.addEventListener('mouseup', up);
+            });
+            inner.addEventListener('click', function(e){
+                if(e.target !== handle && !handle.contains(e.target)) setPos(getPosFromEvent(e.clientX));
+            });
+            handle.addEventListener('touchstart', function(e){ e.preventDefault();
+                function move(ev){ setPos(getPosFromEvent(ev.touches[0].clientX)); }
+                function up(){ document.removeEventListener('touchmove', move); document.removeEventListener('touchend', up); }
+                document.addEventListener('touchmove', move, { passive: false }); document.addEventListener('touchend', up);
+            });
+            document.addEventListener('keydown', function(e){
+                if(e.key === 'ArrowLeft') setPos(pos - 5);
+                else if(e.key === 'ArrowRight') setPos(pos + 5);
+            });
+            var resultsSection = document.getElementById('results');
+            var cards = document.querySelectorAll('.result-card[data-target]');
+            function animateCounters(){
+                cards.forEach(function(card){
+                    var target = +card.dataset.target, prefix = card.dataset.prefix || '', suffix = card.dataset.suffix || '';
+                    var numEl = card.querySelector('.num'), start = 0, startTime = null;
+                    function step(t){
+                        if(!startTime) startTime = t;
+                        var elapsed = t - startTime, progress = Math.min(1, elapsed / 1000);
+                        var ease = 1 - Math.pow(1 - progress, 2), val = Math.round(start + (target - start) * ease);
+                        numEl.textContent = prefix + val + suffix;
+                        if(progress < 1) requestAnimationFrame(step);
+                    }
+                    requestAnimationFrame(step);
+                });
+            }
+            var animated = false;
+            var io = typeof IntersectionObserver !== 'undefined' ? new IntersectionObserver(function(entries){
+                entries.forEach(function(entry){
+                    if(entry.isIntersecting && !animated){ animated = true; animateCounters(); io.unobserve(resultsSection); }
+                });
+            }, { threshold: 0.3 }) : null;
+            if(io && resultsSection) io.observe(resultsSection);
+
+            var revealEls = document.querySelectorAll('.reveal');
+            var revealIO = typeof IntersectionObserver !== 'undefined' ? new IntersectionObserver(function(entries){
+                entries.forEach(function(entry){ if(entry.isIntersecting) entry.target.classList.add('visible'); });
+            }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }) : null;
+            if(revealIO) revealEls.forEach(function(el){ revealIO.observe(el); });
+        })();
+    </script>
+</body>
+</html>

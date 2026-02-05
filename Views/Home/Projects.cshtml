@@ -4,14 +4,65 @@
 <div class="page-inner page-inner--projects">
     <header class="page-header">
         <div class="container">
-            <p class="page-header__label">Featured Projects</p>
-            <h1 class="page-header__title">Selected Work</h1>
-            <p class="page-header__lead">Full‑stack web apps, e‑commerce, interactive experiences, and deployment pipelines—clean code, clear UX, and modern backend.</p>
+            <p class="page-header__label">Portfolio</p>
+            <h1 class="page-header__title">Projects & Design Showcase</h1>
+            <p class="page-header__lead">Programming and design work: e-commerce, web apps, games, and creative marketing projects. Filter by category to explore.</p>
         </div>
     </header>
-    <div class="scroll-hint" aria-hidden="true">
-        <span class="scroll-hint__text">Scroll down to see more projects</span>
-        <span class="scroll-hint__icon"><i class="fas fa-chevron-down"></i></span>
-    </div>
-    <partial name="_ProjectsPartial" />
+
+    <section class="projects-showcase">
+        <div class="container container--projects-wide">
+            <div class="projects-filter" role="tablist">
+                <button class="filter-btn active" data-filter="all" aria-selected="true">All</button>
+                <button class="filter-btn" data-filter="ecommerce">E-Commerce</button>
+                <button class="filter-btn" data-filter="marketing">Marketing</button>
+                <button class="filter-btn" data-filter="crm">CRM</button>
+                <button class="filter-btn" data-filter="game">Games</button>
+                <button class="filter-btn" data-filter="design">Content Creation</button>
+                <button class="filter-btn" data-filter="fullstack">Full-Stack</button>
+            </div>
+
+            <p class="projects-scroll-hint" aria-hidden="true">
+                <i class="fas fa-chevron-down"></i> Scroll to explore
+            </p>
+
+            <partial name="_ProjectsPartial" />
+        </div>
+    </section>
 </div>
+
+@section Scripts {
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.project-card-modern[data-category]');
+
+    function filterProjects(category) {
+        let visible = 0;
+        cards.forEach((card, i) => {
+            const categories = (card.dataset.category || '').split(' ').filter(Boolean);
+            const match = category === 'all' || categories.includes(category);
+            card.classList.toggle('filtered-out', !match);
+            card.style.animationDelay = match ? (visible++ * 0.06) + 's' : '0s';
+        });
+    }
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            filterProjects(btn.dataset.filter);
+        });
+    });
+
+    filterProjects('all');
+
+    const scrollHint = document.querySelector('.projects-scroll-hint');
+    if (scrollHint) {
+        window.addEventListener('scroll', function() {
+            scrollHint.classList.toggle('hidden', window.scrollY > 120);
+        }, { passive: true });
+    }
+});
+</script>
+}

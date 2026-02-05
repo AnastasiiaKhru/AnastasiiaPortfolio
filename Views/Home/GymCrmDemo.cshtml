@@ -7,6 +7,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FitHub CRM - Gym Management System</title>
+    @{
+        var baseUrl = $"{Context.Request.Scheme}://{Context.Request.Host}";
+        var ogImage = $"{baseUrl}{Url.Content("~/images/project-crm-og.png")}?v=2";
+        var ogUrl = $"{baseUrl}{Context.Request.Path}{Context.Request.QueryString}";
+    }
+    <meta property="og:title" content="FitHub CRM — Gym Management System" />
+    <meta property="og:description" content="CRM System Demo · Full Dashboard. Gym membership management with members, tiers, activity feed, and payments." />
+    <meta property="og:image" content="@ogImage" />
+    <meta property="og:url" content="@ogUrl" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>

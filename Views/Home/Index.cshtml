@@ -49,8 +49,8 @@
             z-index: 1;
             background: rgba(55, 60, 68, 0.18);
             border-radius: var(--radius-2xl);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 16px 56px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.12) inset;
             padding: var(--spacing-10) var(--spacing-6);
         }
 
@@ -73,22 +73,77 @@
 
         .hero-image {
             position: relative;
-            overflow: hidden;
+            overflow: visible;
             border-radius: var(--radius-2xl);
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        .profile-image {
+        .hero-slider {
+            --slider-pos: 0.5;
+            position: relative;
+            width: 100%;
             max-width: 85%;
-            height: auto;
-            display: block;
-            margin: 0 auto;
-            border-radius: var(--radius-2xl);
-            box-shadow: var(--shadow-xl);
-            object-fit: cover;
-            border: 3px solid rgba(255,255,255,0.12);
+            border-radius: 24px;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            max-height: 420px;
+            isolation: isolate;
+            box-shadow: 0 40px 100px -20px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06),             inset 0 1px 0 rgba(255,255,255,0.04);
+            cursor: crosshair;
+        }
+
+        .hero-slider::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .hero-slider__before,
+        .hero-slider__after {
+            position: absolute;
+            inset: 0;
+            background-size: 85%;
+            background-position: center 38%;
+            background-repeat: no-repeat;
+            will-change: clip-path;
+        }
+
+        .hero-slider__before { background-image: url('/images/hero-image.png'); }
+
+        .hero-slider__after {
+            clip-path: inset(0 calc(100% - var(--slider-pos) * 100%) 0 0);
+            background-image: url('/images/hero-image-sketch.png');
+        }
+
+        .hero-slider__handle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: calc(var(--slider-pos) * 100%);
+            width: 32px;
+            margin-left: -16px;
+            cursor: ew-resize;
+            z-index: 10;
+            touch-action: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: left 0.12s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .hero-slider__handle::before {
+            content: '';
+            position: absolute;
+            inset: -20px 0;
+        }
+
+        @@media (prefers-reduced-motion: reduce) {
+            .hero-slider__handle { transition: none; }
         }
 
         /* Hero buttons unchanged – scoped for dark background */
@@ -142,7 +197,7 @@
             .hero-section .display-4 { font-size: clamp(1.5rem, 4vw, 2rem); }
             .hero-section .lead { font-size: var(--font-size-base); }
             .hero-image { max-width: 280px; margin: 0 auto; }
-            .profile-image { max-width: 100%; }
+            .hero-slider { max-width: 100%; max-height: 320px; }
         }
     </style>
 }
@@ -177,9 +232,190 @@
             </div>
             <div class="col-lg-6 order-lg-2">
                 <div class="hero-image">
-                    <img src="/images/hero-image.png" alt="Anastasiia Khrustaleva" class="profile-image">
+                    <div class="hero-slider" id="heroSlider" role="img" aria-label="Drag to compare photo and illustration">
+                        <div class="hero-slider__before" aria-hidden="true"></div>
+                        <div class="hero-slider__after" aria-hidden="true"></div>
+                        <div class="hero-slider__handle" id="heroSliderHandle"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+(function() {
+    var slider = document.getElementById('heroSlider');
+    var handle = document.getElementById('heroSliderHandle');
+    if (!slider || !handle) return;
+
+    var pos = 0.5;
+    var displayPos = 0.5;
+    var vel = 0;
+    var autoPos = 0.5;
+    var autoPhase = 0;
+    var lastT = 0;
+    var isDragging = false;
+    var isHovering = false;
+    var mouseX = 0;
+    var rafId = null;
+    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var SPRING_STIFF = 280;
+    var SPRING_DAMP = 24;
+
+    function setPos(p, immediate) {
+        pos = Math.max(0, Math.min(1, p));
+        if (immediate) {
+            displayPos = pos;
+            vel = 0;
+            slider.style.setProperty('--slider-pos', pos);
+        }
+    }
+
+    function commitDisplay() {
+        slider.style.setProperty('--slider-pos', displayPos);
+    }
+
+    function onMove(clientX, immediate) {
+        var rect = slider.getBoundingClientRect();
+        setPos((clientX - rect.left) / rect.width, !!immediate);
+        if (immediate) commitDisplay();
+    }
+
+    function startDrag() {
+        isDragging = true;
+        handle.classList.add('hero-slider__handle--active');
+        if (rafId) cancelAnimationFrame(rafId);
+        vel = 0;
+        autoPos = pos;
+    }
+
+    function endDrag() {
+        isDragging = false;
+        handle.classList.remove('hero-slider__handle--active');
+        displayPos = pos;
+        if (!prefersReduced) {
+            lastT = performance.now();
+            rafId = requestAnimationFrame(physicsStep);
+        } else {
+            commitDisplay();
+        }
+    }
+
+    function physicsStep(t) {
+        var dt = Math.min((t - lastT) / 1000, 0.05);
+        lastT = t;
+
+        if (isDragging) return;
+
+        var target = isHovering && !isDragging
+            ? Math.max(0, Math.min(1, mouseX))
+            : pos;
+
+        var spring = (target - displayPos) * SPRING_STIFF;
+        var damp = -vel * SPRING_DAMP;
+        vel += (spring + damp) * dt;
+        displayPos += vel * dt;
+
+        if (Math.abs(vel) < 0.001 && Math.abs(displayPos - target) < 0.001) {
+            displayPos = target;
+            vel = 0;
+            if (!isHovering) {
+                rafId = requestAnimationFrame(autoAnimate);
+                return;
+            }
+        }
+
+        displayPos = Math.max(0, Math.min(1, displayPos));
+        commitDisplay();
+        rafId = requestAnimationFrame(physicsStep);
+    }
+
+    function autoAnimate(t) {
+        if (isDragging) return;
+        if (isHovering) { lastT = t; rafId = requestAnimationFrame(physicsStep); return; }
+        var dt = Math.min((t - lastT) / 1000, 0.05);
+        lastT = t;
+        autoPhase += dt * 0.35;
+        if (autoPhase > Math.PI * 2) autoPhase = 0;
+        var ease = (1 - Math.cos(autoPhase)) / 2;
+        displayPos = ease;
+        pos = ease;
+        commitDisplay();
+        rafId = requestAnimationFrame(autoAnimate);
+    }
+
+    function onClick(e) {
+        if (e.target.closest('.hero-slider__handle')) return;
+        var rect = slider.getBoundingClientRect();
+        var x = (e.clientX - rect.left) / rect.width;
+        setPos(x < 0.5 ? 0 : 1, true);
+        commitDisplay();
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(autoAnimate);
+    }
+
+    handle.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        startDrag();
+        onMove(e.clientX, true);
+    });
+
+    slider.addEventListener('click', onClick);
+
+    document.addEventListener('mousemove', function(e) {
+        var rect = slider.getBoundingClientRect();
+        isHovering = e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
+        mouseX = (e.clientX - rect.left) / rect.width;
+        if (isDragging) onMove(e.clientX, true);
+    });
+
+    slider.addEventListener('mouseleave', function() {
+        isHovering = false;
+        pos = displayPos;
+        autoPhase = Math.acos(Math.max(-1, Math.min(1, 1 - 2 * displayPos)));
+    });
+
+    document.addEventListener('mouseup', endDrag);
+
+    handle.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        startDrag();
+        if (e.touches.length) onMove(e.touches[0].clientX, true);
+    }, { passive: false });
+
+    slider.addEventListener('touchend', function(e) {
+        if (e.target.closest('.hero-slider__handle')) return;
+        var touch = e.changedTouches && e.changedTouches[0];
+        if (touch) {
+            var rect = slider.getBoundingClientRect();
+            var x = (touch.clientX - rect.left) / rect.width;
+            setPos(x < 0.5 ? 0 : 1, true);
+            commitDisplay();
+        }
+    }, { passive: true });
+
+    document.addEventListener('touchmove', function(e) {
+        if (isDragging && e.touches.length) onMove(e.touches[0].clientX, true);
+    }, { passive: true });
+
+    document.addEventListener('touchend', endDrag);
+
+    document.addEventListener('keydown', function(e) {
+        if (document.activeElement && document.activeElement !== document.body) return;
+        if (slider.matches(':hover') || handle.matches(':hover') || isDragging) {
+            if (e.key === 'ArrowLeft') { e.preventDefault(); setPos(pos - 0.1, true); commitDisplay(); }
+            if (e.key === 'ArrowRight') { e.preventDefault(); setPos(pos + 0.1, true); commitDisplay(); }
+        }
+    });
+
+    setPos(0.5, true);
+    commitDisplay();
+    if (!prefersReduced) {
+        lastT = performance.now();
+        rafId = requestAnimationFrame(autoAnimate);
+    }
+})();
+</script>

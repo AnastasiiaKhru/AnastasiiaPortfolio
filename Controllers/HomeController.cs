@@ -61,6 +61,9 @@ public class HomeController : Controller
     public IActionResult CakeShopDemo() => View();
     public IActionResult GymCrmDemo() => View();
     public IActionResult LiquorStoreDemo() => View();
+    public IActionResult EventWebinarDemo() => View();
+    public IActionResult BrandRefreshDemo() => View();
+    public IActionResult AdCreativeDemo() => View();
 
     public IActionResult Portfolio()
     {

@@ -1,0 +1,459 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marketing Mastery Webinar — Event Landing Page Demo</title>
+    @{
+        var baseUrl = $"{Context.Request.Scheme}://{Context.Request.Host}";
+        var ogImage = $"{baseUrl}{Url.Content("~/images/project-event-og.png")}?v=1";
+        var ogUrl = $"{baseUrl}{Context.Request.Path}{Context.Request.QueryString}";
+    }
+    <meta property="og:title" content="Event Landing Page — Marketing Mastery Webinar" />
+    <meta property="og:description" content="Conversion-focused event landing page with countdown timer, agenda, speaker bios, and registration form." />
+    <meta property="og:image" content="@ogImage" />
+    <meta property="og:url" content="@ogUrl" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #fef8f3; --surface: #ffffff; --surface2: #fdf4ed;
+            --accent: #e85d3a; --accent-soft: rgba(232, 93, 58, 0.12);
+            --text: #2d1f1a; --text-muted: #7a6b65; --border: rgba(45, 31, 26, 0.08);
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', sans-serif; color: var(--text); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+        .event-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1rem 2.5rem;
+            background: rgba(254, 248, 243, 0.92);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        .event-nav.scrolled { background: rgba(254, 248, 243, 0.98); box-shadow: 0 2px 20px rgba(45,31,26,0.06); }
+        .event-nav__logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--text); text-decoration: none; }
+        .event-nav__logo span { color: var(--accent); }
+        .event-nav__links { display: flex; gap: 2.5rem; list-style: none; }
+        .event-nav__links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.2s; }
+        .event-nav__links a:hover, .event-nav__links a.active { color: var(--text); }
+        .event-nav__cta {
+            background: linear-gradient(135deg, #e85d3a, #f07a5b);
+            color: white; padding: 0.6rem 1.5rem; border-radius: 12px;
+            font-weight: 600; text-decoration: none; font-size: 0.9rem;
+            box-shadow: 0 4px 20px rgba(232, 93, 58, 0.35);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .event-nav__cta:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(232, 93, 58, 0.4); color: white; }
+
+        .event-hero {
+            min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 8rem 2rem 6rem; text-align: center; position: relative; overflow: hidden;
+            background: linear-gradient(180deg, #fff5f0 0%, #fef8f3 40%, #fdf4ed 100%);
+        }
+        .event-hero::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(232, 93, 58, 0.08) 0%, transparent 55%);
+            pointer-events: none;
+        }
+        .event-hero::after {
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 200px;
+            background: linear-gradient(to top, var(--bg), transparent);
+            pointer-events: none;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: var(--surface2); border: 1px solid var(--border);
+            padding: 0.5rem 1.25rem; border-radius: 100px;
+            color: var(--text-muted); font-size: 0.9rem; font-weight: 500; margin-bottom: 1.5rem;
+            position: relative; z-index: 1; animation: fadeUp 0.6s ease forwards;
+        }
+        .hero-badge i { color: var(--accent); }
+        .event-hero h1 {
+            font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 600; color: var(--text); margin-bottom: 1rem; line-height: 1.1;
+            letter-spacing: -0.02em; position: relative; z-index: 1;
+            animation: fadeUp 0.6s ease 0.1s both;
+        }
+        .event-hero .subtitle {
+            color: var(--text-muted); font-size: clamp(1.05rem, 2vw, 1.25rem);
+            max-width: 540px; margin-bottom: 2.5rem; line-height: 1.7;
+            position: relative; z-index: 1;
+            animation: fadeUp 0.6s ease 0.2s both;
+        }
+        .countdown {
+            display: flex; gap: 1.25rem; flex-wrap: wrap; justify-content: center; margin-bottom: 2.5rem;
+            position: relative; z-index: 1;
+            animation: fadeUp 0.6s ease 0.3s both;
+        }
+        .countdown-item {
+            background: var(--surface2); border: 1px solid var(--border);
+            border-radius: 16px; padding: 1.5rem 2rem; min-width: 100px;
+            transition: transform 0.25s ease, border-color 0.25s, background 0.25s;
+        }
+        .countdown-item:hover {
+            transform: translateY(-6px); border-color: var(--accent-soft);
+            background: rgba(232, 93, 58, 0.06);
+        }
+        .countdown-item .num {
+            display: block; font-size: 2.5rem; font-weight: 700; color: var(--text);
+            font-variant-numeric: tabular-nums; letter-spacing: -0.02em;
+        }
+        .countdown-item .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); margin-top: 0.25rem; }
+        .event-cta {
+            display: inline-flex; align-items: center; gap: 0.6rem;
+            background: linear-gradient(135deg, #e85d3a, #f07a5b); color: white;
+            padding: 1rem 2.5rem; border-radius: 14px; font-weight: 600; font-size: 1rem;
+            text-decoration: none; border: none; cursor: pointer;
+            box-shadow: 0 8px 32px rgba(232, 93, 58, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative; z-index: 1;
+            animation: fadeUp 0.6s ease 0.4s both;
+        }
+        .event-cta:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(232, 93, 58, 0.45); color: white; }
+        .event-cta:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+        .event-cta .spinner { display: none; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        .event-cta.loading .spinner { display: inline-block; }
+        .event-cta.loading .cta-text { display: none; }
+        .trust-row { display: flex; gap: 2.5rem; margin-top: 2.5rem; flex-wrap: wrap; justify-content: center; position: relative; z-index: 1;
+            animation: fadeUp 0.6s ease 0.5s both; }
+        .trust-item { display: flex; align-items: center; gap: 0.6rem; color: var(--text-muted); font-size: 0.9rem; }
+        .trust-item i { color: #22c55e; font-size: 1rem; }
+        .live-count { display: inline-flex; align-items: center; gap: 0.4rem; margin-left: 0.5rem; }
+        .live-dot { width: 6px; height: 6px; background: #22c55e; border-radius: 50%; animation: pulse 2s infinite; }
+
+        .section { max-width: 840px; margin: 0 auto; padding: 5rem 2rem; }
+        .section h2 {
+            font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 600; color: var(--text);
+            margin-bottom: 2rem; display: flex; align-items: center; gap: 0.75rem;
+        }
+        .section h2 i { color: var(--accent); font-size: 1.25rem; }
+
+        .learn-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+        .learn-item {
+            display: flex; align-items: flex-start; gap: 1rem;
+            background: var(--surface); border: 1px solid var(--border);
+            padding: 1.25rem; border-radius: 16px;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .learn-item:hover { border-color: var(--accent-soft); transform: translateX(4px); }
+        .learn-item i { color: #22c55e; font-size: 1.1rem; margin-top: 0.2rem; flex-shrink: 0; }
+        .learn-item span { font-size: 0.95rem; color: var(--text); }
+
+        .share-row { display: flex; gap: 0.75rem; margin-top: 2rem; flex-wrap: wrap; }
+        .share-btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.5rem 1rem; border-radius: 10px; border: 1px solid var(--border);
+            background: var(--surface2); color: var(--text-muted); font-size: 0.85rem;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .share-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+        .share-btn.copied { border-color: #22c55e; color: #22c55e; }
+
+        .agenda-list { list-style: none; }
+        .agenda-item {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 16px; margin-bottom: 0.75rem;
+            overflow: hidden; transition: border-color 0.2s, background 0.2s;
+        }
+        .agenda-item:hover { border-color: rgba(232, 93, 58, 0.2); }
+        .agenda-item.expanded { border-color: var(--accent-soft); background: rgba(232, 93, 58, 0.04); }
+        .agenda-item-header {
+            display: flex; gap: 1.5rem; padding: 1.35rem 1.5rem; cursor: pointer;
+            align-items: center; transition: background 0.2s;
+        }
+        .agenda-item-header:hover { background: rgba(232, 93, 58, 0.04); }
+        .agenda-time {
+            font-weight: 600; color: var(--accent); min-width: 90px;
+            font-variant-numeric: tabular-nums; font-size: 0.95rem;
+        }
+        .agenda-item-desc {
+            padding: 0 1.5rem 1.5rem; font-size: 0.95rem; color: var(--text-muted);
+            border-top: 1px solid var(--border); margin-top: -1px; padding-top: 1rem;
+            display: none; line-height: 1.7;
+        }
+        .agenda-item.expanded .agenda-item-desc { display: block; }
+        .agenda-item.expanded .agenda-chevron { transform: rotate(180deg); }
+        .agenda-chevron { margin-left: auto; color: var(--text-muted); transition: transform 0.3s ease; }
+
+        .speakers { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem; }
+        .speaker-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 20px; padding: 2rem; text-align: center;
+            transition: transform 0.25s ease, border-color 0.25s, box-shadow 0.25s;
+        }
+        .speaker-card:hover {
+            transform: translateY(-6px); border-color: var(--accent-soft);
+            box-shadow: 0 20px 40px rgba(45,31,26,0.08);
+        }
+        .speaker-avatar {
+            width: 80px; height: 80px; border-radius: 20px;
+            background: linear-gradient(135deg, #e85d3a, #f07a5b);
+            margin: 0 auto 1.25rem; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.5rem; font-weight: 600;
+        }
+        .speaker-name { font-weight: 600; color: var(--text); font-size: 1.1rem; }
+        .speaker-role { font-size: 0.9rem; color: var(--text-muted); margin-top: 0.25rem; }
+
+        .register-form {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 24px; padding: 3rem;
+        }
+        .register-form.submitted { text-align: center; padding: 4rem; }
+        .register-form.submitted .form-fields { display: none; }
+        .register-form.submitted .submit-btn-wrap { display: none; }
+        .success-message { display: none; }
+        .register-form.submitted .success-message { display: block; color: #22c55e; }
+        .success-message i { font-size: 3.5rem; margin-bottom: 1rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 0.5rem; }
+        .form-group input {
+            width: 100%; padding: 0.9rem 1.25rem; background: var(--surface2);
+            border: 1px solid var(--border); border-radius: 12px;
+            font-size: 1rem; color: var(--text); transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-group input::placeholder { color: var(--text-muted); opacity: 0.7; }
+        .form-group input:focus {
+            outline: none; border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(232, 93, 58, 0.15);
+        }
+        .form-group input.error { border-color: #ef4444; }
+        .form-error { font-size: 0.8rem; color: #ef4444; margin-top: 0.35rem; display: none; }
+        .form-group.has-error .form-error { display: block; }
+
+        .calendar-dropdown { position: relative; display: inline-block; margin-top: 1.25rem; }
+        .calendar-btn {
+            background: var(--surface2); color: var(--text-muted);
+            padding: 0.6rem 1.25rem; border-radius: 12px; border: 1px solid var(--border);
+            cursor: pointer; font-size: 0.9rem; transition: all 0.2s;
+        }
+        .calendar-btn:hover { border-color: var(--accent); color: var(--text); }
+        .calendar-menu {
+            position: absolute; top: 100%; left: 0; margin-top: 0.5rem;
+            background: var(--surface2); border: 1px solid var(--border);
+            border-radius: 16px; padding: 0.5rem; min-width: 220px; display: none; z-index: 10;
+        }
+        .calendar-menu.open { display: block; }
+        .calendar-menu a {
+            display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 1rem;
+            color: var(--text); text-decoration: none; border-radius: 10px; font-size: 0.95rem;
+            transition: background 0.2s;
+        }
+        .calendar-menu a:hover { background: rgba(124, 92, 255, 0.1); }
+
+        .faq-list { list-style: none; }
+        .faq-item {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 16px; margin-bottom: 0.75rem; overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-item:hover { border-color: rgba(232, 93, 58, 0.15); }
+        .faq-item.open { border-color: var(--accent-soft); }
+        .faq-q {
+            padding: 1.25rem 1.5rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+            font-weight: 600; color: var(--text); font-size: 1rem;
+        }
+        .faq-q:hover { background: rgba(255,255,255,0.02); }
+        .faq-a { padding: 0 1.5rem 1.25rem; color: var(--text-muted); font-size: 0.95rem; display: none; line-height: 1.7; }
+        .faq-item.open .faq-a { display: block; }
+        .faq-item.open .faq-chevron { transform: rotate(180deg); }
+        .faq-chevron { color: var(--text-muted); transition: transform 0.3s ease; }
+
+        @@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @@keyframes spin { to { transform: rotate(360deg); } }
+        @@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        @@media (max-width: 768px) { .event-nav__links { display: none; } .form-row { grid-template-columns: 1fr; } }
+        @@media (max-width: 600px) { .countdown-item { min-width: 80px; padding: 1.25rem; } .countdown-item .num { font-size: 2rem; } .event-nav { padding: 1rem 1.5rem; } }
+    </style>
+</head>
+<body>
+    <nav class="event-nav" id="eventNav">
+        <a href="#" class="event-nav__logo">Event<span>Hub</span></a>
+        <ul class="event-nav__links">
+            <li><a href="#learn" class="nav-link" data-section="learn">Learn</a></li>
+            <li><a href="#agenda" class="nav-link" data-section="agenda">Agenda</a></li>
+            <li><a href="#speakers" class="nav-link" data-section="speakers">Speakers</a></li>
+            <li><a href="#faq" class="nav-link" data-section="faq">FAQ</a></li>
+            <li><a href="#register" class="nav-link" data-section="register">Register</a></li>
+        </ul>
+        <a href="#register" class="event-nav__cta">Register Now</a>
+    </nav>
+
+    <section class="event-hero">
+        <div class="hero-badge"><i class="far fa-calendar-alt"></i> Feb 15, 2026 · 10:00 AM EST · Live</div>
+        <h1>Marketing Mastery<br/>Webinar</h1>
+        <p class="subtitle">Learn growth strategies from industry experts. Live 60-min session with Q&A and downloadable resources.</p>
+        <div class="countdown" id="countdown">
+            <div class="countdown-item"><span class="num" id="days">--</span><span class="label">Days</span></div>
+            <div class="countdown-item"><span class="num" id="hours">--</span><span class="label">Hours</span></div>
+            <div class="countdown-item"><span class="num" id="mins">--</span><span class="label">Mins</span></div>
+            <div class="countdown-item"><span class="num" id="secs">--</span><span class="label">Secs</span></div>
+        </div>
+        <a href="#register" class="event-cta"><span class="spinner"></span><span class="cta-text"><i class="fas fa-user-plus"></i> Register — It's Free</span></a>
+        <div class="trust-row">
+            <span class="trust-item"><i class="fas fa-check-circle"></i> <span id="attendeeCount">2,047</span> registered<span class="live-count"><span class="live-dot"></span> live</span></span>
+            <span class="trust-item"><i class="fas fa-check-circle"></i> 60 min live</span>
+            <span class="trust-item"><i class="fas fa-check-circle"></i> Recording + slides</span>
+        </div>
+    </section>
+
+    <section class="section" id="learn">
+        <h2><i class="fas fa-graduation-cap"></i> What You'll Learn</h2>
+        <div class="learn-grid">
+            <div class="learn-item"><i class="fas fa-check"></i><span>Growth hacking tactics for 2026</span></div>
+            <div class="learn-item"><i class="fas fa-check"></i><span>Real case studies & best practices</span></div>
+            <div class="learn-item"><i class="fas fa-check"></i><span>Conversion optimization strategies</span></div>
+            <div class="learn-item"><i class="fas fa-check"></i><span>Q&A with industry experts</span></div>
+        </div>
+        <div class="share-row">
+            <button type="button" class="share-btn" id="shareCopy"><i class="fas fa-link"></i> Copy Link</button>
+            <button type="button" class="share-btn" id="shareLinkedIn"><i class="fab fa-linkedin-in"></i> Share on LinkedIn</button>
+            <button type="button" class="share-btn" id="shareTwitter"><i class="fab fa-x-twitter"></i> Share on X</button>
+        </div>
+    </section>
+
+    <section class="section" id="agenda">
+        <h2><i class="fas fa-list-ol"></i> Agenda</h2>
+        <ul class="agenda-list">
+            <li class="agenda-item expanded">
+                <div class="agenda-item-header"><span class="agenda-time">10:00</span><span>Welcome & Introductions</span><i class="fas fa-chevron-down agenda-chevron"></i></div>
+                <div class="agenda-item-desc">Kick off with a brief intro from our host. Meet the speakers and set expectations for the session.</div>
+            </li>
+            <li class="agenda-item">
+                <div class="agenda-item-header"><span class="agenda-time">10:15</span><span>Keynote: Growth Hacking in 2026</span><i class="fas fa-chevron-down agenda-chevron"></i></div>
+                <div class="agenda-item-desc">Sarah Chen shares actionable tactics for scaling growth in the current landscape.</div>
+            </li>
+            <li class="agenda-item">
+                <div class="agenda-item-header"><span class="agenda-time">10:45</span><span>Case Studies & Best Practices</span><i class="fas fa-chevron-down agenda-chevron"></i></div>
+                <div class="agenda-item-desc">Real-world examples from Alex Rivera on what works and what to avoid.</div>
+            </li>
+            <li class="agenda-item">
+                <div class="agenda-item-header"><span class="agenda-time">11:15</span><span>Panel Discussion</span><i class="fas fa-chevron-down agenda-chevron"></i></div>
+                <div class="agenda-item-desc">All speakers discuss trends, challenges, and opportunities in marketing.</div>
+            </li>
+            <li class="agenda-item">
+                <div class="agenda-item-header"><span class="agenda-time">11:45</span><span>Q&A & Networking</span><i class="fas fa-chevron-down agenda-chevron"></i></div>
+                <div class="agenda-item-desc">Your questions answered. Stay to network with other attendees.</div>
+            </li>
+        </ul>
+    </section>
+
+    <section class="section" id="speakers">
+        <h2><i class="fas fa-users"></i> Speakers</h2>
+        <div class="speakers">
+            <div class="speaker-card"><div class="speaker-avatar">SC</div><div class="speaker-name">Sarah Chen</div><div class="speaker-role">Growth Lead, TechCorp</div></div>
+            <div class="speaker-card"><div class="speaker-avatar">AR</div><div class="speaker-name">Alex Rivera</div><div class="speaker-role">Marketing Director</div></div>
+            <div class="speaker-card"><div class="speaker-avatar">JL</div><div class="speaker-name">Jordan Lee</div><div class="speaker-role">Brand Strategist</div></div>
+        </div>
+    </section>
+
+    <section class="section" id="faq">
+        <h2><i class="fas fa-circle-question"></i> FAQ</h2>
+        <ul class="faq-list">
+            <li class="faq-item open"><div class="faq-q">Is it free? <i class="fas fa-chevron-down faq-chevron"></i></div><div class="faq-a">Yes, registration is completely free.</div></li>
+            <li class="faq-item"><div class="faq-q">Will I get a recording? <i class="fas fa-chevron-down faq-chevron"></i></div><div class="faq-a">All registrants receive the recording and slides within 24 hours.</div></li>
+            <li class="faq-item"><div class="faq-q">What platform is used? <i class="fas fa-chevron-down faq-chevron"></i></div><div class="faq-a">We use Zoom. You'll receive a link after registration.</div></li>
+        </ul>
+    </section>
+
+    <section class="section" id="register">
+        <h2><i class="fas fa-pen-to-square"></i> Register</h2>
+        <form class="register-form" id="registerForm">
+            <div class="form-fields">
+                <div class="form-row">
+                    <div class="form-group"><label>First Name</label><input type="text" name="firstName" placeholder="Jane" required /><span class="form-error">Required</span></div>
+                    <div class="form-group"><label>Last Name</label><input type="text" name="lastName" placeholder="Doe" required /><span class="form-error">Required</span></div>
+                </div>
+                <div class="form-group"><label>Email</label><input type="email" name="email" placeholder="jane@example.com" required /><span class="form-error">Valid email required</span></div>
+                <div class="form-group"><label>Company (optional)</label><input type="text" name="company" placeholder="Acme Inc" /></div>
+                <div class="submit-btn-wrap">
+                    <button type="submit" class="event-cta submit-btn" style="width: 100%; justify-content: center;"><span class="spinner"></span><span class="cta-text"><i class="fas fa-paper-plane"></i> Complete Registration</span></button>
+                    <div class="calendar-dropdown">
+                        <button type="button" class="calendar-btn" id="calendarBtn"><i class="far fa-calendar-plus"></i> Add to Calendar</button>
+                        <div class="calendar-menu" id="calendarMenu">
+                            <a href="#" id="googleCal" target="_blank" rel="noopener"><i class="fab fa-google"></i> Google Calendar</a>
+                            <a href="#" id="icsCal" download="webinar.ics"><i class="fab fa-apple"></i> Apple / Outlook</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="success-message">
+                <i class="fas fa-check-circle"></i>
+                <p><strong>You're registered!</strong> Check your inbox for confirmation and calendar invite.</p>
+            </div>
+        </form>
+    </section>
+
+    <script>
+        (function(){
+            var end = new Date('2026-02-15T15:00:00');
+            function update(){
+                var now = new Date(), diff = Math.max(0, end - now);
+                document.getElementById('days').textContent = String(Math.floor(diff / 86400000)).padStart(2,'0');
+                document.getElementById('hours').textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2,'0');
+                document.getElementById('mins').textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2,'0');
+                document.getElementById('secs').textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2,'0');
+            }
+            update(); setInterval(update, 1000);
+            setInterval(function(){ var el = document.getElementById('attendeeCount'); if(el) el.textContent = String(2040 + Math.floor(Math.random() * 20)); }, 8000);
+            var toCal = function(d){ var y=d.getUTCFullYear(),m=String(d.getUTCMonth()+1).padStart(2,'0'),day=String(d.getUTCDate()).padStart(2,'0'),h=String(d.getUTCHours()).padStart(2,'0'),min=String(d.getUTCMinutes()).padStart(2,'0'),s=String(d.getUTCSeconds()).padStart(2,'0'); return y+m+day+'T'+h+min+s+'Z'; };
+            var endPlus1 = new Date(end.getTime() + 3600000);
+            document.getElementById('googleCal').href = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Marketing+Mastery+Webinar&dates='+toCal(end)+'/'+toCal(endPlus1)+'&details=Live+session+with+Q%26A';
+            document.getElementById('icsCal').href = 'data:text/calendar;charset=utf-8,'+encodeURIComponent('BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:'+toCal(end)+'\nDTEND:'+toCal(endPlus1)+'\nSUMMARY:Marketing Mastery Webinar\nDESCRIPTION:Live session with Q&A\nEND:VEVENT\nEND:VCALENDAR');
+        })();
+        document.getElementById('registerForm').addEventListener('submit', function(e){
+            e.preventDefault();
+            var valid = true;
+            var emailRe = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+            this.querySelectorAll('[required]').forEach(function(inp){
+                var g = inp.closest('.form-group');
+                g.classList.remove('has-error');
+                if(!inp.value.trim()){ g.classList.add('has-error'); valid = false; }
+                else if(inp.type==='email' && !emailRe.test(inp.value.trim())){ g.classList.add('has-error'); g.querySelector('.form-error').textContent='Valid email required'; valid = false; }
+            });
+            if(!valid) return;
+            var btn = this.querySelector('.submit-btn');
+            btn.classList.add('loading');
+            btn.disabled = true;
+            setTimeout(function(){
+                btn.classList.remove('loading');
+                btn.disabled = false;
+                document.getElementById('registerForm').classList.add('submitted');
+            }, 1200);
+        });
+        document.querySelectorAll('.agenda-item-header').forEach(function(h){ h.addEventListener('click', function(){ this.closest('.agenda-item').classList.toggle('expanded'); }); });
+        document.querySelectorAll('.faq-q').forEach(function(q){ q.addEventListener('click', function(){ this.closest('.faq-item').classList.toggle('open'); }); });
+        document.getElementById('calendarBtn').addEventListener('click', function(e){ e.stopPropagation(); document.getElementById('calendarMenu').classList.toggle('open'); });
+        document.addEventListener('click', function(){ document.getElementById('calendarMenu').classList.remove('open'); });
+        var shareUrl = window.location.href;
+        document.getElementById('shareCopy').addEventListener('click', function(){
+            navigator.clipboard && navigator.clipboard.writeText(shareUrl).then(function(){
+                var b = document.getElementById('shareCopy');
+                b.classList.add('copied'); b.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                setTimeout(function(){ b.classList.remove('copied'); b.innerHTML = '<i class="fas fa-link"></i> Copy Link'; }, 2000);
+            });
+        });
+        document.getElementById('shareLinkedIn').addEventListener('click', function(){
+            window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(shareUrl), '_blank', 'width=600,height=400');
+        });
+        document.getElementById('shareTwitter').addEventListener('click', function(){
+            window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(shareUrl)+'&text=Marketing+Mastery+Webinar+-+Register+free!', '_blank', 'width=600,height=400');
+        });
+        window.addEventListener('scroll', function(){
+            document.getElementById('eventNav').classList.toggle('scrolled', window.scrollY > 50);
+            var sections = ['learn','agenda','speakers','faq','register'], best = 'learn';
+            for(var i=0;i<sections.length;i++){ var el = document.getElementById(sections[i]); if(el && el.getBoundingClientRect().top <= 150) best = sections[i]; }
+            document.querySelectorAll('.nav-link').forEach(function(a){ a.classList.toggle('active', a.dataset.section === best); });
+        }, { passive: true });
+    </script>
+</body>
+</html>

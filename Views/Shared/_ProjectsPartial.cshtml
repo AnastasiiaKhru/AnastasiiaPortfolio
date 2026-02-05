@@ -1,605 +1,564 @@
 <section class="projects-page section-padding">
-    <div class="container container--projects">
-        <div class="projects-list">
-            <!-- LIQUOR STORE DEMO - Premium Alcohol Delivery -->
-            <article class="project-card-modern project-card--featured project-card--liquor" data-project="01">
-                <div class="project-card__head">
-                    <span class="project-card__num" aria-hidden="true">01</span>
-                    <span class="project-card__meta">E-Commerce Demo · Full Website</span>
-                </div>
-                <h2 class="project-card__title">LUXE SPIRITS — Premium Alcohol Delivery</h2>
-                <p class="project-card__link-line">
-                    <a href="#" class="project-link" onclick="openLiquorDemo(); return false;">Click to open interactive demo</a>
-                </p>
-                <div class="project-card__preview project-card__preview--demo">
-                    <div class="project-preview__chrome project-preview__chrome--liquor">
-                        <span class="project-preview__url">luxespirits.demo</span>
-                        <a href="#" class="project-preview__open" onclick="openLiquorDemo(); return false;" title="Open Demo"><i class="fas fa-expand" aria-hidden="true"></i></a>
-                    </div>
-                    <div class="project-preview__frame-wrap project-preview__frame-wrap--liquor">
-                        <a href="#" class="liquor-demo-trigger" onclick="openLiquorDemo(); return false;" title="Open Demo">
-                            <div class="liquor-preview-scene">
-                                <div class="liquor-preview__bg"></div>
-                                <div class="liquor-preview__content">
-                                    <div class="liquor-preview__logo">
-                                        <i class="fas fa-wine-bottle"></i>
-                                    </div>
-                                    <h3 class="liquor-preview__title">LUXE SPIRITS</h3>
-                                    <p class="liquor-preview__tagline">Premium Alcohol Delivery</p>
-                                    <div class="liquor-preview__features">
-                                        <span><i class="fas fa-truck-fast"></i> Fast Delivery</span>
-                                        <span><i class="fas fa-shield-alt"></i> Age Verified</span>
-                                        <span><i class="fas fa-award"></i> Premium</span>
-                                    </div>
-                                    <div class="liquor-preview__cta">
-                                        <i class="fas fa-mouse-pointer"></i> Click to Explore Full Demo
-                                    </div>
+    <div class="projects-grid" id="projectsGrid">
+        <!-- 01 LUXE SPIRITS -->
+        <article class="project-card-modern project-card--featured project-card--liquor" data-project="01" data-category="ecommerce fullstack">
+            <div class="project-card__head">
+                <span class="project-card__num" aria-hidden="true">01</span>
+                <span class="project-card__meta">E-Commerce Demo · Full Website</span>
+            </div>
+            <h2 class="project-card__title">LUXE SPIRITS — Premium Alcohol Delivery</h2>
+            <div class="project-card__preview project-card__preview--demo">
+                <div class="project-preview__frame-wrap project-preview__frame-wrap--liquor">
+                    <a href="#" class="liquor-demo-trigger" onclick="openLiquorDemo(); return false;" title="Open Demo">
+                        <div class="liquor-preview-scene">
+                            <div class="liquor-preview__bg"></div>
+                            <div class="liquor-preview__content">
+                                <div class="liquor-preview__logo"><i class="fas fa-wine-bottle"></i></div>
+                                <h3 class="liquor-preview__title">LUXE SPIRITS</h3>
+                                <p class="liquor-preview__tagline">Premium Alcohol Delivery</p>
+                                <div class="liquor-preview__features">
+                                    <span><i class="fas fa-truck-fast"></i> Fast Delivery</span>
+                                    <span><i class="fas fa-shield-alt"></i> Age Verified</span>
+                                    <span><i class="fas fa-award"></i> Premium</span>
                                 </div>
                             </div>
-                        </a>
-                    </div>
+                        </div>
+                    </a>
+                    <a href="#" class="preview-cta" onclick="openLiquorDemo(); return false;"><i class="fas fa-arrow-right"></i> Explore demo</a>
                 </div>
-                <p class="project-card__summary">A sophisticated premium alcohol delivery e-commerce platform with age verification, product catalog, shopping cart, customer reviews, and elegant dark theme design.</p>
-                <p class="project-card__desc">Designed and developed a complete luxury liquor delivery website showcasing modern e-commerce patterns. Features include age verification modal, category-based product browsing (Whiskey, Wine, Vodka, Champagne), premium product cards with ratings and details, working shopping cart with quantity controls, customer testimonials section, elegant gold-on-dark color scheme, and smooth animations throughout. Demonstrates ability to create high-end, conversion-focused retail experiences.</p>
-                <div class="project-card__backend" aria-label="Features">
-                    <span class="backend-pill">Age Verification</span>
-                    <span class="backend-pill">Shopping Cart</span>
-                    <span class="backend-pill">Product Catalog</span>
-                    <span class="backend-pill">Customer Reviews</span>
-                </div>
-                <div class="project-card__stack" aria-label="Tech stack">
-                    <span class="stack-pill">HTML5</span>
-                    <span class="stack-pill">CSS3</span>
-                    <span class="stack-pill">JavaScript</span>
-                    <span class="stack-pill">UI/UX Design</span>
-                    <span class="stack-pill">Responsive</span>
-                    <span class="stack-pill">E-Commerce</span>
-                </div>
-                <ul class="project-card__contributions" aria-label="Key features">
-                    <li>Elegant dark theme with gold accents for luxury brand feel</li>
-                    <li>Age verification modal with legal compliance messaging</li>
-                    <li>Product cards with ABV, volume, origin details and ratings</li>
-                    <li>Interactive shopping cart with quantity management</li>
-                    <li>Customer testimonials and reviews section</li>
-                </ul>
-                <button class="project-cta project-cta--primary" onclick="openLiquorDemo()">
-                    <i class="fas fa-play" aria-hidden="true"></i> Open Interactive Demo
-                </button>
-            </article>
+            </div>
+            <p class="project-card__summary">Premium alcohol e-commerce.</p>
+            <p class="project-card__desc">Luxury liquor e-commerce with age verification, product catalog, shopping cart, and reviews.</p>
+            <div class="project-card__backend" aria-label="Features">
+                <span class="backend-pill">Age Verification</span>
+                <span class="backend-pill">Shopping Cart</span>
+                <span class="backend-pill">Product Catalog</span>
+                <span class="backend-pill">Customer Reviews</span>
+            </div>
+            <div class="project-card__stack" aria-label="Tech stack">
+                <span class="stack-pill">HTML5</span>
+                <span class="stack-pill">CSS3</span>
+                <span class="stack-pill">JavaScript</span>
+                <span class="stack-pill">UI/UX Design</span>
+                <span class="stack-pill">Responsive</span>
+                <span class="stack-pill">E-Commerce</span>
+            </div>
+        </article>
 
-            <!-- CAKE SHOP DEMO - Interactive Demo Website -->
-            <article class="project-card-modern" data-project="02">
-                <div class="project-card__head">
-                    <span class="project-card__num" aria-hidden="true">02</span>
-                    <span class="project-card__meta">E-Commerce Demo · Full Website</span>
-                </div>
-                <h2 class="project-card__title">Sweet Delights Bakery — Interactive Demo</h2>
-                <p class="project-card__link-line">
-                    <a href="#" class="project-link" onclick="openCakeDemo(); return false;">Click to open interactive demo</a>
-                </p>
-                <div class="project-card__preview project-card__preview--demo">
-                    <div class="project-preview__chrome project-preview__chrome--cake">
-                        <span class="project-preview__url">sweetdelights.demo</span>
-                        <a href="#" class="project-preview__open" onclick="openCakeDemo(); return false;" title="Open Demo"><i class="fas fa-expand" aria-hidden="true"></i></a>
-                    </div>
-                    <div class="project-preview__frame-wrap project-preview__frame-wrap--cake">
-                        <a href="#" class="cake-demo-trigger" onclick="openCakeDemo(); return false;" title="Open Demo">
-                            <div class="cake-preview-scene">
-                                <div class="cake-preview__bg"></div>
-                                <div class="cake-preview__content">
-                                    <div class="cake-preview__logo">
-                                        <i class="fas fa-birthday-cake"></i>
-                                    </div>
-                                    <h3 class="cake-preview__title">Sweet Delights</h3>
-                                    <p class="cake-preview__tagline">Handcrafted Cakes & Pastries</p>
-                                    <div class="cake-preview__features">
-                                        <span><i class="fas fa-shopping-cart"></i> E-Commerce</span>
-                                        <span><i class="fas fa-mobile-alt"></i> Responsive</span>
-                                        <span><i class="fas fa-star"></i> Interactive</span>
-                                    </div>
-                                    <div class="cake-preview__cta">
-                                        <i class="fas fa-mouse-pointer"></i> Click to Explore Full Demo
-                                    </div>
+        <!-- 02 CAKE SHOP -->
+        <article class="project-card-modern" data-project="02" data-category="ecommerce fullstack">
+            <div class="project-card__head">
+                <span class="project-card__num" aria-hidden="true">02</span>
+                <span class="project-card__meta">E-Commerce Demo · Full Website</span>
+            </div>
+            <h2 class="project-card__title">Sweet Delights Bakery — E-Commerce Demo</h2>
+            <div class="project-card__preview project-card__preview--demo">
+                <div class="project-preview__frame-wrap project-preview__frame-wrap--cake">
+                    <a href="#" class="cake-demo-trigger" onclick="openCakeDemo(); return false;" title="Open Demo">
+                        <div class="cake-preview-scene">
+                            <div class="cake-preview__bg"></div>
+                            <div class="cake-preview__content">
+                                <div class="cake-preview__logo"><i class="fas fa-birthday-cake"></i></div>
+                                <h3 class="cake-preview__title">Sweet Delights</h3>
+                                <p class="cake-preview__tagline">Handcrafted Cakes & Pastries</p>
+                                <div class="cake-preview__features">
+                                    <span><i class="fas fa-shopping-cart"></i> E-Commerce</span>
+                                    <span><i class="fas fa-mobile-alt"></i> Responsive</span>
                                 </div>
                             </div>
-                        </a>
-                    </div>
+                        </div>
+                    </a>
+                    <a href="#" class="preview-cta" onclick="openCakeDemo(); return false;"><i class="fas fa-arrow-right"></i> Explore demo</a>
                 </div>
-                <p class="project-card__summary">A complete, fully-interactive bakery e-commerce website demo showcasing modern web design, shopping cart functionality, product catalog, and contact forms.</p>
-                <p class="project-card__desc">Designed and developed a complete bakery website from scratch to demonstrate full-stack web development capabilities. Features include a stunning hero section, interactive product catalog with category filtering, working shopping cart with add/remove functionality, customer testimonials section, contact form, and responsive design that works flawlessly on all devices. This demo showcases real-world e-commerce patterns and modern UI/UX best practices.</p>
-                <div class="project-card__backend" aria-label="Features">
-                    <span class="backend-pill">Shopping Cart</span>
-                    <span class="backend-pill">Product Catalog</span>
-                    <span class="backend-pill">Contact Form</span>
-                    <span class="backend-pill">Responsive Design</span>
-                </div>
-                <div class="project-card__stack" aria-label="Tech stack">
-                    <span class="stack-pill">HTML5</span>
-                    <span class="stack-pill">CSS3</span>
-                    <span class="stack-pill">JavaScript</span>
-                    <span class="stack-pill">UI/UX Design</span>
-                    <span class="stack-pill">Responsive</span>
-                    <span class="stack-pill">E-Commerce</span>
-                </div>
-                <ul class="project-card__contributions" aria-label="Key features">
-                    <li>Complete e-commerce layout with hero, products, about, testimonials, and contact sections</li>
-                    <li>Interactive shopping cart with add-to-cart functionality and live total calculation</li>
-                    <li>Product catalog with category tabs and hover effects</li>
-                    <li>Fully responsive design optimized for mobile, tablet, and desktop</li>
-                    <li>Modern glassmorphism, gradients, and smooth animations throughout</li>
-                </ul>
-                <button class="project-cta project-cta--primary" onclick="openCakeDemo()">
-                    <i class="fas fa-play" aria-hidden="true"></i> Open Interactive Demo
-                </button>
-            </article>
+            </div>
+            <p class="project-card__summary">Bakery e-commerce demo.</p>
+            <p class="project-card__desc">Bakery site with product catalog, cart, testimonials, and contact form.</p>
+            <div class="project-card__backend" aria-label="Features">
+                <span class="backend-pill">Shopping Cart</span>
+                <span class="backend-pill">Product Catalog</span>
+                <span class="backend-pill">Contact Form</span>
+                <span class="backend-pill">Responsive Design</span>
+            </div>
+            <div class="project-card__stack" aria-label="Tech stack">
+                <span class="stack-pill">HTML5</span>
+                <span class="stack-pill">CSS3</span>
+                <span class="stack-pill">JavaScript</span>
+                <span class="stack-pill">UI/UX Design</span>
+                <span class="stack-pill">Responsive</span>
+                <span class="stack-pill">E-Commerce</span>
+            </div>
+        </article>
 
-            <!-- GYM CRM DEMO - Interactive Management System -->
-            <article class="project-card-modern project-card--gym" data-project="03">
-                <div class="project-card__head">
-                    <span class="project-card__num" aria-hidden="true">03</span>
-                    <span class="project-card__meta">CRM System Demo · Full Dashboard</span>
+        <!-- 03 GYM CRM -->
+        <article class="project-card-modern project-card--gym" data-project="03" data-category="crm fullstack">
+            <div class="project-card__head">
+                <span class="project-card__num" aria-hidden="true">03</span>
+                <span class="project-card__meta">CRM System Demo · Full Dashboard</span>
+            </div>
+            <h2 class="project-card__title">FitHub CRM — Gym Management System</h2>
+            <div class="project-card__preview project-card__preview--demo">
+                <div class="project-preview__frame-wrap project-preview__frame-wrap--img">
+                    <a href="#" class="project-preview__img-link img-preview-trigger gym-demo-trigger" onclick="openGymDemo(); return false;" title="Open FitHub CRM Demo">
+                        <img src="/images/project-crm-og.png" alt="FitHub CRM — Gym Management System, full dashboard demo" class="project-preview__img" loading="lazy" />
+                    </a>
+                    <a href="#" class="preview-cta" onclick="openGymDemo(); return false;"><i class="fas fa-arrow-right"></i> Explore demo</a>
                 </div>
-                <h2 class="project-card__title">FitHub CRM — Gym Management System</h2>
-                <p class="project-card__link-line">
-                    <a href="#" class="project-link" onclick="openGymDemo(); return false;">Click to open interactive demo</a>
-                </p>
-                <div class="project-card__preview project-card__preview--demo">
-                    <div class="project-preview__chrome project-preview__chrome--gym">
-                        <span class="project-preview__url">fithub.crm</span>
-                        <a href="#" class="project-preview__open" onclick="openGymDemo(); return false;" title="Open Demo"><i class="fas fa-expand" aria-hidden="true"></i></a>
-                    </div>
-                    <div class="project-preview__frame-wrap project-preview__frame-wrap--gym">
-                        <a href="#" class="gym-demo-trigger" onclick="openGymDemo(); return false;" title="Open Demo">
-                            <div class="gym-preview-scene">
-                                <div class="gym-preview__sidebar">
-                                    <div class="gym-preview__logo"><i class="fas fa-dumbbell"></i></div>
-                                    <div class="gym-preview__nav-items">
-                                        <span class="active"></span>
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                    </div>
-                                </div>
-                                <div class="gym-preview__main">
-                                    <div class="gym-preview__header"></div>
-                                    <div class="gym-preview__stats">
-                                        <div class="gym-stat"></div>
-                                        <div class="gym-stat"></div>
-                                        <div class="gym-stat"></div>
-                                        <div class="gym-stat"></div>
-                                    </div>
-                                    <div class="gym-preview__table"></div>
-                                </div>
-                                <div class="gym-preview__cta">
-                                    <i class="fas fa-mouse-pointer"></i> Click to Explore CRM
+            </div>
+            <p class="project-card__summary">Gym membership CRM.</p>
+            <p class="project-card__desc">Dashboard with members, tiers, activity feed, and payments.</p>
+            <div class="project-card__backend" aria-label="Features">
+                <span class="backend-pill">Member Management</span>
+                <span class="backend-pill">Dashboard Analytics</span>
+                <span class="backend-pill">Subscription Tiers</span>
+                <span class="backend-pill">Activity Tracking</span>
+            </div>
+            <div class="project-card__stack" aria-label="Tech stack">
+                <span class="stack-pill">HTML5</span>
+                <span class="stack-pill">CSS3</span>
+                <span class="stack-pill">JavaScript</span>
+                <span class="stack-pill">UI/UX Design</span>
+                <span class="stack-pill">Dashboard</span>
+                <span class="stack-pill">CRM</span>
+            </div>
+        </article>
+
+        <!-- 04 EVENT/WEBINAR LANDING PAGE -->
+        <article class="project-card-modern" data-project="04" data-category="marketing">
+            <div class="project-card__head">
+                <span class="project-card__num" aria-hidden="true">04</span>
+                <span class="project-card__meta">Marketing · Landing Page</span>
+            </div>
+            <h2 class="project-card__title">Event Landing Page</h2>
+            <div class="project-card__preview">
+                <div class="project-preview__frame-wrap project-preview__frame-wrap--img">
+                    <a href="#" class="project-preview__img-link img-preview-trigger" onclick="openEventDemo(); return false;" title="Open Event Webinar Demo">
+                        <img src="/images/project-event-og.png" alt="Event Landing Page — Marketing Mastery Webinar, countdown, agenda, registration" class="project-preview__img" loading="lazy" />
+                    </a>
+                    <a href="#" class="preview-cta" onclick="openEventDemo(); return false;"><i class="fas fa-arrow-right"></i> Explore demo</a>
+                </div>
+            </div>
+            <p class="project-card__summary">Conversion-focused event page.</p>
+            <p class="project-card__desc">Landing page with countdown timer, agenda, speaker bios, and registration form.</p>
+            <div class="project-card__backend" aria-label="Features">
+                <span class="backend-pill">Countdown</span>
+                <span class="backend-pill">Agenda</span>
+                <span class="backend-pill">Speaker Bios</span>
+                <span class="backend-pill">Registration Form</span>
+            </div>
+            <div class="project-card__stack" aria-label="Tech stack">
+                <span class="stack-pill">HTML5</span>
+                <span class="stack-pill">CSS3</span>
+                <span class="stack-pill">JavaScript</span>
+                <span class="stack-pill">Responsive</span>
+                <span class="stack-pill">UI/UX</span>
+                <span class="stack-pill">Marketing</span>
+            </div>
+        </article>
+
+        <!-- 05 BRAND REFRESH CASE STUDY -->
+        <article class="project-card-modern" data-project="05" data-category="marketing">
+            <div class="project-card__head">
+                <span class="project-card__num" aria-hidden="true">05</span>
+                <span class="project-card__meta">Marketing · Case Study</span>
+            </div>
+            <h2 class="project-card__title">Brand Refresh Case Study</h2>
+            <div class="project-card__preview">
+                <div class="project-preview__frame-wrap project-preview__frame-wrap--img">
+                    <a href="#" class="project-preview__img-link img-preview-trigger" onclick="openBrandDemo(); return false;" title="Open Brand Refresh Demo">
+                        <img src="/images/project-brand-og.png" alt="Brand Refresh Case Study — before/after transformation" class="project-preview__img" loading="lazy" />
+                    </a>
+                    <a href="#" class="preview-cta" onclick="openBrandDemo(); return false;"><i class="fas fa-arrow-right"></i> Explore demo</a>
+                </div>
+            </div>
+            <p class="project-card__summary">Before/after brand transformation.</p>
+            <p class="project-card__desc">Case study showcasing web presence, messaging, and visual identity redesign.</p>
+            <div class="project-card__backend" aria-label="Features">
+                <span class="backend-pill">Visual Identity</span>
+                <span class="backend-pill">Messaging</span>
+                <span class="backend-pill">Site Redesign</span>
+                <span class="backend-pill">Before/After</span>
+            </div>
+            <div class="project-card__stack" aria-label="Tech stack">
+                <span class="stack-pill">Design</span>
+                <span class="stack-pill">Copy</span>
+                <span class="stack-pill">HTML/CSS</span>
+                <span class="stack-pill">Branding</span>
+                <span class="stack-pill">UI/UX</span>
+            </div>
+        </article>
+
+        <!-- 06 AD CREATIVE / BANNER SET -->
+        <article class="project-card-modern" data-project="06" data-category="marketing">
+            <div class="project-card__head">
+                <span class="project-card__num" aria-hidden="true">06</span>
+                <span class="project-card__meta">Marketing · Display Ads</span>
+            </div>
+            <h2 class="project-card__title">Ad Creative / Banner Set</h2>
+            <div class="project-card__preview">
+                <div class="project-preview__frame-wrap project-preview__frame-wrap--img">
+                    <a href="#" class="project-preview__img-link img-preview-trigger" onclick="openAdsDemo(); return false;" title="Open Ad Creative Demo">
+                        <img src="/images/project-ads.png" alt="Ad Creative / Banner Set — responsive display ads" class="project-preview__img" loading="lazy" />
+                    </a>
+                    <a href="#" class="preview-cta" onclick="openAdsDemo(); return false;"><i class="fas fa-arrow-right"></i> Explore demo</a>
+                </div>
+            </div>
+            <p class="project-card__summary">Responsive display ad variants.</p>
+            <p class="project-card__desc">Multiple sizes and variants for display campaigns—leaderboard, medium rectangle, mobile.</p>
+            <div class="project-card__backend" aria-label="Features">
+                <span class="backend-pill">Multiple Sizes</span>
+                <span class="backend-pill">Responsive</span>
+                <span class="backend-pill">Variants</span>
+                <span class="backend-pill">Display Ads</span>
+            </div>
+            <div class="project-card__stack" aria-label="Tech stack">
+                <span class="stack-pill">HTML5</span>
+                <span class="stack-pill">CSS3</span>
+                <span class="stack-pill">Responsive</span>
+                <span class="stack-pill">Design</span>
+                <span class="stack-pill">Marketing</span>
+            </div>
+        </article>
+
+        <!-- 07 MARKAGE -->
+        <article class="project-card-modern" data-project="07" data-category="webdesign fullstack marketing">
+            <div class="project-card__head">
+                <span class="project-card__num" aria-hidden="true">07</span>
+                <span class="project-card__meta">Web Design &amp; Development</span>
+            </div>
+            <h2 class="project-card__title">MARKAGE — Plan Features</h2>
+            <div class="project-card__preview">
+                <div class="project-preview__frame-wrap project-preview__frame-wrap--img">
+                    <a href="https://markage.ca/products/website-design" class="project-preview__img-link img-preview-trigger" target="_blank" rel="noopener" title="Open MARK.AGE">
+                        <img src="/images/project-markage.png" alt="MARK.AGE — Website Plan Features preview" class="project-preview__img" loading="lazy" />
+                    </a>
+                    <a href="https://markage.ca/products/website-design" class="preview-cta" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> View site</a>
+                </div>
+            </div>
+            <p class="project-card__summary">Feature presentation section.</p>
+            <p class="project-card__desc">Plan features section with custom made icons </p>
+            <div class="project-card__backend" aria-label="Features">
+                <span class="backend-pill">Custom icons</span>
+                <span class="backend-pill">Plan features</span>
+                <span class="backend-pill">Responsive layout</span>
+            </div>
+            <div class="project-card__stack" aria-label="Tech stack">
+                <span class="stack-pill">HTML</span>
+                <span class="stack-pill">CSS</span>
+                <span class="stack-pill">Liquid</span>
+                <span class="stack-pill">UI/UX</span>
+                <span class="stack-pill">WordPress</span>
+                <span class="stack-pill">Shopify</span>
+            </div>
+        </article>
+
+        <!-- 08 SNAKE -->
+        <article class="project-card-modern" data-project="08" data-category="game fullstack">
+            <div class="project-card__head">
+                <span class="project-card__num" aria-hidden="true">08</span>
+                <span class="project-card__meta">Interactive Web Game · Full‑stack</span>
+            </div>
+            <h2 class="project-card__title">PlayZone — Snake Game</h2>
+            <div class="project-card__preview project-card__preview--game">
+                <div class="project-preview__frame-wrap project-preview__frame-wrap--snake">
+                    <a href="/PlayZone/Snake" class="game-preview-link" title="Play Snake">
+                        <div class="snake-preview-scene">
+                            <div class="snake-preview__grid"></div>
+                            <div class="snake-preview__body">
+                                <div class="snake-segment snake-head"></div>
+                                <div class="snake-segment"></div>
+                                <div class="snake-segment"></div>
+                                <div class="snake-segment"></div>
+                                <div class="snake-segment"></div>
+                                <div class="snake-segment"></div>
+                                <div class="snake-segment"></div>
+                            </div>
+                            <div class="snake-preview__food"></div>
+                            <div class="snake-preview__score">Score: 70</div>
+                        </div>
+                    </a>
+                    <a href="/PlayZone/Snake" class="preview-cta"><i class="fas fa-play"></i> Play now</a>
+                </div>
+            </div>
+            <p class="project-card__summary">Playable Snake game.</p>
+            <p class="project-card__desc">Playable Snake with leaderboard, keyboard/touch controls.</p>
+            <div class="project-card__backend" aria-label="Backend highlights">
+                <span class="backend-pill">REST API</span>
+                <span class="backend-pill">Score persistence</span>
+                <span class="backend-pill">Server-side leaderboard</span>
+            </div>
+            <div class="project-card__stack" aria-label="Tech stack">
+                <span class="stack-pill">JavaScript</span>
+                <span class="stack-pill">HTML5 Canvas</span>
+                <span class="stack-pill">ASP.NET Core</span>
+                <span class="stack-pill">Razor</span>
+                <span class="stack-pill">REST API</span>
+                <span class="stack-pill">Responsive</span>
+            </div>
+        </article>
+
+        <!-- 09 MAZE -->
+        <article class="project-card-modern" data-project="09" data-category="game fullstack">
+            <div class="project-card__head">
+                <span class="project-card__num" aria-hidden="true">09</span>
+                <span class="project-card__meta">3D Web Game · Three.js · Full‑stack</span>
+            </div>
+            <h2 class="project-card__title">PlayZone — 3D Horror Maze</h2>
+            <div class="project-card__preview project-card__preview--game">
+                <div class="project-preview__frame-wrap project-preview__frame-wrap--maze">
+                    <a href="/PlayZone/Maze" class="game-preview-link" title="Play 3D Maze">
+                        <div class="maze-preview-scene">
+                            <div class="maze-preview__3d">
+                                <div class="maze-wall h" style="top: 0; left: 0;"></div>
+                                <div class="maze-wall h" style="top: 0; left: 55px;"></div>
+                                <div class="maze-wall h" style="top: 0; left: 110px;"></div>
+                                <div class="maze-wall v" style="top: 0; left: 0;"></div>
+                                <div class="maze-wall v" style="top: 45px; left: 35px;"></div>
+                                <div class="maze-wall h" style="top: 45px; left: 70px;"></div>
+                                <div class="maze-wall v" style="top: 90px; left: 15px;"></div>
+                                <div class="maze-wall h" style="top: 90px; left: 55px;"></div>
+                                <div class="maze-wall v" style="top: 0; right: 0;"></div>
+                                <div class="maze-wall h" style="bottom: 0; left: 0;"></div>
+                                <div class="maze-wall h" style="bottom: 0; left: 55px;"></div>
+                                <div class="maze-wall h" style="bottom: 0; right: 0;"></div>
+                                <div class="maze-preview__player"></div>
+                                <div class="maze-preview__goal"></div>
+                            </div>
+                            <div class="maze-preview__hud">
+                                <span class="maze-hud__time">00:42</span>
+                                <span class="maze-hud__label">First-Person 3D</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="/PlayZone/Maze" class="preview-cta"><i class="fas fa-play"></i> Play now</a>
+                </div>
+            </div>
+            <p class="project-card__summary">3D horror maze game.</p>
+            <p class="project-card__desc">3D maze with Three.js, procedural generation, MongoDB leaderboard.</p>
+            <div class="project-card__backend" aria-label="Backend highlights">
+                <span class="backend-pill">Three.js 3D</span>
+                <span class="backend-pill">Procedural generation</span>
+                <span class="backend-pill">MongoDB leaderboard</span>
+            </div>
+            <div class="project-card__stack" aria-label="Tech stack">
+                <span class="stack-pill">Three.js</span>
+                <span class="stack-pill">JavaScript</span>
+                <span class="stack-pill">WebGL</span>
+                <span class="stack-pill">ASP.NET Core</span>
+                <span class="stack-pill">MongoDB</span>
+                <span class="stack-pill">Responsive</span>
+            </div>
+        </article>
+
+        <!-- 10 KHRUS -->
+        <article class="project-card-modern" data-project="10" data-category="ecommerce webdesign fullstack">
+            <div class="project-card__head">
+                <span class="project-card__num" aria-hidden="true">10</span>
+                <span class="project-card__meta">E‑commerce &amp; Marketing</span>
+            </div>
+            <h2 class="project-card__title">KHRUS — Web Design</h2>
+            <div class="project-card__preview">
+                <div class="project-preview__frame-wrap project-preview__frame-wrap--img">
+                    <a href="https://khrus.com/" class="project-preview__img-link img-preview-trigger" target="_blank" rel="noopener" title="Open KHRUS">
+                        <img src="/images/project-khrus.png" alt="KHRUS — Web Design &amp; Development preview" class="project-preview__img" loading="lazy" />
+                    </a>
+                    <a href="https://khrus.com/" class="preview-cta" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> View site</a>
+                </div>
+            </div>
+            <p class="project-card__summary">Shopify storefront & chatbot.</p>
+            <p class="project-card__desc">Shopify storefront with chatbot, products, subscriptions, email.</p>
+            <div class="project-card__backend" aria-label="Backend highlights">
+                <span class="backend-pill">Email integration</span>
+                <span class="backend-pill">Checkout &amp; cart</span>
+                <span class="backend-pill">Client chatbot</span>
+            </div>
+            <div class="project-card__stack" aria-label="Tech stack">
+                <span class="stack-pill">HTML</span>
+                <span class="stack-pill">CSS</span>
+                <span class="stack-pill">Liquid</span>
+                <span class="stack-pill">JavaScript</span>
+                <span class="stack-pill">Shopify</span>
+                <span class="stack-pill">Canva</span>
+                <span class="stack-pill">Email</span>
+            </div>
+        </article>
+
+        <!-- 11 PORTFOLIO -->
+        <article class="project-card-modern" data-project="11" data-category="fullstack">
+            <div class="project-card__head">
+                <span class="project-card__num" aria-hidden="true">11</span>
+                <span class="project-card__meta">Full‑stack portfolio &amp; PlayZone host</span>
+            </div>
+            <h2 class="project-card__title">Anastasiia Portfolio</h2>
+            <div class="project-card__preview">
+                <div class="project-preview__frame-wrap project-preview__frame-wrap--img">
+                    <a href="https://github.com/AnastasiiaKhru/AnastasiiaPortfolio" class="project-preview__img-link img-preview-trigger" target="_blank" rel="noopener" title="View on GitHub">
+                        <div class="portfolio-preview-scene">
+                            <div class="portfolio-preview__bg">
+                                <span class="portfolio-preview__code">{ }</span>
+                                <span class="portfolio-preview__code portfolio-preview__code--2">=&gt;</span>
+                            </div>
+                            <div class="portfolio-preview__icons">
+                                <span class="portfolio-preview__icon"><i class="fab fa-github"></i></span>
+                                <span class="portfolio-preview__icon"><i class="fab fa-docker"></i></span>
+                                <span class="portfolio-preview__icon portfolio-preview__icon--play"><i class="fas fa-gamepad"></i></span>
+                            </div>
+                            <div class="portfolio-preview__content">
+                                <span class="portfolio-preview__logo">AK</span>
+                                <span class="portfolio-preview__text">Full‑stack · PlayZone</span>
+                                <div class="portfolio-preview__stack-hint">
+                                    <span>ASP.NET</span>
+                                    <span>MongoDB</span>
+                                    <span>Railway</span>
                                 </div>
                             </div>
-                        </a>
-                    </div>
+                        </div>
+                    </a>
+                    <a href="https://github.com/AnastasiiaKhru/AnastasiiaPortfolio" class="preview-cta" target="_blank" rel="noopener"><i class="fab fa-github"></i> View code</a>
                 </div>
-                <p class="project-card__summary">A professional gym membership CRM system with member management, dashboard analytics, activity tracking, and subscription handling.</p>
-                <p class="project-card__desc">Built a complete gym management CRM dashboard demonstrating enterprise-level UI/UX patterns. Features include member database with search and filtering, membership tier management (Basic, Standard, Premium), real-time activity feed, payment tracking, quick action buttons, and comprehensive statistics. The system showcases professional dashboard design with sidebar navigation, data tables, and modal forms.</p>
-                <div class="project-card__backend" aria-label="Features">
-                    <span class="backend-pill">Member Management</span>
-                    <span class="backend-pill">Dashboard Analytics</span>
-                    <span class="backend-pill">Subscription Tiers</span>
-                    <span class="backend-pill">Activity Tracking</span>
-                </div>
-                <div class="project-card__stack" aria-label="Tech stack">
-                    <span class="stack-pill">HTML5</span>
-                    <span class="stack-pill">CSS3</span>
-                    <span class="stack-pill">JavaScript</span>
-                    <span class="stack-pill">UI/UX Design</span>
-                    <span class="stack-pill">Dashboard</span>
-                    <span class="stack-pill">CRM</span>
-                </div>
-                <ul class="project-card__contributions" aria-label="Key features">
-                    <li>Professional dashboard with sidebar navigation and responsive layout</li>
-                    <li>Member database table with avatars, membership tiers, and status badges</li>
-                    <li>Real-time activity feed showing check-ins, payments, and sign-ups</li>
-                    <li>Add Member modal form with validation and membership plan selection</li>
-                    <li>Statistics cards with trend indicators and key metrics</li>
-                </ul>
-                <button class="project-cta project-cta--primary" onclick="openGymDemo()">
-                    <i class="fas fa-play" aria-hidden="true"></i> Open Interactive Demo
-                </button>
-            </article>
+            </div>
+            <p class="project-card__summary">Full-stack portfolio site.</p>
+            <p class="project-card__desc">ASP.NET Core app with PlayZone, MongoDB, Docker, Railway.</p>
+            <div class="project-card__backend" aria-label="Backend highlights">
+                <span class="backend-pill">ASP.NET Core MVC</span>
+                <span class="backend-pill">MongoDB</span>
+                <span class="backend-pill">PlayZone API</span>
+                <span class="backend-pill">Docker</span>
+                <span class="backend-pill">Railway</span>
+            </div>
+            <div class="project-card__stack" aria-label="Tech stack">
+                <span class="stack-pill">ASP.NET Core</span>
+                <span class="stack-pill">Razor</span>
+                <span class="stack-pill">C#</span>
+                <span class="stack-pill">CSS</span>
+                <span class="stack-pill">JavaScript</span>
+                <span class="stack-pill">MongoDB</span>
+                <span class="stack-pill">GitHub</span>
+                <span class="stack-pill">Railway</span>
+                <span class="stack-pill">Docker</span>
+            </div>
+        </article>
 
-            <article class="project-card-modern" data-project="04">
-                <div class="project-card__head">
-                    <span class="project-card__num" aria-hidden="true">04</span>
-                    <span class="project-card__meta">Web Design &amp; Development</span>
+        <!-- 12 CONTENT CREATION -->
+        <article class="project-card-modern" data-project="12" data-category="design marketing">
+            <div class="project-card__head">
+                <span class="project-card__num" aria-hidden="true">12</span>
+                <span class="project-card__meta">Personal Project · Design &amp; Content</span>
+            </div>
+            <h2 class="project-card__title">Content Creation</h2>
+            <div class="project-card__preview">
+                <div class="project-preview__frame-wrap project-preview__frame-wrap--img">
+                    <a href="https://www.instagram.com/alissa_ruru/" class="project-preview__img-link img-preview-trigger" target="_blank" rel="noopener" title="Open Instagram">
+                        <img src="/images/project-instagram.png" alt="@@alissa_ruru — Instagram Content Creation &amp; Visual Branding preview" class="project-preview__img" loading="lazy" />
+                    </a>
+                    <a href="https://www.instagram.com/alissa_ruru/" class="preview-cta" target="_blank" rel="noopener"><i class="fab fa-instagram"></i> View profile</a>
                 </div>
-                <h2 class="project-card__title">MARK.AGE — Website Plan Features</h2>
-                <p class="project-card__link-line">
-                    <a href="https://markage.ca/products/website-design" class="project-link" target="_blank" rel="noopener">markage.ca/products/website-design</a>
-                </p>
-                <div class="project-card__preview">
-                    <div class="project-preview__chrome">
-                        <span class="project-preview__url">markage.ca/products/website-design</span>
-                        <a href="https://markage.ca/products/website-design" class="project-preview__open" target="_blank" rel="noopener" title="Open in new tab"><i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
-                    </div>
-                    <div class="project-preview__frame-wrap project-preview__frame-wrap--img">
-                        <a href="https://markage.ca/products/website-design" class="project-preview__img-link" target="_blank" rel="noopener" title="Open MARK.AGE">
-                            <img src="/images/project-markage.png" alt="MARK.AGE — Website Plan Features preview" class="project-preview__img" loading="lazy" />
-                        </a>
-                    </div>
-                </div>
-                <p class="project-card__summary">Market‑driven feature presentation with custom icons, structured UI/UX, and WordPress/Shopify integration.</p>
-                <p class="project-card__desc">Designed and developed the Website Plan Features page for MARK.AGE, a Canada-based productized marketing studio. Delivered a clear presentation of plan offerings using custom-coded icons, a structured layout, and seamless WordPress/Shopify integration. The page showcases &ldquo;Website Plan Features&rdquo; and &ldquo;Additional WordPress Features&rdquo; in a clean grid, with line-art icons, concise copy, and a professional aesthetic.</p>
-                <div class="project-card__stack" aria-label="Tech stack">
-                    <span class="stack-pill">HTML</span>
-                    <span class="stack-pill">CSS</span>
-                    <span class="stack-pill">Liquid</span>
-                    <span class="stack-pill">UI/UX</span>
-                    <span class="stack-pill">WordPress</span>
-                    <span class="stack-pill">Shopify</span>
-                </div>
-                <ul class="project-card__contributions" aria-label="Key contributions">
-                    <li>Market-driven feature definition and content structure</li>
-                    <li>Custom-coded icons and consistent visual system</li>
-                    <li>Responsive grid layout for plan features and WordPress add-ons</li>
-                    <li>Clear hierarchy and conversion-focused design</li>
-                </ul>
-                <a href="https://markage.ca/products/website-design" class="project-cta project-cta--primary" target="_blank" rel="noopener">View live site <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
-            </article>
-
-            <article class="project-card-modern" data-project="05">
-                <div class="project-card__head">
-                    <span class="project-card__num" aria-hidden="true">05</span>
-                    <span class="project-card__meta">Interactive Web Game · Full‑stack</span>
-                </div>
-                <h2 class="project-card__title">PlayZone — Snake Game</h2>
-                <p class="project-card__link-line">
-                    <a href="/PlayZone/Snake" class="project-link">Play Snake</a>
-                </p>
-                <div class="project-card__preview project-card__preview--game">
-                    <div class="project-preview__chrome project-preview__chrome--snake">
-                        <span class="project-preview__url">/PlayZone/Snake</span>
-                        <a href="/PlayZone/Snake" class="project-preview__open" title="Play Snake"><i class="fas fa-play" aria-hidden="true"></i></a>
-                    </div>
-                    <div class="project-preview__frame-wrap project-preview__frame-wrap--snake">
-                        <a href="/PlayZone/Snake" class="game-preview-link" title="Play Snake">
-                            <div class="snake-preview-scene">
-                                <div class="snake-preview__grid"></div>
-                                <div class="snake-preview__body">
-                                    <div class="snake-segment snake-head"></div>
-                                    <div class="snake-segment"></div>
-                                    <div class="snake-segment"></div>
-                                    <div class="snake-segment"></div>
-                                    <div class="snake-segment"></div>
-                                    <div class="snake-segment"></div>
-                                    <div class="snake-segment"></div>
-                                </div>
-                                <div class="snake-preview__food"></div>
-                                <div class="snake-preview__score">Score: 70</div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <p class="project-card__summary">Playable Snake with leaderboard API, score persistence, keyboard &amp; touch controls, and modern UI.</p>
-                <p class="project-card__desc">A fully playable Snake game built into this portfolio app. Players enter their name, then control the snake with arrow keys (desktop) or swipe / D‑pad (mobile). Includes a persistent top-score leaderboard backed by the app&rsquo;s REST API, real-time score tracking, combo system, levels, and a &ldquo;Game Over&rdquo; flow with play again or new player.</p>
-                <div class="project-card__backend" aria-label="Backend highlights">
-                    <span class="backend-pill">REST API</span>
-                    <span class="backend-pill">Score persistence</span>
-                    <span class="backend-pill">Server-side leaderboard</span>
-                </div>
-                <div class="project-card__stack" aria-label="Tech stack">
-                    <span class="stack-pill">JavaScript</span>
-                    <span class="stack-pill">HTML5 Canvas</span>
-                    <span class="stack-pill">ASP.NET Core</span>
-                    <span class="stack-pill">Razor</span>
-                    <span class="stack-pill">REST API</span>
-                    <span class="stack-pill">Responsive</span>
-                </div>
-                <ul class="project-card__contributions" aria-label="Key features">
-                    <li>Name-on-start dialog, keyboard and touch controls, responsive canvas</li>
-                    <li>Server-side score persistence and top-three leaderboard</li>
-                    <li>Progressive difficulty, pause, combo system, levels</li>
-                    <li>Accessible, readable UI with professional styling</li>
-                </ul>
-                <a href="/PlayZone/Snake" class="project-cta project-cta--primary">Play now <i class="fas fa-play" aria-hidden="true"></i></a>
-            </article>
-
-            <article class="project-card-modern" data-project="06">
-                <div class="project-card__head">
-                    <span class="project-card__num" aria-hidden="true">06</span>
-                    <span class="project-card__meta">3D Web Game · Three.js · Full‑stack</span>
-                </div>
-                <h2 class="project-card__title">PlayZone — 3D Horror Maze</h2>
-                <p class="project-card__link-line">
-                    <a href="/PlayZone/Maze" class="project-link">Play 3D Maze</a>
-                </p>
-                <div class="project-card__preview project-card__preview--game">
-                    <div class="project-preview__chrome project-preview__chrome--maze">
-                        <span class="project-preview__url">/PlayZone/Maze</span>
-                        <a href="/PlayZone/Maze" class="project-preview__open" title="Play 3D Maze"><i class="fas fa-play" aria-hidden="true"></i></a>
-                    </div>
-                    <div class="project-preview__frame-wrap project-preview__frame-wrap--maze">
-                        <a href="/PlayZone/Maze" class="game-preview-link" title="Play 3D Maze">
-                            <div class="maze-preview-scene">
-                                <div class="maze-preview__3d">
-                                    <div class="maze-wall h" style="top: 0; left: 0;"></div>
-                                    <div class="maze-wall h" style="top: 0; left: 55px;"></div>
-                                    <div class="maze-wall h" style="top: 0; left: 110px;"></div>
-                                    <div class="maze-wall v" style="top: 0; left: 0;"></div>
-                                    <div class="maze-wall v" style="top: 45px; left: 35px;"></div>
-                                    <div class="maze-wall h" style="top: 45px; left: 70px;"></div>
-                                    <div class="maze-wall v" style="top: 90px; left: 15px;"></div>
-                                    <div class="maze-wall h" style="top: 90px; left: 55px;"></div>
-                                    <div class="maze-wall v" style="top: 0; right: 0;"></div>
-                                    <div class="maze-wall h" style="bottom: 0; left: 0;"></div>
-                                    <div class="maze-wall h" style="bottom: 0; left: 55px;"></div>
-                                    <div class="maze-wall h" style="bottom: 0; right: 0;"></div>
-                                    <div class="maze-preview__player"></div>
-                                    <div class="maze-preview__goal"></div>
-                                </div>
-                                <div class="maze-preview__hud">
-                                    <span class="maze-hud__time">00:42</span>
-                                    <span class="maze-hud__label">First-Person 3D</span>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <p class="project-card__summary">Immersive first-person 3D maze with Three.js rendering, procedural generation, and timed leaderboard.</p>
-                <p class="project-card__desc">A fully immersive first-person 3D maze game built with Three.js. Features procedurally generated mazes using recursive backtracking, real-time 3D rendering with dynamic lighting, textured walls/floors, and a glowing goal portal. Supports keyboard/mouse controls on desktop and touch joystick on mobile. Includes a persistent fastest-time leaderboard backed by MongoDB.</p>
-                <div class="project-card__backend" aria-label="Backend highlights">
-                    <span class="backend-pill">Three.js 3D</span>
-                    <span class="backend-pill">Procedural generation</span>
-                    <span class="backend-pill">MongoDB leaderboard</span>
-                </div>
-                <div class="project-card__stack" aria-label="Tech stack">
-                    <span class="stack-pill">Three.js</span>
-                    <span class="stack-pill">JavaScript</span>
-                    <span class="stack-pill">WebGL</span>
-                    <span class="stack-pill">ASP.NET Core</span>
-                    <span class="stack-pill">MongoDB</span>
-                    <span class="stack-pill">Responsive</span>
-                </div>
-                <ul class="project-card__contributions" aria-label="Key features">
-                    <li>Real-time 3D rendering with Three.js, dynamic lighting, shadows</li>
-                    <li>Procedural maze generation using recursive backtracking algorithm</li>
-                    <li>First-person controls: WASD/arrows + mouse look (desktop), touch joystick (mobile)</li>
-                    <li>Timed gameplay with fastest-time leaderboard persisted in MongoDB</li>
-                    <li>Minimap, particle effects, neon cyberpunk aesthetic</li>
-                </ul>
-                <a href="/PlayZone/Maze" class="project-cta project-cta--primary">Play now <i class="fas fa-play" aria-hidden="true"></i></a>
-            </article>
-
-            <article class="project-card-modern" data-project="07">
-                <div class="project-card__head">
-                    <span class="project-card__num" aria-hidden="true">07</span>
-                    <span class="project-card__meta">E‑commerce &amp; Marketing</span>
-                </div>
-                <h2 class="project-card__title">KHRUS — Web Design &amp; Development</h2>
-                <p class="project-card__link-line">
-                    <a href="https://khrus.com/" class="project-link" target="_blank" rel="noopener">khrus.com</a>
-                </p>
-                <div class="project-card__preview">
-                    <div class="project-preview__chrome">
-                        <span class="project-preview__url">khrus.com</span>
-                        <a href="https://khrus.com/" class="project-preview__open" target="_blank" rel="noopener" title="Open in new tab"><i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
-                    </div>
-                    <div class="project-preview__frame-wrap project-preview__frame-wrap--img">
-                        <a href="https://khrus.com/" class="project-preview__img-link" target="_blank" rel="noopener" title="Open KHRUS">
-                            <img src="/images/project-khrus.png" alt="KHRUS — Web Design &amp; Development preview" class="project-preview__img" loading="lazy" />
-                        </a>
-                    </div>
-                </div>
-                <p class="project-card__summary">Custom Shopify storefront, product &amp; subscription offerings, email integration, JavaScript chatbot for client FAQs, and Canva-driven visuals.</p>
-                <p class="project-card__desc">Designed, built, and launched the KHRUS website using HTML, CSS, Liquid, and JavaScript on Shopify. Created visuals and marketing assets in Canva, then implemented custom layout and styling. Built a custom JavaScript chatbot that answers client questions in real time—handling FAQs about services, pricing, and process to improve support and site engagement. Set up a fully working storefront with product listings, PageCare subscription options, and EliteSite/BrandSite/LaunchSite packages. Connected and configured email so contact and form submissions work in production.</p>
-                <div class="project-card__backend" aria-label="Backend highlights">
-                    <span class="backend-pill">Email integration</span>
-                    <span class="backend-pill">Checkout &amp; cart</span>
-                    <span class="backend-pill">Client chatbot</span>
-                </div>
-                <div class="project-card__stack" aria-label="Tech stack">
-                    <span class="stack-pill">HTML</span>
-                    <span class="stack-pill">CSS</span>
-                    <span class="stack-pill">Liquid</span>
-                    <span class="stack-pill">JavaScript</span>
-                    <span class="stack-pill">Shopify</span>
-                    <span class="stack-pill">Canva</span>
-                    <span class="stack-pill">Email</span>
-                </div>
-                <ul class="project-card__contributions" aria-label="Key contributions">
-                    <li>Custom-coded storefront with product and subscription offerings</li>
-                    <li>Custom JavaScript chatbot that answers client questions and FAQs in real time</li>
-                    <li>Canva-driven visuals integrated into layout and branding</li>
-                    <li>Email integration for forms and notifications; full checkout and cart flow</li>
-                    <li>Deployed, tested, and maintained with documented code</li>
-                </ul>
-                <a href="https://khrus.com/" class="project-cta project-cta--primary" target="_blank" rel="noopener">View live site <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
-            </article>
-
-            <article class="project-card-modern" data-project="08">
-                <div class="project-card__head">
-                    <span class="project-card__num" aria-hidden="true">08</span>
-                    <span class="project-card__meta">Full‑stack portfolio &amp; PlayZone host</span>
-                </div>
-                <h2 class="project-card__title">Anastasiia Portfolio</h2>
-                <p class="project-card__link-line">This site</p>
-                <div class="project-card__preview">
-                    <div class="project-preview__chrome">
-                        <span class="project-preview__url">/ (Home)</span>
-                        <a href="/" class="project-preview__open" title="Open home"><i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
-                    </div>
-                    <div class="project-preview__frame-wrap">
-                        <iframe src="/" title="Live preview: Portfolio home" class="project-preview__iframe" loading="lazy"></iframe>
-                    </div>
-                </div>
-                <p class="project-card__summary">ASP.NET Core MVC app with hero, projects, skills, experience, education, contact form, and PlayZone.</p>
-                <p class="project-card__desc">Full-stack ASP.NET Core app showcasing experience, projects, resume, and contact. Includes a hero with glass-style panel, skills and experience sections, education, featured projects, and a working contact form. PlayZone Snake lives here. Source on GitHub; built via Docker and deployed on Railway (Azure Web App for production). MongoDB used for identity and game scores where applicable.</p>
-                <div class="project-card__backend" aria-label="Backend highlights">
-                    <span class="backend-pill">ASP.NET Core MVC</span>
-                    <span class="backend-pill">MongoDB</span>
-                    <span class="backend-pill">PlayZone API</span>
-                    <span class="backend-pill">Docker</span>
-                    <span class="backend-pill">Railway</span>
-                </div>
-                <div class="project-card__stack" aria-label="Tech stack">
-                    <span class="stack-pill">ASP.NET Core</span>
-                    <span class="stack-pill">Razor</span>
-                    <span class="stack-pill">C#</span>
-                    <span class="stack-pill">CSS</span>
-                    <span class="stack-pill">JavaScript</span>
-                    <span class="stack-pill">MongoDB</span>
-                    <span class="stack-pill">GitHub</span>
-                    <span class="stack-pill">Railway</span>
-                    <span class="stack-pill">Docker</span>
-                </div>
-                <ul class="project-card__contributions" aria-label="Tech &amp; tooling">
-                    <li>ASP.NET Core MVC, Razor views, server-side rendering, static assets in wwwroot</li>
-                    <li>Identity (MongoDB-backed), contact form, PlayZone API for scores</li>
-                    <li>GitHub for version control; Dockerfile + Railway for build and deploy</li>
-                    <li>Bootstrap, custom CSS, responsive layout, modern UI</li>
-                </ul>
-                <a href="https://github.com/AnastasiiaKhru/AnastasiiaPortfolio" class="project-cta project-cta--primary" target="_blank" rel="noopener">View on GitHub <i class="fab fa-github" aria-hidden="true"></i></a>
-            </article>
-
-            <article class="project-card-modern" data-project="09">
-                <div class="project-card__head">
-                    <span class="project-card__num" aria-hidden="true">09</span>
-                    <span class="project-card__meta">Personal Project · Design &amp; Content</span>
-                </div>
-                <h2 class="project-card__title">Instagram Content Creation &amp; Visual Branding</h2>
-                <p class="project-card__link-line">
-                    <a href="https://www.instagram.com/alissa_ruru/" class="project-link" target="_blank" rel="noopener">@@alissa_ruru</a> on Instagram
-                </p>
-                <div class="project-card__preview">
-                    <div class="project-preview__chrome">
-                        <span class="project-preview__url">instagram.com/alissa_ruru</span>
-                        <a href="https://www.instagram.com/alissa_ruru/" class="project-preview__open" target="_blank" rel="noopener" title="Open Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
-                    </div>
-                    <div class="project-preview__frame-wrap project-preview__frame-wrap--img">
-                        <a href="https://www.instagram.com/alissa_ruru/" class="project-preview__img-link" target="_blank" rel="noopener" title="Open Instagram">
-                            <img src="/images/project-instagram.png" alt="@@alissa_ruru — Instagram Content Creation &amp; Visual Branding preview" class="project-preview__img" loading="lazy" />
-                        </a>
-                    </div>
-                </div>
-                <p class="project-card__summary">AI‑driven visuals, storytelling, and short‑form video—Photoshop, Canva, AI tools, full creative process.</p>
-                <p class="project-card__desc">Created and managed a personal Instagram brand focused on AI-driven visuals, storytelling, and short-form video. Designed and produced images and videos using Photoshop, Canva, and AI tools, from concept to final export. Built a cohesive visual identity and grew engagement through consistent, platform-optimized content.</p>
-                <div class="project-card__stack" aria-label="Tech stack">
-                    <span class="stack-pill">Photoshop</span>
-                    <span class="stack-pill">Canva</span>
-                    <span class="stack-pill">AI Tools</span>
-                    <span class="stack-pill">Video</span>
-                    <span class="stack-pill">Social</span>
-                    <span class="stack-pill">Visual Design</span>
-                </div>
-                <ul class="project-card__contributions" aria-label="Key contributions">
-                    <li>Designed visual assets and short-form videos for social media</li>
-                    <li>Edited images and videos using Photoshop &amp; Canva</li>
-                    <li>Experimented with AI-generated visuals and effects</li>
-                    <li>Consistent visual style and platform-optimized content</li>
-                </ul>
-                <a href="https://www.instagram.com/alissa_ruru/" class="project-cta project-cta--secondary" target="_blank" rel="noopener">View Instagram <i class="fab fa-instagram" aria-hidden="true"></i></a>
-            </article>
-        </div>
+            </div>
+            <p class="project-card__summary">Visual branding & content.</p>
+            <p class="project-card__desc">AI visuals and short-form video with Photoshop, Canva.</p>
+            <div class="project-card__backend" aria-label="Features">
+                <span class="backend-pill">Content creation</span>
+                <span class="backend-pill">Visual branding</span>
+                <span class="backend-pill">Social media</span>
+            </div>
+            <div class="project-card__stack" aria-label="Tech stack">
+                <span class="stack-pill">Photoshop</span>
+                <span class="stack-pill">Canva</span>
+                <span class="stack-pill">AI Tools</span>
+                <span class="stack-pill">Video</span>
+                <span class="stack-pill">Social</span>
+                <span class="stack-pill">Visual Design</span>
+            </div>
+        </article>
     </div>
 </section>
 
-<!-- Cake Demo Modal -->
+<!-- Demo Modals -->
 <div class="demo-modal" id="cakeDemoModal">
     <div class="demo-modal__overlay" onclick="closeCakeDemo()"></div>
     <div class="demo-modal__container">
         <div class="demo-modal__header">
-            <div class="demo-modal__browser-dots">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <div class="demo-modal__browser-dots"><span></span><span></span><span></span></div>
             <span class="demo-modal__url">sweetdelights.demo - Sweet Delights Bakery</span>
-            <button class="demo-modal__close" onclick="closeCakeDemo()" title="Close">
-                <i class="fas fa-times"></i>
-            </button>
+            <button class="demo-modal__close" onclick="closeCakeDemo()" title="Close"><i class="fas fa-times"></i></button>
         </div>
         <iframe src="/Home/CakeShopDemo" class="demo-modal__iframe" id="cakeDemoIframe" title="Sweet Delights Bakery Demo"></iframe>
     </div>
 </div>
 
-<!-- Gym CRM Demo Modal -->
 <div class="demo-modal demo-modal--gym" id="gymDemoModal">
     <div class="demo-modal__overlay" onclick="closeGymDemo()"></div>
     <div class="demo-modal__container">
         <div class="demo-modal__header" style="background: linear-gradient(90deg, #1e1b4b, #312e81);">
-            <div class="demo-modal__browser-dots">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <div class="demo-modal__browser-dots"><span></span><span></span><span></span></div>
             <span class="demo-modal__url" style="color: #a5b4fc;">fithub.crm - Gym Management System</span>
-            <button class="demo-modal__close" onclick="closeGymDemo()" title="Close" style="background: rgba(255,255,255,0.1); color: #a5b4fc;">
-                <i class="fas fa-times"></i>
-            </button>
+            <button class="demo-modal__close" onclick="closeGymDemo()" title="Close" style="background: rgba(255,255,255,0.1); color: #a5b4fc;"><i class="fas fa-times"></i></button>
         </div>
         <iframe src="/Home/GymCrmDemo" class="demo-modal__iframe" id="gymDemoIframe" title="FitHub Gym CRM Demo"></iframe>
     </div>
 </div>
 
-<!-- Liquor Store Demo Modal -->
 <div class="demo-modal demo-modal--liquor" id="liquorDemoModal">
     <div class="demo-modal__overlay" onclick="closeLiquorDemo()"></div>
     <div class="demo-modal__container">
         <div class="demo-modal__header" style="background: linear-gradient(90deg, #0f0f1a, #1a1a2e);">
-            <div class="demo-modal__browser-dots">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <div class="demo-modal__browser-dots"><span></span><span></span><span></span></div>
             <span class="demo-modal__url" style="color: #c9a962;">luxespirits.demo - Premium Alcohol Delivery</span>
-            <button class="demo-modal__close" onclick="closeLiquorDemo()" title="Close" style="background: rgba(201,169,98,0.2); color: #c9a962;">
-                <i class="fas fa-times"></i>
-            </button>
+            <button class="demo-modal__close" onclick="closeLiquorDemo()" title="Close" style="background: rgba(201,169,98,0.2); color: #c9a962;"><i class="fas fa-times"></i></button>
         </div>
         <iframe src="/Home/LiquorStoreDemo" class="demo-modal__iframe" id="liquorDemoIframe" title="LUXE SPIRITS Demo"></iframe>
     </div>
 </div>
 
+<div class="demo-modal demo-modal--event" id="eventDemoModal">
+    <div class="demo-modal__overlay" onclick="closeEventDemo()"></div>
+    <div class="demo-modal__container">
+        <div class="demo-modal__header" style="background: linear-gradient(90deg, #1e1b4b, #3730a3);">
+            <div class="demo-modal__browser-dots"><span></span><span></span><span></span></div>
+            <span class="demo-modal__url" style="color: #c4b5fd;">event.demo - Event / Webinar Landing Page</span>
+            <button class="demo-modal__close" onclick="closeEventDemo()" title="Close" style="background: rgba(196,181,253,0.2); color: #c4b5fd;"><i class="fas fa-times"></i></button>
+        </div>
+        <iframe src="/Home/EventWebinarDemo" class="demo-modal__iframe" id="eventDemoIframe" title="Event Webinar Demo"></iframe>
+    </div>
+</div>
+
+<div class="demo-modal demo-modal--brand" id="brandDemoModal">
+    <div class="demo-modal__overlay" onclick="closeBrandDemo()"></div>
+    <div class="demo-modal__container">
+        <div class="demo-modal__header" style="background: linear-gradient(90deg, #0f172a, #1e293b);">
+            <div class="demo-modal__browser-dots"><span></span><span></span><span></span></div>
+            <span class="demo-modal__url" style="color: #94a3b8;">brand.demo - Brand Refresh Case Study</span>
+            <button class="demo-modal__close" onclick="closeBrandDemo()" title="Close" style="background: rgba(148,163,184,0.2); color: #94a3b8;"><i class="fas fa-times"></i></button>
+        </div>
+        <iframe src="/Home/BrandRefreshDemo" class="demo-modal__iframe" id="brandDemoIframe" title="Brand Refresh Demo"></iframe>
+    </div>
+</div>
+
+<div class="demo-modal demo-modal--ads" id="adsDemoModal">
+    <div class="demo-modal__overlay" onclick="closeAdsDemo()"></div>
+    <div class="demo-modal__container">
+        <div class="demo-modal__header" style="background: linear-gradient(90deg, #0f172a, #334155);">
+            <div class="demo-modal__browser-dots"><span></span><span></span><span></span></div>
+            <span class="demo-modal__url" style="color: #a5b4fc;">ads.demo - Ad Creative / Banner Set</span>
+            <button class="demo-modal__close" onclick="closeAdsDemo()" title="Close" style="background: rgba(165,180,252,0.2); color: #a5b4fc;"><i class="fas fa-times"></i></button>
+        </div>
+        <iframe src="/Home/AdCreativeDemo" class="demo-modal__iframe" id="adsDemoIframe" title="Ad Creative Demo"></iframe>
+    </div>
+</div>
+
 <script>
-    function openCakeDemo() {
-        const modal = document.getElementById('cakeDemoModal');
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeCakeDemo() {
-        const modal = document.getElementById('cakeDemoModal');
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    function openGymDemo() {
-        const modal = document.getElementById('gymDemoModal');
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeGymDemo() {
-        const modal = document.getElementById('gymDemoModal');
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    function openLiquorDemo() {
-        const modal = document.getElementById('liquorDemoModal');
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeLiquorDemo() {
-        const modal = document.getElementById('liquorDemoModal');
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    // Close on Escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            closeCakeDemo();
-            closeGymDemo();
-            closeLiquorDemo();
-        }
-    });
+function openCakeDemo() { document.getElementById('cakeDemoModal').classList.add('active'); document.body.style.overflow = 'hidden'; }
+function closeCakeDemo() { document.getElementById('cakeDemoModal').classList.remove('active'); document.body.style.overflow = ''; }
+function openGymDemo() { document.getElementById('gymDemoModal').classList.add('active'); document.body.style.overflow = 'hidden'; }
+function closeGymDemo() { document.getElementById('gymDemoModal').classList.remove('active'); document.body.style.overflow = ''; }
+function openLiquorDemo() { document.getElementById('liquorDemoModal').classList.add('active'); document.body.style.overflow = 'hidden'; }
+function closeLiquorDemo() { document.getElementById('liquorDemoModal').classList.remove('active'); document.body.style.overflow = ''; }
+function openEventDemo() { document.getElementById('eventDemoModal').classList.add('active'); document.body.style.overflow = 'hidden'; }
+function closeEventDemo() { document.getElementById('eventDemoModal').classList.remove('active'); document.body.style.overflow = ''; }
+function openBrandDemo() { document.getElementById('brandDemoModal').classList.add('active'); document.body.style.overflow = 'hidden'; }
+function closeBrandDemo() { document.getElementById('brandDemoModal').classList.remove('active'); document.body.style.overflow = ''; }
+function openAdsDemo() { document.getElementById('adsDemoModal').classList.add('active'); document.body.style.overflow = 'hidden'; }
+function closeAdsDemo() { document.getElementById('adsDemoModal').classList.remove('active'); document.body.style.overflow = ''; }
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { closeCakeDemo(); closeGymDemo(); closeLiquorDemo(); closeEventDemo(); closeBrandDemo(); closeAdsDemo(); }
+});
 </script>

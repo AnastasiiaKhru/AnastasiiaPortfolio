@@ -1,0 +1,350 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ad Creative / Banner Set — Display Ads Demo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #f6f8fa; --surface: #ffffff; --surface2: #eef1f5;
+            --accent: #0969da; --accent-soft: rgba(9, 105, 218, 0.12);
+            --text: #1f2328; --text-muted: #656d76; --border: rgba(31, 35, 40, 0.12);
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+        .ads-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1rem 2.5rem; background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(31, 35, 40, 0.04);
+        }
+        .ads-nav__logo { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 600; color: var(--text); }
+        .ads-nav__logo span { color: var(--accent); }
+        .ads-nav__links { display: flex; gap: 2rem; list-style: none; }
+        .ads-nav__links a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+        .ads-nav__links a:hover { color: var(--text); }
+
+        .ads-hero {
+            padding: 7rem 2rem 5rem; text-align: center; border-bottom: 1px solid var(--border);
+            background: linear-gradient(180deg, #ffffff 0%, #f6f8fa 100%);
+        }
+        .ads-hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 0.75rem; letter-spacing: -0.02em; }
+        .ads-hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 560px; margin: 0 auto; }
+
+        .ads-toolbar { max-width: 1100px; margin: -2rem auto 0; padding: 0 2rem; position: relative; z-index: 5; }
+        .ads-toolbar-inner {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 20px; padding: 1.75rem 2rem;
+            display: flex; flex-wrap: wrap; gap: 2rem; align-items: center;
+        }
+        .toolbar-group { display: flex; align-items: center; gap: 1rem; }
+        .toolbar-group label { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
+        .toolbar-input {
+            padding: 0.6rem 1.25rem; background: var(--surface2);
+            border: 1px solid var(--border); border-radius: 12px;
+            font-size: 0.95rem; width: 200px; color: var(--text);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .toolbar-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+        .toolbar-input--sm { width: 130px; }
+        .export-btn {
+            padding: 0.55rem 1.25rem; border-radius: 12px; border: 1px solid var(--accent);
+            background: var(--accent-soft); color: var(--accent); font-size: 0.9rem; font-weight: 600;
+            cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem;
+        }
+        .export-btn:hover { background: var(--accent); color: white; }
+        .export-btn.copied { border-color: #22c55e; background: rgba(34,197,94,0.15); color: #22c55e; }
+        .theme-tabs { display: flex; gap: 0.35rem; }
+        .theme-tab {
+            padding: 0.55rem 1.25rem; background: var(--surface2);
+            border: 1px solid var(--border); border-radius: 12px;
+            cursor: pointer; font-size: 0.9rem; font-weight: 500; color: var(--text-muted);
+            transition: all 0.2s;
+        }
+        .theme-tab:hover { color: var(--text); border-color: rgba(9, 105, 218, 0.3); }
+        .theme-tab.active { background: var(--accent); color: white; border-color: var(--accent); }
+        .theme-tab.light.active { background: var(--text); color: white; border-color: var(--text); }
+        .size-tabs { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+        .size-tab {
+            padding: 0.45rem 1rem; background: var(--surface2);
+            border: 1px solid var(--border); border-radius: 10px;
+            cursor: pointer; font-size: 0.85rem; font-weight: 500; color: var(--text-muted);
+            transition: all 0.2s;
+        }
+        .size-tab:hover { color: var(--text); }
+        .size-tab.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+        .ads-showcase { max-width: 1200px; margin: 0 auto; padding: 5rem 2rem; }
+        .ads-section { margin-bottom: 4rem; }
+        .ads-section h2 {
+            font-family: 'Fraunces', serif; font-size: 1.35rem; font-weight: 600; margin-bottom: 1.5rem;
+            display: flex; align-items: center; gap: 0.6rem; color: var(--text);
+        }
+        .ads-section h2 i { color: var(--accent); }
+        .banner-row { display: flex; flex-wrap: wrap; gap: 2rem; align-items: flex-start; }
+        .banner-wrapper {
+            display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
+            transition: transform 0.25s ease, opacity 0.3s;
+        }
+        .banner-wrapper.hidden { display: none; }
+        .banner-wrapper:hover { transform: translateY(-6px); }
+        .banner-label { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; }
+        .banner {
+            position: relative; border-radius: 16px; display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem; font-weight: 600;
+            border: 1px solid rgba(255,255,255,0.06);
+            overflow: hidden; cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.3s;
+        }
+        .banner:hover { box-shadow: 0 16px 48px rgba(9, 105, 218, 0.2); transform: scale(1.02); }
+        .banner.banner-dark {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%);
+            color: white;
+        }
+        .banner.banner-dark::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse 80% 50% at 80% 50%, rgba(124, 92, 255, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .banner.banner-light {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+            color: #0f172a; border-color: rgba(15,23,42,0.08);
+        }
+        .banner.banner-light::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse 60% 40% at 90% 20%, rgba(9, 105, 218, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .banner-inner { padding: 0.5rem 1rem; text-align: center; position: relative; z-index: 1; }
+        .banner.banner-dark .banner-inner strong { color: #79c0ff; }
+        .banner.banner-light .banner-inner strong { color: #7c5cff; }
+        .banner--leaderboard { width: 364px; height: 50px; }
+        .banner--medium { width: 300px; height: 250px; flex-direction: column; }
+        .banner--medium .banner-inner { padding: 1.25rem; }
+        .banner--mobile { width: 320px; height: 50px; }
+        .banner--large { width: 336px; height: 280px; flex-direction: column; }
+        .banner--large .banner-inner { padding: 1.25rem; }
+        .banner--halfpage { width: 300px; height: 600px; flex-direction: column; }
+        .banner--halfpage .banner-inner { padding: 2rem; }
+        .banner--skyscraper { width: 160px; height: 600px; flex-direction: column; }
+        .banner--skyscraper .banner-inner { padding: 1rem; font-size: 0.8rem; }
+
+        .toast {
+            position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: var(--text); color: white; border: none;
+            color: var(--text); padding: 0.9rem 1.75rem;
+            border-radius: 14px; font-size: 0.95rem; font-weight: 500;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+            opacity: 0; transition: transform 0.3s ease, opacity 0.3s; z-index: 1000;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        .mock-page { background: #eef1f5; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; }
+        .mock-page-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1rem 1.5rem; background: var(--surface); border-bottom: 1px solid var(--border);
+        }
+        .mock-logo { font-weight: 600; color: var(--text); font-size: 1rem; }
+        .mock-nav { display: flex; gap: 1.5rem; }
+        .mock-nav a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; }
+        .mock-banner-slot { display: flex; justify-content: center; padding: 1.25rem; }
+        .mock-context-banner { max-width: 364px; }
+
+        .specs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .spec-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 20px; padding: 1.75rem;
+            transition: transform 0.25s ease, border-color 0.25s;
+        }
+        .spec-card:hover { transform: translateY(-4px); border-color: var(--accent-soft); }
+        .spec-card i { font-size: 1.5rem; color: var(--accent); margin-bottom: 0.75rem; }
+        .spec-card h3 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--text); }
+        .spec-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+        @@media (max-width: 600px) { .ads-nav__links { display: none; } .ads-toolbar-inner { flex-direction: column; align-items: stretch; } }
+    </style>
+</head>
+<body>
+    <nav class="ads-nav">
+        <span class="ads-nav__logo">Ad<span>Creative</span></span>
+        <ul class="ads-nav__links">
+            <li><a href="#standard">Banners</a></li>
+            <li><a href="#specs">Specs</a></li>
+        </ul>
+    </nav>
+
+    <header class="ads-hero">
+        <h1>Responsive Display Ad Creative</h1>
+        <p>Customize brand name, CTA text, and theme. Filter by size. Click any banner to copy dimensions. Export specs for handoff.</p>
+    </header>
+
+    <div class="ads-toolbar">
+        <div class="ads-toolbar-inner">
+            <div class="toolbar-group">
+                <label>Brand Name</label>
+                <input type="text" class="toolbar-input" id="brandInput" value="Your Brand" placeholder="Your Brand" />
+            </div>
+            <div class="toolbar-group">
+                <label>CTA Text</label>
+                <input type="text" class="toolbar-input toolbar-input--sm" id="ctaInput" value="Learn more" placeholder="CTA text" />
+            </div>
+            <div class="toolbar-group">
+                <label>Theme</label>
+                <div class="theme-tabs">
+                    <button type="button" class="theme-tab active" data-theme="dark">Dark</button>
+                    <button type="button" class="theme-tab light" data-theme="light">Light</button>
+                </div>
+            </div>
+            <div class="toolbar-group">
+                <label>Filter</label>
+                <div class="size-tabs">
+                    <button type="button" class="size-tab active" data-size="all">All</button>
+                    <button type="button" class="size-tab" data-size="leaderboard">728×90</button>
+                    <button type="button" class="size-tab" data-size="medium">300×250</button>
+                    <button type="button" class="size-tab" data-size="mobile">320×50</button>
+                    <button type="button" class="size-tab" data-size="large">336×280</button>
+                    <button type="button" class="size-tab" data-size="halfpage">300×600</button>
+                    <button type="button" class="size-tab" data-size="skyscraper">160×600</button>
+                </div>
+            </div>
+            <div class="toolbar-group" style="margin-left: auto;">
+                <button type="button" class="export-btn" id="exportSpecs"><i class="fas fa-download"></i> Export Specs</button>
+            </div>
+        </div>
+    </div>
+
+    <section class="ads-showcase" id="standard">
+        <div class="ads-section ads-preview-context">
+            <h2><i class="fas fa-window-maximize"></i> Preview in Context</h2>
+            <div class="mock-page">
+                <div class="mock-page-header">
+                    <span class="mock-logo">Example Site</span>
+                    <nav class="mock-nav"><a href="#">Home</a><a href="#">About</a><a href="#">Contact</a></nav>
+                </div>
+                <div class="mock-banner-slot" id="mockBannerSlot">
+                    <div class="banner banner-dark banner--leaderboard mock-context-banner" data-spec="728×90">
+                        <div class="banner-inner"><strong class="brand-text">Your Brand</strong> — <span class="cta-text">Learn more</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ads-section">
+            <h2><i class="fas fa-th-large"></i> All Sizes</h2>
+            <div class="banner-row">
+                <div class="banner-wrapper" data-size="leaderboard">
+                    <span class="banner-label">Leaderboard 728×90</span>
+                    <div class="banner banner-dark" data-spec="728×90"><div class="banner-inner"><strong class="brand-text">Your Brand</strong> — <span class="cta-text">Learn more</span></div></div>
+                </div>
+                <div class="banner-wrapper" data-size="medium">
+                    <span class="banner-label">Medium Rectangle 300×250</span>
+                    <div class="banner banner-dark banner--medium" data-spec="300×250"><div class="banner-inner"><strong class="brand-text">Your Brand</strong><br/><span style="font-size:0.9em;opacity:0.95;">Compelling headline</span><br/><span style="font-size:0.8em;opacity:0.85;" class="cta-text">Learn more →</span></div></div>
+                </div>
+                <div class="banner-wrapper" data-size="mobile">
+                    <span class="banner-label">Mobile 320×50</span>
+                    <div class="banner banner-dark banner--mobile" data-spec="320×50"><div class="banner-inner"><strong class="brand-text">Your Brand</strong> — <span class="cta-text">Tap to explore</span></div></div>
+                </div>
+                <div class="banner-wrapper" data-size="large">
+                    <span class="banner-label">Large Rectangle 336×280</span>
+                    <div class="banner banner-dark banner--large" data-spec="336×280"><div class="banner-inner"><strong class="brand-text">Your Brand</strong><br/><span style="font-size:0.9em;opacity:0.95;">Engaging message</span><br/><span style="font-size:0.8em;opacity:0.85;" class="cta-text">Learn more</span></div></div>
+                </div>
+                <div class="banner-wrapper" data-size="halfpage">
+                    <span class="banner-label">Half Page 300×600</span>
+                    <div class="banner banner-dark banner--halfpage" data-spec="300×600"><div class="banner-inner"><strong class="brand-text">Your Brand</strong><br/><br/><span style="font-size:0.95em;opacity:0.95;">Premium placement</span><br/><span style="font-size:0.85em;opacity:0.85;" class="cta-text">Call to action</span></div></div>
+                </div>
+                <div class="banner-wrapper" data-size="skyscraper">
+                    <span class="banner-label">Skyscraper 160×600</span>
+                    <div class="banner banner-dark banner--skyscraper" data-spec="160×600"><div class="banner-inner"><strong class="brand-text">Brand</strong><br/><span style="opacity:0.95;">Sidebar</span><br/><span style="opacity:0.85;" class="cta-text">CTA</span></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="specs">
+            <h2 style="margin-bottom: 1.5rem;"><i class="fas fa-info-circle"></i> Specs & Use Cases</h2>
+            <div class="specs-grid">
+                <div class="spec-card"><i class="fas fa-desktop"></i><h3>Header / Leaderboard</h3><p>728×90 for top-of-page placement. High visibility.</p></div>
+                <div class="spec-card"><i class="fas fa-square"></i><h3>In-Feed / Medium Rect</h3><p>300×250 & 336×280 for content integration.</p></div>
+                <div class="spec-card"><i class="fas fa-mobile-alt"></i><h3>Mobile Banner</h3><p>320×50 for mobile-first campaigns.</p></div>
+                <div class="spec-card"><i class="fas fa-columns"></i><h3>Sidebar / Skyscraper</h3><p>160×600 & 300×600 for sidebar.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="toast" id="toast"><i class="fas fa-copy" style="margin-right: 0.5rem;"></i>Copied: <span id="toastSpec"></span></div>
+
+    <script>
+        (function(){
+            var brandInput = document.getElementById('brandInput');
+            var ctaInput = document.getElementById('ctaInput');
+            var banners = document.querySelectorAll('.banner');
+            var wrappers = document.querySelectorAll('.banner-wrapper');
+            brandInput.addEventListener('input', function(){
+                var v = this.value || 'Your Brand';
+                document.querySelectorAll('.brand-text').forEach(function(el){ el.textContent = v.length > 12 ? v.substring(0,12)+'…' : v; });
+            });
+            ctaInput.addEventListener('input', function(){
+                var v = this.value || 'Learn more';
+                document.querySelectorAll('.cta-text').forEach(function(el){
+                    el.textContent = v.length > 15 ? v.substring(0,15)+'…' : v;
+                });
+            });
+            document.getElementById('exportSpecs').addEventListener('click', function(){
+                var specs = [];
+                document.querySelectorAll('.banner-wrapper:not(.hidden) .banner').forEach(function(b){
+                    var label = b.closest('.banner-wrapper').querySelector('.banner-label');
+                    if(b.dataset.spec && label) specs.push(label.textContent + ': ' + b.dataset.spec);
+                });
+                var text = specs.length ? specs.join('\n') : '728×90, 300×250, 320×50, 336×280, 300×600, 160×600';
+                if(navigator.clipboard && navigator.clipboard.writeText){
+                    navigator.clipboard.writeText(text).then(function(){
+                        var btn = document.getElementById('exportSpecs');
+                        btn.classList.add('copied'); btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        setTimeout(function(){ btn.classList.remove('copied'); btn.innerHTML = '<i class="fas fa-download"></i> Export Specs'; }, 2000);
+                    });
+                }
+            });
+            document.querySelectorAll('.theme-tab').forEach(function(tab){
+                tab.addEventListener('click', function(){
+                    document.querySelectorAll('.theme-tab').forEach(function(t){ t.classList.remove('active'); });
+                    this.classList.add('active');
+                    var theme = this.dataset.theme;
+                    banners.forEach(function(b){
+                        b.classList.remove('banner-dark','banner-light');
+                        b.classList.add(theme === 'light' ? 'banner-light' : 'banner-dark');
+                    });
+                });
+            });
+            document.querySelectorAll('.size-tab').forEach(function(tab){
+                tab.addEventListener('click', function(){
+                    document.querySelectorAll('.size-tab').forEach(function(t){ t.classList.remove('active'); });
+                    this.classList.add('active');
+                    var size = this.dataset.size;
+                    wrappers.forEach(function(w){
+                        w.classList.remove('hidden');
+                        if(size !== 'all' && w.dataset.size !== size) w.classList.add('hidden');
+                    });
+                });
+            });
+            banners.forEach(function(b){
+                b.addEventListener('click', function(){
+                    var spec = this.dataset.spec || '';
+                    if(navigator.clipboard && navigator.clipboard.writeText){
+                        navigator.clipboard.writeText(spec).then(function(){
+                            var toast = document.getElementById('toast');
+                            document.getElementById('toastSpec').textContent = spec;
+                            toast.classList.add('show');
+                            setTimeout(function(){ toast.classList.remove('show'); }, 1800);
+                        });
+                    }
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
