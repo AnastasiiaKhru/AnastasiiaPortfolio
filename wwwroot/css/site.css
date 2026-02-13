@@ -2169,9 +2169,8 @@ a:hover {
 }
 
 /* Align FEATURES section across WordPress cards 13–15 (variable description length) */
-.project-card-modern[data-project="13"] .project-card__desc,
-.project-card-modern[data-project="14"] .project-card__desc,
-.project-card-modern[data-project="15"] .project-card__desc {
+/* Align Features/Tech sections across all project cards */
+.projects-page .project-card__desc {
     min-height: 9.5rem;
 }
 
@@ -2982,6 +2981,29 @@ a:hover {
     background: var(--wp-accent-muted);
     border-color: var(--wp-accent-border);
     transform: translateY(-1px);
+}
+
+/* Unified Features & Tech: same color, size, and position on projects page */
+.projects-page .project-card-modern .project-card__backend,
+.projects-page .project-card-modern .project-card__stack {
+    margin-top: 0;
+}
+.projects-page .project-card-modern .backend-pill,
+.projects-page .project-card-modern .stack-pill {
+    background: rgba(100, 116, 139, 0.08) !important;
+    color: var(--accent-hover) !important;
+    border: 1px solid rgba(100, 116, 139, 0.15) !important;
+    font-weight: 600;
+    font-size: 0.6875rem;
+}
+.projects-page .project-card-modern .backend-pill:hover,
+.projects-page .project-card-modern .stack-pill:hover {
+    background: rgba(100, 116, 139, 0.12) !important;
+    border-color: rgba(100, 116, 139, 0.25) !important;
+}
+.projects-page .project-card-modern .project-card__backend::before,
+.projects-page .project-card-modern .project-card__stack::before {
+    color: var(--mid-grey);
 }
 
 
