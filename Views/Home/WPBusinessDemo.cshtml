@@ -1,0 +1,682 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ConsultPro — Strategy & Growth Consulting · WordPress Theme</title>
+    <meta name="description" content="Premium WordPress consulting theme. Gutenberg, ACF, block patterns. Built for consultants who convert." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        :root {
+            --wp-blue: #0073aa;
+            --wp-blue-dark: #005a87;
+            --wp-accent: #00a0d2;
+            --text: #0f172a;
+            --text-muted: #475569;
+            --bg: #f8fafc;
+            --bg-alt: #f1f5f9;
+            --surface: #ffffff;
+            --border: rgba(0,115,170,0.12);
+            --radius: 12px;
+            --radius-lg: 18px;
+            --radius-xl: 24px;
+            --shadow-sm: 0 1px 3px rgba(0,115,170,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow: 0 4px 20px rgba(0,115,170,0.08), 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-lg: 0 20px 50px rgba(0,115,170,0.12), 0 4px 12px rgba(0,0,0,0.05);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; background: var(--bg); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text); line-height: 1.65; -webkit-font-smoothing: antialiased; background: var(--bg) !important; background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0,115,170,0.04), transparent); }
+        main { background: transparent; }
+
+        .wp-demo-badge {
+            position: fixed; top: 72px; right: 1rem; z-index: 150;
+            padding: 0.4rem 0.75rem; background: #23282d; color: #fff;
+            font-size: 0.7rem; font-weight: 600; letter-spacing: 0.05em;
+            border-radius: 0 0 6px 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .wp-demo-badge i { margin-right: 0.35rem; color: #00a0d2; }
+        .announcement {
+            background: linear-gradient(90deg, var(--wp-blue) 0%, var(--wp-blue-dark) 100%);
+            color: #fff; text-align: center; padding: 0.65rem 1rem; font-size: 0.8rem; font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+        .announcement a { color: #fff; text-decoration: underline; text-underline-offset: 2px; }
+        .announcement a:hover { opacity: 0.95; }
+
+        header {
+            background: rgba(255,255,255,0.94);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            position: sticky; top: 0; z-index: 200;
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 1px 0 rgba(0,115,170,0.06);
+            transition: box-shadow 0.25s ease;
+        }
+        header.scrolled { box-shadow: 0 4px 24px rgba(0,115,170,0.08); }
+        .header-inner { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; height: 72px; }
+        .logo { font-weight: 800; font-size: 1.4rem; color: var(--text); letter-spacing: -0.03em; }
+        .logo span { color: var(--wp-blue); }
+        nav ul { list-style: none; display: flex; gap: 2.25rem; margin: 0; padding: 0; }
+        nav a { text-decoration: none; color: var(--text-muted); font-weight: 600; font-size: 0.9rem; transition: color 0.2s; }
+        nav a:hover, nav a.active { color: var(--wp-blue); }
+        .btn { border: none; border-radius: var(--radius); padding: 0.75rem 1.5rem; font-weight: 700; font-size: 0.9rem; cursor: pointer; font-family: inherit; transition: all 0.25s ease; }
+        .btn-primary { background: linear-gradient(135deg, var(--wp-blue) 0%, var(--wp-blue-dark) 100%); color: #fff; box-shadow: 0 4px 14px rgba(0,115,170,0.3); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,115,170,0.35); }
+        .btn-outline { background: transparent; border: 2px solid var(--border); color: var(--text); }
+        .btn-outline:hover { border-color: var(--wp-blue); color: var(--wp-blue); }
+        .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
+        .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--text); margin: 5px 0; border-radius: 1px; }
+
+        .hero {
+            position: relative;
+            padding: 1.5rem 0 2rem;
+            overflow: hidden;
+            min-height: auto;
+            background: var(--bg);
+        }
+        .hero-inner, .hero .container { background: transparent; }
+        .hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,115,170,0.04) 0%, transparent 55%); pointer-events: none; }
+        .hero .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; position: relative; }
+        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.18em; color: var(--wp-blue); margin-bottom: 1.25rem; background: rgba(0,115,170,0.08); padding: 0.4rem 1rem; border-radius: 100px; }
+        .hero h1 { font-size: clamp(2.25rem, 4.5vw, 3.25rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 1rem; color: var(--text); }
+        .hero h1 .highlight { color: var(--wp-blue); }
+        .hero .lead { font-size: 1.1rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.25rem; max-width: 480px; }
+        .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+        .hero-stats { display: flex; gap: 2.5rem; padding-top: 1.25rem; border-top: 1px solid var(--border); }
+        .hero-stat strong { display: block; font-size: 2rem; color: var(--wp-blue); font-weight: 800; letter-spacing: -0.02em; }
+        .hero-stat span { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+        .trust-bar { padding: 1rem 0; border-top: 1px solid var(--border); margin-top: 1.5rem; overflow: hidden; }
+        .trust-bar p { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); margin-bottom: 1.25rem; text-align: center; }
+        .trust-logos { display: flex; justify-content: center; align-items: center; gap: 2.5rem; opacity: 0.75; flex-wrap: wrap; }
+        .trust-logos span { font-size: 0.95rem; font-weight: 700; color: var(--text-muted); white-space: nowrap; padding: 0.4rem 0.8rem; background: rgba(0,115,170,0.04); border-radius: 8px; border: 1px solid var(--border); }
+        .hero-visual { position: relative; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg); border: 1px solid var(--border); transition: transform var(--transition); width: 100%; align-self: stretch; }
+        .hero-visual::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1); pointer-events: none; }
+        .hero-visual:hover { transform: translateY(-4px); box-shadow: 0 28px 72px rgba(0,115,170,0.18); }
+        .hero-slider { position: relative; width: 100%; height: 100%; min-height: 200px; }
+        .hero-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.8s ease; }
+        .hero-slide.active { opacity: 1; z-index: 1; }
+        .hero-slide img { width: 100%; height: 100%; object-fit: cover; transition: transform 8s ease; }
+        .hero-visual:hover .hero-slide.active img { transform: scale(1.05); }
+        .hero-visual .hero-dots { position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%); display: flex; gap: 0.5rem; z-index: 5; }
+        .hero-visual .hero-dot { width: 8px; height: 8px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.6); background: transparent; cursor: pointer; transition: all 0.3s; }
+        .hero-visual .hero-dot.active { background: var(--wp-blue); border-color: var(--wp-blue); }
+        .hero-visual::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 60%, rgba(0,115,170,0.06) 100%); pointer-events: none; z-index: 2; }
+
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        .back-to-top {
+            position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200;
+            width: 48px; height: 48px; border-radius: 50%;
+            background: var(--wp-blue); color: #fff; border: none;
+            cursor: pointer; display: none; align-items: center; justify-content: center;
+            box-shadow: var(--shadow-lg); transition: all var(--transition);
+        }
+        .back-to-top:hover { background: var(--wp-blue-dark); transform: translateY(-2px); }
+        .back-to-top.show { display: flex; }
+
+        .section { padding: 5rem 0; }
+        .section--alt { background: var(--surface); box-shadow: 0 1px 0 rgba(0,115,170,0.06) inset; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        .section-header { text-align: center; max-width: 640px; margin: 0 auto 3rem; }
+        .section-badge { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: var(--wp-blue); margin-bottom: 0.75rem; }
+        .section-badge i { margin-right: 0.3rem; }
+        .section-title { font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.75rem; color: var(--text); }
+        .section-sub { color: var(--text-muted); font-size: 1.1rem; line-height: 1.7; }
+
+        .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+        .feature-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            border: 1px solid var(--border);
+            transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,115,170,0.04);
+        }
+        .feature-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 0; background: linear-gradient(180deg, var(--wp-blue), var(--wp-blue-dark)); border-radius: 0 4px 4px 0; transition: height 0.35s ease; }
+        .feature-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: rgba(0,115,170,0.15); }
+        .feature-card:hover::before { height: 100%; }
+        .feature-card:nth-child(1) { transition-delay: 0.1s; }
+        .feature-card:nth-child(2) { transition-delay: 0.2s; }
+        .feature-card:nth-child(3) { transition-delay: 0.3s; }
+        .feature-icon { width: 56px; height: 56px; border-radius: 14px; background: rgba(0,115,170,0.08); display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; color: var(--wp-blue); font-size: 1.35rem; transition: transform 0.3s; }
+        .feature-card:hover .feature-icon { transform: scale(1.05); }
+        .feature-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text); }
+        .feature-card p { margin: 0; color: var(--text-muted); font-size: 0.95rem; line-height: 1.65; }
+
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1024px; margin: 0 auto; }
+        .price-card {
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            padding: 2.25rem 2rem;
+            border: 2px solid var(--border);
+            text-align: center;
+            transition: all 0.35s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .price-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+        .price-card.featured { border-color: var(--wp-blue); background: linear-gradient(180deg, rgba(0,115,170,0.04) 0%, var(--surface) 40%); box-shadow: var(--shadow-lg); animation: featured-pulse 4s ease-in-out infinite; }
+        @@keyframes featured-pulse { 0%, 100% { box-shadow: var(--shadow-lg); } 50% { box-shadow: 0 24px 72px rgba(0,115,170,0.2); } }
+        .price-card.featured::before { content: 'Most popular'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--wp-blue); color: #fff; font-size: 0.7rem; font-weight: 800; padding: 0.35rem 1rem; border-radius: 100px; letter-spacing: 0.05em; }
+        .price-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text); }
+        .price-card .amount { display: inline-flex; align-items: baseline; gap: 0.4rem; font-size: 2.5rem; font-weight: 800; color: var(--text); letter-spacing: -0.03em; line-height: 1; }
+        .price-card .amount span { font-size: 0.95rem; font-weight: 500; color: var(--text-muted); }
+        .price-card ul { list-style: none; padding: 0; margin: 1.25rem 0 1.5rem; text-align: left; width: 100%; }
+        .price-card li { padding: 0.5rem 0; font-size: 0.95rem; color: var(--text-muted); padding-left: 1.5rem; position: relative; }
+        .price-card li::before { content: '✓'; position: absolute; left: 0; color: var(--wp-blue); font-weight: 800; }
+
+        .testimonials-section { position: relative; }
+        .testimonials-carousel { overflow: hidden; }
+        .testimonials-track { display: flex; gap: 1.5rem; transition: transform 0.5s cubic-bezier(0.4,0,0.2,1); }
+        .testimonial { flex: 0 0 calc(33.333% - 1rem); min-width: 280px; }
+        .carousel-nav { display: flex; justify-content: center; gap: 0.5rem; margin-top: 2rem; }
+        .carousel-dot { width: 10px; height: 10px; border-radius: 50%; border: none; background: var(--border); cursor: pointer; transition: all 0.3s; }
+        .carousel-dot.active { background: var(--wp-blue); transform: scale(1.2); }
+        .carousel-dot:hover { background: rgba(0,115,170,0.5); }
+        .carousel-arrows { position: absolute; top: 50%; left: 0; right: 0; transform: translateY(-50%); display: flex; justify-content: space-between; pointer-events: none; padding: 0 0.5rem; }
+        .carousel-arrows button { pointer-events: auto; width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--border); background: var(--surface); color: var(--wp-blue); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.25s; box-shadow: var(--shadow-sm); }
+        .carousel-arrows button:hover { background: var(--wp-blue); color: #fff; border-color: var(--wp-blue); }
+        .testimonial {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            border: 1px solid var(--border);
+            transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+            position: relative;
+            box-shadow: 0 2px 12px rgba(0,115,170,0.04);
+        }
+        .testimonial::before { content: '\201C'; position: absolute; top: 1rem; left: 1.5rem; font-size: 2.5rem; color: rgba(0,115,170,0.12); line-height: 1; font-family: Georgia, serif; }
+        .testimonial:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+        .testimonial:nth-child(1) { transition-delay: 0s; }
+        .testimonial:nth-child(2) { transition-delay: 0.05s; }
+        .testimonial:nth-child(3) { transition-delay: 0.1s; }
+        .testimonial .stars { color: #f59e0b; font-size: 1rem; margin-bottom: 1rem; letter-spacing: 0.15em; }
+        .testimonial p { font-size: 1.05rem; font-style: italic; line-height: 1.75; margin-bottom: 1.5rem; color: var(--text); }
+        .testimonial .author { display: flex; align-items: center; gap: 1rem; }
+        .testimonial .avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--wp-blue); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1.1rem; }
+        .testimonial strong { font-size: 0.95rem; color: var(--text); }
+        .testimonial span { font-size: 0.85rem; color: var(--text-muted); }
+
+        .faq-list { max-width: 720px; margin: 0 auto; }
+        .faq-item { background: var(--surface); border-radius: var(--radius); margin-bottom: 0.75rem; border: 1px solid var(--border); overflow: hidden; transition: all 0.3s ease; }
+        .faq-item:hover { border-color: rgba(0,115,170,0.15); }
+        .faq-q { padding: 1.25rem 1.5rem; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 1rem; color: var(--text); }
+        .faq-q:hover { background: rgba(0,115,170,0.02); }
+        .faq-q i { color: var(--wp-blue); transition: transform 0.3s ease; font-size: 0.85rem; }
+        .faq-item.open .faq-q i { transform: rotate(180deg); }
+        .faq-a { padding: 0 1.5rem 1.25rem; color: var(--text-muted); font-size: 0.95rem; line-height: 1.75; display: none; }
+        .faq-item.open .faq-a { display: block; }
+
+        .cta-banner {
+            background: linear-gradient(135deg, var(--wp-blue) 0%, var(--wp-blue-dark) 45%, #003d5c 100%);
+            padding: 4.5rem 2rem;
+            text-align: center;
+            color: #fff;
+            border-radius: var(--radius-xl);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,83,135,0.25);
+        }
+        .cta-banner::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); opacity: 0.6; }
+        .cta-banner h2 { font-size: clamp(1.75rem, 3.5vw, 2.5rem); margin-bottom: 0.5rem; font-weight: 800; letter-spacing: -0.02em; }
+        .cta-banner p { opacity: 0.95; margin-bottom: 1.75rem; font-size: 1.1rem; }
+        .cta-banner .btn { background: #fff; color: var(--wp-blue); }
+        .cta-banner .btn:hover { background: #f8fafc; transform: translateY(-2px) scale(1.02); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+
+        .contact-form { max-width: 540px; margin: 0 auto; display: grid; gap: 1.25rem; }
+        .contact-form input, .contact-form textarea { padding: 1rem 1.25rem; border: 2px solid var(--border); border-radius: var(--radius); font-family: inherit; font-size: 1rem; background: var(--surface); transition: border-color 0.2s, box-shadow 0.2s; }
+        .contact-form input::placeholder, .contact-form textarea::placeholder { color: #94a3b8; }
+        .contact-form input:focus, .contact-form textarea:focus { outline: none; border-color: var(--wp-blue); box-shadow: 0 0 0 4px rgba(0,115,170,0.1); }
+        .contact-form.loading button { opacity: 0.85; pointer-events: none; position: relative; }
+        .contact-form.loading button::after { content: ''; position: absolute; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.5); border-top-color: #fff; border-radius: 50%; animation: spin 0.6s linear infinite; margin-left: 0.5rem; }
+        @@keyframes spin { to { transform: rotate(360deg); } }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-success { display: none; color: var(--wp-blue); font-weight: 700; padding: 1rem; background: rgba(0,115,170,0.08); border-radius: var(--radius); animation: success-in 0.5s ease; }
+        .contact-form.submitted .form-success { display: block; }
+        @@keyframes success-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+        .contact-form.submitted button { display: none; }
+
+        footer { background: #23282d; color: #a0a5aa; padding: 4rem 0 2rem; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2.5rem; }
+        .footer-brand { font-weight: 800; font-size: 1.25rem; color: #fff; margin-bottom: 0.75rem; letter-spacing: -0.02em; }
+        .footer-brand span { color: #a0a5aa; }
+        .footer p { margin: 0; font-size: 0.9rem; line-height: 1.75; max-width: 300px; color: #a0a5aa; }
+        .footer h4 { color: #fff; font-size: 0.9rem; font-weight: 700; margin-bottom: 1rem; }
+        .footer ul { list-style: none; padding: 0; margin: 0; }
+        .footer li { margin-bottom: 0.6rem; }
+        .footer ul li a, .footer ul li a:link, .footer ul li a:visited, .footer ul li a:active, .footer ul li a:hover {
+            color: #9ea3a8 !important;
+            text-decoration: none !important;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        .footer ul li a:hover { color: #fff !important; }
+        .footer-bottom { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.08); text-align: center; font-size: 0.85rem; color: #787c82; }
+        .wp-credit { color: #00a0d2; font-weight: 600; }
+        .wp-credit i { margin-right: 0.3rem; }
+
+        .tech-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+        .tech-pill { font-size: 0.75rem; font-weight: 600; padding: 0.35rem 0.75rem; background: rgba(255,255,255,0.06); color: #a0a5aa; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; }
+        .wp-features-bar { padding: 2rem 1rem; background: rgba(0,115,170,0.04); border-top: 1px solid var(--border); }
+        .wp-features-bar .wp-features-title { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-muted); text-align: center; margin-bottom: 1rem; }
+        .wp-features-bar .wp-features-wrap { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; }
+        .wp-features-bar span { font-size: 0.65rem; font-weight: 700; padding: 0.35rem 0.7rem; background: var(--surface); color: var(--text-muted); border: 1px solid var(--border); border-radius: 6px; display: inline-flex; align-items: center; gap: 0.35rem; }
+        .wp-features-bar span i { color: var(--wp-blue); font-size: 0.7rem; }
+
+        @@media (max-width: 1100px) {
+            .testimonial { flex: 0 0 calc(50% - 0.75rem); min-width: 260px; }
+        }
+        @@media (max-width: 960px) {
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero .lead { max-width: none; }
+            .hero-cta { justify-content: center; }
+            .hero-stats { justify-content: center; border-top: 1px solid var(--border); }
+            .features-grid, .pricing-grid { grid-template-columns: 1fr; }
+            .testimonial { flex: 0 0 100%; min-width: 100%; }
+            .carousel-arrows { display: none; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @@media (max-width: 768px) {
+            .nav-toggle { display: flex; flex-direction: column; justify-content: center; }
+            nav ul { display: none; position: absolute; top: 72px; left: 0; right: 0; background: var(--surface); flex-direction: column; padding: 1.5rem; box-shadow: var(--shadow-lg); border-bottom: 1px solid var(--border); }
+            nav ul.show { display: flex; }
+            .form-row { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            .footer p { max-width: none; }
+        }
+        @@media (max-width: 600px) {
+            .hero-stats { flex-direction: column; gap: 1.5rem; align-items: center; }
+            .trust-bar { display: none; }
+        }
+        a:focus-visible, button:focus-visible { outline: 2px solid var(--wp-blue); outline-offset: 2px; }
+        @@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .price-card.featured { animation: none; } .form-success { animation: none; } .contact-form.loading button::after { display: none; } }
+    </style>
+</head>
+<body>
+    <div class="wp-demo-badge"><i class="fab fa-wordpress"></i> WordPress Theme Demo</div>
+    <div class="announcement">WordPress · Gutenberg · ACF — <a href="#contact">Book a strategy call →</a></div>
+    <header>
+        <div class="header-inner">
+            <a href="#" class="logo">Consult<span>Pro</span></a>
+            <nav>
+                <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('nav ul').classList.toggle('show')"><span></span><span></span><span></span></button>
+                <ul>
+                    <li><a href="#features">Services</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#testimonials">Reviews</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#contact" class="btn btn-primary">Get Started</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero reveal">
+            <div class="hero-bg"></div>
+            <div class="hero-inner">
+                <div class="container">
+                    <div class="hero-grid">
+                        <div>
+                            <div class="hero-badge"><i class="fas fa-wordpress"></i> WordPress · Gutenberg · ACF</div>
+                            <h1>Strategy that <span class="highlight">converts.</span> Sites that scale.</h1>
+                            <p class="lead">Premium consulting sites built on WordPress. Block patterns, ACF, theme.json. Sticky nav, lead capture, testimonials—everything you need to book more strategy calls.</p>
+                            <div class="hero-cta">
+                                <a href="#contact" class="btn btn-primary">Book Strategy Call</a>
+                                <a href="#pricing" class="btn btn-outline">View Pricing</a>
+                            </div>
+                            <div class="hero-stats">
+                                <div class="hero-stat"><strong>120+</strong><span>WordPress builds</span></div>
+                                <div class="hero-stat"><strong>4.9/5</strong><span>Client rating</span></div>
+                                <div class="hero-stat"><strong>3×</strong><span>Avg. ROI</span></div>
+                            </div>
+                            <div class="trust-bar">
+                                <p>Trusted by teams at</p>
+                                <div class="trust-logos">
+                                    <span>WP Engine</span><span>Kinsta</span><span>Automattic</span><span>WooCommerce</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hero-visual">
+                            <div class="hero-slider" id="heroSlider">
+                                <div class="hero-slide active"><img src="https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=1200&q=90" alt="Consulting" loading="eager" /></div>
+                                <div class="hero-slide"><img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=90" alt="Team" /></div>
+                                <div class="hero-slide"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=90" alt="Strategy" /></div>
+                            </div>
+                            <div class="hero-dots" id="heroDots"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section features reveal" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-badge">What we deliver</div>
+                    <h2 class="section-title">Built for consultants who convert</h2>
+                    <p class="section-sub">Gutenberg block patterns, ACF-powered content, WPForms integration. Fully editable in the WordPress admin.</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-layer-group"></i></div>
+                        <h3>Hero + Stats Block</h3>
+                        <p>Reusable Gutenberg patterns with Columns, custom typography, and theme.json color presets. One-click import.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-envelope-open-text"></i></div>
+                        <h3>Lead Capture</h3>
+                        <p>WPForms / Gravity Forms. Sticky CTA bars, modal forms, custom CSS variables. Built for conversion.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-database"></i></div>
+                        <h3>ACF Case Studies</h3>
+                        <p>Custom post types, taxonomy filters, Query Loop block. Dynamic ACF fields. Fully manageable.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-shield-halved"></i></div>
+                        <h3>SEO & Schema</h3>
+                        <p>Yoast / Rank Math ready. Block patterns with semantic markup. Schema.org structured data.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section--alt pricing reveal" id="pricing">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-badge">Transparent pricing</div>
+                    <h2 class="section-title">Choose the engagement that fits</h2>
+                    <p class="section-sub">All include Gutenberg, ACF, and theme.json. No hidden fees.</p>
+                </div>
+                <div class="pricing-grid">
+                    <div class="price-card">
+                        <h3>Starter</h3>
+                        <div class="amount">$2,500 <span>/ one-time</span></div>
+                        <ul>
+                            <li>5-page site</li>
+                            <li>Hero + metrics block</li>
+                            <li>Contact form</li>
+                            <li>1 round revisions</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-outline" style="width:100%;display:block;text-align:center;text-decoration:none;">Get Started</a>
+                    </div>
+                    <div class="price-card featured">
+                        <h3>Growth</h3>
+                        <div class="amount">$5,500 <span>/ one-time</span></div>
+                        <ul>
+                            <li>12-page site</li>
+                            <li>All block patterns</li>
+                            <li>ACF case studies</li>
+                            <li>WPForms + 2 rounds</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-primary" style="width:100%;display:block;text-align:center;text-decoration:none;">Most Popular</a>
+                    </div>
+                    <div class="price-card">
+                        <h3>Scale</h3>
+                        <div class="amount">Custom</div>
+                        <ul>
+                            <li>Unlimited pages</li>
+                            <li>Custom development</li>
+                            <li>Ongoing support</li>
+                            <li>Priority SLA</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-outline" style="width:100%;display:block;text-align:center;text-decoration:none;">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section testimonials-section reveal" id="testimonials">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-badge">Client stories · ACF repeater</div>
+                    <h2 class="section-title">Trusted by consultants worldwide</h2>
+                    <p class="section-sub">See why strategy firms choose ConsultPro themes. Testimonials powered by ACF repeater block.</p>
+                </div>
+                <div class="testimonials-carousel">
+                    <div class="carousel-arrows">
+                        <button type="button" class="carousel-prev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+                        <button type="button" class="carousel-next" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="testimonials-track" id="testimonialsTrack">
+                        <div class="testimonial">
+                            <div class="stars">★★★★★</div>
+                            <p>"Doubled inbound leads in 60 days. The block patterns made updates effortless—I edit everything myself now."</p>
+                            <div class="author"><div class="avatar">S</div><div><strong>Sofia Chen</strong><br><span>SaaS VP Marketing</span></div></div>
+                        </div>
+                        <div class="testimonial">
+                            <div class="stars">★★★★★</div>
+                            <p>"Premium theme feel, fully bespoke. My clients love the Gutenberg workflow. Best investment we've made."</p>
+                            <div class="author"><div class="avatar">M</div><div><strong>Marcus Webb</strong><br><span>Agency Partner</span></div></div>
+                        </div>
+                        <div class="testimonial">
+                            <div class="stars">★★★★★</div>
+                            <p>"From zero to launched in 3 weeks. ACF made our case studies a breeze. Now we add new wins weekly."</p>
+                            <div class="author"><div class="avatar">J</div><div><strong>James Okonkwo</strong><br><span>Growth Lead</span></div></div>
+                        </div>
+                        <div class="testimonial">
+                            <div class="stars">★★★★★</div>
+                            <p>"The pricing table block and contact form integration saved us weeks. Client loves the Gutenberg workflow."</p>
+                            <div class="author"><div class="avatar">L</div><div><strong>Lisa Park</strong><br><span>Strategy Consultant</span></div></div>
+                        </div>
+                    </div>
+                    <div class="carousel-nav" id="testimonialsDots"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section--alt faq" id="faq">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-badge">Support</div>
+                    <h2 class="section-title">Frequently asked</h2>
+                </div>
+                <div class="faq-list">
+                    <div class="faq-item" onclick="document.querySelectorAll('.faq-item').forEach(function(el){el.classList.remove('open');}); this.classList.toggle('open');">
+                        <div class="faq-q">How long does a typical build take? <i class="fas fa-chevron-down"></i></div>
+                        <div class="faq-a">Starter sites ship in 2–3 weeks. Growth builds take 4–6 weeks. We work in sprints with regular check-ins.</div>
+                    </div>
+                    <div class="faq-item" onclick="document.querySelectorAll('.faq-item').forEach(function(el){el.classList.remove('open');}); this.classList.toggle('open');">
+                        <div class="faq-q">Can I edit the content myself? <i class="fas fa-chevron-down"></i></div>
+                        <div class="faq-a">Yes. Everything is built in Gutenberg with ACF where needed. We provide training and documentation.</div>
+                    </div>
+                    <div class="faq-item" onclick="document.querySelectorAll('.faq-item').forEach(function(el){el.classList.remove('open');}); this.classList.toggle('open');">
+                        <div class="faq-q">Do you offer hosting? <i class="fas fa-chevron-down"></i></div>
+                        <div class="faq-a">We recommend WP Engine or Kinsta. We can set up hosting and migrate your site as part of the project.</div>
+                    </div>
+                    <div class="faq-item" onclick="document.querySelectorAll('.faq-item').forEach(function(el){el.classList.remove('open');}); this.classList.toggle('open');">
+                        <div class="faq-q">What about SEO and performance? <i class="fas fa-chevron-down"></i></div>
+                        <div class="faq-a">All themes are built with semantic HTML, theme.json, and optimized assets. Yoast or Rank Math ready.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="cta-banner">
+                    <h2>Ready to grow your consulting practice?</h2>
+                    <p>Book a free 30-minute strategy call. No pitch—just clarity.</p>
+                    <a href="#contact" class="btn btn-primary">Schedule Call</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section--alt contact" id="contact">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-badge">Get in touch</div>
+                    <h2 class="section-title">Tell us about your project</h2>
+                    <p class="section-sub">We respond within 24 hours.</p>
+                </div>
+                <form class="contact-form" onsubmit="var f=this;f.classList.add('loading');setTimeout(function(){f.classList.remove('loading');f.classList.add('submitted');},800); return false;">
+                    <div class="form-row">
+                        <input type="text" placeholder="Name" required />
+                        <input type="email" placeholder="Email" required />
+                    </div>
+                    <input type="tel" placeholder="Phone (optional)" />
+                    <textarea rows="4" placeholder="Tell us about your consulting practice and goals..."></textarea>
+                    <button type="submit" class="btn btn-primary" style="width:100%">Send message</button>
+                    <p class="form-success" aria-live="polite">Thanks! We'll be in touch within 24 hours.</p>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <div class="wp-features-bar">
+        <p class="wp-features-title">WordPress Pro Features</p>
+        <div class="wp-features-wrap">
+            <span><i class="fab fa-wordpress"></i> Gutenberg</span>
+            <span><i class="fas fa-layer-group"></i> Block Patterns</span>
+            <span><i class="fas fa-palette"></i> theme.json</span>
+            <span><i class="fas fa-desktop"></i> FSE</span>
+            <span><i class="fas fa-puzzle-piece"></i> Template Parts</span>
+            <span><i class="fas fa-search"></i> Query Loop</span>
+            <span><i class="fas fa-image"></i> Cover Block</span>
+            <span><i class="fas fa-images"></i> Gallery Block</span>
+            <span><i class="fas fa-bars"></i> Navigation Block</span>
+            <span><i class="fas fa-th-large"></i> Columns · Group · Row</span>
+            <span><i class="fas fa-database"></i> ACF</span>
+            <span><i class="fas fa-cube"></i> ACF Blocks</span>
+            <span><i class="fas fa-envelope"></i> WPForms</span>
+            <span><i class="fas fa-file-alt"></i> Contact Form 7</span>
+            <span><i class="fas fa-tasks"></i> Gravity Forms</span>
+            <span><i class="fas fa-search-plus"></i> Yoast SEO</span>
+            <span><i class="fas fa-chart-line"></i> Rank Math</span>
+            <span><i class="fas fa-plug"></i> Jetpack</span>
+            <span><i class="fas fa-shopping-cart"></i> WooCommerce</span>
+            <span><i class="fas fa-calendar-check"></i> WooCommerce Bookings</span>
+            <span><i class="fas fa-file"></i> Custom Post Types</span>
+            <span><i class="fas fa-tags"></i> Custom Taxonomies</span>
+            <span><i class="fas fa-code"></i> REST API</span>
+            <span><i class="fas fa-link"></i> Webhooks</span>
+            <span><i class="fas fa-bolt"></i> Redis · Memcached</span>
+            <span><i class="fas fa-paint-brush"></i> Elementor · Bricks</span>
+            <span><i class="fas fa-server"></i> WP Engine · Kinsta</span>
+            <span><i class="fas fa-globe"></i> CDN</span>
+            <span><i class="fas fa-envelope-open-text"></i> Mailchimp · ConvertKit</span>
+        </div>
+    </div>
+    <button class="back-to-top" id="backToTop" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">Consult<span>Pro</span></div>
+                    <p>WordPress consulting themes. Gutenberg, ACF, theme.json. Built for consultants who convert.</p>
+                    <div class="tech-pills">
+                        <span class="tech-pill">Gutenberg</span>
+                        <span class="tech-pill">ACF</span>
+                        <span class="tech-pill">theme.json</span>
+                        <span class="tech-pill">WPForms</span>
+                    </div>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul><li><a href="#">Strategy Sites</a></li><li><a href="#">Block Patterns</a></li><li><a href="#">ACF Builds</a></li></ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul><li><a href="#">Playbook</a></li><li><a href="#">Case Studies</a></li><li><a href="#">Blog</a></li></ul>
+                </div>
+                <div>
+                    <h4>Connect</h4>
+                    <ul><li><a href="#">LinkedIn</a></li><li><a href="#">Twitter</a></li></ul>
+                </div>
+            </div>
+            <div class="footer-bottom">© 2026 ConsultPro · <span class="wp-credit"><i class="fab fa-wordpress"></i> Block Editor Ready</span> · Portfolio showcase</div>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('nav a').forEach(a => a.addEventListener('click', () => document.querySelector('nav ul')?.classList.remove('show')));
+        window.addEventListener('scroll', function() {
+            var btn = document.getElementById('backToTop');
+            btn?.classList.toggle('show', window.scrollY > 400);
+            document.querySelector('header')?.classList.toggle('scrolled', window.scrollY > 50);
+        });
+        document.getElementById('backToTop')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        var observer = new IntersectionObserver(function(entries) { entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
+        function updateNavActive() {
+            var sections = ['features','pricing','testimonials','faq','contact'];
+            var scrollY = window.scrollY + 150;
+            document.querySelectorAll('nav a[href^="#"]').forEach(function(a){ a.classList.remove('active'); });
+            sections.forEach(function(id) {
+                var el = document.getElementById(id);
+                var link = document.querySelector('nav a[href="#' + id + '"]');
+                if (el && link) {
+                    var top = el.offsetTop, h = el.offsetHeight;
+                    if (scrollY >= top && scrollY < top + h) link.classList.add('active');
+                }
+            });
+        }
+        window.addEventListener('scroll', updateNavActive);
+        updateNavActive();
+
+        (function() {
+            var track = document.getElementById('testimonialsTrack');
+            var dots = document.getElementById('testimonialsDots');
+            if (!track) return;
+            var slides = track.querySelectorAll('.testimonial');
+            var total = slides.length;
+            var idx = 0;
+            function update() {
+                var slideW = slides[0] ? slides[0].offsetWidth + 24 : 320;
+                var maxIdx = Math.max(0, total - 1);
+                idx = Math.max(0, Math.min(idx, maxIdx));
+                track.style.transform = 'translateX(' + (-idx * slideW) + 'px)';
+                dots.querySelectorAll('.carousel-dot').forEach(function(d, j){ d.classList.toggle('active', j === idx); });
+            }
+            function goTo(i) { idx = i; update(); }
+            for (var i = 0; i < total; i++) {
+                var dot = document.createElement('button');
+                dot.type = 'button';
+                dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+                dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+                dot.addEventListener('click', (function(k){ return function(){ goTo(k); }; })(i));
+                dots.appendChild(dot);
+            }
+            document.querySelector('.carousel-prev')?.addEventListener('click', function(){ goTo(idx - 1); });
+            document.querySelector('.carousel-next')?.addEventListener('click', function(){ goTo(idx + 1); });
+            window.addEventListener('resize', update);
+        })();
+
+        (function() {
+            var slides = document.querySelectorAll('.hero-slide');
+            var dotsEl = document.getElementById('heroDots');
+            if (slides.length && dotsEl) {
+                var idx = 0;
+                for (var i = 0; i < slides.length; i++) {
+                    var d = document.createElement('button');
+                    d.type = 'button';
+                    d.className = 'hero-dot' + (i === 0 ? ' active' : '');
+                    d.setAttribute('aria-label', 'Slide ' + (i + 1));
+                    d.addEventListener('click', (function(k){ return function(){ goTo(k); }; })(i));
+                    dotsEl.appendChild(d);
+                }
+                function goTo(i) {
+                    idx = i;
+                    slides.forEach(function(s, j){ s.classList.toggle('active', j === idx); });
+                    dotsEl.querySelectorAll('.hero-dot').forEach(function(d, j){ d.classList.toggle('active', j === idx); });
+                }
+                setInterval(function(){ goTo((idx + 1) % slides.length); }, 5000);
+            }
+        })();
+    </script>
+</body>
+</html>

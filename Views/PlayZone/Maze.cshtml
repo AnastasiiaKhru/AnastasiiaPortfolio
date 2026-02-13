@@ -453,6 +453,7 @@
         .start-dialog.hidden { display: none; }
 
         .start-content {
+            position: relative;
             background: linear-gradient(180deg, #1a0000 0%, #0a0000 100%);
             border: 2px solid #4a0000;
             border-radius: 1rem;
@@ -651,6 +652,23 @@
             box-shadow: 0 0 25px rgba(0, 139, 0, 0.5);
         }
 
+        .return-to-games {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding: 0.6rem 1rem;
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 0.5rem;
+            transition: color 0.2s, background 0.2s;
+        }
+        .return-to-games:hover { color: #ff4444; background: rgba(139, 0, 0, 0.2); }
+        .win-content .return-to-games { color: #558855; }
+        .win-content .return-to-games:hover { color: #00ff00; background: rgba(0, 139, 0, 0.15); }
+
         /* Screen shake */
         .shake {
             animation: screenShake 0.5s ease;
@@ -753,6 +771,9 @@
 <!-- START DIALOG -->
 <div class="start-dialog" id="startDialog">
     <div class="start-content">
+        <a href="/PlayZone" class="return-to-games" style="position:absolute;top:1rem;left:1rem;">
+            <i class="fas fa-arrow-left"></i> Return to Games
+        </a>
         <div class="horror-icon"><i class="fas fa-skull-crossbones"></i></div>
         <h1 class="start-title">ESCAPE</h1>
         <p class="start-subtitle">Can you find your way out... alive?</p>
@@ -792,6 +813,9 @@
         <button class="btn-play-again" id="playAgainBtn">
             <i class="fas fa-redo"></i> Face Your Fears Again
         </button>
+        <a href="/PlayZone" class="return-to-games">
+            <i class="fas fa-th-large"></i> Return to Games
+        </a>
     </div>
 </div>
 

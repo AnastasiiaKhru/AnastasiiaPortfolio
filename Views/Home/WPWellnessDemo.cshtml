@@ -1,0 +1,583 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NurtureWell — Holistic Wellness · WordPress Theme</title>
+    <meta name="description" content="Premium WordPress wellness theme. WooCommerce Appointments, ACF, booking." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        :root {
+            --sage: #6b9080;
+            --sage-light: #a4c4b5;
+            --forest: #1a3c34;
+            --forest-light: #2d5a4e;
+            --cream: #f7f9f7;
+            --text: #1a2520;
+            --text-muted: #5c6d66;
+            --surface: #ffffff;
+            --border: rgba(107,144,128,0.16);
+            --radius: 12px;
+            --radius-lg: 18px;
+            --shadow: 0 4px 20px rgba(26,60,52,0.08);
+            --shadow-lg: 0 16px 40px rgba(26,60,52,0.12);
+            --space: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            --space-2xl: 4rem;
+            --space-3xl: 5rem;
+            --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+        body { font-family: 'DM Sans', sans-serif; color: var(--text); line-height: 1.65; -webkit-font-smoothing: antialiased; background: var(--cream); background-image: radial-gradient(ellipse 70% 40% at 100% 0%, rgba(107,144,128,0.05), transparent 60%); }
+        .wrap { max-width: 1100px; margin: 0 auto; padding: 0 var(--space); }
+
+        .wp-demo-badge {
+            position: fixed; top: 0; right: 1rem; z-index: 250;
+            padding: 0.4rem 0.75rem; background: #23282d; color: #fff;
+            font-size: 0.7rem; font-weight: 600; letter-spacing: 0.05em;
+            border-radius: 0 0 6px 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .wp-demo-badge i { margin-right: 0.35rem; color: #00a0d2; }
+
+        .announcement { background: linear-gradient(90deg, var(--forest) 0%, var(--forest-light) 100%); color: #fff; text-align: center; padding: 0.55rem 1rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.02em; }
+        .announcement a { color: rgba(255,255,255,0.95); text-decoration: underline; text-underline-offset: 2px; }
+        .announcement a:hover { color: #fff; }
+
+        /* Header */
+        header {
+            background: var(--forest);
+            position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 2px 20px rgba(26,60,52,0.2);
+            transition: box-shadow 0.25s ease;
+        }
+        header.scrolled { box-shadow: 0 4px 28px rgba(26,60,52,0.3); }
+        .header-inner { max-width: 1100px; margin: 0 auto; padding: 0 var(--space); height: 64px; display: flex; align-items: center; justify-content: space-between; }
+        .logo { font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 600; color: #fff; }
+        nav ul { list-style: none; display: flex; gap: 1.75rem; margin: 0; padding: 0; }
+        nav a { color: rgba(255,255,255,0.9); text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: color 0.2s; }
+        nav a:hover, nav a.active { color: #fff; }
+        .nav-cta { background: var(--sage); color: #fff !important; padding: 0.5rem 1.1rem; border-radius: 10px; transition: background 0.25s, transform 0.2s; }
+        .nav-cta:hover { background: var(--sage-light) !important; transform: translateY(-1px); }
+        .nav-toggle { display: none; background: none; border: none; cursor: pointer; color: #fff; padding: 0.5rem; }
+        .nav-toggle span { display: block; width: 20px; height: 2px; background: currentColor; margin: 5px 0; border-radius: 1px; }
+
+        /* Hero */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 70vh;
+            background: var(--cream);
+            position: relative;
+        }
+        .hero::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(107,144,128,0.08) 0%, transparent 70%); pointer-events: none; }
+        .hero-content { padding: var(--space-3xl) var(--space-xl); display: flex; flex-direction: column; justify-content: center; }
+        .hero-badge { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--sage); margin-bottom: var(--space); display: inline-flex; align-items: center; gap: 0.4rem; }
+        .hero h1 { font-family: 'Fraunces', serif; font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 600; line-height: 1.2; margin-bottom: var(--space); color: var(--text); }
+        .hero p { font-size: 1rem; color: var(--text-muted); line-height: 1.7; margin-bottom: var(--space-lg); }
+        .hero-features { list-style: none; padding: 0; margin: 0 0 var(--space-lg); }
+        .hero-features li { padding: 0.4rem 0; padding-left: 1.5rem; position: relative; color: var(--text-muted); font-size: 0.95rem; }
+        .hero-features li::before { content: ''; position: absolute; left: 0; top: 0.75rem; width: 6px; height: 6px; border-radius: 50%; background: var(--sage); }
+        .btn { border: none; border-radius: var(--radius); padding: 0.85rem 1.75rem; font-weight: 700; font-size: 0.95rem; cursor: pointer; font-family: inherit; text-decoration: none; display: inline-block; text-align: center; transition: transform 0.2s, box-shadow 0.2s; }
+        .btn-primary { background: var(--forest); color: #fff; box-shadow: 0 4px 14px rgba(26,60,52,0.25); }
+        .btn-primary:hover { background: var(--forest-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,60,52,0.3); }
+        .hero-image { position: relative; min-height: 320px; border-radius: 0 var(--radius-lg) var(--radius-lg) 0; overflow: hidden; box-shadow: -8px 8px 32px rgba(26,60,52,0.1); }
+        .hero-slider { position: absolute; inset: 0; }
+        .hero-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1s ease; }
+        .hero-slide.active { opacity: 1; z-index: 1; }
+        .hero-slide img { width: 100%; height: 100%; object-fit: cover; transition: transform 6s cubic-bezier(0.25,0.46,0.45,0.94); }
+        .hero-image:hover .hero-slide.active img { transform: scale(1.05); }
+        .hero-image::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 50%, rgba(247,249,247,0.2) 100%); pointer-events: none; z-index: 2; }
+        .hero-dots { position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%); display: flex; gap: 0.5rem; z-index: 3; }
+        .hero-dot { width: 8px; height: 8px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.5); background: transparent; cursor: pointer; transition: all 0.3s; }
+        .hero-dot.active { background: var(--sage); border-color: var(--sage); }
+
+        /* Booking Section */
+        .booking-section {
+            padding: var(--space-3xl) var(--space);
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+        }
+        .booking-section .wrap { max-width: 480px; }
+        .booking-section h2 { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 600; color: var(--forest); margin-bottom: 0.25rem; }
+        .booking-section .meta { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: var(--space-lg); }
+        .booking-form { display: grid; gap: var(--space); }
+        .booking-form input, .booking-form select, .booking-form textarea {
+            padding: 0.9rem 1.1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            font-family: inherit; font-size: 0.95rem;
+            background: var(--cream);
+            color: var(--text);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .booking-form input:focus, .booking-form select:focus, .booking-form textarea:focus { outline: none; border-color: var(--sage); box-shadow: 0 0 0 3px rgba(107,144,128,0.15); }
+        .booking-form select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%235a6d65' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
+        .booking-form input[type="date"] { cursor: pointer; }
+        .booking-success { display: none; color: var(--forest); font-weight: 600; padding: var(--space); background: rgba(107,144,128,0.08); border-radius: var(--radius); }
+        .booking-form.submitted .booking-success { display: block; animation: success-in 0.5s ease; }
+        .booking-form.submitted button { display: none; }
+        .booking-form.loading button { opacity: 0.85; pointer-events: none; position: relative; }
+        .booking-form.loading button::after { content: ''; position: absolute; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.5); border-top-color: #fff; border-radius: 50%; animation: spin 0.6s linear infinite; margin-left: 0.5rem; }
+        .retreat-form.loading button { opacity: 0.85; pointer-events: none; position: relative; }
+        .retreat-form.loading button::after { content: ''; position: absolute; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.5); border-top-color: #fff; border-radius: 50%; animation: spin 0.6s linear infinite; margin-left: 0.5rem; }
+        @@keyframes spin { to { transform: rotate(360deg); } }
+        @@keyframes success-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Services */
+        .services { padding: var(--space-3xl) var(--space); }
+        .section-head { text-align: center; margin-bottom: var(--space-xl); }
+        .section-title { font-family: 'Fraunces', serif; font-size: clamp(1.75rem, 3vw, 2.25rem); font-weight: 600; color: var(--text); margin-bottom: 0.5rem; }
+        .section-sub { font-size: 1rem; color: var(--text-muted); max-width: 500px; margin: 0 auto; }
+        .service-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space); }
+        .service-card {
+            background: var(--surface);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), box-shadow 0.35s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, var(--sage), var(--sage-light)); opacity: 0; transition: opacity 0.3s; }
+        .service-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .service-card:hover::before { opacity: 1; }
+        .service-icon { width: 48px; height: 48px; border-radius: 12px; background: rgba(107,144,128,0.1); display: flex; align-items: center; justify-content: center; margin-bottom: var(--space); color: var(--sage); font-size: 1.2rem; }
+        .service-card h3 { font-family: 'Fraunces', serif; font-size: 1.1rem; margin-bottom: 0.35rem; }
+        .service-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; margin: 0; }
+        .service-card .wp-hint { font-size: 0.7rem; color: var(--sage); font-weight: 600; margin-top: 0.5rem; }
+
+        /* Benefits */
+        .benefits { padding: var(--space-3xl) var(--space); background: var(--surface); border-top: 1px solid var(--border); }
+        .benefits-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-xl); max-width: 900px; margin: 0 auto; }
+        .benefit { text-align: center; }
+        .benefit-icon { width: 56px; height: 56px; border-radius: 50%; background: rgba(107,144,128,0.1); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space); color: var(--sage); font-size: 1.35rem; }
+        .benefit h4 { font-family: 'Fraunces', serif; font-size: 1.1rem; margin-bottom: 0.35rem; }
+        .benefit p { font-size: 0.9rem; color: var(--text-muted); margin: 0; line-height: 1.55; }
+
+        /* Testimonials */
+        .testimonials { padding: var(--space-3xl) var(--space); }
+        .testimonials-carousel { overflow: hidden; position: relative; max-width: 960px; margin: 0 auto; }
+        .testimonial-arrows { position: absolute; top: 50%; left: 0; right: 0; transform: translateY(-50%); display: flex; justify-content: space-between; pointer-events: none; padding: 0 0.5rem; }
+        .testimonial-arrows button { pointer-events: auto; width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--border); background: var(--surface); color: var(--sage); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.25s; box-shadow: var(--shadow); }
+        .testimonial-arrows button:hover { background: var(--sage); color: #fff; border-color: var(--sage); }
+        .testimonials-track { display: flex; gap: var(--space-lg); transition: transform 0.5s cubic-bezier(0.4,0,0.2,1); }
+        .testimonial-card { flex: 0 0 calc(33.333% - var(--space-lg) * 0.67); min-width: 260px; }
+        .testimonial-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: var(--space-lg); }
+        .testimonial-dot { width: 10px; height: 10px; border-radius: 50%; border: none; background: var(--border); cursor: pointer; transition: all 0.3s; }
+        .testimonial-dot.active { background: var(--sage); transform: scale(1.2); }
+        .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); max-width: 960px; margin: 0 auto; }
+        .testimonial-card { text-align: center; padding: var(--space-xl); background: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border); transition: transform var(--transition), box-shadow var(--transition); position: relative; }
+        .testimonial-card::before { content: '\201C'; position: absolute; top: 1rem; left: 1.25rem; font-family: 'Fraunces', serif; font-size: 3rem; color: rgba(107,144,128,0.15); line-height: 1; }
+        .testimonial-card:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(26,60,52,0.08); }
+        .testimonial-card .stars { color: #eab308; font-size: 1rem; margin-bottom: var(--space); }
+        .testimonial-card .quote { font-family: 'Fraunces', serif; font-size: 1.35rem; font-style: italic; line-height: 1.6; margin-bottom: var(--space); color: var(--text); }
+        .testimonial-card strong { display: block; font-size: 0.95rem; }
+        .testimonial-card span { font-size: 0.85rem; color: var(--text-muted); }
+
+        /* FAQ */
+        .faq-section { padding: var(--space-3xl) var(--space); background: var(--cream); }
+        .faq-list { max-width: 600px; margin: 0 auto; }
+        .faq-item { background: var(--surface); border-radius: var(--radius); margin-bottom: 0.5rem; border: 1px solid var(--border); overflow: hidden; transition: border-color 0.2s; }
+        .faq-item:hover { border-color: rgba(107,144,128,0.25); }
+        .faq-a { transition: max-height 0.3s ease, padding 0.3s ease; }
+        .faq-q { padding: 1rem 1.25rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; font-size: 0.95rem; }
+        .faq-q i { color: var(--sage); font-size: 0.8rem; transition: transform 0.2s; }
+        .faq-item.open .faq-q i { transform: rotate(180deg); }
+        .faq-a { padding: 0 1.25rem 1rem; color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; display: none; }
+        .faq-item.open .faq-a { display: block; }
+
+        /* Retreat CTA */
+        .retreat-cta { background: linear-gradient(135deg, var(--forest) 0%, var(--forest-light) 45%, #143028 100%); color: #fff; padding: var(--space-2xl) var(--space); text-align: center; position: relative; overflow: hidden; box-shadow: 0 16px 48px rgba(26,60,52,0.2); }
+        .retreat-cta::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 20% 80%, rgba(107,144,128,0.25) 0%, transparent 55%); pointer-events: none; }
+        .retreat-cta .wrap { max-width: 480px; margin: 0 auto; }
+        .retreat-cta h2 { font-family: 'Fraunces', serif; font-size: 1.75rem; margin-bottom: 0.5rem; }
+        .retreat-cta p { opacity: 0.9; margin-bottom: var(--space-lg); font-size: 0.95rem; }
+        .retreat-form { display: flex; gap: 0.5rem; }
+        .retreat-form input { flex: 1; padding: 0.9rem 1.1rem; border: none; border-radius: var(--radius); font-size: 1rem; font-family: inherit; }
+        .retreat-form button { background: var(--sage); color: #fff; border: none; padding: 0.9rem 1.35rem; border-radius: var(--radius); font-weight: 700; cursor: pointer; font-family: inherit; transition: all var(--transition); }
+        .retreat-form button:hover { background: var(--sage-light); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(107,144,128,0.35); }
+        .retreat-success { display: none; font-weight: 600; }
+        .retreat-wrap.submitted .retreat-form { display: none; }
+        .retreat-wrap.submitted .retreat-success { display: block; }
+
+        /* Tech bar & Footer */
+        .tech-bar { padding: var(--space-lg); text-align: center; background: rgba(107,144,128,0.05); border-top: 1px solid var(--border); }
+        .wp-features-bar { padding: 2rem 1rem; background: rgba(107,144,128,0.05); border-top: 1px solid var(--border); }
+        .wp-features-bar .wp-features-title { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-muted); text-align: center; margin-bottom: 1rem; }
+        .wp-features-bar .wp-features-wrap { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; }
+        .wp-features-bar span { font-size: 0.65rem; font-weight: 700; padding: 0.35rem 0.7rem; background: var(--surface); color: var(--text-muted); border: 1px solid var(--border); border-radius: 6px; display: inline-flex; align-items: center; gap: 0.35rem; }
+        .wp-features-bar span i { color: var(--sage); font-size: 0.7rem; }
+        .tech-bar span { font-size: 0.7rem; font-weight: 600; padding: 0.35rem 0.75rem; background: rgba(255,255,255,0.7); color: var(--text-muted); border-radius: 4px; margin: 0 0.25rem 0.35rem 0; display: inline-block; }
+        .back-to-top {
+            position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200;
+            width: 48px; height: 48px; border-radius: 50%;
+            background: var(--forest); color: #fff; border: none;
+            cursor: pointer; display: none; align-items: center; justify-content: center;
+            box-shadow: 0 8px 24px rgba(26,60,52,0.25); transition: all var(--transition);
+        }
+        .back-to-top:hover { background: var(--forest-light); transform: translateY(-2px); }
+        .back-to-top.show { display: flex; }
+
+        .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        .retreat-success { animation: fade-in 0.4s ease; }
+        @@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+        a:focus-visible, button:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
+        @@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .booking-success, .retreat-success { animation: none; } .booking-form.loading button::after, .retreat-form.loading button::after { display: none; } }
+        footer { background: #23282d; color: #a0a5aa; padding: var(--space-xl) var(--space); text-align: center; }
+        footer .logo { color: #fff; display: block; margin-bottom: 0.5rem; }
+        footer p { margin: 0; font-size: 0.85rem; }
+        .wp-credit { color: #00a0d2; font-weight: 600; }
+
+        @@media (max-width: 900px) {
+            .hero { grid-template-columns: 1fr; }
+            .hero-image { min-height: 280px; order: -1; }
+            .hero-content { padding: var(--space-2xl) var(--space); }
+            .service-grid { grid-template-columns: repeat(2, 1fr); }
+            .benefits-grid { grid-template-columns: 1fr; }
+            .testimonial-card { flex: 0 0 calc(50% - 12px); min-width: 240px; }
+        }
+        @@media (max-width: 640px) {
+            .nav-toggle { display: flex; flex-direction: column; }
+            nav ul { display: none; position: absolute; top: 64px; left: 0; right: 0; background: var(--forest); flex-direction: column; padding: var(--space); }
+            nav ul.show { display: flex; }
+            .service-grid { grid-template-columns: 1fr; }
+            .testimonial-card { flex: 0 0 100%; min-width: 100%; }
+            .retreat-form { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="wp-demo-badge"><i class="fab fa-wordpress"></i> WordPress Theme Demo</div>
+    <div class="announcement">WooCommerce · Gutenberg · ACF — <a href="#booking">Book your discovery session →</a></div>
+    <header>
+        <div class="header-inner">
+            <span class="logo">NurtureWell Studio</span>
+            <nav>
+                <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('nav ul').classList.toggle('show')"><span></span><span></span><span></span></button>
+                <ul>
+                    <li><a href="#services">Sessions</a></li>
+                    <li><a href="#booking">Book</a></li>
+                    <li><a href="#testimonials">Stories</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#booking" class="nav-cta">Book Now</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero reveal">
+        <div class="hero-content">
+            <p class="hero-badge">WooCommerce · WordPress · ACF</p>
+            <h1>Calm layouts. Booking-ready.</h1>
+            <p>Holistic wellness themes on WordPress. WooCommerce Appointments, ACF repeaters, block patterns for spas and coaches.</p>
+            <ul class="hero-features">
+                <li>WooCommerce Bookings & gift cards</li>
+                <li>ACF repeater for services & pricing</li>
+                <li>Gutenberg block patterns</li>
+            </ul>
+            <a href="#booking" class="btn btn-primary">Book Discovery Session</a>
+        </div>
+        <div class="hero-image">
+            <div class="hero-slider" id="heroSlider">
+                <div class="hero-slide active"><img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1200&q=90" alt="Wellness" /></div>
+                <div class="hero-slide"><img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=1200&q=90" alt="Yoga" /></div>
+                <div class="hero-slide"><img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=90" alt="Meditation" /></div>
+            </div>
+            <div class="hero-dots" id="heroDots"></div>
+        </div>
+    </section>
+
+    <section class="booking-section reveal" id="booking">
+        <div class="wrap">
+            <h2>Book your discovery session</h2>
+            <p class="meta">WooCommerce Appointments · WPForms</p>
+            <form class="booking-form" onsubmit="var f=this; f.classList.add('loading'); setTimeout(function(){f.classList.remove('loading'); f.classList.add('submitted');}, 700); return false;">
+                <input type="text" placeholder="Full name" required />
+                <input type="email" placeholder="Email" required />
+                <input type="date" title="Preferred date" />
+                <select>
+                    <option>Holistic coaching</option>
+                    <option>Breathwork session</option>
+                    <option>Nutrition reset</option>
+                </select>
+                <select>
+                    <option value="">Preferred time</option>
+                    <option>9:00 AM</option>
+                    <option>10:00 AM</option>
+                    <option>11:00 AM</option>
+                    <option>2:00 PM</option>
+                    <option>3:00 PM</option>
+                    <option>4:00 PM</option>
+                </select>
+                <textarea rows="3" placeholder="What are your wellness goals?"></textarea>
+                <button type="submit" class="btn btn-primary">Reserve spot</button>
+                <p class="booking-success" aria-live="polite">Booking received. We'll confirm within 24 hours.</p>
+            </form>
+        </div>
+    </section>
+
+    <section class="services reveal" id="services">
+        <div class="wrap">
+            <div class="section-head">
+                <h2 class="section-title">Our Offerings</h2>
+                <p class="section-sub">ACF repeater–powered service cards. Fully editable in WordPress.</p>
+            </div>
+            <div class="service-grid">
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-spa"></i></div>
+                    <h3>Signature Programs</h3>
+                    <p>ACF repeater. Custom post type for multi-week journeys. Query Loop for program listings.</p>
+                    <span class="wp-hint"><i class="fab fa-wordpress"></i> ACF · CPT</span>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-video"></i></div>
+                    <h3>Virtual Studio</h3>
+                    <p>Embed block for Zoom. Custom post type for courses. Cover block for session headers.</p>
+                    <span class="wp-hint"><i class="fab fa-wordpress"></i> Embed · Cover</span>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-mountain-sun"></i></div>
+                    <h3>Retreat Landing</h3>
+                    <p>Hero countdown, FAQ accordion. WooCommerce for deposits. Block patterns.</p>
+                    <span class="wp-hint"><i class="fab fa-wordpress"></i> WooCommerce</span>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-shopping-bag"></i></div>
+                    <h3>Mindful Commerce</h3>
+                    <p>WooCommerce Subscriptions. Digital products, gift cards. WPForms for inquiry.</p>
+                    <span class="wp-hint"><i class="fab fa-wordpress"></i> WooCommerce · WPForms</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="benefits reveal">
+        <div class="wrap">
+            <div class="section-head">
+                <h2 class="section-title">Why NurtureWell</h2>
+                <p class="section-sub">Built for wellness practitioners who want conversion-focused sites.</p>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit">
+                    <div class="benefit-icon"><i class="fas fa-calendar-check"></i></div>
+                    <h4>Seamless Booking</h4>
+                    <p>WooCommerce Appointments. Calendar view. Automated reminders.</p>
+                </div>
+                <div class="benefit">
+                    <div class="benefit-icon"><i class="fas fa-palette"></i></div>
+                    <h4>Calm Design</h4>
+                    <p>theme.json presets. Soft gradients. Accessibility-first.</p>
+                </div>
+                <div class="benefit">
+                    <div class="benefit-icon"><i class="fas fa-edit"></i></div>
+                    <h4>Easy to Edit</h4>
+                    <p>Gutenberg + ACF. Update services and pricing yourself.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials reveal" id="testimonials">
+        <div class="wrap">
+            <div class="section-head">
+                <h2 class="section-title">Client Stories · ACF Repeater</h2>
+                <p class="section-sub">Wellness practitioners who chose NurtureWell. Testimonials managed via ACF repeater.</p>
+            </div>
+            <div class="testimonials-carousel">
+                <div class="testimonial-arrows">
+                    <button type="button" class="tprev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+                    <button type="button" class="tnext" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="testimonials-track" id="testimonialsTrack">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="quote">"Bookings doubled in the first month. The WooCommerce integration is seamless—clients love the simplicity."</p>
+                    <strong>Dr. Maya Chen</strong>
+                    <span>Holistic Physician</span>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="quote">"Calm, conversion-focused design. My retreat waitlist grew 3× with the clean CTA. Highly recommend."</p>
+                    <strong>Sarah Kim</strong>
+                    <span>Wellness Coach</span>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="quote">"The booking flow is effortless. Clients love the simplicity. Support was responsive and helpful."</p>
+                    <strong>Alex Rivera</strong>
+                    <span>Meditation Guide</span>
+                </div>
+                </div>
+                <div class="testimonial-dots" id="testimonialDots"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section reveal" id="faq">
+        <div class="wrap">
+            <div class="section-head">
+                <h2 class="section-title">Questions?</h2>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item" onclick="document.querySelectorAll('.faq-item').forEach(function(el){el.classList.remove('open');}); this.classList.toggle('open');">
+                    <div class="faq-q">What's included in a discovery session? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-a">A 30-minute video call to discuss your goals and how we can support you.</div>
+                </div>
+                <div class="faq-item" onclick="document.querySelectorAll('.faq-item').forEach(function(el){el.classList.remove('open');}); this.classList.toggle('open');">
+                    <div class="faq-q">Do you offer virtual sessions? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-a">Yes. All programs are available online via Zoom with on-demand recordings.</div>
+                </div>
+                <div class="faq-item" onclick="document.querySelectorAll('.faq-item').forEach(function(el){el.classList.remove('open');}); this.classList.toggle('open');">
+                    <div class="faq-q">What payment methods do you accept? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-a">Credit cards, PayPal, and payment plans via WooCommerce Subscriptions.</div>
+                </div>
+                <div class="faq-item" onclick="document.querySelectorAll('.faq-item').forEach(function(el){el.classList.remove('open');}); this.classList.toggle('open');">
+                    <div class="faq-q">Can I reschedule or cancel? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-a">Yes. Free rescheduling up to 24 hours before. Cancellations handled via WooCommerce.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="retreat-cta reveal" id="retreats">
+        <div class="wrap retreat-wrap" id="retreatFormWrap">
+            <h2>Seasonal Retreat Waitlist</h2>
+            <p>Be the first to know when we announce our next retreat.</p>
+            <form class="retreat-form" onsubmit="var f=this; f.classList.add('loading'); setTimeout(function(){ f.classList.remove('loading'); document.getElementById('retreatFormWrap').classList.add('submitted'); }, 600); return false;">
+                <input type="email" placeholder="your@email.com" required />
+                <button type="submit">Join Waitlist</button>
+            </form>
+            <p class="retreat-success" aria-live="polite">You're on the list. We'll be in touch.</p>
+        </div>
+    </section>
+
+    <div class="tech-bar">
+        <span>WooCommerce</span><span>Appointments</span><span>ACF</span><span>Gutenberg</span><span>WPForms</span><span>theme.json</span><span>Subscriptions</span>
+    </div>
+    <div class="wp-features-bar">
+        <p class="wp-features-title">WordPress Pro Features</p>
+        <div class="wp-features-wrap">
+            <span><i class="fab fa-wordpress"></i> Gutenberg</span>
+            <span><i class="fas fa-layer-group"></i> Block Patterns</span>
+            <span><i class="fas fa-palette"></i> theme.json</span>
+            <span><i class="fas fa-desktop"></i> FSE</span>
+            <span><i class="fas fa-puzzle-piece"></i> Template Parts</span>
+            <span><i class="fas fa-search"></i> Query Loop</span>
+            <span><i class="fas fa-image"></i> Cover Block</span>
+            <span><i class="fas fa-images"></i> Gallery Block</span>
+            <span><i class="fas fa-bars"></i> Navigation Block</span>
+            <span><i class="fas fa-th-large"></i> Columns · Group · Row</span>
+            <span><i class="fas fa-database"></i> ACF</span>
+            <span><i class="fas fa-cube"></i> ACF Blocks</span>
+            <span><i class="fas fa-envelope"></i> WPForms</span>
+            <span><i class="fas fa-file-alt"></i> Contact Form 7</span>
+            <span><i class="fas fa-tasks"></i> Gravity Forms</span>
+            <span><i class="fas fa-shopping-cart"></i> WooCommerce</span>
+            <span><i class="fas fa-calendar-check"></i> Appointments</span>
+            <span><i class="fas fa-redo"></i> Subscriptions</span>
+            <span><i class="fas fa-search-plus"></i> Yoast SEO</span>
+            <span><i class="fas fa-chart-line"></i> Rank Math</span>
+            <span><i class="fas fa-plug"></i> Jetpack</span>
+            <span><i class="fas fa-file"></i> Custom Post Types</span>
+            <span><i class="fas fa-tags"></i> Custom Taxonomies</span>
+            <span><i class="fas fa-code"></i> REST API</span>
+            <span><i class="fas fa-link"></i> Webhooks</span>
+            <span><i class="fas fa-bolt"></i> Redis · Memcached</span>
+            <span><i class="fas fa-paint-brush"></i> Elementor · Bricks</span>
+            <span><i class="fas fa-server"></i> WP Engine · Kinsta</span>
+            <span><i class="fas fa-globe"></i> CDN</span>
+            <span><i class="fas fa-envelope-open-text"></i> Mailchimp · ConvertKit</span>
+        </div>
+    </div>
+
+    <button class="back-to-top" id="backToTop" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
+    <footer>
+        <span class="logo">NurtureWell Studio</span>
+        <p>WordPress wellness demo · <span class="wp-credit"><i class="fab fa-wordpress"></i> WooCommerce Appointments</span> · Portfolio showcase</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('nav a').forEach(function(a) { a.addEventListener('click', function() { document.querySelector('nav ul')?.classList.remove('show'); }); });
+        window.addEventListener('scroll', function() {
+            document.getElementById('backToTop')?.classList.toggle('show', window.scrollY > 400);
+            document.querySelector('header')?.classList.toggle('scrolled', window.scrollY > 50);
+        });
+        document.getElementById('backToTop')?.addEventListener('click', function() { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+        var io = new IntersectionObserver(function(entries) { entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
+        function updateNavActive() {
+            var sections = ['services','booking','testimonials','faq'];
+            var scrollY = window.scrollY + 120;
+            document.querySelectorAll('nav a[href^="#"]:not(.nav-cta)').forEach(function(a){ a.classList.remove('active'); });
+            sections.forEach(function(id) {
+                var el = document.getElementById(id);
+                var links = document.querySelectorAll('nav a[href="#' + id + '"]:not(.nav-cta)');
+                if (el && links.length) {
+                    var top = el.offsetTop, h = el.offsetHeight;
+                    if (scrollY >= top && scrollY < top + h) links.forEach(function(l){ l.classList.add('active'); });
+                }
+            });
+        }
+        window.addEventListener('scroll', updateNavActive);
+        updateNavActive();
+
+        (function() {
+            var slides = document.querySelectorAll('.hero-slide');
+            var dotsEl = document.getElementById('heroDots');
+            if (slides.length && dotsEl) {
+                var idx = 0;
+                for (var i = 0; i < slides.length; i++) {
+                    var d = document.createElement('button');
+                    d.type = 'button';
+                    d.className = 'hero-dot' + (i === 0 ? ' active' : '');
+                    d.setAttribute('aria-label', 'Slide ' + (i + 1));
+                    d.addEventListener('click', (function(k){ return function(){ goTo(k); }; })(i));
+                    dotsEl.appendChild(d);
+                }
+                function goTo(i) {
+                    idx = i;
+                    slides.forEach(function(s, j){ s.classList.toggle('active', j === idx); });
+                    dotsEl.querySelectorAll('.hero-dot').forEach(function(d, j){ d.classList.toggle('active', j === idx); });
+                }
+                setInterval(function(){ goTo((idx + 1) % slides.length); }, 4500);
+            }
+
+            var track = document.getElementById('testimonialsTrack');
+            var dots = document.getElementById('testimonialDots');
+            if (track) {
+                var items = track.querySelectorAll('.testimonial-card');
+                var total = items.length;
+                var tidx = 0;
+                for (var i = 0; i < total; i++) {
+                    var dot = document.createElement('button');
+                    dot.type = 'button';
+                    dot.className = 'testimonial-dot' + (i === 0 ? ' active' : '');
+                    dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+                    dot.addEventListener('click', (function(k){ return function(){ tgoTo(k); }; })(i));
+                    dots.appendChild(dot);
+                }
+                function tgoTo(i) {
+                    tidx = Math.max(0, Math.min(i, total - 1));
+                    var w = items[0] ? items[0].offsetWidth + 24 : 300;
+                    track.style.transform = 'translateX(' + (-tidx * w) + 'px)';
+                    dots.querySelectorAll('.testimonial-dot').forEach(function(d, j){ d.classList.toggle('active', j === tidx); });
+                }
+                document.querySelector('.tprev')?.addEventListener('click', function(){ tgoTo(tidx - 1); });
+                document.querySelector('.tnext')?.addEventListener('click', function(){ tgoTo(tidx + 1); });
+                window.addEventListener('resize', function(){ tgoTo(tidx); });
+            }
+        })();
+    </script>
+</body>
+</html>

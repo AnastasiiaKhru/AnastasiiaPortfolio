@@ -825,6 +825,9 @@ a:hover {
 .project-card-modern[data-project="10"] { animation-delay: 0.5s; }
 .project-card-modern[data-project="11"] { animation-delay: 0.55s; }
 .project-card-modern[data-project="12"] { animation-delay: 0.6s; }
+.project-card-modern[data-project="13"] { animation-delay: 0.65s; }
+.project-card-modern[data-project="14"] { animation-delay: 0.7s; }
+.project-card-modern[data-project="15"] { animation-delay: 0.75s; }
 
 .project-card-modern::before {
     content: '';
@@ -2165,6 +2168,13 @@ a:hover {
     margin-bottom: var(--spacing-4);
 }
 
+/* Align FEATURES section across WordPress cards 13–15 (variable description length) */
+.project-card-modern[data-project="13"] .project-card__desc,
+.project-card-modern[data-project="14"] .project-card__desc,
+.project-card-modern[data-project="15"] .project-card__desc {
+    min-height: 9.5rem;
+}
+
 .project-card__backend,
 .project-card__stack {
     display: flex;
@@ -2725,6 +2735,256 @@ a:hover {
     text-decoration: none;
 }
 
+/* WordPress showcase — super modern premium project cards */
+.project-card--wordpress {
+    --wp-accent: #0073aa;
+    --wp-accent-muted: rgba(0, 115, 170, 0.08);
+    --wp-accent-border: rgba(0, 115, 170, 0.2);
+    border: 1px solid rgba(15, 23, 42, 0.05);
+    background: linear-gradient(168deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%);
+    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease, border-color 0.3s ease;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.project-card--wp-consult,
+.project-card--wp-default { --wp-accent: #0073aa; --wp-accent-muted: rgba(0, 115, 170, 0.09); --wp-accent-border: rgba(0, 115, 170, 0.22); }
+.project-card--wp-lifestyle { --wp-accent: #d97706; --wp-accent-muted: rgba(217, 119, 6, 0.08); --wp-accent-border: rgba(217, 119, 6, 0.2); }
+.project-card--wp-wellness { --wp-accent: #059669; --wp-accent-muted: rgba(5, 150, 105, 0.09); --wp-accent-border: rgba(5, 150, 105, 0.2); }
+
+.project-card--wordpress::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, transparent 0%, var(--wp-accent) 50%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+}
+
+.project-card--wordpress:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 56px rgba(15, 23, 42, 0.1), 0 12px 32px rgba(0, 0, 0, 0.04);
+    border-color: var(--wp-accent-border);
+}
+
+.project-card--wordpress:hover::before {
+    opacity: 0.85;
+}
+
+/* Restore accent bar when wp + featured/liquor */
+.project-card--wordpress.project-card--liquor::before,
+.project-card--wordpress.project-card--featured::before {
+    display: block;
+}
+
+/* Unified cards: hide old FEATURED / gym head badges */
+.project-card--wordpress .project-card__head::before {
+    display: none;
+}
+
+.project-card--wordpress .project-card__head .wp-meta-badge {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--wp-accent);
+    background: var(--wp-accent-muted);
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    margin-right: 0.4rem;
+    vertical-align: middle;
+}
+
+.project-card--wordpress .project-card__title {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.project-card--wordpress .project-card__summary {
+    font-weight: 600;
+    color: var(--pepper);
+    font-size: 0.9375rem;
+}
+
+.project-card__preview--wp {
+    padding: 0;
+    margin: 0 0 1.25rem;
+    flex-shrink: 0;
+}
+
+/* Ensure preview area has consistent height so Features align across all cards */
+.project-card--wordpress .project-card__preview {
+    min-height: 240px;
+    height: 240px;
+}
+
+/* All cards use same frame dimensions when inside project-card--wordpress */
+.project-card--wordpress .project-preview__frame-wrap {
+    height: 240px;
+    min-height: 240px;
+    max-height: 240px;
+    padding: 0;
+    border-radius: 14px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.project-preview__frame-wrap--wp-consult,
+.project-preview__frame-wrap--wp-lifestyle,
+.project-preview__frame-wrap--wp-wellness {
+    height: 240px;
+    min-height: 240px;
+    max-height: 240px;
+    padding: 0;
+    border-radius: 14px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.project-preview__frame-wrap--wp-consult {
+    background: linear-gradient(170deg, #eff6ff 0%, #dbeafe 100%);
+    box-shadow: 0 6px 24px rgba(0, 115, 170, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.project-preview__frame-wrap--wp-lifestyle {
+    background: linear-gradient(170deg, #fffbeb 0%, #fef3c7 100%);
+    box-shadow: 0 6px 24px rgba(217, 119, 6, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.project-preview__frame-wrap--wp-wellness {
+    background: linear-gradient(170deg, #f0fdf4 0%, #dcfce7 100%);
+    box-shadow: 0 6px 24px rgba(5, 150, 105, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.project-card--wordpress .project-preview__frame-wrap:hover {
+    transform: scale(1.015);
+}
+
+.project-preview__frame-wrap--wp-consult:hover {
+    box-shadow: 0 24px 48px rgba(0, 115, 170, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.project-preview__frame-wrap--wp-lifestyle:hover {
+    box-shadow: 0 24px 48px rgba(217, 119, 6, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.project-preview__frame-wrap--wp-wellness:hover {
+    box-shadow: 0 24px 48px rgba(5, 150, 105, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.project-preview__frame-wrap--wp-img .project-preview__img-link {
+    position: absolute;
+    inset: 0;
+}
+
+.wp-preview__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.project-preview__frame-wrap--wp-img:hover .wp-preview__img {
+    transform: scale(1.05);
+}
+
+.wp-preview__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    transition: background 0.3s ease;
+}
+
+.project-preview__frame-wrap:hover .wp-preview__overlay {
+    background: linear-gradient(180deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.15) 60%, transparent 100%);
+}
+
+.wp-preview__domain {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.98);
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.wp-preview__overlay .wp-dots span {
+    background: rgba(255,255,255,0.75);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.1);
+}
+
+.wp-dots {
+    display: inline-flex;
+    gap: 0.25rem;
+}
+
+.wp-dots span {
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 50%;
+    background: rgba(100, 116, 139, 0.3);
+}
+
+.project-card--wordpress .project-preview__frame-wrap .preview-cta,
+.project-preview__frame-wrap--wp-consult .preview-cta,
+.project-preview__frame-wrap--wp-lifestyle .preview-cta,
+.project-preview__frame-wrap--wp-wellness .preview-cta {
+    bottom: 1rem;
+}
+
+/* CTA hover for wp-default */
+.project-card--wp-default .preview-cta--wp:hover { background: #0073aa !important; color: #fff !important; transform: translateX(-50%) translateY(-2px); }
+
+.preview-cta--wp {
+    background: rgba(255,255,255,0.95) !important;
+    color: #1e293b !important;
+    font-weight: 600;
+    font-size: 0.8rem;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+}
+
+.project-card--wp-consult .preview-cta--wp:hover { background: #0073aa !important; color: #fff !important; transform: translateX(-50%) translateY(-2px); }
+.project-card--wp-lifestyle .preview-cta--wp:hover { background: #d97706 !important; color: #fff !important; transform: translateX(-50%) translateY(-2px); }
+.project-card--wp-wellness .preview-cta--wp:hover { background: #059669 !important; color: #fff !important; transform: translateX(-50%) translateY(-2px); }
+
+.project-card--wordpress .backend-pill--wp,
+.project-card--wordpress .stack-pill--wp {
+    background: var(--wp-accent-muted);
+    color: var(--wp-accent);
+    font-weight: 600;
+    border: 1px solid transparent;
+    transition: background 0.25s, border-color 0.25s, transform 0.2s;
+}
+
+.project-card--wordpress .backend-pill--wp:hover,
+.project-card--wordpress .stack-pill--wp:hover {
+    background: var(--wp-accent-muted);
+    border-color: var(--wp-accent-border);
+    transform: translateY(-1px);
+}
+
+
 @media (max-width: 768px) {
     .hero-btn-group {
         flex-direction: column;
@@ -2759,4 +3019,5 @@ a:hover {
         padding: 0.4rem 1rem;
         font-size: 0.8rem;
     }
+
 }

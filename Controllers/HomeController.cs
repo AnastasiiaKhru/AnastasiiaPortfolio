@@ -64,6 +64,9 @@ public class HomeController : Controller
     public IActionResult EventWebinarDemo() => View();
     public IActionResult BrandRefreshDemo() => View();
     public IActionResult AdCreativeDemo() => View();
+    public IActionResult WPBusinessDemo() => View();
+    public IActionResult WPLifestyleDemo() => View();
+    public IActionResult WPWellnessDemo() => View();
 
     public IActionResult Portfolio()
     {
