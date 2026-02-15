@@ -1,0 +1,611 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SkyBridge IT Solutions — B2B IT Consulting &amp; Cloud | Ontario</title>
+    @{
+        var baseUrl = $"{Context.Request.Scheme}://{Context.Request.Host}";
+        var ogUrl = $"{baseUrl}{Context.Request.Path}{Context.Request.QueryString}";
+    }
+    <meta name="description" content="SkyBridge IT Solutions delivers B2B IT consulting, Microsoft 365 migration, Dynamics 365, cybersecurity audits, managed IT, and cloud infrastructure across Ontario." />
+    <meta property="og:title" content="SkyBridge IT Solutions — IT Consulting &amp; Cloud" />
+    <meta property="og:url" content="@ogUrl" />
+    <meta property="og:type" content="website" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0a0e14;
+            --bg-card: rgba(255,255,255,0.03);
+            --bg-card-hover: rgba(255,255,255,0.06);
+            --surface: #141922;
+            --border: rgba(255,255,255,0.08);
+            --text: #f0f4f8;
+            --text-muted: #94a3b8;
+            --accent: #22d3ee;
+            --accent-soft: rgba(34, 211, 238, 0.15);
+            --accent-alt: #06b6d4;
+            --success: #34d399;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2.5rem;
+            background: rgba(10, 14, 20, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        .nav.scrolled { border-bottom-color: rgba(255,255,255,0.12); }
+        .nav__logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+        .nav__logo span { color: var(--accent); }
+        .nav__links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav__links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        .nav__links a:hover { color: var(--text); }
+        .nav__cta {
+            background: linear-gradient(135deg, var(--accent), var(--accent-alt));
+            color: #0a0e14;
+            padding: 0.6rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .nav__cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(34, 211, 238, 0.3);
+            color: #0a0e14;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 2rem 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 50% 0%, rgba(34, 211, 238, 0.08) 0%, transparent 55%),
+                radial-gradient(ellipse 60% 40% at 80% 60%, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent-soft);
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            padding: 0.5rem 1.25rem;
+            border-radius: 100px;
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+            animation: fadeUp 0.6s ease forwards;
+        }
+        .hero h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 1.25rem;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            position: relative;
+            z-index: 1;
+            animation: fadeUp 0.6s ease 0.1s both;
+        }
+        .hero h1 span { color: var(--accent); }
+        .hero .subtitle {
+            color: var(--text-muted);
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            max-width: 560px;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+            animation: fadeUp 0.6s ease 0.2s both;
+        }
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-alt));
+            color: #0a0e14;
+            padding: 1rem 2.25rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(34, 211, 238, 0.25);
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            z-index: 1;
+            animation: fadeUp 0.6s ease 0.3s both;
+        }
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(34, 211, 238, 0.35);
+            color: #0a0e14;
+        }
+        .hero-cta--outline {
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid rgba(34, 211, 238, 0.4);
+            margin-left: 0.75rem;
+        }
+        .hero-cta--outline:hover { background: var(--accent-soft); color: var(--accent); }
+        .hero-ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; position: relative; z-index: 1; }
+        @@keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-head {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .section-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+        .section-desc {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .service-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+        .service-card:hover {
+            background: var(--bg-card-hover);
+            border-color: rgba(34, 211, 238, 0.2);
+            transform: translateY(-4px);
+        }
+        .service-card__icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-soft);
+            border-radius: 12px;
+            color: var(--accent);
+            font-size: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+        .service-card h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .offers {
+            background: linear-gradient(180deg, rgba(34, 211, 238, 0.04) 0%, transparent 100%);
+            padding: 6rem 2rem;
+        }
+        .offers-inner { max-width: 1200px; margin: 0 auto; }
+        .offers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .offer-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+        .offer-card:hover {
+            border-color: rgba(34, 211, 238, 0.25);
+            box-shadow: 0 0 40px rgba(34, 211, 238, 0.08);
+        }
+        .offer-card--highlight {
+            border-color: rgba(34, 211, 238, 0.35);
+            background: linear-gradient(145deg, rgba(34, 211, 238, 0.08) 0%, transparent 100%);
+        }
+        .offer-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--success);
+            background: rgba(52, 211, 153, 0.12);
+            padding: 0.35rem 0.75rem;
+            border-radius: 100px;
+            width: fit-content;
+        }
+        .offer-card h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.3;
+        }
+        .offer-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            flex-grow: 1;
+        }
+        .offer-card .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-alt));
+            color: #0a0e14;
+            padding: 0.65rem 1.25rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            width: fit-content;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .offer-card .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(34, 211, 238, 0.3);
+            color: #0a0e14;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-num {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: -0.02em;
+            margin-bottom: 0.25rem;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+        .cta-box {
+            max-width: 700px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, rgba(34, 211, 238, 0.1) 0%, rgba(6, 182, 212, 0.05) 100%);
+            border: 1px solid rgba(34, 211, 238, 0.25);
+            border-radius: 24px;
+            padding: 3.5rem;
+        }
+        .cta-box h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.75rem, 4vw, 2.25rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        .cta-box p {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+        .cta-box .btn-large {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-alt));
+            color: #0a0e14;
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .cta-box .btn-large:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(34, 211, 238, 0.35);
+            color: #0a0e14;
+        }
+
+        .footer {
+            padding: 2.5rem 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .footer a:hover { color: var(--accent); }
+
+        .back-link {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            z-index: 50;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+        .back-link:hover { color: var(--accent); border-color: rgba(34, 211, 238, 0.3); }
+
+        @@media (max-width: 768px) {
+            .nav { padding: 1rem 1.25rem; }
+            .nav__links { display: none; }
+            .stats { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <a href="/Home/Projects" class="back-link" aria-label="Back to Projects"><i class="fas fa-arrow-left"></i> Back</a>
+
+    <nav class="nav" id="nav">
+        <a href="#" class="nav__logo">SkyBridge<span>IT</span></a>
+        <ul class="nav__links">
+            <li><a href="#services">Services</a></li>
+            <li><a href="#offers">Free Audit</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <a href="#contact" class="nav__cta">Book Free Audit</a>
+    </nav>
+
+    <header class="hero">
+        <span class="hero-badge"><i class="fas fa-shield-halved"></i> Trusted B2B IT Partner in Ontario</span>
+        <h1>Secure Your Business.<br />Scale with <span>Cloud.</span></h1>
+        <p class="subtitle">
+            SkyBridge delivers enterprise-grade IT consulting, Microsoft 365 migration, Dynamics 365 implementation, 
+            cybersecurity audits, managed IT, and cloud infrastructure for growing businesses.
+        </p>
+        <div class="hero-ctas">
+            <a href="#contact" class="hero-cta">
+                <i class="fas fa-calendar-check"></i> Claim Free IT Audit
+            </a>
+            <a href="#services" class="hero-cta hero-cta--outline">
+                <i class="fas fa-arrow-down"></i> Our Services
+            </a>
+        </div>
+    </header>
+
+    <section id="services">
+        <div class="section-head">
+            <span class="section-label">What We Provide</span>
+            <h2 class="section-title">They provide:</h2>
+            <p class="section-desc">End-to-end IT solutions tailored for B2B and enterprise clients across Ontario.</p>
+        </div>
+        <div class="services-grid">
+            <article class="service-card">
+                <div class="service-card__icon"><i class="fas fa-cloud-arrow-up"></i></div>
+                <h3>Microsoft 365 Migration</h3>
+                <p>Seamless migration to M365 with minimal downtime. Email, Teams, SharePoint, and productivity suite deployment.</p>
+            </article>
+            <article class="service-card">
+                <div class="service-card__icon"><i class="fas fa-cogs"></i></div>
+                <h3>Dynamics 365 Implementation</h3>
+                <p>CRM and ERP implementation for sales, customer service, and operations. Custom workflows and integrations.</p>
+            </article>
+            <article class="service-card">
+                <div class="service-card__icon"><i class="fas fa-shield-halved"></i></div>
+                <h3>Cybersecurity Audits</h3>
+                <p>Comprehensive security assessments, vulnerability scanning, compliance review (SOC 2, ISO 27001 prep), and remediation plans.</p>
+            </article>
+            <article class="service-card">
+                <div class="service-card__icon"><i class="fas fa-headset"></i></div>
+                <h3>Managed IT Services</h3>
+                <p>24/7 monitoring, help desk, patch management, backup & recovery. Proactive support so you focus on growth.</p>
+            </article>
+            <article class="service-card">
+                <div class="service-card__icon"><i class="fas fa-server"></i></div>
+                <h3>Cloud Infrastructure</h3>
+                <p>Azure, AWS, or hybrid setup. Architecture design, cost optimization, and scaling for reliability and performance.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="offers" id="offers">
+        <div class="offers-inner">
+            <div class="section-head">
+                <span class="section-label">Limited-Time Offers</span>
+                <h2 class="section-title">Secure Your Business — Free IT Audit</h2>
+                <p class="section-desc">Complimentary assessments to identify risks and opportunities. Book before month-end.</p>
+            </div>
+            <div class="offers-grid">
+                <article class="offer-card offer-card--highlight">
+                    <span class="offer-badge"><i class="fas fa-bolt"></i> Most Popular</span>
+                    <h3>Complimentary IT Security Audit — Limited Time</h3>
+                    <p>Full security review: vulnerability scan, policy check, and prioritized remediation roadmap. Valued at $2,500.</p>
+                    <a href="#contact" class="btn"><i class="fas fa-arrow-right"></i> Claim Your Audit</a>
+                </article>
+                <article class="offer-card">
+                    <h3>Secure Your Business: Free IT Audit (Ends Soon)</h3>
+                    <p>Identify gaps in your infrastructure before they become incidents. No commitment required.</p>
+                    <a href="#contact" class="btn"><i class="fas fa-arrow-right"></i> Book Now</a>
+                </article>
+                <article class="offer-card">
+                    <h3>Free Cybersecurity Checkup — Book Before Month-End</h3>
+                    <p>Quick health check: patch status, access controls, and backup verification. Get a report in 48 hours.</p>
+                    <a href="#contact" class="btn"><i class="fas fa-arrow-right"></i> Schedule Checkup</a>
+                </article>
+                <article class="offer-card">
+                    <h3>Protect Your Systems — Free Security Assessment</h3>
+                    <p>Understand your exposure. We deliver a concise risk assessment with actionable recommendations.</p>
+                    <a href="#contact" class="btn"><i class="fas fa-arrow-right"></i> Get Assessment</a>
+                </article>
+                <article class="offer-card">
+                    <h3>Claim Your Free IT Risk Assessment Today</h3>
+                    <p>One-hour discovery call + written summary. Perfect for businesses exploring managed IT for the first time.</p>
+                    <a href="#contact" class="btn"><i class="fas fa-arrow-right"></i> Start Now</a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="section-head">
+            <span class="section-label">Industry Focus</span>
+            <h2 class="section-title">They work with:</h2>
+            <p class="section-desc">SMB and mid-market organizations across Ontario and Canada.</p>
+        </div>
+        <div class="services-grid" style="max-width: 800px; margin: 0 auto;">
+            <article class="service-card" style="text-align: center;">
+                <div class="service-card__icon" style="margin: 0 auto;"><i class="fas fa-building"></i></div>
+                <h3>Professional Services</h3>
+                <p>Law firms, accounting, consulting — compliance-focused industries.</p>
+            </article>
+            <article class="service-card" style="text-align: center;">
+                <div class="service-card__icon" style="margin: 0 auto;"><i class="fas fa-store"></i></div>
+                <h3>Retail & Distribution</h3>
+                <p>Multi-location operations, inventory, e-commerce integrations.</p>
+            </article>
+            <article class="service-card" style="text-align: center;">
+                <div class="service-card__icon" style="margin: 0 auto;"><i class="fas fa-industry"></i></div>
+                <h3>Manufacturing</h3>
+                <p>ERP, production systems, supply chain, and OT/IT convergence.</p>
+            </article>
+        </div>
+    </section>
+
+    <div class="stats">
+        <div class="stat-item">
+            <div class="stat-num">150+</div>
+            <div class="stat-label">Clients Served</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">99.9%</div>
+            <div class="stat-label">Uptime SLA</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">12+</div>
+            <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">24/7</div>
+            <div class="stat-label">Support</div>
+        </div>
+    </div>
+
+    <section class="cta-section" id="contact">
+        <div class="cta-box">
+            <h2>Ready to Secure Your Business?</h2>
+            <p>Claim your complimentary IT security audit today. Limited slots available — book before month-end.</p>
+            <a href="mailto:hello@skybridgeit.ca?subject=Free%20IT%20Audit%20Request" class="btn-large">
+                <i class="fas fa-envelope"></i> Book Free Audit
+            </a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <a href="/Home/Projects">← Back to Projects</a>
+    </footer>
+
+    <script>
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 50));
+    </script>
+</body>
+</html>

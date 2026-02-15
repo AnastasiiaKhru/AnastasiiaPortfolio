@@ -828,6 +828,8 @@ a:hover {
 .project-card-modern[data-project="13"] { animation-delay: 0.65s; }
 .project-card-modern[data-project="14"] { animation-delay: 0.7s; }
 .project-card-modern[data-project="15"] { animation-delay: 0.75s; }
+.project-card-modern[data-project="16"] { animation-delay: 0.8s; }
+.project-card-modern[data-project="17"] { animation-delay: 0.85s; }
 
 .project-card-modern::before {
     content: '';
@@ -2880,6 +2882,79 @@ a:hover {
 .project-preview__frame-wrap--wp-wellness:hover {
     box-shadow: 0 24px 48px rgba(5, 150, 105, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.95);
 }
+
+/* Valentine preview */
+.project-preview__frame-wrap--valentine {
+    height: 240px;
+    min-height: 240px;
+    max-height: 240px;
+    background: linear-gradient(170deg, #fff5f8 0%, #ffe8f0 50%, #fce7ff 100%);
+    box-shadow: 0 6px 24px rgba(232, 67, 147, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    position: relative;
+    overflow: hidden;
+}
+.project-preview__frame-wrap--valentine:hover {
+    box-shadow: 0 24px 48px rgba(232, 67, 147, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+.valentine-preview-trigger {
+    display: block;
+    position: absolute;
+    inset: 0;
+    text-decoration: none;
+}
+.valentine-preview-scene {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    padding-bottom: 2.5rem;
+    overflow: hidden;
+}
+.valentine-preview__bg {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 20% 30%, rgba(255, 107, 157, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.15) 0%, transparent 50%);
+}
+.valentine-preview__content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+.valentine-preview__heart {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #ff6b9d 0%, #e84393 100%);
+    border-radius: 50%;
+    margin: 0 auto 0.75rem;
+    font-size: 1.25rem;
+    color: white;
+    box-shadow: 0 6px 20px rgba(232, 67, 147, 0.4);
+    animation: valentinePulse 2s ease-in-out infinite;
+}
+@keyframes valentinePulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 6px 20px rgba(232, 67, 147, 0.4); }
+    50% { transform: scale(1.05); box-shadow: 0 8px 28px rgba(232, 67, 147, 0.5); }
+}
+.valentine-preview__text {
+    font-family: 'Quicksand', 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #e84393;
+    margin-bottom: 0.5rem;
+}
+.valentine-preview__hearts {
+    font-size: 0.75rem;
+    color: rgba(232, 67, 147, 0.5);
+}
+.valentine-preview__hearts i { margin: 0 0.15rem; }
 
 .project-preview__frame-wrap--wp-img .project-preview__img-link {
     position: absolute;

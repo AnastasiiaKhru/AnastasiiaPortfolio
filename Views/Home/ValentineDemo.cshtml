@@ -1,0 +1,826 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Will you be my Valentine?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @@media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+        }
+        :root {
+            --pink: #f472b6;
+            --pink-500: #ec4899;
+            --pink-600: #db2777;
+            --violet: #a78bfa;
+            --rose: #fce7f3;
+            --gold: #fbbf24;
+            --ease: cubic-bezier(0.4, 0, 0.2, 1);
+            --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { font-size: 16px; scroll-behavior: smooth; }
+        body {
+            font-family: 'Outfit', system-ui, sans-serif;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            background: #08080c;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse 150% 110% at 5% 5%, rgba(236,72,153,0.2) 0%, transparent 50%),
+                radial-gradient(ellipse 130% 100% at 95% 15%, rgba(167,139,250,0.18) 0%, transparent 48%),
+                radial-gradient(ellipse 110% 110% at 45% 95%, rgba(244,114,182,0.14) 0%, transparent 52%),
+                radial-gradient(ellipse 90% 70% at 15% 65%, rgba(167,139,250,0.12) 0%, transparent 48%);
+            animation: bgPulse 15s ease-in-out infinite alternate;
+        }
+        @@keyframes bgPulse {
+            0% { opacity: 1; filter: hue-rotate(0deg); }
+            100% { opacity: 1; filter: hue-rotate(2deg); }
+        }
+
+        .bg-orbs {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(110px);
+            opacity: 0.55;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+        .orb1 { width: 420px; height: 420px; background: var(--pink-500); top: -15%; left: -8%; animation-delay: 0s; }
+        .orb2 { width: 340px; height: 340px; background: var(--violet); top: 45%; right: -12%; animation-delay: -7s; }
+        .orb3 { width: 300px; height: 300px; background: var(--pink); bottom: -8%; left: 15%; animation-delay: -14s; }
+        .orb4 { width: 200px; height: 200px; background: rgba(251,191,36,0.35); top: 25%; right: 25%; animation-delay: -4s; }
+        @@keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.55; }
+            25% { transform: translate(50px, -60px) scale(1.1); opacity: 0.6; }
+            50% { transform: translate(-40px, 50px) scale(0.92); opacity: 0.5; }
+            75% { transform: translate(30px, 25px) scale(1.05); opacity: 0.55; }
+        }
+
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background-image: 
+                linear-gradient(rgba(236,72,153,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(236,72,153,0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .bg-noise {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        .floating-hearts {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .float-heart {
+            position: absolute;
+            opacity: 0.22;
+            animation: floatUp 16s ease-in infinite;
+        }
+        .float-heart svg { width: 100%; height: 100%; fill: var(--pink-500); }
+        .float-heart:nth-child(odd) { animation-name: floatUp; }
+        .float-heart:nth-child(even) { animation-name: floatUpAlt; }
+        .float-heart:nth-child(1) { left: 6%; width: 22px; height: 22px; animation-delay: 0s; }
+        .float-heart:nth-child(2) { left: 20%; width: 14px; height: 14px; animation-delay: 2s; }
+        .float-heart:nth-child(3) { left: 38%; width: 26px; height: 26px; animation-delay: 4s; }
+        .float-heart:nth-child(4) { left: 55%; width: 18px; height: 18px; animation-delay: 6s; }
+        .float-heart:nth-child(5) { left: 72%; width: 24px; height: 24px; animation-delay: 1s; }
+        .float-heart:nth-child(6) { left: 88%; width: 12px; height: 12px; animation-delay: 3s; }
+        .float-heart:nth-child(7) { left: 12%; width: 16px; height: 16px; animation-delay: 5s; }
+        .float-heart:nth-child(8) { left: 62%; width: 20px; height: 20px; animation-delay: 7s; }
+        .float-heart:nth-child(9) { left: 95%; width: 14px; height: 14px; animation-delay: 2.5s; }
+        @@keyframes floatUp {
+            0% { transform: translateY(105vh) rotate(-15deg) scale(0.4); opacity: 0; }
+            10% { opacity: 0.22; }
+            90% { opacity: 0.08; }
+            100% { transform: translateY(-20vh) rotate(400deg) scale(1); opacity: 0; }
+        }
+        @@keyframes floatUpAlt {
+            0% { transform: translateY(102vh) rotate(10deg) scale(0.5); opacity: 0; }
+            10% { opacity: 0.2; }
+            90% { opacity: 0.06; }
+            100% { transform: translateY(-18vh) rotate(-350deg) scale(0.9); opacity: 0; }
+        }
+
+        .sparkles {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .sparkle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: sparkle 4s ease-in-out infinite;
+        }
+        .sparkle:nth-child(1) { top: 12%; left: 18%; animation-delay: 0s; }
+        .sparkle:nth-child(2) { top: 22%; right: 22%; animation-delay: 0.7s; }
+        .sparkle:nth-child(3) { top: 55%; left: 12%; animation-delay: 1.4s; }
+        .sparkle:nth-child(4) { top: 68%; right: 18%; animation-delay: 2.1s; }
+        .sparkle:nth-child(5) { top: 35%; left: 78%; animation-delay: 0.4s; }
+        .sparkle:nth-child(6) { top: 80%; left: 45%; animation-delay: 1.1s; }
+        @@keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1.8); }
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        .back-btn {
+            position: fixed;
+            top: 1.25rem;
+            left: 1.25rem;
+            z-index: 50;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--pink-500);
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 0.6rem 1.1rem;
+            border-radius: 16px;
+            border: 1px solid rgba(236,72,153,0.3);
+            transition: all 0.3s var(--ease);
+        }
+        .back-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(236,72,153,0.5);
+            transform: translateX(-3px);
+            box-shadow: 0 4px 20px rgba(236,72,153,0.2);
+        }
+
+        .card-wrap {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 460px;
+            perspective: 1400px;
+        }
+        .card {
+            background: linear-gradient(155deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.02) 100%);
+            backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
+            border-radius: 36px;
+            padding: 3.25rem 2.5rem;
+            border: 1px solid rgba(255,255,255,0.18);
+            box-shadow: 
+                0 0 0 1px rgba(0,0,0,0.08),
+                0 40px 80px -20px rgba(0,0,0,0.5),
+                0 0 120px -30px rgba(236, 72, 153, 0.4),
+                inset 0 1px 0 rgba(255,255,255,0.12);
+            animation: cardIn 1.1s var(--spring) both;
+            transform-style: preserve-3d;
+            transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.04) 50%, transparent 70%);
+            animation: cardShimmer 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @@keyframes cardShimmer {
+            0%, 100% { transform: translateX(-100%); opacity: 0; }
+            50% { transform: translateX(100%); opacity: 1; }
+        }
+        .card-sub { animation: fadeUp 0.8s var(--spring) 0.5s both; }
+        .btn-row { animation: fadeUp 0.8s var(--spring) 0.65s both; }
+        @@keyframes cardIn {
+            from { opacity: 0; transform: translateY(50px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @@keyframes titleIn {
+            from { opacity: 0; transform: translateY(20px); letter-spacing: 0.15em; }
+            to { opacity: 1; transform: translateY(0); letter-spacing: -0.02em; }
+        }
+        @@keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            background: linear-gradient(110deg, #fff 0%, #fce7f3 35%, #f472b6 70%, #ec4899 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            animation: titleIn 1s var(--spring) 0.3s both, titleShimmer 6s ease-in-out 1.5s infinite;
+        }
+        @@keyframes titleShimmer {
+            0%, 100% { background-position: 0% center; }
+            50% { background-position: 100% center; }
+        }
+        .card-sub {
+            font-size: 1.05rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 2.5rem;
+            font-weight: 500;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+            min-height: 58px;
+        }
+        .btn {
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 1.05rem;
+            padding: 1rem 2.25rem;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s var(--ease);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .btn-yes {
+            background: linear-gradient(135deg, var(--pink) 0%, var(--pink-500) 45%, var(--pink-600) 100%);
+            color: white;
+            box-shadow: 0 8px 28px -8px rgba(236, 72, 153, 0.6);
+            position: relative;
+            overflow: hidden;
+            animation: btnGlow 3s ease-in-out infinite;
+        }
+        .btn-yes::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.5), transparent 50%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+        .btn-yes .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            transform: scale(0);
+            animation: ripple 0.6s ease-out;
+            pointer-events: none;
+        }
+        @@keyframes ripple {
+            to { transform: scale(4); opacity: 0; }
+        }
+        .btn-yes:hover {
+            transform: translateY(-4px) scale(1.04);
+            box-shadow: 0 14px 40px -8px rgba(236, 72, 153, 0.7);
+        }
+        .btn-yes:active { transform: translateY(0) scale(1); }
+        .btn-yes svg { width: 24px; height: 24px; flex-shrink: 0; }
+        @@keyframes btnGlow {
+            0%, 100% { box-shadow: 0 8px 28px -8px rgba(236, 72, 153, 0.6); }
+            50% { box-shadow: 0 10px 36px -6px rgba(236, 72, 153, 0.75); }
+        }
+
+        .btn-no-wrap {
+            transition: transform 0.12s var(--ease);
+            will-change: transform;
+        }
+        .btn-no {
+            background: rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.75);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .btn-no:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .nope-msg {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.5);
+            margin-top: 1.25rem;
+            text-align: center;
+            min-height: 1.5rem;
+            transition: all 0.3s var(--ease);
+        }
+        .nope-msg.visible { color: var(--pink-500); font-weight: 600; }
+
+        .success { display: none; text-align: center; position: relative; }
+        .success.active {
+            display: block;
+            animation: successIn 0.6s var(--spring) both;
+        }
+        @@keyframes successIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .success-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            margin: -100px 0 0 -100px;
+            background: radial-gradient(circle, rgba(244,114,182,0.25) 0%, transparent 70%);
+            pointer-events: none;
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+        @@keyframes glowPulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.3); opacity: 0.3; }
+        }
+        .success-heart-wrap {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        .success-heart {
+            width: 110px;
+            height: 110px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            animation: heartPop 1s var(--spring) 0.1s both;
+        }
+        .success-heart.animate {
+            animation: heartPop 1s var(--spring) 0.1s both, heartFloat 2s ease-in-out 1.2s infinite;
+        }
+        .success-heart::before {
+            content: '';
+            position: absolute;
+            inset: -12px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(244,114,182,0.4) 0%, transparent 70%);
+            animation: ringPulse 2s ease-in-out infinite;
+        }
+        .success-heart svg {
+            width: 100%;
+            height: 100%;
+            fill: url(#heartGrad);
+            filter: drop-shadow(0 0 20px rgba(244,114,182,0.6)) drop-shadow(0 0 40px rgba(236,72,153,0.3));
+        }
+        @@keyframes heartPop {
+            0% { transform: scale(0); opacity: 0; }
+            65% { transform: scale(1.15); }
+            85% { transform: scale(0.95); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @@keyframes heartFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        @@keyframes ringPulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.2; }
+        }
+        .success-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            background: linear-gradient(120deg, #fff 0%, #fce7f3 30%, #f472b6 60%, #ec4899 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            animation: titleReveal 0.8s var(--spring) 0.4s both, titleShine 5s ease-in-out 1.5s infinite;
+        }
+        @@keyframes titleReveal {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @@keyframes titleShine {
+            0%, 100% { background-position: 0% center; }
+            50% { background-position: 100% center; }
+        }
+        .success-sub {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.75);
+            margin-bottom: 2rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            animation: fadeUp 0.6s var(--spring) 0.6s both;
+        }
+        .success-sub .dot { color: var(--pink-500); font-size: 0.6em; }
+        .success-celeb {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+        .success-celeb .mini-heart {
+            width: 32px;
+            height: 32px;
+            animation: miniPop 0.6s var(--spring) both;
+        }
+        .success-celeb .mini-heart svg {
+            width: 100%;
+            height: 100%;
+            fill: url(#heartGrad);
+        }
+        .success-celeb .mini-heart:nth-child(1) { animation-delay: 0.15s; }
+        .success-celeb .mini-heart:nth-child(2) { animation-delay: 0.25s; }
+        .success-celeb .mini-heart:nth-child(3) { animation-delay: 0.35s; }
+        .success-celeb .mini-heart:nth-child(4) { animation-delay: 0.45s; }
+        .success-celeb .mini-heart:nth-child(5) { animation-delay: 0.55s; }
+        @@keyframes miniPop {
+            from { opacity: 0; transform: scale(0) rotate(-180deg); }
+            to { opacity: 1; transform: scale(1) rotate(0); }
+        }
+        .try-again {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--pink-500);
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(236,72,153,0.5);
+            padding: 0.75rem 1.5rem;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.3s var(--ease);
+            box-shadow: 0 0 20px rgba(236,72,153,0.15);
+            animation: fadeUp 0.6s var(--spring) 0.8s both;
+        }
+        .try-again:hover {
+            background: rgba(236,72,153,0.15);
+            border-color: rgba(236,72,153,0.7);
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(236,72,153,0.35);
+        }
+
+        .particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 100;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            animation: burst 2.2s var(--ease) forwards;
+        }
+        .particle.circle { border-radius: 50%; }
+        @@keyframes burst {
+            0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -50%) translate(var(--tx), var(--ty)) scale(0.05); }
+        }
+
+        .confetti-canvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 99;
+        }
+
+        .ask.hidden { display: none; }
+    </style>
+</head>
+<body>
+    <svg width="0" height="0">
+        <defs>
+            <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#fce7f3"/>
+                <stop offset="50%" style="stop-color:#f472b6"/>
+                <stop offset="100%" style="stop-color:#ec4899"/>
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <div class="bg"></div>
+    <div class="bg-orbs">
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+        <div class="orb orb3"></div>
+        <div class="orb orb4"></div>
+    </div>
+    <div class="bg-grid"></div>
+    <div class="bg-noise"></div>
+    <div class="sparkles">
+        <span class="sparkle"></span><span class="sparkle"></span><span class="sparkle"></span>
+        <span class="sparkle"></span><span class="sparkle"></span><span class="sparkle"></span>
+    </div>
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <a href="/Home/Projects" class="back-btn" aria-label="Back">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back
+    </a>
+
+    <div class="card-wrap" id="cardWrap">
+        <div class="card" id="card">
+            <div class="ask" id="ask">
+                <h1 class="card-title">Will you be my Valentine?</h1>
+                <p class="card-sub">Pick your answer ~</p>
+                <div class="btn-row" id="btnRow">
+                    <button class="btn btn-yes" id="btnYes">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        Yes
+                    </button>
+                    <div class="btn-no-wrap" id="btnNoWrap">
+                        <button class="btn btn-no" id="btnNo">No</button>
+                    </div>
+                </div>
+                <p class="nope-msg" id="nopeMsg"></p>
+            </div>
+            <div class="success" id="success">
+                <div class="success-glow"></div>
+                <div class="success-heart-wrap">
+                    <div class="success-heart" id="successHeart">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </div>
+                </div>
+                <h2 class="success-title">You said yes!</h2>
+                <p class="success-sub">Best decision ever <span class="dot">✦</span></p>
+                <div class="success-celeb">
+                    <span class="mini-heart"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
+                    <span class="mini-heart"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
+                    <span class="mini-heart"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
+                    <span class="mini-heart"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
+                    <span class="mini-heart"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
+                </div>
+                <button class="try-again" id="tryAgain">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                    Try again
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <canvas class="confetti-canvas" id="confettiCanvas"></canvas>
+    <div class="particles" id="particles"></div>
+
+    <script>
+(function() {
+    'use strict';
+    const $ = id => document.getElementById(id);
+    const ask = $('ask');
+    const success = $('success');
+    const btnYes = $('btnYes');
+    const btnNo = $('btnNo');
+    const btnNoWrap = $('btnNoWrap');
+    const card = $('card');
+    const cardWrap = $('cardWrap');
+    const nopeMsg = $('nopeMsg');
+    const tryAgain = $('tryAgain');
+    const successHeart = $('successHeart');
+    const particles = $('particles');
+    const confettiCanvas = $('confettiCanvas');
+    const floatingHearts = $('floatingHearts');
+
+    const HEART_SVG = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
+    const MSGS = ['Try Yes instead ~', 'Sure?', 'Pretty please?', 'Say yes!', 'You know you want to ~'];
+    const BURST_COLORS = ['#fce7f3', '#fbcfe8', '#f9a8d4', '#f472b6', '#ec4899', '#a78bfa'];
+    const RUNAWAY_RADIUS = 100;
+    const RUNAWAY_SPEED = 1.3;
+    const MAX_OFFSET = 220;
+    let noOffsetX = 0, noOffsetY = 0;
+    let pointerX = -9999, pointerY = -9999;
+
+    for (let i = 0; i < 9; i++) {
+        const h = document.createElement('div');
+        h.className = 'float-heart';
+        h.innerHTML = HEART_SVG;
+        floatingHearts.appendChild(h);
+    }
+
+    function getPointer(e) {
+        if (e.touches && e.touches.length) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        return { x: e.clientX, y: e.clientY };
+    }
+    function runAway() {
+        const r = btnNoWrap.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const dx = pointerX - cx;
+        const dy = pointerY - cy;
+        const dist = Math.hypot(dx, dy);
+        if (dist < RUNAWAY_RADIUS && dist > 2) {
+            const angle = Math.atan2(dy, dx);
+            const push = (RUNAWAY_RADIUS - dist) * RUNAWAY_SPEED;
+            noOffsetX -= Math.cos(angle) * push;
+            noOffsetY -= Math.sin(angle) * push;
+        }
+        noOffsetX *= 0.9;
+        noOffsetY *= 0.9;
+        noOffsetX = Math.max(-MAX_OFFSET, Math.min(MAX_OFFSET, noOffsetX));
+        noOffsetY = Math.max(-MAX_OFFSET, Math.min(MAX_OFFSET, noOffsetY));
+        btnNoWrap.style.transform = `translate(${noOffsetX}px, ${noOffsetY}px)`;
+        requestAnimationFrame(runAway);
+    }
+    runAway();
+
+    ['mousemove','touchmove','touchstart'].forEach(ev => {
+        document.addEventListener(ev, e => { const p = getPointer(e); pointerX = p.x; pointerY = p.y; }, { passive: true });
+    });
+    document.addEventListener('mouseleave', () => { pointerX = -9999; pointerY = -9999; });
+    document.addEventListener('touchend', () => { setTimeout(() => { pointerX = -9999; pointerY = -9999; }, 100); });
+
+    function cardTilt(e) {
+        const p = getPointer(e);
+        const rect = card.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = (p.x - cx) / (rect.width / 2);
+        const dy = (p.y - cy) / (rect.height / 2);
+        const tx = Math.max(-7, Math.min(7, -dy * 6));
+        const ty = Math.max(-7, Math.min(7, dx * 6));
+        card.style.transform = `perspective(1400px) rotateX(${tx}deg) rotateY(${ty}deg) translateY(0) scale(1)`;
+    }
+    cardWrap.addEventListener('mousemove', cardTilt);
+    cardWrap.addEventListener('mouseleave', () => { card.style.transform = ''; });
+    cardWrap.addEventListener('touchmove', cardTilt, { passive: true });
+    cardWrap.addEventListener('touchend', () => { card.style.transform = ''; });
+
+    let noClicks = 0;
+    function reset() {
+        ask.classList.remove('hidden');
+        success.classList.remove('active');
+        successHeart.classList.remove('animate');
+        nopeMsg.classList.remove('visible');
+        nopeMsg.textContent = '';
+        noClicks = 0;
+        noOffsetX = 0;
+        noOffsetY = 0;
+        btnNoWrap.style.transform = '';
+    }
+    function onNoClick() {
+        noClicks++;
+        nopeMsg.textContent = MSGS[Math.min(noClicks - 1, MSGS.length - 1)];
+        nopeMsg.classList.add('visible');
+    }
+    function addRipple(btn, x, y) {
+        const rect = btn.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        ripple.style.left = (x - rect.left) + 'px';
+        ripple.style.top = (y - rect.top) + 'px';
+        ripple.style.width = ripple.style.height = Math.max(rect.width, rect.height) + 'px';
+        ripple.style.marginLeft = ripple.style.marginTop = -Math.max(rect.width, rect.height) / 2 + 'px';
+        btn.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+    }
+    function burst(x, y) {
+        const count = 75;
+        for (let i = 0; i < count; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle ' + (Math.random() > 0.35 ? 'circle' : '');
+            p.style.background = BURST_COLORS[Math.random() * BURST_COLORS.length | 0];
+            const a = (Math.PI * 2 * i) / count + Math.random() * 2;
+            const v = 90 + Math.random() * 200;
+            const s = 6 + Math.random() * 18;
+            p.style.setProperty('--tx', Math.cos(a) * v + 'px');
+            p.style.setProperty('--ty', Math.sin(a) * v + 'px');
+            p.style.width = s + 'px';
+            p.style.height = s + 'px';
+            p.style.left = x + 'px';
+            p.style.top = y + 'px';
+            if (Math.random() > 0.65) {
+                p.innerHTML = HEART_SVG;
+                p.style.background = 'none';
+                p.style.color = BURST_COLORS[Math.random() * BURST_COLORS.length | 0];
+            }
+            particles.appendChild(p);
+            setTimeout(() => p.remove(), 2300);
+        }
+    }
+    function drawStar(ctx, size) {
+        const spikes = 4;
+        const outer = size;
+        const inner = size * 0.4;
+        ctx.beginPath();
+        for (let i = 0; i < spikes * 2; i++) {
+            const r = i % 2 === 0 ? outer : inner;
+            const a = (Math.PI * i) / spikes - Math.PI / 2;
+            const px = Math.cos(a) * r;
+            const py = Math.sin(a) * r;
+            if (i === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+        }
+        ctx.closePath();
+        ctx.fill();
+    }
+    function confetti(x, y) {
+        const ctx = confettiCanvas.getContext('2d');
+        confettiCanvas.width = window.innerWidth;
+        confettiCanvas.height = window.innerHeight;
+        const colors = ['#f472b6','#ec4899','#a78bfa','#fce7f3','#fbbf24','#fbcfe8'];
+        const items = [];
+        for (let i = 0; i < 140; i++) {
+            items.push({
+                x, y, vx: (Math.random() - 0.5) * 16, vy: -12 - Math.random() * 14,
+                rot: Math.random() * 360, vr: (Math.random() - 0.5) * 28,
+                s: 6 + Math.random() * 14, color: colors[Math.random() * colors.length | 0],
+                shape: ['rect','circle','star','heart'][Math.random() * 4 | 0], ay: 0.32
+            });
+        }
+        function draw() {
+            ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+            let alive = 0;
+            items.forEach(it => {
+                it.x += it.vx;
+                it.y += it.vy;
+                it.vy += it.ay;
+                it.rot += it.vr;
+                if (it.y < confettiCanvas.height + 100) alive++;
+                ctx.save();
+                ctx.translate(it.x, it.y);
+                ctx.rotate(it.rot * Math.PI / 180);
+                ctx.fillStyle = it.color;
+                if (it.shape === 'circle') {
+                    ctx.beginPath();
+                    ctx.arc(0, 0, it.s / 2, 0, Math.PI * 2);
+                    ctx.fill();
+                } else if (it.shape === 'star') {
+                    drawStar(ctx, it.s / 2);
+                } else if (it.shape === 'heart') {
+                    ctx.font = it.s + 'px Georgia';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('♥', 0, 0);
+                } else {
+                    ctx.fillRect(-it.s/2, -it.s/3, it.s, it.s*0.6);
+                }
+                ctx.restore();
+            });
+            if (alive > 0) requestAnimationFrame(draw);
+        }
+        draw();
+    }
+    function sayYes(e) {
+        addRipple(btnYes, e.clientX, e.clientY);
+        const r = btnYes.getBoundingClientRect();
+        burst(r.left + r.width / 2, r.top + r.height / 2);
+        setTimeout(() => confetti(r.left + r.width / 2, r.top + r.height / 2), 80);
+        ask.classList.add('hidden');
+        success.classList.add('active');
+        setTimeout(() => successHeart.classList.add('animate'), 100);
+        fetch('/api/valentine/yes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' }).catch(() => {});
+    }
+
+    btnYes.addEventListener('click', sayYes);
+    btnNo.addEventListener('click', onNoClick);
+    tryAgain.addEventListener('click', reset);
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') window.location.href = '/Home/Projects';
+        if (e.key === 'Enter' && !ask.classList.contains('hidden')) sayYes({ clientX: btnYes.getBoundingClientRect().left + btnYes.offsetWidth/2, clientY: btnYes.getBoundingClientRect().top + btnYes.offsetHeight/2 });
+    });
+})();
+    </script>
+</body>
+</html>
