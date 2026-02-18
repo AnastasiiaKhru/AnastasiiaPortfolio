@@ -1027,7 +1027,12 @@
             overflow-y: auto;
             padding: 1rem;
         }
-
+        .cart-empty {
+            padding: 2rem;
+            text-align: center;
+            color: var(--secondary);
+            font-size: 0.95rem;
+        }
         .cart-item {
             display: flex;
             gap: 1rem;
@@ -1670,36 +1675,11 @@
             <h3>Shopping Cart</h3>
             <button class="close-cart" onclick="toggleCart()"><i class="fas fa-times"></i></button>
         </div>
-        <div class="cart-items" id="cartItems">
-            <div class="cart-item">
-                <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=100&h=100&fit=crop" alt="Chocolate Cake" />
-                <div class="cart-item-info">
-                    <div class="cart-item-name">Chocolate Dream Cake</div>
-                    <div class="cart-item-price">$65.00</div>
-                    <div class="cart-item-qty">
-                        <button class="qty-btn">-</button>
-                        <span>1</span>
-                        <button class="qty-btn">+</button>
-                    </div>
-                </div>
-            </div>
-            <div class="cart-item">
-                <img src="https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?w=100&h=100&fit=crop" alt="Cupcakes" />
-                <div class="cart-item-info">
-                    <div class="cart-item-name">Vanilla Cupcakes (6 pcs)</div>
-                    <div class="cart-item-price">$28.00</div>
-                    <div class="cart-item-qty">
-                        <button class="qty-btn">-</button>
-                        <span>1</span>
-                        <button class="qty-btn">+</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="cart-items" id="cartItems"></div>
         <div class="cart-footer">
             <div class="cart-total">
                 <span>Total:</span>
-                <span id="cartTotal">$93.00</span>
+                <span id="cartTotal">$0.00</span>
             </div>
             <button class="checkout-btn" onclick="checkout()">
                 <i class="fas fa-lock"></i> Checkout
@@ -1723,9 +1703,66 @@
             }
         });
 
-        // Cart functionality
-        let cartCount = 2;
-        let cartTotal = 93;
+        // Cart functionality - proper calculation from cart items
+        const PRODUCT_IMGS = {
+            'Chocolate Dream': 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=100&h=100&fit=crop',
+            'Strawberry Bliss': 'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=100&h=100&fit=crop',
+            'Vanilla Cupcakes': 'https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?w=100&h=100&fit=crop',
+            'Red Velvet': 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=100&h=100&fit=crop'
+        };
+        let cart = [
+            { name: 'Chocolate Dream Cake', price: 65, qty: 1, img: PRODUCT_IMGS['Chocolate Dream'] || 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=100&h=100&fit=crop' },
+            { name: 'Vanilla Cupcakes (6 pcs)', price: 28, qty: 1, img: PRODUCT_IMGS['Vanilla Cupcakes'] || 'https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?w=100&h=100&fit=crop' }
+        ];
+
+        function getCartCount() {
+            return cart.reduce((sum, i) => sum + i.qty, 0);
+        }
+        function getCartTotal() {
+            return cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cartItems');
+            document.getElementById('cartCount').textContent = getCartCount();
+            document.getElementById('cartTotal').textContent = '$' + getCartTotal().toFixed(2);
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="cart-empty">Your cart is empty</p>';
+                document.getElementById('cartCount').textContent = '0';
+                document.getElementById('cartTotal').textContent = '$0.00';
+                return;
+            }
+            container.innerHTML = cart.map((item, idx) => `
+                <div class="cart-item" data-idx="${idx}">
+                    <img src="${item.img}" alt="${item.name}" />
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">$${item.price.toFixed(2)}</div>
+                        <div class="cart-item-qty">
+                            <button class="qty-btn" data-action="minus" data-idx="${idx}">-</button>
+                            <span>${item.qty}</span>
+                            <button class="qty-btn" data-action="plus" data-idx="${idx}">+</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            container.querySelectorAll('.qty-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const idx = parseInt(this.dataset.idx, 10);
+                    const action = this.dataset.action;
+                    if (action === 'plus') {
+                        cart[idx].qty++;
+                    } else if (action === 'minus' && cart[idx].qty > 1) {
+                        cart[idx].qty--;
+                    } else if (action === 'minus' && cart[idx].qty === 1) {
+                        cart.splice(idx, 1);
+                    }
+                    updateCartUI();
+                });
+            });
+        }
 
         function toggleCart() {
             const sidebar = document.getElementById('cartSidebar');
@@ -1734,15 +1771,20 @@
             overlay.classList.toggle('open');
         }
 
+        const DISPLAY_NAMES = { 'Chocolate Dream': 'Chocolate Dream Cake', 'Vanilla Cupcakes': 'Vanilla Cupcakes (6 pcs)', 'Strawberry Bliss': 'Strawberry Bliss Cake', 'Red Velvet': 'Red Velvet Cake' };
         function addToCart(name, price) {
-            cartCount++;
-            cartTotal += price;
-            document.getElementById('cartCount').textContent = cartCount;
-            document.getElementById('cartTotal').textContent = '$' + cartTotal.toFixed(2);
-            
-            // Show toast notification
-            showToast(`${name} added to cart!`);
+            const displayName = DISPLAY_NAMES[name] || name;
+            const existing = cart.find(i => i.name === displayName);
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({ name: displayName, price, qty: 1, img: PRODUCT_IMGS[name] || 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=100&h=100&fit=crop' });
+            }
+            updateCartUI();
+            showToast(`${displayName} added to cart!`);
         }
+
+        updateCartUI();
 
         function checkout() {
             showToast('Demo: Checkout would process your order here!');
