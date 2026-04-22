@@ -20,13 +20,14 @@
             : $"{Context.Request.Scheme}://{Context.Request.Host}";
         if (!baseUrl.StartsWith("https://", StringComparison.OrdinalIgnoreCase) && baseUrl.Contains("railway.app"))
             baseUrl = "https://" + baseUrl.Replace("http://", "");
-        var ogImage = ViewData["OgImage"] as string ?? $"{baseUrl}/images/og-image-v3.png";
-        var path = Context.Request.Path.Value ?? "";
-        var ogUrl = ViewData["OgUrl"] as string ?? (path == "" || path == "/" ? baseUrl + "/" : baseUrl + path + Context.Request.QueryString);
+        var ogImage = ViewData["OgImage"] as string ?? $"{baseUrl}/images/og-image-v4.png";
+        var path = string.IsNullOrEmpty(Context.Request.Path.Value) ? "/" : Context.Request.Path.Value!;
+        var ogUrl = ViewData["OgUrl"] as string ?? $"{baseUrl}{path}{Context.Request.QueryString}";
         var ogTitle = ViewData["OgTitle"] as string ?? $"{ViewData["Title"]} - Anastasiia Portfolio";
         var ogDescription = ViewData["OgDescription"] as string ?? "Anastasiia Khrustaleva — Full-stack developer portfolio. Skills, projects, experience, and contact.";
     }
     <meta property="og:image" content="@ogImage" />
+    <meta property="og:image:url" content="@ogImage" />
     <meta property="og:image:secure_url" content="@ogImage" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -36,6 +37,7 @@
     <meta property="og:description" content="@ogDescription" />
     <meta property="og:url" content="@ogUrl" />
     <meta property="og:type" content="website" />
+    <meta name="image" content="@ogImage" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="@ogTitle" />
     <meta name="twitter:description" content="@ogDescription" />
