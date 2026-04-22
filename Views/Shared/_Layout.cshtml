@@ -20,7 +20,7 @@
             : $"{Context.Request.Scheme}://{Context.Request.Host}";
         if (!baseUrl.StartsWith("https://", StringComparison.OrdinalIgnoreCase) && baseUrl.Contains("railway.app"))
             baseUrl = "https://" + baseUrl.Replace("http://", "");
-        var ogImage = ViewData["OgImage"] as string ?? $"{baseUrl}/images/hero-image.png?v=2";
+        var ogImage = ViewData["OgImage"] as string ?? $"{baseUrl}/images/og-image-v3.png";
         var path = Context.Request.Path.Value ?? "";
         var ogUrl = ViewData["OgUrl"] as string ?? (path == "" || path == "/" ? baseUrl + "/" : baseUrl + path + Context.Request.QueryString);
         var ogTitle = ViewData["OgTitle"] as string ?? $"{ViewData["Title"]} - Anastasiia Portfolio";
@@ -37,6 +37,9 @@
     <meta property="og:url" content="@ogUrl" />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="@ogTitle" />
+    <meta name="twitter:description" content="@ogDescription" />
+    <meta name="twitter:image" content="@ogImage" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
