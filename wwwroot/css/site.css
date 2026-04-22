@@ -4,13 +4,13 @@
     --light-grey: #e2e8f0;
     --mid-grey: #64748b;
     --pepper: #0f172a;
+    --accent-hover: #475569;
     
     /* Extended palette – grey accents (no blue) */
     --bg-subtle: #f8fafc;
     --bg-surface: #ffffff;
     --border-subtle: rgba(15, 23, 42, 0.08);
     --accent: #64748b;
-    --accent-hover: #475569;
     --accent-muted: rgba(100, 116, 139, 0.15);
 
     /* Override Bootstrap primary (no blue) */
@@ -262,10 +262,10 @@ a:hover {
 
 /* Navigation */
 .navbar {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.8));
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.84));
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(148, 163, 184, 0.22);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.1);
     box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
     position: fixed;
     top: 0;
@@ -273,13 +273,13 @@ a:hover {
     right: 0;
     z-index: var(--z-index-fixed);
     padding: 0.4rem var(--spacing-6);
-    min-height: 66px;
+    min-height: 78px;
     transition: background var(--transition-medium), box-shadow var(--transition-medium), border-color var(--transition-medium);
 }
 
 .navbar-scrolled {
-    background: rgba(255, 255, 255, 0.96);
-    border-bottom-color: rgba(148, 163, 184, 0.3);
+    background: rgba(255, 255, 255, 0.97);
+    border-bottom-color: rgba(15, 23, 42, 0.15);
     box-shadow: 0 10px 28px rgba(15, 23, 42, 0.1);
 }
 
@@ -321,7 +321,8 @@ a:hover {
 .navbar-brand-center {
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);
+    top: calc(50% + 10px);
+    transform: translate(-50%, -50%);
     padding: 0;
     margin: 0;
     display: flex;
@@ -334,7 +335,7 @@ a:hover {
 }
 
 .navbar-logo {
-    height: 62px;
+    height: 88px;
     width: auto;
     display: block;
     object-fit: contain;
@@ -352,16 +353,16 @@ a:hover {
 }
 
 .nav-link:hover {
-    color: #0f172a !important;
-    background: rgba(56, 189, 248, 0.14);
+    color: var(--pepper) !important;
+    background: rgba(100, 116, 139, 0.12);
     text-decoration: none;
     transform: translateY(-1px);
 }
 
 .nav-link.active {
-    color: #0f172a !important;
+    color: var(--pepper) !important;
     font-weight: var(--font-weight-semibold);
-    background: rgba(165, 180, 252, 0.22);
+    background: rgba(100, 116, 139, 0.2);
     text-decoration: none;
 }
 
@@ -2701,7 +2702,7 @@ a:hover {
     }
 
     .navbar-logo {
-        height: 50px;
+        height: 70px;
         margin-top: 0;
     }
 
