@@ -20,7 +20,7 @@
             : $"{Context.Request.Scheme}://{Context.Request.Host}";
         if (!baseUrl.StartsWith("https://", StringComparison.OrdinalIgnoreCase) && baseUrl.Contains("railway.app"))
             baseUrl = "https://" + baseUrl.Replace("http://", "");
-        var ogImage = ViewData["OgImage"] as string ?? $"{baseUrl}/images/og-image-v6.png";
+        var ogImage = ViewData["OgImage"] as string ?? $"{baseUrl}/images/og-image-v7.png";
         var path = string.IsNullOrEmpty(Context.Request.Path.Value) ? "/" : Context.Request.Path.Value!;
         var ogUrl = ViewData["OgUrl"] as string ?? $"{baseUrl}{path}{Context.Request.QueryString}";
         var ogTitle = ViewData["OgTitle"] as string ?? $"{ViewData["Title"]} - Anastasiia Portfolio";
