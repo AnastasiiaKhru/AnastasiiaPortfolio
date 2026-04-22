@@ -80,9 +80,15 @@
             z-index: 1;
         }
         .slider-after {
-            background: linear-gradient(160deg, #0f172a 0%, #1e293b 40%, #334155 100%);
+            background:
+                radial-gradient(circle at 80% 15%, rgba(46, 160, 67, 0.18), transparent 35%),
+                linear-gradient(160deg, #0b1220 0%, #172337 42%, #1f334b 100%);
             color: white; z-index: 2;
             clip-path: inset(0 50% 0 0);
+        }
+        .slider-container.view-after {
+            border-color: rgba(46, 160, 67, 0.45);
+            box-shadow: 0 34px 84px rgba(8, 12, 20, 0.55), 0 0 0 1px rgba(46, 160, 67, 0.2);
         }
         .slider-handle {
             position: absolute; top: 0; left: 50%; width: 4px; height: 100%;
@@ -154,6 +160,45 @@
         }
         .mock-new-feature { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: #94a3b8; }
         .mock-new-feature i { color: #2ea043; font-size: 0.75rem; }
+        .mock-new-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.6rem;
+            margin-top: 1rem;
+        }
+        .mock-new-metric {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 0.55rem 0.6rem;
+            text-align: center;
+        }
+        .mock-new-metric strong {
+            display: block;
+            font-size: 0.95rem;
+            color: #f8fafc;
+            font-variant-numeric: tabular-nums;
+        }
+        .mock-new-metric span {
+            font-size: 0.68rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .mock-new-trust {
+            margin-top: 0.95rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+        }
+        .mock-new-trust-badge {
+            font-size: 0.66rem;
+            padding: 0.26rem 0.5rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.14);
+            background: rgba(255,255,255,0.06);
+            color: #cbd5e1;
+        }
 
         .process { max-width: 1000px; margin: 0 auto; padding: 4rem 2rem; }
         .process h2 { font-family: 'Fraunces', serif; font-size: 1.5rem; margin-bottom: 2rem; color: var(--text); }
@@ -200,13 +245,22 @@
             padding: 1.5rem; min-height: 180px;
         }
         .comparison-2-card.before { background: linear-gradient(180deg, #e8eef5 0%, #b8cce0 100%); }
-        .comparison-2-card.after { background: linear-gradient(160deg, #1e293b 0%, #334155 100%); color: white; }
+        .comparison-2-card.after { background: linear-gradient(160deg, #0f172a 0%, #1e293b 100%); color: white; border-color: rgba(46,160,67,0.32); box-shadow: 0 16px 36px rgba(3,7,18,0.35); }
         .comparison-2-card.before .card-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #2d5a8a; margin-bottom: 0.75rem; }
         .comparison-2-card.after .card-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #2ea043; margin-bottom: 0.75rem; }
         .comparison-2-card.before .card-title { font-family: Arial Black, sans-serif; font-size: 1.1rem; color: #0a1525; margin-bottom: 0.5rem; }
         .comparison-2-card.after .card-title { font-family: 'Instrument Serif', serif; font-size: 1.35rem; color: #f8fafc; margin-bottom: 0.5rem; }
         .comparison-2-card.before .card-desc { font-size: 0.8rem; color: #1a3a5c; line-height: 1.5; }
-        .comparison-2-card.after .card-desc { font-size: 0.9rem; color: #94a3b8; line-height: 1.5; }
+        .comparison-2-card.after .card-desc { font-size: 0.9rem; color: #cbd5e1; line-height: 1.6; }
+        .after-points {
+            margin-top: 0.8rem;
+            padding-left: 1rem;
+        }
+        .after-points li {
+            font-size: 0.82rem;
+            color: #cbd5e1;
+            margin-bottom: 0.3rem;
+        }
 
         .testimonial { max-width: 800px; margin: 0 auto; padding: 4rem 2rem; text-align: center; }
         .testimonial-block {
@@ -303,6 +357,16 @@
                                 <span class="mock-new-feature"><i class="fas fa-users"></i> 2,000+ teams</span>
                                 <span class="mock-new-feature"><i class="fas fa-shield-alt"></i> Enterprise-ready</span>
                             </div>
+                            <div class="mock-new-metrics">
+                                <div class="mock-new-metric"><strong>+40%</strong><span>Engagement</span></div>
+                                <div class="mock-new-metric"><strong>3x</strong><span>Leads</span></div>
+                                <div class="mock-new-metric"><strong>+25%</strong><span>Recall</span></div>
+                            </div>
+                            <div class="mock-new-trust">
+                                <span class="mock-new-trust-badge">Design System</span>
+                                <span class="mock-new-trust-badge">WCAG-ready</span>
+                                <span class="mock-new-trust-badge">Mobile-first UX</span>
+                            </div>
                         </div>
                     </div>
                     <div class="slider-handle" id="sliderHandle"></div>
@@ -324,6 +388,11 @@
                 <div class="card-label">After</div>
                 <div class="card-title">Built for teams that ship.</div>
                 <div class="card-desc">Clear value proposition. Confident tone. Focused on outcomes, not features.</div>
+                <ul class="after-points">
+                    <li>Outcome-led headline and stronger clarity</li>
+                    <li>Trust signals integrated above the fold</li>
+                    <li>Modern CTA hierarchy for conversion</li>
+                </ul>
             </div>
         </div>
     </section>

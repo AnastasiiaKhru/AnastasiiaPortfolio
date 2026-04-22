@@ -99,11 +99,22 @@
     <footer class="site-footer">
         <div class="container">
             <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="~/images/logo-ak.png" alt="AK logo" class="footer-logo" />
+                    <p class="footer-tagline">Designing and building modern, high-converting digital experiences.</p>
+                </div>
+                <nav class="footer-links" aria-label="Footer navigation">
+                    <a asp-controller="Home" asp-action="Projects">Projects</a>
+                    <a asp-controller="Home" asp-action="Skills">Skills</a>
+                    <a asp-controller="Home" asp-action="Experience">Experience</a>
+                    <a asp-controller="Rate" asp-action="Index">Reviews</a>
+                    <a asp-controller="Home" asp-action="Contact">Contact</a>
+                </nav>
                 <div class="footer-socials">
                     <a href="https://www.linkedin.com/in/anastasiia-khrustaleva-29a180100/" target="_blank" rel="noopener" title="LinkedIn" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
                     <a href="https://github.com/AnastasiiaKhru" target="_blank" rel="noopener" title="GitHub" class="social-icon"><i class="fab fa-github"></i></a>
                 </div>
-                <div class="footer-copyright">&copy; @DateTime.Now.Year Anastasiia Khrustaleva. All Rights Reserved.</div>
+                <div class="footer-copyright">&copy; @DateTime.Now.Year Anastasiia Khrustaleva. Crafted with care.</div>
             </div>
         </div>
     </footer>

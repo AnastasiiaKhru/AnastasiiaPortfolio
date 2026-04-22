@@ -35,15 +35,57 @@
         .ads-hero {
             padding: 7rem 2rem 5rem; text-align: center; border-bottom: 1px solid var(--border);
             background: linear-gradient(180deg, #ffffff 0%, #f6f8fa 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .ads-hero::before {
+            content: '';
+            position: absolute;
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            top: -180px;
+            left: -110px;
+            background: radial-gradient(circle, rgba(9, 105, 218, 0.14), transparent 70%);
+            pointer-events: none;
+        }
+        .ads-hero::after {
+            content: '';
+            position: absolute;
+            width: 360px;
+            height: 360px;
+            border-radius: 50%;
+            right: -120px;
+            bottom: -200px;
+            background: radial-gradient(circle, rgba(124, 92, 255, 0.14), transparent 70%);
+            pointer-events: none;
         }
         .ads-hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 0.75rem; letter-spacing: -0.02em; }
         .ads-hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 560px; margin: 0 auto; }
+        .ads-hero > * { position: relative; z-index: 1; }
+        .hero-stats {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .hero-stat {
+            background: rgba(255,255,255,0.82);
+            border: 1px solid var(--border);
+            padding: 0.45rem 0.85rem;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
 
         .ads-toolbar { max-width: 1100px; margin: -2rem auto 0; padding: 0 2rem; position: relative; z-index: 5; }
         .ads-toolbar-inner {
             background: var(--surface); border: 1px solid var(--border);
             border-radius: 20px; padding: 1.75rem 2rem;
             display: flex; flex-wrap: wrap; gap: 2rem; align-items: center;
+            box-shadow: 0 16px 34px rgba(31,35,40,0.08);
         }
         .toolbar-group { display: flex; align-items: center; gap: 1rem; }
         .toolbar-group label { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
@@ -93,6 +135,10 @@
         .banner-wrapper {
             display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
             transition: transform 0.25s ease, opacity 0.3s;
+            background: rgba(255,255,255,0.7);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 0.9rem;
         }
         .banner-wrapper.hidden { display: none; }
         .banner-wrapper:hover { transform: translateY(-6px); }
@@ -124,6 +170,11 @@
             pointer-events: none;
         }
         .banner-inner { padding: 0.5rem 1rem; text-align: center; position: relative; z-index: 1; }
+        .banner-inner strong {
+            display: inline-block;
+            margin-bottom: 0.25rem;
+            letter-spacing: 0.01em;
+        }
         .banner.banner-dark .banner-inner strong { color: #79c0ff; }
         .banner.banner-light .banner-inner strong { color: #7c5cff; }
         .banner--leaderboard { width: 364px; height: 50px; }
@@ -140,7 +191,7 @@
         .toast {
             position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(100px);
             background: var(--text); color: white; border: none;
-            color: var(--text); padding: 0.9rem 1.75rem;
+            padding: 0.9rem 1.75rem;
             border-radius: 14px; font-size: 0.95rem; font-weight: 500;
             box-shadow: 0 12px 40px rgba(0,0,0,0.3);
             opacity: 0; transition: transform 0.3s ease, opacity 0.3s; z-index: 1000;
@@ -183,6 +234,11 @@
     <header class="ads-hero">
         <h1>Responsive Display Ad Creative</h1>
         <p>Customize brand name, CTA text, and theme. Filter by size. Click any banner to copy dimensions. Export specs for handoff.</p>
+        <div class="hero-stats">
+            <span class="hero-stat"><i class="fas fa-bolt"></i> Campaign-ready</span>
+            <span class="hero-stat"><i class="fas fa-mobile-screen"></i> Multi-device formats</span>
+            <span class="hero-stat"><i class="fas fa-layer-group"></i> 6 production sizes</span>
+        </div>
     </header>
 
     <div class="ads-toolbar">
@@ -284,6 +340,7 @@
             var ctaInput = document.getElementById('ctaInput');
             var banners = document.querySelectorAll('.banner');
             var wrappers = document.querySelectorAll('.banner-wrapper');
+            var navLinks = document.querySelectorAll('.ads-nav__links a');
             brandInput.addEventListener('input', function(){
                 var v = this.value || 'Your Brand';
                 document.querySelectorAll('.brand-text').forEach(function(el){ el.textContent = v.length > 12 ? v.substring(0,12)+'…' : v; });
@@ -344,6 +401,17 @@
                     }
                 });
             });
+
+            window.addEventListener('scroll', function(){
+                var y = window.scrollY;
+                navLinks.forEach(function(link){
+                    var target = document.querySelector(link.getAttribute('href'));
+                    if (!target) return;
+                    var top = target.getBoundingClientRect().top;
+                    var inView = top <= 140 && top > -target.offsetHeight + 160;
+                    link.style.color = inView ? 'var(--text)' : 'var(--text-muted)';
+                });
+            }, { passive: true });
         })();
     </script>
 </body>

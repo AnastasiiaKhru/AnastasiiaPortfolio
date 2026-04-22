@@ -97,17 +97,48 @@
         .countdown-item {
             background: var(--surface2); border: 1px solid var(--border);
             border-radius: 16px; padding: 1.5rem 2rem; min-width: 100px;
-            transition: transform 0.25s ease, border-color 0.25s, background 0.25s;
+            box-shadow: 0 10px 24px rgba(45,31,26,0.05);
+            transition: transform 0.25s ease, border-color 0.25s, background 0.25s, box-shadow 0.25s;
         }
         .countdown-item:hover {
             transform: translateY(-6px); border-color: var(--accent-soft);
-            background: rgba(232, 93, 58, 0.06);
+            background: rgba(232, 93, 58, 0.06); box-shadow: 0 14px 30px rgba(232, 93, 58, 0.12);
         }
         .countdown-item .num {
             display: block; font-size: 2.5rem; font-weight: 700; color: var(--text);
             font-variant-numeric: tabular-nums; letter-spacing: -0.02em;
         }
         .countdown-item .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); margin-top: 0.25rem; }
+        .countdown-toolbar {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-top: -1rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+            animation: fadeUp 0.6s ease 0.35s both;
+        }
+        .timer-note {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .timer-reset {
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.72);
+            color: var(--text);
+            border-radius: 10px;
+            padding: 0.4rem 0.75rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .timer-reset:hover {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
         .event-cta {
             display: inline-flex; align-items: center; gap: 0.6rem;
             background: linear-gradient(135deg, #e85d3a, #f07a5b); color: white;
@@ -289,7 +320,7 @@
     </nav>
 
     <section class="event-hero">
-        <div class="hero-badge"><i class="far fa-calendar-alt"></i> Feb 15, 2026 · 10:00 AM EST · Live</div>
+        <div class="hero-badge"><i class="far fa-calendar-alt"></i> <span id="heroDateLabel">Upcoming Session · Live</span></div>
         <h1>Marketing Mastery<br/>Webinar</h1>
         <p class="subtitle">Learn growth strategies from industry experts. Live 60-min session with Q&A and downloadable resources.</p>
         <div class="countdown" id="countdown">
@@ -297,6 +328,10 @@
             <div class="countdown-item"><span class="num" id="hours">--</span><span class="label">Hours</span></div>
             <div class="countdown-item"><span class="num" id="mins">--</span><span class="label">Mins</span></div>
             <div class="countdown-item"><span class="num" id="secs">--</span><span class="label">Secs</span></div>
+        </div>
+        <div class="countdown-toolbar">
+            <span class="timer-note" id="timerStatus">Next webinar countdown</span>
+            <button type="button" class="timer-reset" id="resetCountdownBtn"><i class="fas fa-rotate-right"></i> Reset Demo Timer</button>
         </div>
         <a href="#register" class="event-cta"><span class="spinner"></span><span class="cta-text"><i class="fas fa-user-plus"></i> Register — It's Free</span></a>
         <div class="trust-row">
@@ -395,16 +430,60 @@
 
     <script>
         (function(){
-            var end = new Date('2026-02-15T15:00:00');
+            var TIMER_KEY = 'eventDemoCountdownEnd';
+            var TIMER_DURATION_MS = ((12 * 24 + 4) * 60 + 30) * 60 * 1000; // 12d 4h 30m demo window
+            function buildNewEnd(){ return new Date(Date.now() + TIMER_DURATION_MS); }
+            function resolveEnd(){
+                var saved = localStorage.getItem(TIMER_KEY);
+                var parsed = saved ? new Date(saved) : null;
+                if (!parsed || Number.isNaN(parsed.getTime()) || parsed.getTime() <= Date.now()) {
+                    parsed = buildNewEnd();
+                    localStorage.setItem(TIMER_KEY, parsed.toISOString());
+                }
+                return parsed;
+            }
+            var end = resolveEnd();
+            var heroDateLabel = document.getElementById('heroDateLabel');
+            var timerStatus = document.getElementById('timerStatus');
+            var resetBtn = document.getElementById('resetCountdownBtn');
+            function formatLocalDate(d){
+                return d.toLocaleString([], { month:'short', day:'numeric', hour:'numeric', minute:'2-digit' });
+            }
+            function syncDateText(){
+                if (heroDateLabel) heroDateLabel.textContent = formatLocalDate(end) + ' · Live Webinar';
+            }
             function update(){
                 var now = new Date(), diff = Math.max(0, end - now);
                 document.getElementById('days').textContent = String(Math.floor(diff / 86400000)).padStart(2,'0');
                 document.getElementById('hours').textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2,'0');
                 document.getElementById('mins').textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2,'0');
                 document.getElementById('secs').textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2,'0');
+                if (diff <= 0) {
+                    end = buildNewEnd();
+                    localStorage.setItem(TIMER_KEY, end.toISOString());
+                    syncDateText();
+                    if (timerStatus) timerStatus.textContent = 'Timer restarted for demo';
+                }
             }
+            syncDateText();
             update(); setInterval(update, 1000);
-            setInterval(function(){ var el = document.getElementById('attendeeCount'); if(el) el.textContent = String(2040 + Math.floor(Math.random() * 20)); }, 8000);
+            if (resetBtn) {
+                resetBtn.addEventListener('click', function(){
+                    end = buildNewEnd();
+                    localStorage.setItem(TIMER_KEY, end.toISOString());
+                    syncDateText();
+                    update();
+                    if (timerStatus) timerStatus.textContent = 'Timer reset just now';
+                });
+            }
+            var attendeeBase = 2040;
+            setInterval(function(){
+                var el = document.getElementById('attendeeCount');
+                if(el){
+                    attendeeBase += Math.floor(Math.random() * 3);
+                    el.textContent = String(attendeeBase);
+                }
+            }, 6000);
             var toCal = function(d){ var y=d.getUTCFullYear(),m=String(d.getUTCMonth()+1).padStart(2,'0'),day=String(d.getUTCDate()).padStart(2,'0'),h=String(d.getUTCHours()).padStart(2,'0'),min=String(d.getUTCMinutes()).padStart(2,'0'),s=String(d.getUTCSeconds()).padStart(2,'0'); return y+m+day+'T'+h+min+s+'Z'; };
             var endPlus1 = new Date(end.getTime() + 3600000);
             document.getElementById('googleCal').href = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Marketing+Mastery+Webinar&dates='+toCal(end)+'/'+toCal(endPlus1)+'&details=Live+session+with+Q%26A';

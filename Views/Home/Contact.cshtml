@@ -6,38 +6,25 @@
 
 @section Styles {
     <style>
+        .page-inner--contact {
+            position: relative;
+        }
+
         .contact-page {
             padding-top: 2rem;
             padding-bottom: 4rem;
         }
 
-        .contact-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .contact-header h1 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 800;
-            background: linear-gradient(135deg, #1e293b 0%, #475569 50%, #64748b 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1rem;
-        }
-
-        .contact-header p {
-            color: #64748b;
-            font-size: 1.1rem;
-            max-width: 500px;
-            margin: 0 auto;
+        .page-inner--contact .page-header__lead {
+            max-width: 760px;
+            color: #5b4f42;
         }
 
         .contact-grid {
             display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 2rem;
-            max-width: 1000px;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+            max-width: 680px;
             margin: 0 auto;
         }
 
@@ -49,12 +36,12 @@
 
         /* Contact Info Card */
         .contact-info-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
-            backdrop-filter: blur(20px);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 250, 242, 0.85));
+            backdrop-filter: blur(14px);
             border-radius: 1.5rem;
             padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(191, 161, 106, 0.22);
+            box-shadow: 0 18px 38px rgba(15, 23, 42, 0.1);
             height: fit-content;
         }
 
@@ -72,7 +59,7 @@
             content: '';
             width: 4px;
             height: 24px;
-            background: linear-gradient(180deg, #8b5cf6, #ec4899);
+            background: linear-gradient(180deg, #f59e0b, #fbbf24);
             border-radius: 2px;
         }
 
@@ -100,18 +87,18 @@
         }
 
         .contact-item-icon.email {
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(139, 92, 246, 0.05));
-            color: #8b5cf6;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.06));
+            color: #b45309;
         }
 
         .contact-item-icon.location {
-            background: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(14, 165, 233, 0.05));
-            color: #0ea5e9;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(168, 85, 247, 0.05));
+            color: #7e22ce;
         }
 
         .contact-item-icon.phone {
-            background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(236, 72, 153, 0.05));
-            color: #ec4899;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(34, 197, 94, 0.05));
+            color: #15803d;
         }
 
         .contact-item-content {
@@ -140,141 +127,50 @@
         }
 
         .contact-item-value a:hover {
-            color: #8b5cf6;
+            color: #a16207;
         }
 
-        /* Contact Form Card */
-        .contact-form-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
-            backdrop-filter: blur(20px);
-            border-radius: 1.5rem;
-            padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-        }
-
-        .contact-form-card h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #1e293b;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .contact-form-card h3::before {
-            content: '';
-            width: 4px;
-            height: 24px;
-            background: linear-gradient(180deg, #0ea5e9, #8b5cf6);
-            border-radius: 2px;
-        }
-
-        .form-row {
+        .quick-actions {
+            margin-top: 1.25rem;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            gap: 0.6rem;
         }
 
-        @@media (max-width: 500px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #475569;
-            margin-bottom: 0.5rem;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.875rem 1rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 0.75rem;
-            font-size: 1rem;
-            color: #1e293b;
-            background: rgba(255, 255, 255, 0.8);
-            transition: all 0.2s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #8b5cf6;
-            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
-            background: white;
-        }
-
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: #94a3b8;
-        }
-
-        .form-group textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .btn-send {
-            width: 100%;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 0.75rem;
-            font-size: 1rem;
-            font-weight: 600;
-            color: white;
-            background: linear-gradient(135deg, #8b5cf6, #6366f1);
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
+        .quick-action {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .btn-send:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.35);
-        }
-
-        .btn-send:active {
-            transform: translateY(0);
-        }
-
-        /* Success/Error Messages */
-        .alert-success {
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            color: #15803d;
-            padding: 1rem;
+            gap: 0.45rem;
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #1f2937;
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(191, 161, 106, 0.28);
             border-radius: 0.75rem;
-            margin-bottom: 1rem;
+            min-height: 40px;
+            transition: all 0.2s ease;
         }
 
-        .alert-danger {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #dc2626;
-            padding: 1rem;
-            border-radius: 0.75rem;
-            margin-bottom: 1rem;
+        .quick-action:hover {
+            transform: translateY(-1px);
+            background: rgba(255, 248, 230, 0.95);
+            border-color: rgba(191, 161, 106, 0.48);
+            color: #111827;
+        }
+
+        .response-note {
+            margin-top: 1rem;
+            font-size: 0.83rem;
+            color: #7a6650;
+            text-align: center;
         }
 
         /* Social Section */
         .social-section {
             text-align: center;
-            margin-top: 3rem;
+            margin-top: 2.3rem;
             padding-top: 2rem;
         }
 
@@ -311,31 +207,31 @@
         }
 
         .social-btn.linkedin {
-            background: linear-gradient(135deg, rgba(10, 102, 194, 0.1), rgba(10, 102, 194, 0.05));
-            color: #0a66c2;
-            border: 2px solid rgba(10, 102, 194, 0.2);
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(251, 191, 36, 0.06));
+            color: #92400e;
+            border: 1px solid rgba(180, 120, 24, 0.26);
         }
 
         .social-btn.linkedin:hover {
-            background: #0a66c2;
-            color: white;
-            border-color: #0a66c2;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #fff;
+            border-color: #d97706;
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(10, 102, 194, 0.3);
+            box-shadow: 0 10px 26px rgba(217, 119, 6, 0.32);
         }
 
         .social-btn.github {
-            background: linear-gradient(135deg, rgba(36, 41, 46, 0.1), rgba(36, 41, 46, 0.05));
-            color: #24292e;
-            border: 2px solid rgba(36, 41, 46, 0.2);
+            background: linear-gradient(135deg, rgba(148, 163, 184, 0.16), rgba(148, 163, 184, 0.08));
+            color: #334155;
+            border: 1px solid rgba(100, 116, 139, 0.24);
         }
 
         .social-btn.github:hover {
-            background: #24292e;
-            color: white;
-            border-color: #24292e;
+            background: #334155;
+            color: #fff;
+            border-color: #334155;
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(36, 41, 46, 0.3);
+            box-shadow: 0 10px 26px rgba(51, 65, 85, 0.28);
         }
 
         /* Availability Badge */
@@ -366,20 +262,29 @@
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.5; transform: scale(1.2); }
         }
+
+        @@media (max-width: 520px) {
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 }
 
-<div class="container contact-page">
-    <!-- Header -->
-    <div class="contact-header">
-        <h1>Get in Touch</h1>
-        <p>I'd love to hear from you. Let's discuss your project or just say hello!</p>
-    </div>
+<div class="page-inner page-inner--contact">
+    <header class="page-header">
+        <div class="container">
+            <p class="page-header__label">Contact</p>
+            <h1 class="page-header__title">Get in Touch</h1>
+            <p class="page-header__lead">I'd love to hear from you. Let's discuss your project or just say hello. Available for freelance, contract, and long-term collaboration opportunities.</p>
+        </div>
+    </header>
 
-    <!-- Contact Grid -->
-    <div class="contact-grid">
-        <!-- Contact Information -->
-        <div class="contact-info-card">
+    <div class="container contact-page">
+        <!-- Contact Grid -->
+        <div class="contact-grid">
+            <!-- Contact Information -->
+            <div class="contact-info-card">
             <h3>Contact Information</h3>
             
             <div class="contact-item">
@@ -419,95 +324,28 @@
             <div class="availability-badge">
                 Available for new projects
             </div>
-        </div>
 
-        <!-- Contact Form -->
-        <div class="contact-form-card">
-            <h3>Send a Message</h3>
-            
-            <div id="contactThankYou" class="alert-success" role="alert" style="display: none;">
-                <i class="fas fa-check-circle"></i> Thank you! Your email client has opened. Please click <strong>Send</strong> to deliver your message.
+            <div class="quick-actions">
+                <a class="quick-action" href="mailto:nastiakhru@gmail.com"><i class="fas fa-paper-plane"></i> Email Now</a>
+                <a class="quick-action" href="tel:+19053241507"><i class="fas fa-phone-alt"></i> Call Now</a>
             </div>
-            <div id="contactError" class="alert-danger" role="alert" style="display: none;"></div>
-            
-            <form id="contactForm" action="#" method="get">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="name">Your Name</label>
-                        <input type="text" id="name" name="name" required placeholder="John Doe">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Your Email</label>
-                        <input type="email" id="email" name="email" required placeholder="john@example.com">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="subject">Subject</label>
-                    <input type="text" id="subject" name="subject" placeholder="Project Inquiry">
-                </div>
-                <div class="form-group">
-                    <label for="message">Your Message</label>
-                    <textarea id="message" name="message" required placeholder="Tell me about your project..."></textarea>
-                </div>
-                <button type="submit" class="btn-send">
-                    <i class="fas fa-paper-plane"></i> Send Message
-                </button>
-            </form>
-        </div>
-    </div>
+            <p class="response-note">Typical response time: within 24 hours.</p>
+            </div>
 
-    <!-- Social Links -->
-    <div class="social-section">
-        <h3>Connect With Me</h3>
-        <div class="social-buttons">
-            <a href="https://www.linkedin.com/in/anastasiia-khrustaleva-29a180100/" target="_blank" rel="noopener" class="social-btn linkedin">
-                <i class="fab fa-linkedin"></i> LinkedIn
-            </a>
-            <a href="https://github.com/AnastasiiaKhru" target="_blank" rel="noopener" class="social-btn github">
-                <i class="fab fa-github"></i> GitHub
-            </a>
+        </div>
+
+        <!-- Social Links -->
+        <div class="social-section">
+            <h3>Connect With Me</h3>
+            <div class="social-buttons">
+                <a href="https://www.linkedin.com/in/anastasiia-khrustaleva-29a180100/" target="_blank" rel="noopener" class="social-btn linkedin">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+                <a href="https://github.com/AnastasiiaKhru" target="_blank" rel="noopener" class="social-btn github">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </div>
         </div>
     </div>
 </div>
 
-@section Scripts {
-    <script>
-        (function () {
-            var form = document.getElementById('contactForm');
-            var thankYou = document.getElementById('contactThankYou');
-            var errEl = document.getElementById('contactError');
-            var toEmail = 'nastiakhru@gmail.com';
-
-            if (!form) return;
-
-            form.addEventListener('submit', function (e) {
-                e.preventDefault();
-                if (thankYou) thankYou.style.display = 'none';
-                if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
-
-                var name = (document.getElementById('name') || {}).value.trim();
-                var email = (document.getElementById('email') || {}).value.trim();
-                var subject = (document.getElementById('subject') || {}).value.trim() || 'Portfolio Contact';
-                var message = (document.getElementById('message') || {}).value.trim();
-
-                if (!name || !email || !message) {
-                    if (errEl) {
-                        errEl.innerHTML = '<i class="fas fa-exclamation-circle"></i> Please fill in your name, email, and message.';
-                        errEl.style.display = 'block';
-                    }
-                    return;
-                }
-
-                var fullSubject = subject + ' from ' + name;
-                var body = 'Name: ' + name + '\nEmail: ' + email + '\n\nMessage:\n' + message;
-                var mailto = 'mailto:' + toEmail + '?subject=' + encodeURIComponent(fullSubject) + '&body=' + encodeURIComponent(body);
-                window.location.href = mailto;
-
-                if (thankYou) {
-                    thankYou.style.display = 'block';
-                    thankYou.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }
-            });
-        })();
-    </script>
-}

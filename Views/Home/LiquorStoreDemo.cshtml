@@ -496,8 +496,8 @@
             margin: 0 auto;
             padding: 1rem 2rem;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 1.25rem;
         }
 
         .logo {
@@ -505,6 +505,7 @@
             align-items: center;
             gap: 0.8rem;
             text-decoration: none;
+            flex-shrink: 0;
         }
 
         .logo-icon {
@@ -533,8 +534,12 @@
 
         .nav-links {
             display: flex;
-            gap: 2.5rem;
+            gap: clamp(1rem, 1.8vw, 2rem);
             list-style: none;
+            flex: 1;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
         }
 
         .nav-links a {
@@ -570,7 +575,8 @@
         .nav-cta {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
+            gap: 1rem;
+            flex-shrink: 0;
         }
 
         .cart-btn {
@@ -615,6 +621,29 @@
             font-size: 0.85rem;
             letter-spacing: 1px;
             text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        @@media (max-width: 1220px) {
+            .nav-container {
+                padding: 0.85rem 1.2rem;
+                gap: 0.85rem;
+            }
+            .logo-text {
+                font-size: 1.35rem;
+                letter-spacing: 1px;
+            }
+            .nav-links {
+                gap: 1rem;
+            }
+            .nav-links a {
+                font-size: 0.78rem;
+                letter-spacing: 0.7px;
+            }
+            .order-btn {
+                padding: 0.7rem 1.15rem;
+                font-size: 0.78rem;
+            }
         }
 
         .order-btn:hover {
@@ -1735,7 +1764,6 @@
                 <li><a href="#merchandise">Merchandise</a></li>
             </ul>
             <div class="nav-cta">
-                <button class="search-btn" onclick="toggleSearch()"><i class="fas fa-search"></i></button>
                 <button class="cart-btn" onclick="toggleCart()">
                     <i class="fas fa-shopping-bag"></i>
                     <span class="cart-count" id="cartCount">2</span>

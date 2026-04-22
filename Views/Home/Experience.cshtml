@@ -1,7 +1,115 @@
 @{
     ViewData["Title"] = "Experience";
 }
-<div class="page-inner">
+@section Styles {
+<style>
+    .page-inner--experience {
+        background:
+            radial-gradient(circle at 10% 16%, rgba(245, 158, 11, 0.09), transparent 38%),
+            radial-gradient(circle at 88% 8%, rgba(217, 119, 6, 0.08), transparent 34%),
+            linear-gradient(180deg, #faf8f4 0%, #f6f2ea 100%);
+    }
+
+    .experience-showcase {
+        padding: 2rem 0 4rem;
+    }
+
+    .experience-stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.9rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .experience-stat {
+        background: rgba(255,255,255,0.82);
+        border: 1px solid rgba(191, 161, 106, 0.22);
+        border-radius: 14px;
+        padding: 0.8rem 1rem;
+        text-align: center;
+        box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+    }
+
+    .experience-stat strong {
+        display: block;
+        font-size: 1.2rem;
+        color: #1f2937;
+    }
+
+    .experience-stat span {
+        color: #6b7280;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+
+    .timeline-container {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .timeline-item {
+        border: 1px solid rgba(191, 161, 106, 0.2);
+        border-radius: 18px;
+        background: linear-gradient(145deg, rgba(255,255,255,0.9), rgba(255,249,240,0.8));
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+        padding: 1.1rem 1.2rem;
+        transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+
+    .timeline-item:hover {
+        transform: translateY(-2px);
+        border-color: rgba(191, 161, 106, 0.42);
+        box-shadow: 0 16px 34px rgba(15, 23, 42, 0.12);
+    }
+
+    .timeline-item h3.h5 {
+        font-size: 1.15rem;
+        margin-bottom: 0.35rem;
+        color: #111827;
+    }
+
+    .timeline-item .text-secondary {
+        color: #7a6650 !important;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    .timeline-item ul {
+        margin-top: 0.5rem;
+        padding-left: 1.15rem;
+    }
+
+    .timeline-item li {
+        color: #334155;
+        margin-bottom: 0.35rem;
+    }
+
+    .experience-tags {
+        margin-top: 0.65rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+    }
+
+    .experience-tag {
+        padding: 0.28rem 0.55rem;
+        border-radius: 999px;
+        font-size: 0.73rem;
+        color: #5b4f42;
+        background: rgba(255,255,255,0.74);
+        border: 1px solid rgba(191, 161, 106, 0.28);
+        font-weight: 600;
+    }
+
+    @@media (max-width: 768px) {
+        .experience-stats {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+}
+<div class="page-inner page-inner--experience">
     <header class="page-header">
         <div class="container">
             <p class="page-header__label">Work Experience</p>
@@ -9,5 +117,7 @@
             <p class="page-header__lead">From machine learning and web development to operations and leadership—track record of delivery across tech and cross-functional teams.</p>
         </div>
     </header>
-    <partial name="_ExperiencePartial" />
+    <div class="experience-showcase">
+        <partial name="_ExperiencePartial" />
+    </div>
 </div>
