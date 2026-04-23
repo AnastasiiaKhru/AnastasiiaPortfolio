@@ -240,6 +240,49 @@
             }
         }
 
+        @@media (max-width: 1024px) and (min-width: 769px) {
+            .hero-section {
+                min-height: auto;
+                padding: 1rem 0;
+            }
+            .hero-section .container {
+                padding: 1.05rem;
+                border-radius: 20px;
+            }
+            .hero-section .row {
+                row-gap: 0.9rem;
+            }
+            .hero-section .col-md-7,
+            .hero-section .col-md-5 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+            .hero-section .display-4 {
+                font-size: clamp(1.7rem, 1.1rem + 1.35vw, 2.2rem);
+                margin-bottom: 0.65rem;
+            }
+            .hero-section .lead {
+                font-size: 0.98rem;
+                line-height: 1.55;
+                max-width: 100%;
+            }
+            .hero-section .hero-btn-group {
+                margin-top: 0.75rem;
+                gap: 0.55rem;
+                grid-template-columns: 1fr;
+            }
+            .hero-image {
+                max-width: 260px;
+                margin: 0.35rem auto 0;
+            }
+            .hero-portrait {
+                width: 100%;
+            }
+            .hero-section .social-link {
+                grid-column: auto;
+            }
+        }
+
         @@media (max-width: 768px) {
             .hero-section { min-height: auto; padding: var(--spacing-6) 0; }
             .hero-section .container { padding: var(--spacing-5) var(--spacing-4); }
@@ -282,7 +325,7 @@
 <div id="home" class="hero-section">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-lg-6 order-lg-1">
+            <div class="col-lg-7 col-md-7 order-lg-1">
                 <div class="hero-kicker">Portfolio 2026</div>
                 <h1 class="display-4">Building elegant digital experiences that perform.</h1>
                 <p class="lead">Transforming complex ideas into elegant, high-performance web solutions.</p>
@@ -305,7 +348,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-lg-6 order-lg-2">
+            <div class="col-lg-5 col-md-5 order-lg-2 mt-3 mt-md-0">
                 <div class="hero-image">
                     <div class="hero-portrait" role="img" aria-label="Portrait photo of Anastasiia">
                         <img src="/images/hero-image.png" alt="Anastasiia portrait photo">
