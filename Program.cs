@@ -65,9 +65,11 @@ if (!app.Environment.IsDevelopment())
 	fwd.KnownNetworks.Clear();
 	fwd.KnownProxies.Clear();
 	app.UseForwardedHeaders(fwd);
+	// Terminate TLS at the host; still respect X-Forwarded-Proto in production.
+	app.UseHttpsRedirection();
 }
-
-app.UseHttpsRedirection();
+// Local `dotnet run` only binds http://0.0.0.0:8080 (see UseUrls). Forcing HTTPS redirect
+// in Development breaks the site in the browser (no HTTPS listener) — "connection failed".
 app.UseStaticFiles();
 
 app.UseRouting();

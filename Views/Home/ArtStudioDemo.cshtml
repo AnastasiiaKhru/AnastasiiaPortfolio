@@ -1,0 +1,1070 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="By Alisa Khru — contemporary gallery demo. Monochrome catalogue, cyan accent, minimal nav." />
+    <title>By Alisa Khru</title>
+    <style>
+        /* Museum / artist-site rhythm: full-bleed B&W hero, cyan headline, sparse nav */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --accent: #00e5ff;
+            --accent-dim: #00b8cc;
+            --page: #fafafa;
+            --ink: #0a0a0a;
+            --muted: #5c5c5c;
+            --sans: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+        }
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 5rem;
+        }
+        body {
+            font-family: var(--sans);
+            background: var(--page);
+            color: var(--ink);
+            line-height: 1.5;
+            font-size: 14px;
+        }
+        a { color: inherit; text-decoration: none; }
+        a:hover { opacity: 0.75; }
+
+        /* —— Transparent header (reference: logo left, icons right) —— */
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.35rem clamp(1rem, 4vw, 2.5rem);
+            pointer-events: none;
+        }
+        .top-bar > * { pointer-events: auto; }
+        .top-logo {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 1px 12px rgba(0, 0, 0, 0.85);
+        }
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .icon-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border: none;
+            background: transparent;
+            color: #fff;
+            cursor: pointer;
+            padding: 0;
+        }
+        .icon-btn svg { filter: drop-shadow(0 1px 8px rgba(0, 0, 0, 0.7)); }
+        .icon-btn:hover { opacity: 0.8; }
+        .hamburger { flex-direction: column; justify-content: center; gap: 6px; }
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: #fff;
+            box-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        /* —— Full-viewport hero —— */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #050505;
+        }
+        .hero__bg {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0.58) 100%),
+                url("/images/alisa-gallery/hero.jpg") center/cover no-repeat;
+            filter: grayscale(100%) contrast(1.08) brightness(0.88);
+            transform: scale(1.03);
+        }
+        .hero__grain {
+            position: absolute;
+            inset: 0;
+            opacity: 0.14;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            mix-blend-mode: overlay;
+        }
+        .hero__vignette {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            box-shadow: inset 0 0 180px rgba(0, 0, 0, 0.55);
+        }
+        .hero__inner {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            padding: 0 1rem;
+            max-width: 980px;
+            transition: transform 0.25s ease;
+            will-change: transform;
+        }
+        .hero__title {
+            font-size: clamp(2.4rem, 9vw, 6.5rem);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            line-height: 0.95;
+            text-transform: uppercase;
+            color: var(--accent);
+            text-shadow:
+                0 0 40px rgba(0, 229, 255, 0.35),
+                0 2px 24px rgba(0, 0, 0, 0.9);
+            margin-bottom: 0.9rem;
+        }
+        .hero__sub {
+            margin: 0 auto;
+            max-width: 44rem;
+            color: rgba(255, 255, 255, 0.82);
+            font-size: clamp(0.92rem, 1.5vw, 1.05rem);
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            line-height: 1.7;
+        }
+        .hero__actions {
+            margin-top: 1.25rem;
+            display: inline-flex;
+            gap: 0.65rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .hero__btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.62rem 1.05rem;
+            border: 1px solid rgba(255, 255, 255, 0.42);
+            background: rgba(0, 0, 0, 0.36);
+            color: #fff;
+            font-size: 10px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+            font-family: inherit;
+        }
+        .hero__btn:hover {
+            transform: translateY(-2px);
+            background: rgba(0, 229, 255, 0.14);
+            border-color: rgba(0, 229, 255, 0.75);
+            opacity: 1;
+        }
+        .hero__btn--solid {
+            background: rgba(0, 229, 255, 0.2);
+            border-color: rgba(0, 229, 255, 0.72);
+        }
+        .hero__cursor-glow {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            pointer-events: none;
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.18) 0%, rgba(0, 229, 255, 0) 68%);
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+        .hero:hover .hero__cursor-glow { opacity: 1; }
+        .hero__scroll {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            font-size: 10px;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.55);
+        }
+        a.hero__scroll {
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+            padding-bottom: 0.2em;
+        }
+        a.hero__scroll:hover {
+            color: rgba(255, 255, 255, 0.9);
+            border-bottom-color: rgba(255, 255, 255, 0.5);
+            opacity: 1;
+        }
+
+        /* —— Full-screen menu (5 items only) —— */
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            background: rgba(0, 0, 0, 0.97);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.35s ease, visibility 0.35s ease;
+        }
+        .menu-overlay.is-open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .menu-overlay nav {
+            text-align: center;
+        }
+        .menu-overlay nav a {
+            display: block;
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            font-weight: 400;
+            letter-spacing: 0.42em;
+            text-transform: uppercase;
+            color: #fff;
+            padding: 0.85rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .menu-overlay nav a:last-child { border-bottom: none; }
+        .menu-overlay nav a:hover { color: var(--accent); opacity: 1; }
+        .menu-close {
+            position: absolute;
+            top: 1.35rem;
+            right: clamp(1rem, 4vw, 2.5rem);
+            font-size: 11px;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.6);
+            background: none;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 0.6rem 1rem;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .menu-close:hover { color: #fff; border-color: #fff; }
+
+        body.menu-lock { overflow: hidden; }
+
+        /* —— Gallery clusters —— */
+        .band {
+            padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 4vw, 3rem);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .band--alt { background: #fff; }
+        .section-kicker {
+            font-size: 10px;
+            letter-spacing: 0.42em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 0.5rem;
+        }
+        .section-title {
+            font-size: clamp(1.75rem, 4vw, 2.75rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--ink);
+        }
+
+        .cluster { margin-bottom: 4rem; }
+        .cluster:last-child { margin-bottom: 0; }
+        .cluster--mosaic {
+            margin-bottom: 3rem;
+            position: relative;
+            /* no z-index — avoids stacking above the carousel / sections below */
+        }
+        .cluster__label {
+            font-size: 11px;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            margin-bottom: 1.25rem;
+            color: var(--muted);
+        }
+        .cluster__grid {
+            display: grid;
+            gap: 8px;
+            grid-template-columns: repeat(6, 1fr);
+        }
+        .cluster__grid--tri {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        .cluster__grid--quad {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        .cluster__grid--mosaic {
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: repeat(2, minmax(140px, 28vw));
+            width: 100%;
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            border-radius: 2px;
+        }
+        .gcell {
+            position: relative;
+            overflow: hidden;
+            background: #111;
+            aspect-ratio: 1;
+            z-index: 0;
+        }
+        .cluster__grid--mosaic .gcell--wide {
+            grid-column: span 3;
+            grid-row: span 2;
+            aspect-ratio: auto;
+        }
+        .cluster__grid--mosaic .gcell--sq {
+            grid-column: span 3;
+            aspect-ratio: 4/3;
+        }
+        /* One treatment for every artwork: archival B&W, same contrast curve as hero */
+        .art-img {
+            width: 100%;
+            height: 100%;
+            max-width: none;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            filter: grayscale(100%) contrast(1.08) brightness(0.9);
+            transition: transform 0.7s ease, filter 0.5s ease;
+        }
+        .gcell:hover .art-img {
+            transform: scale(1.03);
+            filter: grayscale(72%) contrast(1.1) brightness(0.92);
+        }
+        .cluster__grid--mosaic .gcell:hover .art-img {
+            transform: scale(1.02);
+        }
+        .gcell figcaption {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 0.65rem 0.85rem;
+            font-size: 9px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: #fff;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.75));
+        }
+
+        /* Carousel: stack above preceding mosaic (hover scale / tiles must not cover this block) */
+        .carousel-section {
+            width: 100%;
+            max-width: 100%;
+            clear: both;
+            position: relative;
+            z-index: 2;
+            margin-top: 3rem;
+            contain: layout;
+            isolation: isolate;
+            background: #fff;
+        }
+        .carousel-row {
+            margin-top: 0;
+            border: 1px solid var(--ink);
+            background: #0a0a0a;
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            isolation: isolate;
+            min-height: 200px;
+            aspect-ratio: 21 / 9;
+            max-height: min(56vh, 520px);
+        }
+        .carousel-row__slide {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            opacity: 0;
+            transition: opacity 1s ease;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .carousel-row__slide.is-on {
+            opacity: 1;
+            z-index: 2;
+            pointer-events: auto;
+        }
+        .carousel-row__slide .art-img {
+            width: 100%;
+            height: 100%;
+            min-height: 100%;
+            max-width: none;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            filter: grayscale(100%) contrast(1.08) brightness(0.9);
+        }
+        .carousel-row__cap {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 0.85rem 1rem;
+            font-size: 10px;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.94);
+            border-top: 1px solid var(--ink);
+            z-index: 2;
+        }
+        .carousel-section .carousel-row__controls {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            flex-wrap: wrap;
+        }
+        .carousel-row__controls button {
+            font-size: 10px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            padding: 0.5rem 0.85rem;
+            border: 1px solid var(--ink);
+            background: #fff;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .carousel-row__controls button:hover { background: var(--ink); color: #fff; }
+        .carousel-row__dots { display: flex; gap: 6px; margin-left: auto; }
+        .carousel-row__dots button {
+            width: 24px;
+            height: 4px;
+            padding: 0;
+            border: 1px solid var(--ink);
+            background: #fff;
+            opacity: 0.35;
+            cursor: pointer;
+        }
+        .carousel-row__dots button.on { opacity: 1; background: var(--ink); }
+
+        main, section.band[id] {
+            scroll-margin-top: 5rem;
+        }
+
+        /* —— Catalogue editorial: exhibitions, about, contact, archive —— */
+        .band--catalogue {
+            padding: clamp(3.5rem, 9vw, 6.75rem) clamp(1rem, 4vw, 3rem);
+        }
+        .band--catalogue .catalog-section-head {
+            margin-bottom: clamp(1.25rem, 3vw, 1.75rem);
+        }
+        .band--catalogue .section-kicker {
+            color: var(--accent);
+            letter-spacing: 0.48em;
+            margin-bottom: 0.65rem;
+        }
+        .band--catalogue .section-title {
+            margin-bottom: 0;
+            padding-bottom: 1.15rem;
+            border-bottom: 1px solid var(--ink);
+        }
+        .catalog-stack {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .catalog-stack--wide {
+            max-width: 820px;
+        }
+        .catalog-panel {
+            position: relative;
+            border: 1px solid var(--ink);
+            background: #fff;
+            padding: clamp(1.35rem, 3.5vw, 2.35rem) clamp(1.25rem, 3vw, 2.5rem);
+            padding-left: clamp(1.5rem, 4vw, 2.85rem);
+            box-shadow:
+                0 1px 0 rgba(255, 255, 255, 0.6) inset,
+                0 14px 42px rgba(0, 0, 0, 0.07);
+        }
+        .catalog-panel::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, var(--accent) 0%, var(--accent-dim) 100%);
+        }
+        .band--alt .catalog-panel {
+            background: linear-gradient(165deg, #ffffff 0%, #f4f4f4 100%);
+        }
+        .catalog-lead {
+            font-size: clamp(0.9375rem, 2.2vw, 1.0625rem);
+            line-height: 1.82;
+            color: var(--muted);
+            margin: 0 0 1.35rem;
+        }
+        .catalog-lead:last-child { margin-bottom: 0; }
+        .catalog-quote {
+            margin: 0;
+            padding: 0;
+            border: none;
+            font-size: clamp(1.02rem, 2.4vw, 1.18rem);
+            line-height: 1.78;
+            color: var(--ink);
+            font-weight: 400;
+        }
+        .catalog-quote strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .catalog-meta {
+            margin: 1.35rem 0 0;
+            padding-top: 1.15rem;
+            border-top: 1px solid rgba(10, 10, 10, 0.12);
+            font-size: 9px;
+            letter-spacing: 0.32em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+        .catalog-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 0.15rem;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.26em;
+            text-transform: uppercase;
+            color: var(--ink);
+            border-bottom: 1px solid var(--accent);
+            padding-bottom: 0.2rem;
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+        .catalog-cta:hover {
+            color: var(--accent-dim);
+            border-bottom-color: var(--accent-dim);
+            opacity: 1;
+        }
+
+        .catalog-panel--contact .demo-contact {
+            margin-top: 0.5rem;
+            max-width: none;
+            display: grid;
+            gap: 1.1rem;
+        }
+        .demo-contact__hint {
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin: 0 0 0.35rem;
+            padding: 0.75rem 0.9rem;
+            background: rgba(0, 229, 255, 0.07);
+            border: 1px solid rgba(0, 229, 255, 0.22);
+            line-height: 1.5;
+        }
+        .demo-contact label {
+            font-size: 10px;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: var(--muted);
+            display: block;
+        }
+        .demo-contact input,
+        .demo-contact textarea {
+            width: 100%;
+            margin-top: 0.4rem;
+            padding: 0.7rem 0.9rem;
+            border: 1px solid var(--ink);
+            background: #fff;
+            font-family: inherit;
+            font-size: 14px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .demo-contact input:focus,
+        .demo-contact textarea:focus {
+            outline: none;
+            border-color: var(--accent-dim);
+            box-shadow: 0 0 0 1px var(--accent);
+        }
+        .demo-contact textarea { min-height: 6.5rem; resize: vertical; }
+        .demo-contact button[type="button"] {
+            justify-self: start;
+            margin-top: 0.35rem;
+            padding: 0.65rem 1.35rem;
+            border: 1px solid var(--ink);
+            background: var(--ink);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        }
+        .demo-contact button[type="button"]:hover {
+            background: var(--accent-dim);
+            border-color: var(--accent-dim);
+            color: #fff;
+        }
+        .demo-contact button[type="button"]:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        footer.site-footer {
+            padding: clamp(2.5rem, 6vw, 3.5rem) clamp(1rem, 4vw, 3rem);
+            border-top: 1px solid rgba(10, 10, 10, 0.12);
+            font-size: 10px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--muted);
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+            background: linear-gradient(180deg, #fafafa, #f0f0f0);
+        }
+        .site-footer__line {
+            margin: 0;
+        }
+        .site-footer__line + .site-footer__line {
+            margin-top: 0.55rem;
+            opacity: 0.85;
+        }
+        footer.site-footer a { border-bottom: 1px solid transparent; }
+        footer.site-footer a:hover { border-bottom-color: currentColor; }
+
+        @@media (max-width: 900px) {
+            .cluster__grid--tri { grid-template-columns: 1fr; }
+            .cluster__grid--quad { grid-template-columns: repeat(2, 1fr); }
+            .cluster__grid--mosaic {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: none;
+            }
+            .cluster__grid--mosaic .gcell--wide {
+                grid-column: 1 / -1;
+                grid-row: auto;
+                min-height: 220px;
+                aspect-ratio: 16/10;
+            }
+            .cluster__grid--mosaic .gcell--sq {
+                grid-column: span 1;
+            }
+            .carousel-row {
+                aspect-ratio: 4 / 3;
+                max-height: none;
+                min-height: 180px;
+            }
+            .hero__sub {
+                letter-spacing: 0.06em;
+                line-height: 1.55;
+            }
+            .hero__actions {
+                margin-top: 1rem;
+                width: 100%;
+                display: grid;
+                grid-template-columns: 1fr;
+            }
+            .hero__btn {
+                width: 100%;
+                padding: 0.7rem 0.9rem;
+            }
+            .band--catalogue {
+                padding: clamp(2.75rem, 8vw, 4rem) clamp(0.85rem, 4vw, 1.5rem);
+            }
+            .catalog-panel {
+                padding: 1.15rem 1.1rem 1.15rem 1.35rem;
+            }
+        }
+    </style>
+</head>
+<body id="top">
+    <header class="top-bar">
+        <a class="top-logo" href="#top">By Alisa Khru</a>
+        <div class="top-actions">
+            <a href="#clusters" class="icon-btn" title="Gallery" aria-label="Jump to gallery">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+            </a>
+            <button type="button" class="icon-btn hamburger" id="menuOpen" aria-expanded="false" aria-controls="menuOverlay" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="menu-overlay" id="menuOverlay" role="dialog" aria-modal="true" aria-label="Site menu" hidden>
+        <button type="button" class="menu-close" id="menuClose">Close</button>
+        <nav aria-label="Primary">
+            <a href="#clusters">Gallery</a>
+            <a href="#exhibitions">Exhibitions</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+            <a href="#archive">Archive</a>
+        </nav>
+    </div>
+
+    <section class="hero" aria-label="Intro" id="heroIntro">
+        <div class="hero__bg" role="presentation"></div>
+        <div class="hero__grain" role="presentation"></div>
+        <div class="hero__vignette" role="presentation"></div>
+        <div class="hero__cursor-glow" id="heroCursorGlow" aria-hidden="true"></div>
+        <div class="hero__inner" id="heroInner">
+            <h1 class="hero__title">By Alisa Khru</h1>
+            <p class="hero__sub">Monochrome catalogue experience · private viewing atmosphere · browser-native gallery demo</p>
+            <div class="hero__actions" aria-label="Hero quick actions">
+                <a href="#clusters" class="hero__btn hero__btn--solid">Enter Gallery</a>
+                <button type="button" class="hero__btn" id="heroMenuBtn">Open Menu</button>
+            </div>
+        </div>
+        <a href="#clusters" class="hero__scroll">Gallery</a>
+    </section>
+
+    <main id="clusters">
+        <div class="band band--alt">
+            <p class="section-kicker" id="gallery-section">Collections</p>
+            <h2 class="section-title">Gallery</h2>
+
+            <article class="cluster">
+                <h3 class="cluster__label">Late surfaces · oil &amp; residue</h3>
+                <div class="cluster__grid cluster__grid--tri">
+                    <figure class="gcell">
+                        <img class="art-img" src="/images/alisa-gallery/01.jpg" alt="Abstract oil surface, high contrast" width="900" height="900" loading="lazy" />
+                        <figcaption>Untitled · 2024</figcaption>
+                    </figure>
+                    <figure class="gcell">
+                        <img class="art-img" src="/images/alisa-gallery/02.jpg" alt="Gallery salon wall" width="900" height="900" loading="lazy" />
+                        <figcaption>Night field</figcaption>
+                    </figure>
+                    <figure class="gcell">
+                        <img class="art-img" src="/images/alisa-gallery/03.jpg" alt="Abstract pigment study" width="900" height="900" loading="lazy" />
+                        <figcaption>Study · III</figcaption>
+                    </figure>
+                </div>
+            </article>
+
+            <article class="cluster">
+                <h3 class="cluster__label">Velvet silence · monochrome</h3>
+                <div class="cluster__grid cluster__grid--quad">
+                    <figure class="gcell">
+                        <img class="art-img" src="/images/alisa-gallery/04.jpg" alt="Studio interior, paintings" width="700" height="700" loading="lazy" />
+                        <figcaption>Salon</figcaption>
+                    </figure>
+                    <figure class="gcell">
+                        <img class="art-img" src="/images/alisa-gallery/05.jpg" alt="Abstract installation" width="700" height="700" loading="lazy" />
+                        <figcaption>Cast</figcaption>
+                    </figure>
+                    <figure class="gcell">
+                        <img class="art-img" src="/images/alisa-gallery/06.jpg" alt="Gallery architecture" width="700" height="700" loading="lazy" />
+                        <figcaption>Interior</figcaption>
+                    </figure>
+                    <figure class="gcell">
+                        <img class="art-img" src="/images/alisa-gallery/07.jpg" alt="Abstract canvas detail" width="700" height="700" loading="lazy" />
+                        <figcaption>Fragment</figcaption>
+                    </figure>
+                </div>
+            </article>
+
+            <article class="cluster cluster--mosaic">
+                <h3 class="cluster__label">Paper · ink · ash</h3>
+                <div class="cluster__grid cluster__grid--mosaic">
+                    <figure class="gcell gcell--wide">
+                        <img class="art-img" src="/images/alisa-gallery/08.jpg" alt="Paintings on wall, panoramic" width="1200" height="800" loading="lazy" />
+                        <figcaption>Installation view</figcaption>
+                    </figure>
+                    <figure class="gcell gcell--sq">
+                        <img class="art-img" src="/images/alisa-gallery/01.jpg" alt="Abstract layers" width="800" height="600" loading="lazy" />
+                        <figcaption>Layer index</figcaption>
+                    </figure>
+                    <figure class="gcell gcell--sq">
+                        <img class="art-img" src="/images/alisa-gallery/09.jpg" alt="Abstract canvas, layered pigment — Ash series" width="800" height="600" loading="lazy" onerror="this.onerror=null;this.src='/images/alisa-gallery/05.jpg';" />
+                        <figcaption>Ash series</figcaption>
+                    </figure>
+                </div>
+            </article>
+
+            <div class="carousel-section">
+                <div class="carousel-row" id="featuredCarousel" role="region" aria-label="Featured installation views">
+                    <div class="carousel-row__slide is-on">
+                        <img class="art-img" src="/images/alisa-gallery/02.jpg" alt="Gallery salon — wide view" width="1600" height="685" fetchpriority="high" />
+                        <div class="carousel-row__cap">Carousel · selected works</div>
+                    </div>
+                    <div class="carousel-row__slide">
+                        <img class="art-img" src="/images/alisa-gallery/08.jpg" alt="Wall sequence" width="1600" height="685" loading="lazy" />
+                        <div class="carousel-row__cap">Wall sequence</div>
+                    </div>
+                    <div class="carousel-row__slide">
+                        <img class="art-img" src="/images/alisa-gallery/05.jpg" alt="Abstract interval" width="1600" height="685" loading="lazy" />
+                        <div class="carousel-row__cap">Interval</div>
+                    </div>
+                </div>
+                <div class="carousel-row__controls">
+                    <button type="button" id="carPrev">Previous</button>
+                    <button type="button" id="carNext">Next</button>
+                    <div class="carousel-row__dots" id="carDots" role="tablist" aria-label="Slides"></div>
+                </div>
+            </div>
+        </div>
+
+        <section class="band band--catalogue" id="exhibitions">
+            <div class="catalog-stack">
+                <header class="catalog-section-head">
+                    <p class="section-kicker">Current</p>
+                    <h2 class="section-title">Exhibitions</h2>
+                </header>
+                <div class="catalog-panel">
+                    <p class="catalog-lead">Private viewings and catalogue requests are handled through the studio. Image leads; type supports — the same hierarchy you see in high-end contemporary gallery sites.</p>
+                    <a class="catalog-cta" href="#clusters">Back to gallery →</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="band band--alt band--catalogue" id="about">
+            <div class="catalog-stack">
+                <header class="catalog-section-head">
+                    <p class="section-kicker">Studio</p>
+                    <h2 class="section-title">About</h2>
+                </header>
+                <div class="catalog-panel catalog-panel--about">
+                    <blockquote class="catalog-quote"><strong>By Alisa Khru</strong> is a contemporary gallery demo: esoteric surfaces, archival grain, and one electric accent on monochrome matter — a browser-native nod to exhibition design.</blockquote>
+                    <p class="catalog-meta">Catalogue specimen · demonstration only</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="band band--catalogue" id="contact">
+            <div class="catalog-stack catalog-stack--wide">
+                <header class="catalog-section-head">
+                    <p class="section-kicker">Enquiries</p>
+                    <h2 class="section-title">Contact</h2>
+                </header>
+                <div class="catalog-panel catalog-panel--contact">
+                    <p class="catalog-lead">Commission and catalogue enquiries. This form is part of the demo only — it does not transmit mail or store data.</p>
+                    <form class="demo-contact" action="#" method="post" aria-label="Demo enquiry form">
+                        <p class="demo-contact__hint" id="demoFormNote">Demonstration UI only — nothing leaves this page.</p>
+                        <div>
+                            <label for="demoName">Name</label>
+                            <input id="demoName" name="name" type="text" autocomplete="off" aria-describedby="demoFormNote" />
+                        </div>
+                        <div>
+                            <label for="demoEmail">Email</label>
+                            <input id="demoEmail" name="email" type="email" autocomplete="off" aria-describedby="demoFormNote" />
+                        </div>
+                        <div>
+                            <label for="demoMsg">Message</label>
+                            <textarea id="demoMsg" name="message" aria-describedby="demoFormNote"></textarea>
+                        </div>
+                        <button type="button" id="demoSendBtn">Send enquiry (demo)</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section class="band band--alt band--catalogue" id="archive">
+            <div class="catalog-stack">
+                <header class="catalog-section-head">
+                    <p class="section-kicker">Past</p>
+                    <h2 class="section-title">Archive</h2>
+                </header>
+                <div class="catalog-panel">
+                    <p class="catalog-lead">Past exhibitions and sold works sit in the studio archive. Catalogue access is by appointment. This section stays inside the demo — no external accounts or logins.</p>
+                    <a class="catalog-cta" href="#clusters">Browse works in gallery →</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p class="site-footer__line">By Alisa Khru · gallery demo</p>
+        <p class="site-footer__line">Museum catalogue layout</p>
+    </footer>
+
+    <script>
+    (function () {
+        var overlay = document.getElementById('menuOverlay');
+        var openBtn = document.getElementById('menuOpen');
+        var closeBtn = document.getElementById('menuClose');
+        var heroSection = document.getElementById('heroIntro');
+        var heroInner = document.getElementById('heroInner');
+        var heroGlow = document.getElementById('heroCursorGlow');
+        var heroMenuBtn = document.getElementById('heroMenuBtn');
+        if (!overlay || !openBtn || !closeBtn) return;
+
+        var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function scrollToSectionId(id) {
+            var smooth = reducedMotion ? 'auto' : 'smooth';
+            if (id === 'top') {
+                window.scrollTo({ top: 0, behavior: smooth });
+                return;
+            }
+            var target = document.getElementById(id);
+            if (target) target.scrollIntoView({ behavior: smooth, block: 'start' });
+            else window.location.hash = '#' + id;
+        }
+
+        function openMenu() {
+            overlay.removeAttribute('hidden');
+            overlay.classList.add('is-open');
+            document.body.classList.add('menu-lock');
+            openBtn.setAttribute('aria-expanded', 'true');
+            closeBtn.focus();
+        }
+
+        function closeMenu(returnFocusToMenuBtn) {
+            var refocus = returnFocusToMenuBtn !== false;
+            overlay.classList.remove('is-open');
+            document.body.classList.remove('menu-lock');
+            openBtn.setAttribute('aria-expanded', 'false');
+            window.setTimeout(function () {
+                overlay.setAttribute('hidden', '');
+                if (refocus) openBtn.focus();
+            }, 350);
+        }
+
+        openBtn.addEventListener('click', openMenu);
+        closeBtn.addEventListener('click', function () { closeMenu(true); });
+        if (heroMenuBtn) {
+            heroMenuBtn.addEventListener('click', function () { openMenu(); });
+        }
+        overlay.addEventListener('click', function (e) {
+            if (e.target === overlay) closeMenu(true);
+        });
+
+        overlay.querySelectorAll('nav a').forEach(function (a) {
+            a.addEventListener('click', function (e) {
+                var href = a.getAttribute('href') || '';
+                if (href.charAt(0) !== '#' || href.length < 2) return;
+                e.preventDefault();
+                var id = href.slice(1);
+                closeMenu(false);
+                window.requestAnimationFrame(function () { scrollToSectionId(id); });
+            });
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeMenu(true);
+        });
+
+        function bindInPageAnchor(el) {
+            if (!el) return;
+            el.addEventListener('click', function (e) {
+                var href = el.getAttribute('href') || '';
+                if (href.charAt(0) !== '#' || href.length < 2) return;
+                e.preventDefault();
+                var id = href.slice(1);
+                if (overlay.classList.contains('is-open')) closeMenu(false);
+                window.requestAnimationFrame(function () { scrollToSectionId(id); });
+            });
+        }
+
+        bindInPageAnchor(document.querySelector('.top-logo'));
+        document.querySelectorAll('.top-actions a[href^="#"]').forEach(bindInPageAnchor);
+        document.querySelectorAll('.catalog-cta[href^="#"], footer a[href^="#"], .hero__btn[href^="#"]').forEach(bindInPageAnchor);
+        bindInPageAnchor(document.querySelector('a.hero__scroll'));
+        if (heroSection && heroInner && heroGlow && !reducedMotion) {
+            var rafId;
+            heroSection.addEventListener('mousemove', function (e) {
+                var rect = heroSection.getBoundingClientRect();
+                var x = e.clientX - rect.left;
+                var y = e.clientY - rect.top;
+                var px = (x / rect.width) - 0.5;
+                var py = (y / rect.height) - 0.5;
+                if (rafId) cancelAnimationFrame(rafId);
+                rafId = requestAnimationFrame(function () {
+                    heroInner.style.transform = 'translate3d(' + (px * 10).toFixed(2) + 'px, ' + (py * 8).toFixed(2) + 'px, 0)';
+                    heroGlow.style.left = x.toFixed(1) + 'px';
+                    heroGlow.style.top = y.toFixed(1) + 'px';
+                });
+            });
+            heroSection.addEventListener('mouseleave', function () {
+                heroInner.style.transform = 'translate3d(0,0,0)';
+                heroGlow.style.opacity = '0';
+            });
+            heroSection.addEventListener('mouseenter', function () {
+                heroGlow.style.opacity = '1';
+            });
+        }
+
+        var slides = document.querySelectorAll('.carousel-row__slide');
+        var dotsWrap = document.getElementById('carDots');
+        var carPrev = document.getElementById('carPrev');
+        var carNext = document.getElementById('carNext');
+        var idx = 0;
+
+        function show(i) {
+            if (!slides.length) return;
+            idx = (i + slides.length) % slides.length;
+            slides.forEach(function (s, j) { s.classList.toggle('is-on', j === idx); });
+            if (dotsWrap) {
+                dotsWrap.querySelectorAll('button').forEach(function (d, j) {
+                    d.classList.toggle('on', j === idx);
+                    d.setAttribute('aria-selected', j === idx ? 'true' : 'false');
+                });
+            }
+        }
+
+        if (dotsWrap && slides.length) {
+            slides.forEach(function (_, i) {
+                var b = document.createElement('button');
+                b.type = 'button';
+                b.setAttribute('aria-label', 'Slide ' + (i + 1));
+                b.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+                b.setAttribute('role', 'tab');
+                b.addEventListener('click', function () { show(i); resetCar(); });
+                if (i === 0) b.classList.add('on');
+                dotsWrap.appendChild(b);
+            });
+        }
+
+        if (carPrev) carPrev.addEventListener('click', function () { show(idx - 1); resetCar(); });
+        if (carNext) carNext.addEventListener('click', function () { show(idx + 1); resetCar(); });
+
+        var carTimer;
+        function resetCar() {
+            clearInterval(carTimer);
+            if (!reducedMotion && slides.length) carTimer = setInterval(function () { show(idx + 1); }, 7000);
+        }
+        resetCar();
+
+        var demoForm = document.querySelector('.demo-contact');
+        var demoBtn = document.getElementById('demoSendBtn');
+        if (demoForm) {
+            demoForm.addEventListener('submit', function (e) { e.preventDefault(); });
+        }
+        if (demoBtn) {
+            demoBtn.addEventListener('click', function () {
+                var t = demoBtn.textContent;
+                demoBtn.textContent = 'Demo only — not sent';
+                demoBtn.disabled = true;
+                window.setTimeout(function () {
+                    demoBtn.textContent = t;
+                    demoBtn.disabled = false;
+                }, 2200);
+            });
+        }
+    })();
+    </script>
+</body>
+</html>

@@ -34,6 +34,11 @@
         color: #5b4f42;
     }
 
+    .page-inner--projects .projects-count {
+        color: #6b5d4d;
+        margin-bottom: 0.75rem;
+    }
+
     .page-inner--projects .projects-filter {
         top: 74px;
         padding: .9rem;
@@ -137,6 +142,8 @@
 
     <section class="projects-showcase">
         <div class="container container--projects-wide">
+            <p class="projects-count" id="projectsCountEl" aria-live="polite"></p>
+
             <div class="projects-filter" role="tablist">
                 <button class="filter-btn active" data-filter="all" aria-selected="true">All</button>
                 <button class="filter-btn" data-filter="ecommerce">E-Commerce</button>
@@ -160,6 +167,12 @@
 @section Scripts {
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    const countEl = document.getElementById('projectsCountEl');
+    if (countEl) {
+        const total = document.querySelectorAll('.projects-showcase .project-card-modern[data-category]').length;
+        if (total > 0) countEl.textContent = total + '+ projects';
+    }
+
     const filterBtns = document.querySelectorAll('.filter-btn');
     const cards = document.querySelectorAll('.project-card-modern[data-category]');
 

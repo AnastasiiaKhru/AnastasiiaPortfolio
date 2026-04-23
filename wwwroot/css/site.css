@@ -84,6 +84,12 @@ html {
     position: relative;
     min-height: 100%;
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+img, video, svg, canvas {
+    max-width: 100%;
+    height: auto;
 }
 
 /* Glass panels: let interactive bg show through on non-hero pages */
@@ -103,7 +109,9 @@ body {
     color: var(--pepper);
     margin: 0;
     padding: 0;
-    padding-top: 72px;
+    padding-top: 88px;
+    padding-left: env(safe-area-inset-left, 0);
+    padding-right: env(safe-area-inset-right, 0);
     overflow-x: hidden;
     background: var(--bg-subtle);
     min-height: 100vh;
@@ -272,7 +280,8 @@ a:hover {
     left: 0;
     right: 0;
     z-index: var(--z-index-fixed);
-    padding: 0.4rem var(--spacing-6);
+    padding: 0.4rem max(var(--spacing-6), env(safe-area-inset-right, 0px)) 0.4rem max(var(--spacing-6), env(safe-area-inset-left, 0px));
+    padding-top: max(0.4rem, env(safe-area-inset-top, 0px));
     min-height: 78px;
     transition: background var(--transition-medium), box-shadow var(--transition-medium), border-color var(--transition-medium);
 }
@@ -697,7 +706,7 @@ a:hover {
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
-    padding: 0 var(--spacing-6);
+    padding: 0 max(var(--spacing-6), env(safe-area-inset-right, 0px)) 0 max(var(--spacing-6), env(safe-area-inset-left, 0px));
 }
 
 .projects-filter {
@@ -739,7 +748,13 @@ a:hover {
 }
 
 .projects-count {
-    display: none; /* Project count removed from filter area */
+    display: block;
+    text-align: center;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--mid-grey);
+    margin: 0 0 var(--spacing-3);
+    letter-spacing: 0.02em;
 }
 
 .projects-scroll-hint {
@@ -785,21 +800,18 @@ a:hover {
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
     gap: var(--spacing-8);
     align-items: stretch;
 }
-
-/* Project order priority (shown first in "All") */
-.projects-page .project-card--priority-1 { order: -3; }
-.projects-page .project-card--priority-2 { order: -2; }
-.projects-page .project-card--priority-3 { order: -1; }
 
 .project-card-modern.filtered-out {
     display: none;
 }
 
+/* Grid order follows markup: project 1 first. (Priority-* classes are visual only.) */
 .projects-grid .project-card-modern {
+    order: 0;
     animation: projectCardIn 0.5s ease both;
     --card-padding: var(--spacing-6);
     height: 100%;
@@ -832,15 +844,15 @@ a:hover {
     align-content: start;
 }
 
-.project-card-modern[data-project="01"] { animation-delay: 0.05s; }
-.project-card-modern[data-project="02"] { animation-delay: 0.1s; }
-.project-card-modern[data-project="03"] { animation-delay: 0.15s; }
-.project-card-modern[data-project="04"] { animation-delay: 0.2s; }
-.project-card-modern[data-project="05"] { animation-delay: 0.25s; }
-.project-card-modern[data-project="06"] { animation-delay: 0.3s; }
-.project-card-modern[data-project="07"] { animation-delay: 0.35s; }
-.project-card-modern[data-project="08"] { animation-delay: 0.4s; }
-.project-card-modern[data-project="09"] { animation-delay: 0.45s; }
+.project-card-modern[data-project="1"] { animation-delay: 0.05s; }
+.project-card-modern[data-project="2"] { animation-delay: 0.1s; }
+.project-card-modern[data-project="3"] { animation-delay: 0.15s; }
+.project-card-modern[data-project="4"] { animation-delay: 0.2s; }
+.project-card-modern[data-project="5"] { animation-delay: 0.25s; }
+.project-card-modern[data-project="6"] { animation-delay: 0.3s; }
+.project-card-modern[data-project="7"] { animation-delay: 0.35s; }
+.project-card-modern[data-project="8"] { animation-delay: 0.4s; }
+.project-card-modern[data-project="9"] { animation-delay: 0.45s; }
 .project-card-modern[data-project="10"] { animation-delay: 0.5s; }
 .project-card-modern[data-project="11"] { animation-delay: 0.55s; }
 .project-card-modern[data-project="12"] { animation-delay: 0.6s; }
@@ -849,6 +861,7 @@ a:hover {
 .project-card-modern[data-project="15"] { animation-delay: 0.75s; }
 .project-card-modern[data-project="16"] { animation-delay: 0.8s; }
 .project-card-modern[data-project="17"] { animation-delay: 0.85s; }
+.project-card-modern[data-project="18"] { animation-delay: 0.9s; }
 
 .project-card-modern::before {
     content: '';
@@ -3211,6 +3224,20 @@ textarea:focus-visible {
     transform: scale(1.05);
 }
 
+/* Gallery catalogue project card — museum wall preview, tonal match to demo */
+.project-preview__frame-wrap--gallery-catalogue .wp-preview__img {
+    filter: grayscale(92%) contrast(1.14) brightness(0.86);
+    object-position: center 38%;
+}
+
+.project-preview__frame-wrap--gallery-catalogue:hover .wp-preview__img {
+    filter: grayscale(58%) contrast(1.12) brightness(0.91);
+}
+
+.project-preview__frame-wrap--gallery-catalogue .wp-preview__overlay {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.38) 48%, transparent 100%);
+}
+
 .wp-preview__overlay {
     position: absolute;
     top: 0;
@@ -3228,6 +3255,10 @@ textarea:focus-visible {
 
 .project-preview__frame-wrap:hover .wp-preview__overlay {
     background: linear-gradient(180deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.15) 60%, transparent 100%);
+}
+
+.project-preview__frame-wrap--gallery-catalogue:hover .wp-preview__overlay {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.78) 0%, rgba(0, 0, 0, 0.42) 52%, transparent 100%);
 }
 
 .wp-preview__domain {
