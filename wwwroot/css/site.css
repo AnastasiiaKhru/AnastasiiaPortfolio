@@ -344,23 +344,15 @@ a:hover {
 
 .navbar-logo {
     display: block;
-    width: 78px;
     height: 52px;
+    width: auto;
     max-width: none !important;
     margin-top: 0;
-    background-color: #0f172a;
-    -webkit-mask-image: url('/images/logo-ak-mark.png');
-    mask-image: url('/images/logo-ak-mark.png');
-    -webkit-mask-size: contain;
-    mask-size: contain;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-position: left center;
-    mask-position: left center;
+    object-fit: contain;
 }
 
 .navbar-brand:hover .navbar-logo {
-    background-color: #020617;
+    opacity: 0.88;
 }
 
 .nav-link {
@@ -2810,8 +2802,8 @@ a:hover {
     }
 
     .navbar-logo {
-        width: 66px;
         height: 44px;
+        width: auto;
         margin-top: 0;
     }
 
