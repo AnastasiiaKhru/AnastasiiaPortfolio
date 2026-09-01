@@ -122,11 +122,11 @@
             border-radius: 30px;
             overflow: hidden;
             aspect-ratio: 4/5;
-            border: 1px solid rgba(255, 255, 255, 0.45);
+            border: none;
             box-shadow: 0 30px 70px -20px rgba(2, 6, 23, 0.88);
             transform: perspective(1100px) rotateY(-8deg) rotateX(2deg);
             transition: transform 0.4s ease, box-shadow 0.4s ease;
-            background: #ece8e4;
+            background: #f3eeea;
             animation: heroFadeUp 0.9s ease 0.22s both;
         }
 
@@ -135,14 +135,17 @@
             box-shadow: 0 38px 92px -16px rgba(2, 6, 23, 0.95);
         }
 
-        .hero-portrait img {
+        .hero-portrait img,
+        .hero-portrait-img {
             position: absolute;
             inset: 0;
             width: 100%;
-            height: 100%;
+            height: 100% !important;
             max-width: none;
             object-fit: cover;
-            object-position: center 22%;
+            object-position: center 12%;
+            transform: scale(1.04);
+            transform-origin: center center;
             display: block;
         }
 
@@ -157,6 +160,24 @@
             pointer-events: none;
             z-index: -1;
             animation: heroGlowPulse 4s ease-in-out infinite;
+        }
+
+        .hero-featured {
+            margin-top: 1rem;
+            font-size: 0.92rem;
+            color: #475569;
+            line-height: 1.6;
+        }
+
+        .hero-featured a {
+            color: #0f172a;
+            font-weight: 600;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .hero-featured a:hover {
+            color: #b45309;
         }
 
         .hero-section .hero-btn-group {
@@ -378,11 +399,16 @@
                         <i class="fab fa-linkedin"></i>Connect on LinkedIn
                     </a>
                 </div>
+                <p class="hero-featured mb-0" data-motion-after-typewriter>
+                    Featured client work:
+                    <a href="https://www.one80revolution.com/pages/contact" target="_blank" rel="noopener">ONE80 Revolution</a>
+                    — Shopify storefront I designed &amp; built.
+                </p>
             </div>
             <div class="col-lg-5 col-md-5 order-lg-2 mt-3 mt-md-0" data-motion-float>
                 <div class="hero-image">
                     <div class="hero-portrait" role="img" aria-label="Portrait photo of Anastasiia">
-                        <img src="/images/hero-image.png" alt="Anastasiia portrait photo" class="hero-portrait-img" data-skip-global-img>
+                        <img src="/images/hero-image.png?v=2" alt="Anastasiia portrait photo" class="hero-portrait-img" data-skip-global-img>
                     </div>
                     <div class="hero-portrait-glow" aria-hidden="true"></div>
                 </div>

@@ -90,7 +90,7 @@ html {
     -webkit-text-size-adjust: 100%;
 }
 
-img:not(.navbar-logo):not([data-skip-global-img]), video, svg, canvas {
+img:not(.navbar-logo):not([data-skip-global-img]):not(.wp-preview__img):not(.project-preview__img):not(.hero-portrait-img), video, svg, canvas {
     max-width: 100%;
     height: auto;
 }
@@ -989,10 +989,9 @@ a:hover {
     transform-origin: center center;
 }
 
-.project-card-modern:hover .project-card__preview img,
+.project-card-modern:hover .project-card__preview img:not(.wp-preview__img):not(.project-preview__img),
 .project-card-modern:hover .project-card__preview iframe,
-.project-card-modern:hover .project-card__preview .preview-scene,
-.project-card-modern:hover .project-card__preview .game-preview-link {
+.project-card-modern:hover .project-card__preview .preview-scene {
     transform: scale(1.05);
 }
 
@@ -1194,7 +1193,8 @@ a:hover {
 .project-preview__img {
     width: 100%;
     height: 100%;
-    min-height: 220px;
+    min-height: 100%;
+    max-width: none;
     object-fit: cover;
     object-position: center top;
     display: block;
@@ -1238,8 +1238,9 @@ a:hover {
         max-height: 180px;
     }
 
-    .project-preview__img {
-        min-height: 180px;
+    .project-preview__img,
+    .wp-preview__img {
+        min-height: 100%;
     }
 }
 
@@ -3319,17 +3320,22 @@ textarea:focus-visible {
 .project-preview__frame-wrap--wp-img .project-preview__img-link {
     position: absolute;
     inset: 0;
+    overflow: hidden;
 }
 
 .wp-preview__img {
     width: 100%;
     height: 100%;
+    min-height: 100%;
+    max-width: none;
     object-fit: cover;
+    object-position: center top;
+    display: block;
     transition: transform 0.4s ease;
 }
 
 .project-preview__frame-wrap--wp-img:hover .wp-preview__img {
-    transform: scale(1.05);
+    transform: scale(1.03);
 }
 
 /* Gallery catalogue project card — museum wall preview, tonal match to demo */
