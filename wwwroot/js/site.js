@@ -22,6 +22,89 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    const revealStaggeredMotion = (scope = document) => {
+        scope.querySelectorAll('[data-motion-after-typewriter]').forEach((node, index) => {
+            node.classList.add('motion-after-typewriter');
+            node.style.setProperty('--motion-delay', `${index * 110 + 90}ms`);
+        });
+
+        const floatTarget = scope.querySelector('[data-motion-float]');
+        if (floatTarget) {
+            floatTarget.classList.add('motion-float-in');
+        }
+    };
+
+    const initRotatingWords = () => {
+        if (prefersReduced) return;
+
+        document.querySelectorAll('[data-rotate-words]').forEach((container) => {
+            const words = (container.getAttribute('data-rotate-words') || '')
+                .split('|')
+                .map((word) => word.trim())
+                .filter(Boolean);
+
+            if (words.length <= 1) return;
+
+            let index = 0;
+            const firstWord = container.querySelector('.hero-rotate__word');
+            if (firstWord) {
+                firstWord.textContent = words[0];
+            }
+
+            window.setInterval(() => {
+                const current = container.querySelector('.hero-rotate__word.is-active');
+                if (!current) return;
+
+                current.classList.remove('is-active');
+                current.classList.add('is-exiting');
+
+                window.setTimeout(() => {
+                    index = (index + 1) % words.length;
+                    current.remove();
+
+                    const next = document.createElement('span');
+                    next.className = 'hero-rotate__word is-active';
+                    next.textContent = words[index];
+                    container.appendChild(next);
+                }, 520);
+            }, 3600);
+        });
+    };
+
+    const initHomeHeroMotion = () => {
+        if (!document.body.classList.contains('page-home')) return;
+
+        window.setTimeout(() => {
+            const hero = document.querySelector('.hero-section');
+            if (hero) revealStaggeredMotion(hero);
+        }, prefersReduced ? 0 : 480);
+    };
+
+    const initPreviewReveal = () => {
+        const previews = document.querySelectorAll('.project-card__preview');
+        if (!previews.length) return;
+
+        previews.forEach((preview, index) => {
+            preview.classList.add('preview-reveal');
+            preview.style.setProperty('--preview-reveal-delay', `${Math.min(index % 8, 7) * 70}ms`);
+        });
+
+        if (prefersReduced) {
+            previews.forEach((preview) => preview.classList.add('is-revealed'));
+            return;
+        }
+
+        const previewObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('is-revealed');
+                previewObserver.unobserve(entry.target);
+            });
+        }, { threshold: 0.2, rootMargin: '0px 0px -6% 0px' });
+
+        previews.forEach((preview) => previewObserver.observe(preview));
+    };
+
     const initTypewriters = () => {
         document.querySelectorAll('[data-typewriter]').forEach((el, index) => {
             const text = (el.getAttribute('data-typewriter-text') || el.textContent || '').trim();
@@ -121,8 +204,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     initTypewriters();
+    initRotatingWords();
+    initHomeHeroMotion();
     initMagneticButtons();
     initScrollTextFade();
+    initPreviewReveal();
 
     // Scroll progress bar
     const scrollProgress = document.createElement('div');

@@ -2,11 +2,18 @@
 
 @{
     ViewData["Title"] = "Home";
+    ViewData["BodyClass"] = "page-home";
 }
 
 @section Styles {
     <style>
         /* Modern premium hero */
+
+        .page-home .hero-section {
+            margin-top: calc(-1 * var(--navbar-height, 80px));
+            padding-top: calc(var(--navbar-height, 80px) + clamp(0.9rem, 2vh, 1.5rem));
+            min-height: 100vh;
+        }
 
         .hero-section {
             padding: clamp(0.9rem, 2vh, 1.5rem) 0;
@@ -78,17 +85,51 @@
             animation: heroFadeUp 0.7s ease both;
         }
 
-        .hero-section .display-4 {
+        .hero-headline {
             font-size: clamp(2rem, 1.4rem + 2.4vw, 3.3rem);
             font-weight: 800;
             color: #0f172a;
             letter-spacing: -0.04em;
             margin-bottom: 1rem;
             text-shadow: 0 8px 20px rgba(148, 163, 184, 0.22);
+            line-height: 1.12;
         }
 
-        .hero-section .display-4:not(.typewriter-host) {
+        .hero-headline:not(.motion-before-typewriter) {
             animation: heroFadeUp 0.8s ease 0.08s both;
+        }
+
+        .hero-rotate {
+            display: inline-block;
+            position: relative;
+            vertical-align: bottom;
+            min-width: min(100%, 14ch);
+            height: 1.12em;
+            overflow: hidden;
+            color: #b45309;
+        }
+
+        .hero-rotate__word {
+            display: block;
+            position: absolute;
+            left: 0;
+            right: 0;
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateY(110%);
+            transition:
+                opacity 0.55s var(--ease-motion, cubic-bezier(0.16, 1, 0.3, 1)),
+                transform 0.55s var(--ease-motion, cubic-bezier(0.16, 1, 0.3, 1));
+        }
+
+        .hero-rotate__word.is-active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-rotate__word.is-exiting {
+            opacity: 0;
+            transform: translateY(-110%);
         }
 
         [data-motion-after-typewriter] {
@@ -320,7 +361,7 @@
         @@media (max-width: 768px) {
             .hero-section { min-height: auto; padding: var(--spacing-6) 0; }
             .hero-section .container { padding: var(--spacing-5) var(--spacing-4); }
-            .hero-section .display-4 { font-size: clamp(1.5rem, 4vw, 2rem); }
+            .hero-section .hero-headline { font-size: clamp(1.5rem, 4vw, 2rem); }
             .hero-section .lead { font-size: var(--font-size-base); }
             .hero-image { max-width: 270px; margin: 0.5rem auto 0; }
             .hero-portrait,
@@ -341,7 +382,7 @@
             .hero-section .container {
                 padding: 1rem;
             }
-            .hero-section .display-4 {
+            .hero-section .hero-headline {
                 font-size: clamp(1.8rem, 1.2rem + 1.8vw, 2.7rem);
                 margin-bottom: .6rem;
             }
@@ -361,7 +402,13 @@
         <div class="row align-items-center">
             <div class="col-lg-7 col-md-7 order-lg-1">
                 <div class="hero-kicker" data-motion-before-typewriter>Portfolio 2026</div>
-                <h1 class="display-4" data-typewriter data-typewriter-text="Building elegant digital experiences that perform." data-typewriter-speed="52" data-typewriter-delay="400"></h1>
+                <h1 class="display-4 hero-headline" data-motion-before-typewriter>
+                    Building elegant
+                    <span class="hero-rotate" data-rotate-words="digital experiences|Shopify storefronts|web applications|high-performance sites" aria-live="polite">
+                        <span class="hero-rotate__word is-active">digital experiences</span>
+                    </span>
+                    that perform.
+                </h1>
                 <p class="lead" data-motion-after-typewriter>Transforming complex ideas into elegant, high-performance web solutions.</p>
                 <p class="lead mb-0" data-motion-after-typewriter>Full-stack developer with 5+ years of experience and a foundation in customer service, operations, and management.</p>
                 <div class="hero-btn-group" data-motion-after-typewriter>
