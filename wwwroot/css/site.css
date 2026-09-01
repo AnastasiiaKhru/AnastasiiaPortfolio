@@ -349,6 +349,8 @@ a:hover {
     display: block;
     object-fit: contain;
     margin-top: 0;
+    filter: brightness(0) saturate(100%) contrast(1.15);
+    opacity: 1;
 }
 
 .nav-link {
@@ -3616,4 +3618,109 @@ body.motion-enabled::after {
     .js-enhanced .reveal-ready {
         filter: none;
     }
+
+    [data-motion-after-typewriter] {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* Typewriter + Shopify-style page entrance motion */
+.typewriter-host {
+    display: grid;
+    position: relative;
+}
+
+.typewriter-measure,
+.typewriter-line {
+    grid-area: 1 / 1;
+}
+
+.typewriter-measure {
+    visibility: hidden;
+    pointer-events: none;
+    user-select: none;
+}
+
+.typewriter-line {
+    align-self: start;
+}
+
+.typewriter-cursor {
+    display: inline-block;
+    width: 3px;
+    height: 0.9em;
+    margin-left: 3px;
+    background: linear-gradient(180deg, #f59e0b, #fbbf24);
+    border-radius: 2px;
+    vertical-align: -0.08em;
+    animation: typewriterBlink 0.72s step-end infinite;
+}
+
+.typewriter-cursor.is-done {
+    animation: typewriterBlink 0.72s step-end 4;
+    opacity: 0;
+}
+
+@keyframes typewriterBlink {
+    50% { opacity: 0; }
+}
+
+[data-motion-before-typewriter] {
+    opacity: 0;
+    transform: translateY(14px);
+}
+
+[data-motion-before-typewriter].motion-before-typewriter {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-motion-after-typewriter] {
+    opacity: 0;
+    transform: translateY(22px);
+    filter: blur(4px);
+}
+
+[data-motion-after-typewriter].motion-after-typewriter {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition:
+        opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.7s ease;
+    transition-delay: var(--motion-delay, 0ms);
+}
+
+[data-motion-float] {
+    opacity: 0;
+    transform: translateX(28px) scale(0.96);
+}
+
+[data-motion-float].motion-float-in {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: 0.35s;
+}
+
+.btn.is-magnetic,
+.filter-btn.is-magnetic {
+    transform: translate3d(var(--magnetic-x, 0), var(--magnetic-y, 0), 0);
+    transition: transform 0.18s ease-out, box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+
+.page-header::before {
+    animation: pageHeaderShimmer 9s ease-in-out infinite;
+}
+
+@keyframes pageHeaderShimmer {
+    0%, 100% { opacity: 1; transform: translateX(0); }
+    50% { opacity: 0.82; transform: translateX(1.5%); }
+}
+
+.hero-section .typewriter-complete + .lead {
+    margin-top: 0;
 }
