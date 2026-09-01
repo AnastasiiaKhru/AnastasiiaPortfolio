@@ -7,13 +7,31 @@
     .page-inner--resume {
         position: relative;
         background:
-            radial-gradient(circle at 10% 12%, rgba(251, 191, 36, 0.08), transparent 38%),
-            radial-gradient(circle at 90% 4%, rgba(148, 163, 184, 0.1), transparent 34%),
+            radial-gradient(circle at 12% 15%, rgba(148, 163, 184, 0.1), transparent 40%),
+            radial-gradient(circle at 88% 5%, rgba(203, 213, 225, 0.11), transparent 36%),
             linear-gradient(160deg, #f8fafc 0%, #f8f7f4 52%, #f7f5f0 100%);
     }
 
+    .page-inner--resume::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0));
+        z-index: 0;
+    }
+
+    .page-inner--resume > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    .page-inner--resume .page-header__title {
+        letter-spacing: -0.03em;
+    }
+
     .page-inner--resume .page-header__lead {
-        max-width: 720px;
+        max-width: 760px;
         color: #5b4f42;
     }
 
@@ -381,8 +399,8 @@
     <header class="page-header">
         <div class="container">
             <p class="page-header__label">Resume</p>
-            <h1 class="page-header__title">Anastasiia Khrustaleva</h1>
-            <p class="page-header__lead">Software Developer · Web &amp; Product Designer — building polished digital products from concept through launch.</p>
+            <h1 class="page-header__title">Professional Resume</h1>
+            <p class="page-header__lead">Software Developer · Web &amp; Product Designer — experience across web development, Shopify, WordPress, UI/UX, and client-facing digital products.</p>
         </div>
     </header>
 
