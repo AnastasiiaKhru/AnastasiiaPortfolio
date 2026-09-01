@@ -72,32 +72,36 @@ public class HomeController : Controller
     public IActionResult ValentineDemo() => View();
     public IActionResult SkyBridgeITDemo() => View();
 
-    private static readonly Dictionary<string, string> DemoFramePages = new(StringComparer.OrdinalIgnoreCase)
+    private record DemoFrameMeta(string Title, string UrlLabel);
+
+    private static readonly Dictionary<string, DemoFrameMeta> DemoFramePages = new(StringComparer.OrdinalIgnoreCase)
     {
-        ["ArtStudioDemo"] = "By Alisa Khru — Gallery Catalogue",
-        ["CakeShopDemo"] = "Sweet Delights Bakery",
-        ["GymCrmDemo"] = "FitHub CRM — Gym Management System",
-        ["LiquorStoreDemo"] = "LUXE SPIRITS — Premium Alcohol Delivery",
-        ["EventWebinarDemo"] = "Event / Webinar Landing Page",
-        ["BrandRefreshDemo"] = "Brand Refresh Case Study",
-        ["AdCreativeDemo"] = "Ad Creative / Banner Set",
-        ["WPBusinessDemo"] = "ConsultPro — WordPress Demo",
-        ["WPLifestyleDemo"] = "WanderLens — WordPress Demo",
-        ["WPWellnessDemo"] = "NurtureWell — WordPress Demo",
-        ["WPConstructionDemo"] = "Heritage Build — WordPress Demo",
-        ["ValentineDemo"] = "Valentine Demo",
-        ["SkyBridgeITDemo"] = "SkyBridge IT Solutions",
+        ["ArtStudioDemo"] = new("By Alisa Khru — Gallery Catalogue", "alisakhru.gallery — catalogue demo"),
+        ["CakeShopDemo"] = new("Sweet Delights Bakery", "sweetdelights.demo - Sweet Delights Bakery"),
+        ["GymCrmDemo"] = new("FitHub CRM — Gym Management System", "fithub.crm - Gym Management System"),
+        ["LiquorStoreDemo"] = new("LUXE SPIRITS — Premium Alcohol Delivery", "luxespirits.demo - Premium Alcohol Delivery"),
+        ["EventWebinarDemo"] = new("Event / Webinar Landing Page", "event.demo - Event / Webinar Landing Page"),
+        ["BrandRefreshDemo"] = new("Brand Refresh Case Study", "brand.demo - Brand Refresh Case Study"),
+        ["AdCreativeDemo"] = new("Ad Creative / Banner Set", "ads.demo - Ad Creative / Banner Set"),
+        ["WPBusinessDemo"] = new("ConsultPro — WordPress Demo", "consultpro.demo - Strategy & Growth"),
+        ["WPLifestyleDemo"] = new("WanderLens — WordPress Demo", "wanderlens.demo - Lifestyle Blog"),
+        ["WPWellnessDemo"] = new("NurtureWell — WordPress Demo", "nurturewell.demo - Wellness Studio"),
+        ["WPConstructionDemo"] = new("Heritage Build — WordPress Demo", "heritagebuild.demo - Construction"),
+        ["ValentineDemo"] = new("Valentine Demo", "valentine.demo - Interactive Card"),
+        ["SkyBridgeITDemo"] = new("SkyBridge IT Solutions", "skybridgeit.demo - IT Consulting"),
     };
 
+    [HttpGet("/Home/DemoFrame/{name}")]
     public IActionResult DemoFrame(string name)
     {
-        if (!DemoFramePages.TryGetValue(name, out var title))
+        if (string.IsNullOrWhiteSpace(name) || !DemoFramePages.TryGetValue(name, out var meta))
             return NotFound();
 
         ViewBag.ForceActiveAction = "Projects";
         ViewBag.DemoSrc = Url.Action(name)!;
-        ViewBag.DemoTitle = title;
-        ViewData["Title"] = title;
+        ViewBag.DemoTitle = meta.Title;
+        ViewBag.DemoUrlLabel = meta.UrlLabel;
+        ViewData["Title"] = meta.Title;
         return View("DemoFrame");
     }
 

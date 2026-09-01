@@ -2,29 +2,16 @@
     Layout = "_DemoChromeLayout";
     var demoTitle = ViewBag.DemoTitle as string ?? "Project Demo";
     var demoSrc = ViewBag.DemoSrc as string ?? "/";
-}
-@section Styles {
-    <style>
-        .demo-chrome-page {
-            overflow: hidden;
-        }
-
-        .demo-chrome-page .navbar {
-            z-index: 10050;
-        }
-
-        .demo-chrome-main {
-            padding-top: var(--navbar-height, 78px);
-        }
-
-        .demo-chrome-frame {
-            display: block;
-            width: 100%;
-            height: calc(100vh - var(--navbar-height, 78px));
-            border: 0;
-            background: #fff;
-        }
-    </style>
+    var demoUrlLabel = ViewBag.DemoUrlLabel as string ?? demoTitle;
 }
 
-<iframe class="demo-chrome-frame" src="@demoSrc" title="@demoTitle"></iframe>
+<div class="demo-page-shell">
+    <div class="demo-page-popup demo-modal__container">
+        <div class="demo-modal__header demo-page-popup__header">
+            <div class="demo-modal__browser-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+            <span class="demo-modal__url">@demoUrlLabel</span>
+            <a asp-controller="Home" asp-action="Projects" class="demo-modal__close" title="Back to Projects"><i class="fas fa-times"></i></a>
+        </div>
+        <iframe class="demo-modal__iframe demo-page-popup__iframe" src="@demoSrc" title="@demoTitle"></iframe>
+    </div>
+</div>

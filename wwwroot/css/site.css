@@ -1900,6 +1900,42 @@ a:hover {
     border: none;
 }
 
+/* Full demo page: portfolio navbar + browser popup */
+.demo-page-shell {
+    min-height: calc(100vh - var(--navbar-height, 78px));
+    padding: 1.25rem 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(circle at 12% 15%, rgba(148, 163, 184, 0.12), transparent 40%),
+        radial-gradient(circle at 88% 5%, rgba(203, 213, 225, 0.14), transparent 36%),
+        linear-gradient(160deg, #f8fafc 0%, #f8f7f4 52%, #f1f5f9 100%);
+}
+
+.demo-page-popup {
+    display: flex;
+    flex-direction: column;
+    width: min(1200px, 100%);
+    height: calc(100vh - var(--navbar-height, 78px) - 2.5rem);
+    max-height: 860px;
+    animation: modalSlideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.demo-page-popup__header {
+    flex-shrink: 0;
+}
+
+.demo-page-popup__iframe {
+    flex: 1;
+    height: auto;
+    min-height: 0;
+}
+
+.demo-chrome-page .demo-chrome-main {
+    padding-top: var(--navbar-height, 78px);
+}
+
 /* Featured project highlight */
 .project-card--featured {
     border: 2px solid rgba(212, 165, 116, 0.3);
