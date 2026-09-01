@@ -5,270 +5,7 @@
 }
 
 @section Styles {
-    <style>
-        .page-inner--contact {
-            position: relative;
-        }
-
-        .contact-page {
-            padding-top: 2rem;
-            padding-bottom: 4rem;
-        }
-
-        .page-inner--contact .page-header__lead {
-            max-width: 760px;
-            color: #5b4f42;
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.25rem;
-            max-width: 680px;
-            margin: 0 auto;
-        }
-
-        @@media (max-width: 768px) {
-            .contact-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Contact Info Card */
-        .contact-info-card {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 250, 242, 0.85));
-            backdrop-filter: blur(14px);
-            border-radius: 1.5rem;
-            padding: 2rem;
-            border: 1px solid rgba(191, 161, 106, 0.22);
-            box-shadow: 0 18px 38px rgba(15, 23, 42, 0.1);
-            height: fit-content;
-        }
-
-        .contact-info-card h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #1e293b;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .contact-info-card h3::before {
-            content: '';
-            width: 4px;
-            height: 24px;
-            background: linear-gradient(180deg, #f59e0b, #fbbf24);
-            border-radius: 2px;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-        }
-
-        .contact-item:last-child {
-            border-bottom: none;
-        }
-
-        .contact-item-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            flex-shrink: 0;
-        }
-
-        .contact-item-icon.email {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.06));
-            color: #b45309;
-        }
-
-        .contact-item-icon.location {
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(168, 85, 247, 0.05));
-            color: #7e22ce;
-        }
-
-        .contact-item-icon.phone {
-            background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(34, 197, 94, 0.05));
-            color: #15803d;
-        }
-
-        .contact-item-content {
-            flex: 1;
-        }
-
-        .contact-item-label {
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #64748b;
-            margin-bottom: 0.25rem;
-        }
-
-        .contact-item-value {
-            font-size: 1rem;
-            font-weight: 500;
-            color: #1e293b;
-        }
-
-        .contact-item-value a {
-            color: #1e293b;
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .contact-item-value a:hover {
-            color: #a16207;
-        }
-
-        .quick-actions {
-            margin-top: 1.25rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.6rem;
-        }
-
-        .quick-action {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.45rem;
-            text-decoration: none;
-            font-size: 0.88rem;
-            font-weight: 600;
-            color: #1f2937;
-            background: rgba(255, 255, 255, 0.85);
-            border: 1px solid rgba(191, 161, 106, 0.28);
-            border-radius: 0.75rem;
-            min-height: 40px;
-            transition: all 0.2s ease;
-        }
-
-        .quick-action:hover {
-            transform: translateY(-1px);
-            background: rgba(255, 248, 230, 0.95);
-            border-color: rgba(191, 161, 106, 0.48);
-            color: #111827;
-        }
-
-        .response-note {
-            margin-top: 1rem;
-            font-size: 0.83rem;
-            color: #7a6650;
-            text-align: center;
-        }
-
-        /* Social Section */
-        .social-section {
-            text-align: center;
-            margin-top: 2.3rem;
-            padding-top: 2rem;
-        }
-
-        .social-section h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #1e293b;
-            margin-bottom: 1.5rem;
-        }
-
-        .social-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .social-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem 2rem;
-            border-radius: 1rem;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.3s;
-            min-width: 200px;
-            justify-content: center;
-        }
-
-        .social-btn i {
-            font-size: 1.25rem;
-        }
-
-        .social-btn.linkedin {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(251, 191, 36, 0.06));
-            color: #92400e;
-            border: 1px solid rgba(180, 120, 24, 0.26);
-        }
-
-        .social-btn.linkedin:hover {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: #fff;
-            border-color: #d97706;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 26px rgba(217, 119, 6, 0.32);
-        }
-
-        .social-btn.github {
-            background: linear-gradient(135deg, rgba(148, 163, 184, 0.16), rgba(148, 163, 184, 0.08));
-            color: #334155;
-            border: 1px solid rgba(100, 116, 139, 0.24);
-        }
-
-        .social-btn.github:hover {
-            background: #334155;
-            color: #fff;
-            border-color: #334155;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 26px rgba(51, 65, 85, 0.28);
-        }
-
-        /* Availability Badge */
-        .availability-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            border-radius: 2rem;
-            color: #15803d;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-top: 1.5rem;
-        }
-
-        .availability-badge::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: #22c55e;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        @@keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.2); }
-        }
-
-        @@media (max-width: 520px) {
-            .quick-actions {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="~/css/contact-page.css" asp-append-version="true" />
 }
 
 <div class="page-inner page-inner--contact">
@@ -276,76 +13,141 @@
         <div class="container">
             <p class="page-header__label" data-motion-before-typewriter>Contact</p>
             <h1 class="page-header__title text-gradient-motion" data-typewriter data-typewriter-text="Get in Touch" data-typewriter-speed="56"></h1>
-            <p class="page-header__lead" data-motion-after-typewriter>I'd love to hear from you. Let's discuss your project or just say hello. Available for freelance, contract, and long-term collaboration opportunities.</p>
+            <p class="page-header__lead" data-motion-after-typewriter>Have a project in mind, need a Shopify or WordPress build, or want to collaborate? Send a message — I typically reply within 24 hours.</p>
         </div>
     </header>
 
-    <div class="container contact-page">
-        <!-- Contact Grid -->
-        <div class="contact-grid">
-            <!-- Contact Information -->
-            <div class="contact-info-card">
-            <h3>Contact Information</h3>
-            
-            <div class="contact-item">
-                <div class="contact-item-icon email">
-                    <i class="fas fa-envelope"></i>
-                </div>
-                <div class="contact-item-content">
-                    <div class="contact-item-label">Email</div>
-                    <div class="contact-item-value">
-                        <a href="mailto:nastiakhru@gmail.com">nastiakhru@gmail.com</a>
+    <section class="contact-showcase" aria-label="Contact options">
+        <div class="container contact-page">
+            <div class="contact-highlights">
+                <article class="contact-highlight reveal-ready">
+                    <span class="contact-highlight__icon" aria-hidden="true"><i class="fas fa-clock"></i></span>
+                    <p class="contact-highlight__title">Fast response</p>
+                    <p class="contact-highlight__text">Usually replies within 24 hours on business days.</p>
+                </article>
+                <article class="contact-highlight reveal-ready">
+                    <span class="contact-highlight__icon" aria-hidden="true"><i class="fas fa-globe-americas"></i></span>
+                    <p class="contact-highlight__title">Remote-friendly</p>
+                    <p class="contact-highlight__text">Based in Niagara Region, Canada — working with clients worldwide.</p>
+                </article>
+                <article class="contact-highlight reveal-ready">
+                    <span class="contact-highlight__icon" aria-hidden="true"><i class="fas fa-handshake"></i></span>
+                    <p class="contact-highlight__title">Open to work</p>
+                    <p class="contact-highlight__text">Freelance, contract, and long-term collaboration opportunities.</p>
+                </article>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-info-card reveal-ready">
+                    <h3>Contact information</h3>
+
+                    <div class="contact-item">
+                        <div class="contact-item-icon email">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-item-content">
+                            <div class="contact-item-label">Email</div>
+                            <div class="contact-item-value">
+                                <a href="mailto:nastiakhru@gmail.com">nastiakhru@gmail.com</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="contact-item">
-                <div class="contact-item-icon location">
-                    <i class="fas fa-map-marker-alt"></i>
-                </div>
-                <div class="contact-item-content">
-                    <div class="contact-item-label">Location</div>
-                    <div class="contact-item-value">Niagara Region, Canada</div>
-                </div>
-            </div>
-
-            <div class="contact-item">
-                <div class="contact-item-icon phone">
-                    <i class="fas fa-phone"></i>
-                </div>
-                <div class="contact-item-content">
-                    <div class="contact-item-label">Phone</div>
-                    <div class="contact-item-value">
-                        <a href="tel:+19053241507">(905) 324-1507</a>
+                    <div class="contact-item">
+                        <div class="contact-item-icon phone">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-item-content">
+                            <div class="contact-item-label">Phone</div>
+                            <div class="contact-item-value">
+                                <a href="tel:+19053241507">(905) 324-1507</a>
+                            </div>
+                        </div>
                     </div>
+
+                    <div class="contact-item">
+                        <div class="contact-item-icon location">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-item-content">
+                            <div class="contact-item-label">Location</div>
+                            <div class="contact-item-value">Niagara Region, Canada</div>
+                        </div>
+                    </div>
+
+                    <div class="availability-badge">
+                        Available for new projects
+                    </div>
+
+                    <div class="quick-actions">
+                        <a class="quick-action" href="mailto:nastiakhru@gmail.com"><i class="fas fa-paper-plane"></i> Email now</a>
+                        <a class="quick-action" href="tel:+19053241507"><i class="fas fa-phone-alt"></i> Call now</a>
+                    </div>
+                    <p class="response-note">Prefer email? Include your timeline, goals, and any links.</p>
+                </div>
+
+                <div class="contact-form-card reveal-ready">
+                    <h3>Send a message</h3>
+                    <form class="contact-form" id="contactForm" novalidate>
+                        <div class="contact-form__group">
+                            <label class="contact-form__label" for="contactName">Your name</label>
+                            <input class="contact-form__input" type="text" id="contactName" name="name" placeholder="Anastasiia" required autocomplete="name" />
+                        </div>
+                        <div class="contact-form__group">
+                            <label class="contact-form__label" for="contactEmail">Email address</label>
+                            <input class="contact-form__input" type="email" id="contactEmail" name="email" placeholder="you@example.com" required autocomplete="email" />
+                        </div>
+                        <div class="contact-form__group">
+                            <label class="contact-form__label" for="contactTopic">Project type</label>
+                            <select class="contact-form__select" id="contactTopic" name="topic">
+                                <option value="General inquiry">General inquiry</option>
+                                <option value="Website / redesign">Website / redesign</option>
+                                <option value="Shopify / e-commerce">Shopify / e-commerce</option>
+                                <option value="WordPress / CMS">WordPress / CMS</option>
+                                <option value="Web app / development">Web app / development</option>
+                                <option value="Design / branding">Design / branding</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="contact-form__group">
+                            <label class="contact-form__label" for="contactMessage">Message</label>
+                            <textarea class="contact-form__textarea" id="contactMessage" name="message" placeholder="Tell me about your project, timeline, and what you need help with..." required></textarea>
+                        </div>
+                        <button type="submit" class="contact-form__submit">
+                            <i class="fas fa-paper-plane" aria-hidden="true"></i> Send message
+                        </button>
+                        <p class="contact-form__hint">Opens your email app with your message pre-filled.</p>
+                    </form>
                 </div>
             </div>
 
-            <div class="availability-badge">
-                Available for new projects
+            <div class="contact-help reveal-ready" data-contact-help>
+                <h3 class="contact-help__title">What I can help with <span class="contact-help__hint">Click to add to your message</span></h3>
+                <div class="contact-help__tags">
+                    <span class="contact-help__tag" data-contact-topic="New website or rebrand">New website or rebrand</span>
+                    <span class="contact-help__tag" data-contact-topic="Shopify store setup">Shopify store setup</span>
+                    <span class="contact-help__tag" data-contact-topic="WordPress theme build">WordPress theme build</span>
+                    <span class="contact-help__tag" data-contact-topic="Custom web app">Custom web app</span>
+                    <span class="contact-help__tag" data-contact-topic="UI/UX &amp; landing pages">UI/UX &amp; landing pages</span>
+                    <span class="contact-help__tag" data-contact-topic="SEO &amp; performance">SEO &amp; performance</span>
+                    <span class="contact-help__tag" data-contact-topic="Ongoing support">Ongoing support</span>
+                </div>
             </div>
 
-            <div class="quick-actions">
-                <a class="quick-action" href="mailto:nastiakhru@gmail.com"><i class="fas fa-paper-plane"></i> Email Now</a>
-                <a class="quick-action" href="tel:+19053241507"><i class="fas fa-phone-alt"></i> Call Now</a>
+            <div class="social-section reveal-ready">
+                <h3>Connect with me</h3>
+                <div class="social-buttons">
+                    <a href="https://www.linkedin.com/in/anastasiia-khrus-29a180100/" target="_blank" rel="noopener" class="social-btn linkedin">
+                        <i class="fab fa-linkedin"></i> LinkedIn
+                    </a>
+                    <a href="https://github.com/AnastasiiaKhru" target="_blank" rel="noopener" class="social-btn github">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a asp-controller="Home" asp-action="Resume" class="social-btn resume">
+                        <i class="fas fa-file-alt"></i> View resume
+                    </a>
+                </div>
             </div>
-            <p class="response-note">Typical response time: within 24 hours.</p>
-            </div>
-
         </div>
-
-        <!-- Social Links -->
-        <div class="social-section">
-            <h3>Connect With Me</h3>
-            <div class="social-buttons">
-                <a href="https://www.linkedin.com/in/anastasiia-khrus-29a180100/" target="_blank" rel="noopener" class="social-btn linkedin">
-                    <i class="fab fa-linkedin"></i> LinkedIn
-                </a>
-                <a href="https://github.com/AnastasiiaKhru" target="_blank" rel="noopener" class="social-btn github">
-                    <i class="fab fa-github"></i> GitHub
-                </a>
-            </div>
-        </div>
-    </div>
+    </section>
 </div>
-

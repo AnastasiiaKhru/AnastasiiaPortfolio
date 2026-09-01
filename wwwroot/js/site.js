@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const initMagneticButtons = () => {
         if (prefersReduced) return;
 
-        const magneticSelector = '.hero-btn-group .btn, .hero-section .social-link, .page-header .btn, .filter-btn, .btn-primary, .home-stats__filter-btn, .home-stats__skills-link';
+        const magneticSelector = '.hero-btn-group .btn, .hero-section .social-link, .page-header .btn, .filter-btn, .btn-primary, .home-stats__filter-btn, .home-stats__skills-link, .skills-jump-nav__btn, .quick-action, .contact-form__submit, .social-btn';
         document.querySelectorAll(magneticSelector).forEach((btn) => {
             btn.addEventListener('mousemove', (event) => {
                 const rect = btn.getBoundingClientRect();
@@ -459,6 +459,128 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    const initSkillsPageMotion = () => {
+        const page = document.querySelector('.page-inner--skills');
+        if (!page) return;
+
+        const toggleSkillTag = (tag) => {
+            tag.classList.toggle('is-selected');
+            tag.setAttribute('aria-pressed', tag.classList.contains('is-selected') ? 'true' : 'false');
+        };
+
+        page.querySelectorAll('.skill-tag').forEach((tag) => {
+            tag.setAttribute('role', 'button');
+            tag.setAttribute('tabindex', '0');
+            tag.setAttribute('aria-pressed', 'false');
+            tag.addEventListener('click', () => toggleSkillTag(tag));
+            tag.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    toggleSkillTag(tag);
+                }
+            });
+        });
+
+        const jumpBtns = page.querySelectorAll('.skills-jump-nav__btn[data-skills-jump]');
+        const jumpSections = page.querySelectorAll('.skill-section[id], .learning-section[id]');
+        if (!jumpBtns.length || !jumpSections.length) return;
+
+        const setActiveJump = (id) => {
+            jumpBtns.forEach((btn) => {
+                btn.classList.toggle('is-active', btn.dataset.skillsJump === id);
+            });
+        };
+
+        jumpBtns.forEach((btn) => {
+            btn.addEventListener('click', (event) => {
+                const target = document.getElementById(btn.dataset.skillsJump || '');
+                if (!target) return;
+                event.preventDefault();
+                const navbar = document.querySelector('.navbar');
+                const offset = navbar ? navbar.offsetHeight + 16 : 88;
+                const top = target.getBoundingClientRect().top + window.scrollY - offset;
+                window.scrollTo({ top, behavior: prefersReduced ? 'auto' : 'smooth' });
+                setActiveJump(btn.dataset.skillsJump);
+            });
+        });
+
+        const jumpObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                setActiveJump(entry.target.id);
+            });
+        }, { threshold: 0.35, rootMargin: '-20% 0px -55% 0px' });
+
+        jumpSections.forEach((section) => jumpObserver.observe(section));
+
+        if (prefersReduced) return;
+
+        page.querySelectorAll('.tool-card').forEach((card) => {
+            card.addEventListener('mousemove', (event) => {
+                const rect = card.getBoundingClientRect();
+                const x = (event.clientX - rect.left) / rect.width - 0.5;
+                const y = (event.clientY - rect.top) / rect.height - 0.5;
+                card.style.transform = `perspective(800px) rotateX(${y * -4}deg) rotateY(${x * 5}deg) translateY(-4px)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+    };
+
+    const initContactPageMotion = () => {
+        const page = document.querySelector('.page-inner--contact');
+        const form = document.getElementById('contactForm');
+        const messageField = document.getElementById('contactMessage');
+        const topicField = document.getElementById('contactTopic');
+        if (!page || !form || !messageField) return;
+
+        page.querySelectorAll('.contact-help__tag[data-contact-topic]').forEach((tag) => {
+            tag.setAttribute('role', 'button');
+            tag.setAttribute('tabindex', '0');
+            tag.addEventListener('click', () => {
+                const line = tag.dataset.contactTopic || tag.textContent.trim();
+                tag.classList.toggle('is-selected');
+                const prefix = messageField.value.trim();
+                if (tag.classList.contains('is-selected')) {
+                    messageField.value = prefix ? `${prefix}\n• ${line}` : `• ${line}`;
+                } else {
+                    messageField.value = prefix
+                        .split('\n')
+                        .filter((row) => row.trim() !== `• ${line}`)
+                        .join('\n')
+                        .trim();
+                }
+                messageField.focus();
+            });
+            tag.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    tag.click();
+                }
+            });
+        });
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const name = (document.getElementById('contactName')?.value || '').trim();
+            const email = (document.getElementById('contactEmail')?.value || '').trim();
+            const topic = topicField?.value || 'General inquiry';
+            const message = messageField.value.trim();
+
+            if (!name || !email || !message) {
+                form.reportValidity();
+                return;
+            }
+
+            const subject = encodeURIComponent(`Portfolio inquiry: ${topic}`);
+            const body = encodeURIComponent(
+                `Hi Anastasiia,\n\n${message}\n\n—\n${name}\n${email}\nProject type: ${topic}`
+            );
+            window.location.href = `mailto:nastiakhru@gmail.com?subject=${subject}&body=${body}`;
+        });
+    };
+
     initTypewriters();
     initRotatingWords();
     initHomeHeroMotion();
@@ -469,6 +591,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initProjectFilters();
     initResumeStickyBar();
     initHomeStatsMotion();
+    initSkillsPageMotion();
+    initContactPageMotion();
 
     // Scroll progress bar
     const scrollProgress = document.createElement('div');
@@ -554,6 +678,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const revealSelector = [
             '.project-card-modern',
             '.skill-section',
+            '.skills-highlight-card',
+            '.skills-jump-nav',
             '.skill-category',
             '.skill-section__header',
             '.tool-card',
@@ -567,6 +693,8 @@ document.addEventListener('DOMContentLoaded', () => {
             '.story-step',
             '.contact-info-card',
             '.contact-form-card',
+            '.contact-highlight',
+            '.contact-help',
             '.timeline-item',
             '.card',
             '.experience-stat',
