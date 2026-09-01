@@ -349,6 +349,7 @@ a:hover {
     max-width: none !important;
     margin-top: 0;
     object-fit: contain;
+    opacity: 1;
 }
 
 .navbar-brand:hover .navbar-logo {
