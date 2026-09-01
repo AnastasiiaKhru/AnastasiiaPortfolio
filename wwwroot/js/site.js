@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const initMagneticButtons = () => {
         if (prefersReduced) return;
 
-        const magneticSelector = '.hero-btn-group .btn, .hero-section .social-link, .page-header .btn, .filter-btn, .btn-primary';
+        const magneticSelector = '.hero-btn-group .btn, .hero-section .social-link, .page-header .btn, .filter-btn, .btn-primary, .home-stats__filter-btn, .home-stats__skills-link';
         document.querySelectorAll(magneticSelector).forEach((btn) => {
             btn.addEventListener('mousemove', (event) => {
                 const rect = btn.getBoundingClientRect();
@@ -328,6 +328,137 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('scroll', toggleBar, { passive: true });
     };
 
+    const initHomeStatsMotion = () => {
+        const section = document.querySelector('.home-stats--motion');
+        if (!section) return;
+
+        const chipContainers = section.querySelectorAll('[data-home-stats-chips]');
+        chipContainers.forEach((container) => {
+            container.querySelectorAll('span').forEach((chip, index) => {
+                chip.classList.add('home-stats__chip');
+                chip.setAttribute('role', 'button');
+                chip.setAttribute('tabindex', '0');
+                chip.style.setProperty('--chip-delay', `${Math.min(index * 28, 520)}ms`);
+            });
+        });
+
+        const activateChips = (container) => {
+            if (!container || container.classList.contains('home-stats__chips--ready')) return;
+            container.classList.add('home-stats__chips--ready');
+        };
+
+        const chipObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                activateChips(entry.target);
+                chipObserver.unobserve(entry.target);
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -6% 0px' });
+
+        chipContainers.forEach((container) => {
+            if (container.getBoundingClientRect().top < window.innerHeight * 0.92) {
+                activateChips(container);
+            } else {
+                chipObserver.observe(container);
+            }
+        });
+
+        const toggleChip = (chip) => {
+            chip.classList.toggle('is-selected');
+            chip.setAttribute('aria-pressed', chip.classList.contains('is-selected') ? 'true' : 'false');
+        };
+
+        section.querySelectorAll('.home-stats__chip').forEach((chip) => {
+            chip.addEventListener('click', () => toggleChip(chip));
+            chip.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    toggleChip(chip);
+                }
+            });
+        });
+
+        const statCards = section.querySelectorAll('.home-stat-card[data-stat-card]');
+
+        statCards.forEach((card) => {
+            card.setAttribute('role', 'button');
+            card.setAttribute('aria-pressed', 'false');
+
+            card.addEventListener('click', () => {
+                const wasActive = card.classList.contains('is-active');
+                statCards.forEach((item) => {
+                    item.classList.remove('is-active');
+                    item.style.transform = '';
+                    item.setAttribute('aria-pressed', 'false');
+                });
+                if (!wasActive) {
+                    card.classList.add('is-active');
+                    card.setAttribute('aria-pressed', 'true');
+                }
+            });
+
+            card.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    card.click();
+                }
+            });
+
+            if (prefersReduced) return;
+
+            card.addEventListener('mousemove', (event) => {
+                const rect = card.getBoundingClientRect();
+                const x = (event.clientX - rect.left) / rect.width - 0.5;
+                const y = (event.clientY - rect.top) / rect.height - 0.5;
+                card.classList.add('is-tilting');
+                card.style.transform = `perspective(900px) rotateX(${y * -6}deg) rotateY(${x * 7}deg) translateY(-6px) scale(1.02)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.classList.remove('is-tilting');
+                if (!card.classList.contains('is-active')) {
+                    card.style.transform = '';
+                }
+            });
+        });
+
+        const filterBtns = section.querySelectorAll('.home-stats__filter-btn[data-knowhow-filter]');
+        const knowhowGroups = section.querySelectorAll('.home-stats__knowhow-group[data-knowhow-group]');
+
+        const applyKnowhowFilter = (filter) => {
+            filterBtns.forEach((btn) => {
+                const isActive = btn.dataset.knowhowFilter === filter;
+                btn.classList.toggle('is-active', isActive);
+                btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            });
+
+            knowhowGroups.forEach((group) => {
+                const id = group.dataset.knowhowGroup;
+                const match = filter === 'all' || id === filter;
+                group.classList.toggle('is-focused', filter !== 'all' && match);
+                group.classList.toggle('is-dimmed', filter !== 'all' && !match);
+            });
+        };
+
+        filterBtns.forEach((btn) => {
+            btn.addEventListener('click', () => applyKnowhowFilter(btn.dataset.knowhowFilter || 'all'));
+        });
+
+        if (!prefersReduced) {
+            filterBtns.forEach((btn) => {
+                btn.addEventListener('mousemove', (event) => {
+                    const rect = btn.getBoundingClientRect();
+                    const x = event.clientX - rect.left - rect.width / 2;
+                    const y = event.clientY - rect.top - rect.height / 2;
+                    btn.style.transform = `translate3d(${x * 0.12}px, ${y * 0.16}px, 0)`;
+                });
+                btn.addEventListener('mouseleave', () => {
+                    btn.style.transform = '';
+                });
+            });
+        }
+    };
+
     initTypewriters();
     initRotatingWords();
     initHomeHeroMotion();
@@ -337,6 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initStoryScroll();
     initProjectFilters();
     initResumeStickyBar();
+    initHomeStatsMotion();
 
     // Scroll progress bar
     const scrollProgress = document.createElement('div');
@@ -430,6 +562,8 @@ document.addEventListener('DOMContentLoaded', () => {
             '.home-stat-card',
             '.home-stats__header',
             '.home-stats__knowhow',
+            '.home-stats__delivered',
+            '.home-stats__knowhow-group',
             '.story-step',
             '.contact-info-card',
             '.contact-form-card',

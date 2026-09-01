@@ -462,76 +462,142 @@
     </div>
 </div>
 
-<section class="home-stats" aria-label="Portfolio highlights">
+<section class="home-stats home-stats--motion" aria-label="Experience and expertise">
+    <div class="home-stats__ambient" aria-hidden="true">
+        <span class="home-stats__orb home-stats__orb--amber"></span>
+        <span class="home-stats__orb home-stats__orb--violet"></span>
+        <span class="home-stats__orb home-stats__orb--mint"></span>
+    </div>
     <div class="container">
         <header class="home-stats__header reveal-ready">
-            <p class="home-stats__eyebrow">At a glance</p>
-            <h2 class="home-stats__title">Experience you can measure — and trust</h2>
-            <p class="home-stats__lead">Full-stack development, Shopify &amp; WordPress builds, UI/UX, and end-to-end delivery for real clients and real launches.</p>
+            <p class="home-stats__eyebrow">What I do</p>
+            <h2 class="home-stats__title text-gradient-motion">Developer, designer &amp; digital problem-solver</h2>
+            <p class="home-stats__lead"><span class="home-stats__experience">5+ years of experience</span> building client websites, e-commerce stores, web apps, WordPress themes, CRM tools, games, branding, and marketing experiences — from idea and design through development, launch, and ongoing support.</p>
         </header>
+
         <div class="home-stats__grid">
-            <div class="home-stat-card reveal-ready">
-                <span class="stat-number">5+</span>
-                <span class="home-stat-card__label">Years building digital products</span>
-                <p class="home-stat-card__detail">Freelance &amp; agency work since 2020 — websites, Shopify, WordPress, branding, and full client delivery from concept to launch.</p>
-                <div class="home-stat-card__tags" aria-label="Experience areas">
-                    <span>Web design</span><span>Client delivery</span><span>E-commerce</span><span>UI/UX</span>
+            <article class="home-stat-card reveal-ready" tabindex="0" data-stat-card="fullstack">
+                <p class="home-stat-card__icon" aria-hidden="true"><i class="fas fa-code"></i></p>
+                <h3 class="home-stat-card__label">Full-stack development</h3>
+                <p class="home-stat-card__detail">Business logic, APIs, databases, auth, admin panels, and interactive features — not just front-end mockups.</p>
+                <div class="home-stat-card__tags" aria-label="Development skills">
+                    <span>ASP.NET Core</span><span>C#</span><span>REST APIs</span><span>Entity Framework</span><span>MongoDB</span><span>SignalR</span>
                 </div>
-            </div>
-            <div class="home-stat-card reveal-ready">
-                <span class="stat-number">18+</span>
-                <span class="home-stat-card__label">Projects in portfolio</span>
-                <p class="home-stat-card__detail">Live demos &amp; case studies — stores, CRM, games, WordPress themes, landing pages, ads, and this ASP.NET portfolio.</p>
-                <div class="home-stat-card__tags" aria-label="Project types">
-                    <span>Shopify</span><span>WordPress</span><span>CRM</span><span>Games</span><span>Marketing</span>
+            </article>
+            <article class="home-stat-card reveal-ready" tabindex="0" data-stat-card="ecommerce">
+                <p class="home-stat-card__icon" aria-hidden="true"><i class="fab fa-shopify"></i></p>
+                <h3 class="home-stat-card__label">E-commerce &amp; Shopify</h3>
+                <p class="home-stat-card__detail">Storefronts, product pages, checkout flows, Liquid themes, mobile UX, redirects, subscriptions, and post-launch merchant support.</p>
+                <div class="home-stat-card__tags" aria-label="E-commerce skills">
+                    <span>Shopify</span><span>Liquid</span><span>WooCommerce</span><span>Checkout UX</span><span>Conversion design</span>
                 </div>
-            </div>
-            <div class="home-stat-card reveal-ready">
-                <span class="stat-number">3</span>
-                <span class="home-stat-card__label">Shopify storefronts launched</span>
-                <p class="home-stat-card__detail">ONE80 Revolution, KHRUS, and client builds — Liquid, product pages, checkout, redirects, mobile UX, and post-launch updates.</p>
-                <div class="home-stat-card__tags" aria-label="Shopify skills">
-                    <span>Liquid</span><span>Theme edits</span><span>Checkout</span><span>SEO</span>
+            </article>
+            <article class="home-stat-card reveal-ready" tabindex="0" data-stat-card="wordpress">
+                <p class="home-stat-card__icon" aria-hidden="true"><i class="fab fa-wordpress"></i></p>
+                <h3 class="home-stat-card__label">WordPress &amp; CMS builds</h3>
+                <p class="home-stat-card__detail">Custom themes, Gutenberg blocks, WooCommerce, ACF, block patterns, SEO plugins, and production-ready site structure.</p>
+                <div class="home-stat-card__tags" aria-label="CMS skills">
+                    <span>WordPress</span><span>Gutenberg</span><span>ACF</span><span>theme.json</span><span>Rank Math</span><span>Kinsta</span>
                 </div>
-            </div>
-            <div class="home-stat-card reveal-ready">
-                <span class="stat-number">8+</span>
-                <span class="home-stat-card__label">Technologies in daily stack</span>
-                <p class="home-stat-card__detail">C#, ASP.NET Core, JavaScript, SQL, WordPress, Shopify, MongoDB, Docker — plus design tools and deployment on Railway.</p>
-                <div class="home-stat-card__tags" aria-label="Core technologies">
-                    <span>C#</span><span>ASP.NET</span><span>JavaScript</span><span>SQL</span><span>MongoDB</span><span>Docker</span>
+            </article>
+            <article class="home-stat-card reveal-ready" tabindex="0" data-stat-card="design">
+                <p class="home-stat-card__icon" aria-hidden="true"><i class="fas fa-palette"></i></p>
+                <h3 class="home-stat-card__label">UI/UX, brand &amp; creative</h3>
+                <p class="home-stat-card__detail">Wireframes, visual systems, landing pages, ad creative, social content, and polished interfaces that match the brand.</p>
+                <div class="home-stat-card__tags" aria-label="Design skills">
+                    <span>UI/UX</span><span>Figma</span><span>Photoshop</span><span>Brand design</span><span>Canva</span><span>CapCut</span>
                 </div>
+            </article>
+        </div>
+
+        <div class="home-stats__delivered reveal-ready" data-home-stats-chips>
+            <h3 class="home-stats__knowhow-title">Types of work I've done <span class="home-stats__hint">Click to highlight</span></h3>
+            <div class="home-stats__delivered-tags">
+                <span>Client websites &amp; rebrands</span>
+                <span>Shopify storefronts &amp; theme builds</span>
+                <span>WordPress &amp; WooCommerce sites</span>
+                <span>CRM &amp; dashboard apps</span>
+                <span>Playable web games</span>
+                <span>Event &amp; landing pages</span>
+                <span>Marketing &amp; ad creative</span>
+                <span>Portfolio &amp; demo sites</span>
+                <span>Email campaigns &amp; automation</span>
+                <span>SEO &amp; performance tuning</span>
+                <span>Social content &amp; video edits</span>
+                <span>Hosting, DNS &amp; deployment</span>
+                <span>Merchant &amp; client support</span>
+                <span>Brand systems &amp; visual identity</span>
+                <span>Admin panels &amp; internal tools</span>
+                <span>IT troubleshooting &amp; QA</span>
             </div>
         </div>
 
         <div class="home-stats__knowhow reveal-ready">
-            <h3 class="home-stats__knowhow-title">What I know &amp; work with</h3>
-            <div class="home-stats__knowhow-grid">
-                <div class="home-stats__knowhow-group">
-                    <p class="home-stats__knowhow-label">Development</p>
+            <h3 class="home-stats__knowhow-title">Technologies &amp; tools I work with</h3>
+            <div class="home-stats__filter" role="tablist" aria-label="Filter technology categories">
+                <button type="button" class="home-stats__filter-btn is-active" data-knowhow-filter="all" role="tab" aria-selected="true">All</button>
+                <button type="button" class="home-stats__filter-btn" data-knowhow-filter="languages" role="tab" aria-selected="false">Languages</button>
+                <button type="button" class="home-stats__filter-btn" data-knowhow-filter="frameworks" role="tab" aria-selected="false">Frameworks</button>
+                <button type="button" class="home-stats__filter-btn" data-knowhow-filter="cms" role="tab" aria-selected="false">CMS</button>
+                <button type="button" class="home-stats__filter-btn" data-knowhow-filter="databases" role="tab" aria-selected="false">Cloud</button>
+                <button type="button" class="home-stats__filter-btn" data-knowhow-filter="devops" role="tab" aria-selected="false">DevOps</button>
+                <button type="button" class="home-stats__filter-btn" data-knowhow-filter="design" role="tab" aria-selected="false">Design</button>
+                <button type="button" class="home-stats__filter-btn" data-knowhow-filter="marketing" role="tab" aria-selected="false">Marketing</button>
+                <button type="button" class="home-stats__filter-btn" data-knowhow-filter="collaboration" role="tab" aria-selected="false">Workflow</button>
+            </div>
+            <div class="home-stats__knowhow-grid" data-home-stats-chips>
+                <div class="home-stats__knowhow-group reveal-ready" data-knowhow-group="languages">
+                    <p class="home-stats__knowhow-label">Languages</p>
                     <div class="home-stats__knowhow-tags">
-                        <span>C#</span><span>ASP.NET Core MVC</span><span>JavaScript</span><span>HTML5</span><span>CSS3</span><span>REST APIs</span><span>Entity Framework</span><span>Git</span>
+                        <span>C# / .NET</span><span>JavaScript</span><span>TypeScript</span><span>HTML5</span><span>CSS3</span><span>SQL</span><span>Python</span><span>Java</span><span>PHP</span><span>Liquid</span><span>SCSS / Sass</span><span>Razor</span><span>JSON / YAML</span>
                     </div>
                 </div>
-                <div class="home-stats__knowhow-group">
-                    <p class="home-stats__knowhow-label">CMS &amp; E-Commerce</p>
+                <div class="home-stats__knowhow-group reveal-ready" data-knowhow-group="frameworks">
+                    <p class="home-stats__knowhow-label">Frameworks &amp; libraries</p>
                     <div class="home-stats__knowhow-tags">
-                        <span>Shopify</span><span>Liquid</span><span>WordPress</span><span>WooCommerce</span><span>Gutenberg</span><span>theme.json</span>
+                        <span>ASP.NET Core MVC</span><span>Entity Framework Core</span><span>ASP.NET Identity</span><span>Razor Pages</span><span>REST APIs</span><span>SignalR</span><span>Bootstrap</span><span>Tailwind CSS</span><span>React</span><span>Next.js</span><span>jQuery</span><span>Three.js</span><span>LINQ</span>
                     </div>
                 </div>
-                <div class="home-stats__knowhow-group">
-                    <p class="home-stats__knowhow-label">Design &amp; Creative</p>
+                <div class="home-stats__knowhow-group reveal-ready" data-knowhow-group="cms">
+                    <p class="home-stats__knowhow-label">CMS &amp; e-commerce</p>
                     <div class="home-stats__knowhow-tags">
-                        <span>UI/UX</span><span>Figma-style prototyping</span><span>Photoshop</span><span>Canva</span><span>Brand design</span><span>Wireframes</span>
+                        <span>Shopify</span><span>Shopify Themes</span><span>Shopify Admin</span><span>Subscriptions</span><span>WordPress</span><span>Gutenberg / FSE</span><span>WooCommerce</span><span>ACF</span><span>WPForms</span><span>Block Patterns</span><span>Rank Math</span><span>Kinsta</span>
                     </div>
                 </div>
-                <div class="home-stats__knowhow-group">
-                    <p class="home-stats__knowhow-label">Data &amp; Deployment</p>
+                <div class="home-stats__knowhow-group reveal-ready" data-knowhow-group="databases">
+                    <p class="home-stats__knowhow-label">Databases &amp; cloud</p>
                     <div class="home-stats__knowhow-tags">
-                        <span>SQL Server</span><span>SQLite</span><span>MongoDB</span><span>Docker</span><span>Railway</span><span>Postman</span>
+                        <span>SQL Server</span><span>SQLite</span><span>MongoDB</span><span>MongoDB Atlas</span><span>Firebase</span><span>Railway</span><span>Azure</span><span>AWS</span><span>Google Cloud</span><span>Docker</span><span>Cloudinary</span>
+                    </div>
+                </div>
+                <div class="home-stats__knowhow-group reveal-ready" data-knowhow-group="devops">
+                    <p class="home-stats__knowhow-label">DevOps &amp; tooling</p>
+                    <div class="home-stats__knowhow-tags">
+                        <span>Git / GitHub</span><span>GitLab</span><span>Bitbucket</span><span>GitHub Actions</span><span>CI/CD</span><span>npm / yarn</span><span>Postman</span><span>VS Code</span><span>Visual Studio</span><span>dotnet CLI</span><span>cPanel</span><span>DNS / SSL</span><span>Vercel</span><span>Netlify</span><span>Linux basics</span>
+                    </div>
+                </div>
+                <div class="home-stats__knowhow-group reveal-ready" data-knowhow-group="design">
+                    <p class="home-stats__knowhow-label">Design &amp; creative</p>
+                    <div class="home-stats__knowhow-tags">
+                        <span>Figma</span><span>Photoshop</span><span>Illustrator</span><span>Premiere Pro</span><span>After Effects</span><span>Lightroom</span><span>Sketch</span><span>Canva</span><span>CapCut</span><span>Midjourney</span><span>Adobe Firefly</span><span>Wireframes</span><span>Prototyping</span><span>Brand systems</span><span>AI-assisted design</span>
+                    </div>
+                </div>
+                <div class="home-stats__knowhow-group reveal-ready" data-knowhow-group="marketing">
+                    <p class="home-stats__knowhow-label">Marketing &amp; analytics</p>
+                    <div class="home-stats__knowhow-tags">
+                        <span>Google Analytics</span><span>Search Console</span><span>Semrush</span><span>SEO audits</span><span>Zoho CRM</span><span>Mailchimp</span><span>Meta / social ads</span><span>Conversion UX</span><span>Core Web Vitals</span>
+                    </div>
+                </div>
+                <div class="home-stats__knowhow-group reveal-ready" data-knowhow-group="collaboration">
+                    <p class="home-stats__knowhow-label">Collaboration &amp; workflow</p>
+                    <div class="home-stats__knowhow-tags">
+                        <span>Jira</span><span>Trello</span><span>Slack</span><span>Notion</span><span>Agile / sprints</span><span>Client communication</span><span>Technical docs</span><span>Launch &amp; post-launch QA</span>
                     </div>
                 </div>
             </div>
+            <p class="home-stats__knowhow-more">
+                <a asp-controller="Home" asp-action="Skills" class="home-stats__skills-link">See the full skills breakdown <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+            </p>
         </div>
     </div>
 </section>
