@@ -1,0 +1,30 @@
+@{
+    Layout = "_DemoChromeLayout";
+    var demoTitle = ViewBag.DemoTitle as string ?? "Project Demo";
+    var demoSrc = ViewBag.DemoSrc as string ?? "/";
+}
+@section Styles {
+    <style>
+        .demo-chrome-page {
+            overflow: hidden;
+        }
+
+        .demo-chrome-page .navbar {
+            z-index: 10050;
+        }
+
+        .demo-chrome-main {
+            padding-top: var(--navbar-height, 78px);
+        }
+
+        .demo-chrome-frame {
+            display: block;
+            width: 100%;
+            height: calc(100vh - var(--navbar-height, 78px));
+            border: 0;
+            background: #fff;
+        }
+    </style>
+}
+
+<iframe class="demo-chrome-frame" src="@demoSrc" title="@demoTitle"></iframe>

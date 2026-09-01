@@ -1,0 +1,48 @@
+@{
+    var action = ViewBag.ForceActiveAction as string ?? ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+    var projectsActive = controller == "Home" && (action == "Projects" || action == "DemoFrame");
+}
+<header>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container navbar-container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand navbar-brand-center" href="/">
+                <img src="~/images/logo-ak.png" alt="AK" class="navbar-logo" />
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link @(controller == "Home" && (action == "Index" || string.IsNullOrEmpty(action)) ? "active" : "")" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(projectsActive ? "active" : "")" asp-controller="Home" asp-action="Projects">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(controller == "Home" && action == "Skills" ? "active" : "")" asp-controller="Home" asp-action="Skills">Skills</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(controller == "Home" && action == "Experience" ? "active" : "")" asp-controller="Home" asp-action="Experience">Experience</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(controller == "Home" && action == "Education" ? "active" : "")" asp-controller="Home" asp-action="Education">Education</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link @(controller == "PlayZone" ? "active" : "")" asp-controller="PlayZone" asp-action="Index">PlayZone</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(controller == "Rate" ? "active" : "")" asp-controller="Rate" asp-action="Index">Reviews</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(controller == "Home" && action == "Contact" ? "active" : "")" asp-controller="Home" asp-action="Contact">Contact</a>
+                    </li>
+                    <partial name="_LoginPartial" />
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

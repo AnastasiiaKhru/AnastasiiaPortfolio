@@ -72,6 +72,35 @@ public class HomeController : Controller
     public IActionResult ValentineDemo() => View();
     public IActionResult SkyBridgeITDemo() => View();
 
+    private static readonly Dictionary<string, string> DemoFramePages = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["ArtStudioDemo"] = "By Alisa Khru — Gallery Catalogue",
+        ["CakeShopDemo"] = "Sweet Delights Bakery",
+        ["GymCrmDemo"] = "FitHub CRM — Gym Management System",
+        ["LiquorStoreDemo"] = "LUXE SPIRITS — Premium Alcohol Delivery",
+        ["EventWebinarDemo"] = "Event / Webinar Landing Page",
+        ["BrandRefreshDemo"] = "Brand Refresh Case Study",
+        ["AdCreativeDemo"] = "Ad Creative / Banner Set",
+        ["WPBusinessDemo"] = "ConsultPro — WordPress Demo",
+        ["WPLifestyleDemo"] = "WanderLens — WordPress Demo",
+        ["WPWellnessDemo"] = "NurtureWell — WordPress Demo",
+        ["WPConstructionDemo"] = "Heritage Build — WordPress Demo",
+        ["ValentineDemo"] = "Valentine Demo",
+        ["SkyBridgeITDemo"] = "SkyBridge IT Solutions",
+    };
+
+    public IActionResult DemoFrame(string name)
+    {
+        if (!DemoFramePages.TryGetValue(name, out var title))
+            return NotFound();
+
+        ViewBag.ForceActiveAction = "Projects";
+        ViewBag.DemoSrc = Url.Action(name)!;
+        ViewBag.DemoTitle = title;
+        ViewData["Title"] = title;
+        return View("DemoFrame");
+    }
+
     public IActionResult Portfolio()
     {
         // TODO: Replace with actual data from database

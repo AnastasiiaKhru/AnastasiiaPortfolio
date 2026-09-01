@@ -9,14 +9,14 @@
             <h2 class="project-card__title">NurtureWell</h2>
             <div class="project-card__preview project-card__preview--wp">
                 <div class="project-preview__frame-wrap project-preview__frame-wrap--wp-wellness project-preview__frame-wrap--wp-img">
-                    <a asp-controller="Home" asp-action="WPWellnessDemo" class="project-preview__img-link" target="_blank" rel="noopener" title="Open NurtureWell WordPress Demo">
+                    <a asp-controller="Home" asp-action="DemoFrame" asp-route-name="WPWellnessDemo" class="project-preview__img-link" title="Open NurtureWell WordPress Demo">
                         <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=900&q=85" alt="NurtureWell WordPress wellness theme preview" class="wp-preview__img" loading="lazy" />
                         <div class="wp-preview__overlay">
                             <span class="wp-preview__domain">nurturewell.studio</span>
                             <div class="wp-dots"><span></span><span></span><span></span></div>
                         </div>
                     </a>
-                    <a asp-controller="Home" asp-action="WPWellnessDemo" target="_blank" rel="noopener" class="preview-cta preview-cta--wp"><i class="fas fa-arrow-right"></i> Open demo</a>
+                    <a asp-controller="Home" asp-action="DemoFrame" asp-route-name="WPWellnessDemo" class="preview-cta preview-cta--wp"><i class="fas fa-arrow-right"></i> Open demo</a>
                 </div>
             </div>
             <p class="project-card__summary">Wellness WordPress · Full Pro Features</p>
@@ -48,14 +48,14 @@
             <h2 class="project-card__title">WanderLens</h2>
             <div class="project-card__preview project-card__preview--wp">
                 <div class="project-preview__frame-wrap project-preview__frame-wrap--wp-lifestyle project-preview__frame-wrap--wp-img">
-                    <a asp-controller="Home" asp-action="WPLifestyleDemo" class="project-preview__img-link" target="_blank" rel="noopener" title="Open WanderLens WordPress Demo">
+                    <a asp-controller="Home" asp-action="DemoFrame" asp-route-name="WPLifestyleDemo" class="project-preview__img-link" title="Open WanderLens WordPress Demo">
                         <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=85" alt="WanderLens WordPress blog theme preview" class="wp-preview__img" loading="lazy" />
                         <div class="wp-preview__overlay">
                             <span class="wp-preview__domain">wanderlens.blog</span>
                             <div class="wp-dots"><span></span><span></span><span></span></div>
                         </div>
                     </a>
-                    <a asp-controller="Home" asp-action="WPLifestyleDemo" target="_blank" rel="noopener" class="preview-cta preview-cta--wp"><i class="fas fa-arrow-right"></i> Open demo</a>
+                    <a asp-controller="Home" asp-action="DemoFrame" asp-route-name="WPLifestyleDemo" class="preview-cta preview-cta--wp"><i class="fas fa-arrow-right"></i> Open demo</a>
                 </div>
             </div>
             <p class="project-card__summary">Editorial WordPress · Full Pro Features</p>
@@ -87,14 +87,14 @@
             <h2 class="project-card__title">ConsultPro</h2>
             <div class="project-card__preview project-card__preview--wp">
                 <div class="project-preview__frame-wrap project-preview__frame-wrap--wp-consult project-preview__frame-wrap--wp-img">
-                    <a asp-controller="Home" asp-action="WPBusinessDemo" class="project-preview__img-link" target="_blank" rel="noopener" title="Open ConsultPro WordPress Demo">
+                    <a asp-controller="Home" asp-action="DemoFrame" asp-route-name="WPBusinessDemo" class="project-preview__img-link" title="Open ConsultPro WordPress Demo">
                         <img src="https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=900&q=85" alt="ConsultPro WordPress business theme preview" class="wp-preview__img" loading="lazy" />
                         <div class="wp-preview__overlay">
                             <span class="wp-preview__domain">consultpro.theme</span>
                             <div class="wp-dots"><span></span><span></span><span></span></div>
                         </div>
                     </a>
-                    <a asp-controller="Home" asp-action="WPBusinessDemo" target="_blank" rel="noopener" class="preview-cta preview-cta--wp"><i class="fas fa-arrow-right"></i> Open demo</a>
+                    <a asp-controller="Home" asp-action="DemoFrame" asp-route-name="WPBusinessDemo" class="preview-cta preview-cta--wp"><i class="fas fa-arrow-right"></i> Open demo</a>
                 </div>
             </div>
             <p class="project-card__summary">Corporate WordPress · Full Pro Features</p>
@@ -127,14 +127,14 @@
             <h2 class="project-card__title">Alisa Khru Gallery</h2>
             <div class="project-card__preview project-card__preview--wp project-card__preview--demo">
                 <div class="project-preview__frame-wrap project-preview__frame-wrap--img project-preview__frame-wrap--wp-lifestyle project-preview__frame-wrap--wp-img project-preview__frame-wrap--gallery-catalogue">
-                    <a href="#" class="project-preview__img-link img-preview-trigger" onclick="openArtStudioDemo(); return false;" title="Open gallery demo">
+                    <a asp-controller="Home" asp-action="DemoFrame" asp-route-name="ArtStudioDemo" class="project-preview__img-link img-preview-trigger" title="Open gallery demo">
                         <img src="/images/alisa-gallery/card-preview.jpg" alt="Gallery wall — monochrome catalogue preview" class="wp-preview__img" loading="lazy" />
                         <div class="wp-preview__overlay">
                             <span class="wp-preview__domain">alisakhru.gallery</span>
                             <div class="wp-dots"><span></span><span></span><span></span></div>
                         </div>
                     </a>
-                    <a href="#" class="preview-cta preview-cta--wp" onclick="openArtStudioDemo(); return false;"><i class="fas fa-arrow-right"></i> Explore demo</a>
+                    <a asp-controller="Home" asp-action="DemoFrame" asp-route-name="ArtStudioDemo" class="preview-cta preview-cta--wp"><i class="fas fa-arrow-right"></i> Open demo</a>
                 </div>
             </div>
             <p class="project-card__summary">Monochrome catalogue · sparse nav.</p>
@@ -162,7 +162,7 @@
             <h2 class="project-card__title">LUXE SPIRITS</h2>
             <div class="project-card__preview project-card__preview--wp project-card__preview--demo">
                 <div class="project-preview__frame-wrap project-preview__frame-wrap--liquor">
-                    <a href="#" class="liquor-demo-trigger" onclick="openLiquorDemo(); return false;" title="Open Demo">
+                    <a asp-controller="Home" asp-action="DemoFrame" asp-route-name="LiquorStoreDemo" class="liquor-demo-trigger" title="Open Demo">
                         <div class="liquor-preview-scene">
                             <div class="liquor-preview__bg"></div>
                             <div class="liquor-preview__content">
@@ -177,12 +177,9 @@
                             </div>
                         </div>
                     </a>
-                    <a href="#" class="preview-cta preview-cta--wp" onclick="openLiquorDemo(); return false;"><i class="fas fa-arrow-right"></i> Explore demo</a>
+                    <a asp-controller="Home" asp-action="DemoFrame" asp-route-name="LiquorStoreDemo" class="preview-cta preview-cta--wp"><i class="fas fa-arrow-right"></i> Open demo</a>
                 </div>
             </div>
-            <p class="project-card__link-line">
-                <a asp-controller="Home" asp-action="LiquorStoreDemo" target="_blank" rel="noopener">Open direct link →</a>
-            </p>
             <p class="project-card__summary">Premium alcohol e-commerce.</p>
             <p class="project-card__desc">Luxury liquor e-commerce with age verification, product catalog, shopping cart, and reviews.</p>
             <div class="project-card__backend" aria-label="Features">
@@ -208,7 +205,7 @@
             <h2 class="project-card__title">Sweet Delights Bakery</h2>
             <div class="project-card__preview project-card__preview--wp project-card__preview--demo">
                 <div class="project-preview__frame-wrap project-preview__frame-wrap--cake">
-                    <a href="#" class="cake-demo-trigger" onclick="openCakeDemo(); return false;" title="Open Demo">
+                    <a asp-controller="Home" asp-action="DemoFrame" asp-route-name="CakeShopDemo" class="cake-demo-trigger" title="Open Demo">
                         <div class="cake-preview-scene">
                             <div class="cake-preview__bg"></div>
                             <div class="cake-preview__content">
@@ -222,7 +219,7 @@
                             </div>
                         </div>
                     </a>
-                    <a href="#" class="preview-cta preview-cta--wp" onclick="openCakeDemo(); return false;"><i class="fas fa-arrow-right"></i> Explore demo</a>
+                    <a asp-controller="Home" asp-action="DemoFrame" asp-route-name="CakeShopDemo" class="preview-cta preview-cta--wp"><i class="fas fa-arrow-right"></i> Open demo</a>
                 </div>
             </div>
             <p class="project-card__summary">Bakery e-commerce demo.</p>
@@ -250,19 +247,16 @@
             <h2 class="project-card__title">FitHub CRM</h2>
             <div class="project-card__preview project-card__preview--wp project-card__preview--demo">
                 <div class="project-preview__frame-wrap project-preview__frame-wrap--img project-preview__frame-wrap--wp-consult project-preview__frame-wrap--wp-img">
-                    <a href="#" class="project-preview__img-link img-preview-trigger gym-demo-trigger" onclick="openGymDemo(); return false;" title="Open FitHub CRM Demo">
+                    <a asp-controller="Home" asp-action="DemoFrame" asp-route-name="GymCrmDemo" class="project-preview__img-link img-preview-trigger gym-demo-trigger" title="Open FitHub CRM Demo">
                         <img src="/images/project-crm-og.png" alt="FitHub CRM — Gym Management System" class="wp-preview__img" loading="lazy" />
                         <div class="wp-preview__overlay">
                             <span class="wp-preview__domain">fithub.crm</span>
                             <div class="wp-dots"><span></span><span></span><span></span></div>
                         </div>
                     </a>
-                    <a href="#" class="preview-cta preview-cta--wp" onclick="openGymDemo(); return false;"><i class="fas fa-arrow-right"></i> Explore demo</a>
+                    <a asp-controller="Home" asp-action="DemoFrame" asp-route-name="GymCrmDemo" class="preview-cta preview-cta--wp"><i class="fas fa-arrow-right"></i> Open demo</a>
                 </div>
             </div>
-            <p class="project-card__link-line">
-                <a asp-controller="Home" asp-action="GymCrmDemo" target="_blank" rel="noopener">Open direct link →</a>
-            </p>
             <p class="project-card__summary">Gym membership CRM.</p>
             <p class="project-card__desc">Dashboard with members, tiers, activity feed, and payments.</p>
             <div class="project-card__backend" aria-label="Features">
@@ -287,14 +281,14 @@
             <h2 class="project-card__title">Event Landing Page</h2>
             <div class="project-card__preview project-card__preview--wp">
                 <div class="project-preview__frame-wrap project-preview__frame-wrap--img project-preview__frame-wrap--wp-lifestyle project-preview__frame-wrap--wp-img">
-                    <a href="#" class="project-preview__img-link img-preview-trigger" onclick="openEventDemo(); return false;" title="Open Event Webinar Demo">
+                    <a asp-controller="Home" asp-action="DemoFrame" asp-route-name="EventWebinarDemo" class="project-preview__img-link img-preview-trigger" title="Open Event Webinar Demo">
                         <img src="/images/project-event-og.png" alt="Event Landing Page" class="wp-preview__img" loading="lazy" />
                         <div class="wp-preview__overlay">
                             <span class="wp-preview__domain">event.demo</span>
                             <div class="wp-dots"><span></span><span></span><span></span></div>
                         </div>
                     </a>
-                    <a href="#" class="preview-cta preview-cta--wp" onclick="openEventDemo(); return false;"><i class="fas fa-arrow-right"></i> Explore demo</a>
+                    <a asp-controller="Home" asp-action="DemoFrame" asp-route-name="EventWebinarDemo" class="preview-cta preview-cta--wp"><i class="fas fa-arrow-right"></i> Open demo</a>
                 </div>
             </div>
             <p class="project-card__summary">Conversion-focused event page.</p>
@@ -321,14 +315,14 @@
             <h2 class="project-card__title">Brand Refresh Case Study</h2>
             <div class="project-card__preview project-card__preview--wp">
                 <div class="project-preview__frame-wrap project-preview__frame-wrap--img project-preview__frame-wrap--wp-lifestyle project-preview__frame-wrap--wp-img">
-                    <a href="#" class="project-preview__img-link img-preview-trigger" onclick="openBrandDemo(); return false;" title="Open Brand Refresh Demo">
+                    <a asp-controller="Home" asp-action="DemoFrame" asp-route-name="BrandRefreshDemo" class="project-preview__img-link img-preview-trigger" title="Open Brand Refresh Demo">
                         <img src="/images/project-brand-og.png" alt="Brand Refresh Case Study" class="wp-preview__img" loading="lazy" />
                         <div class="wp-preview__overlay">
                             <span class="wp-preview__domain">brand.demo</span>
                             <div class="wp-dots"><span></span><span></span><span></span></div>
                         </div>
                     </a>
-                    <a href="#" class="preview-cta preview-cta--wp" onclick="openBrandDemo(); return false;"><i class="fas fa-arrow-right"></i> Explore demo</a>
+                    <a asp-controller="Home" asp-action="DemoFrame" asp-route-name="BrandRefreshDemo" class="preview-cta preview-cta--wp"><i class="fas fa-arrow-right"></i> Open demo</a>
                 </div>
             </div>
             <p class="project-card__summary">Before/after brand transformation.</p>
@@ -354,14 +348,14 @@
             <h2 class="project-card__title">Ad Creative / Banner Set</h2>
             <div class="project-card__preview project-card__preview--wp">
                 <div class="project-preview__frame-wrap project-preview__frame-wrap--img project-preview__frame-wrap--wp-lifestyle project-preview__frame-wrap--wp-img">
-                    <a href="#" class="project-preview__img-link img-preview-trigger" onclick="openAdsDemo(); return false;" title="Open Ad Creative Demo">
+                    <a asp-controller="Home" asp-action="DemoFrame" asp-route-name="AdCreativeDemo" class="project-preview__img-link img-preview-trigger" title="Open Ad Creative Demo">
                         <img src="/images/project-ads.png" alt="Ad Creative / Banner Set" class="wp-preview__img" loading="lazy" />
                         <div class="wp-preview__overlay">
                             <span class="wp-preview__domain">ads.demo</span>
                             <div class="wp-dots"><span></span><span></span><span></span></div>
                         </div>
                     </a>
-                    <a href="#" class="preview-cta preview-cta--wp" onclick="openAdsDemo(); return false;"><i class="fas fa-arrow-right"></i> Explore demo</a>
+                    <a asp-controller="Home" asp-action="DemoFrame" asp-route-name="AdCreativeDemo" class="preview-cta preview-cta--wp"><i class="fas fa-arrow-right"></i> Open demo</a>
                 </div>
             </div>
             <p class="project-card__summary">Responsive display ad variants.</p>
@@ -630,7 +624,7 @@
             <h2 class="project-card__title">Will You Be My Valentine?</h2>
             <div class="project-card__preview project-card__preview--wp">
                 <div class="project-preview__frame-wrap project-preview__frame-wrap--valentine">
-                    <a asp-controller="Home" asp-action="ValentineDemo" class="project-preview__img-link valentine-preview-trigger" target="_blank" rel="noopener" title="Open Valentine Demo">
+                    <a asp-controller="Home" asp-action="DemoFrame" asp-route-name="ValentineDemo" class="project-preview__img-link valentine-preview-trigger" title="Open Valentine Demo">
                         <div class="valentine-preview-scene">
                             <div class="valentine-preview__bg"></div>
                             <div class="valentine-preview__content">
@@ -646,7 +640,7 @@
                             <div class="wp-dots"><span></span><span></span><span></span></div>
                         </div>
                     </a>
-                    <a asp-controller="Home" asp-action="ValentineDemo" target="_blank" rel="noopener" class="preview-cta preview-cta--wp"><i class="fas fa-heart"></i> Open demo</a>
+                    <a asp-controller="Home" asp-action="DemoFrame" asp-route-name="ValentineDemo" class="preview-cta preview-cta--wp"><i class="fas fa-heart"></i> Open demo</a>
                 </div>
             </div>
             <p class="project-card__summary">Kawaii interactive Valentine.</p>
@@ -673,14 +667,14 @@
             <h2 class="project-card__title">SkyBridge IT Solutions</h2>
             <div class="project-card__preview project-card__preview--wp">
                 <div class="project-preview__frame-wrap project-preview__frame-wrap--img project-preview__frame-wrap--wp-consult project-preview__frame-wrap--wp-img">
-                    <a asp-controller="Home" asp-action="SkyBridgeITDemo" class="project-preview__img-link" target="_blank" rel="noopener" title="Open SkyBridge IT Solutions Demo">
+                    <a asp-controller="Home" asp-action="DemoFrame" asp-route-name="SkyBridgeITDemo" class="project-preview__img-link" title="Open SkyBridge IT Solutions Demo">
                         <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=900&q=85" alt="SkyBridge IT Solutions — B2B IT Consulting & Cloud" class="wp-preview__img" loading="lazy" />
                         <div class="wp-preview__overlay">
                             <span class="wp-preview__domain">skybridgeit.ca</span>
                             <div class="wp-dots"><span></span><span></span><span></span></div>
                         </div>
                     </a>
-                    <a asp-controller="Home" asp-action="SkyBridgeITDemo" target="_blank" rel="noopener" class="preview-cta preview-cta--wp"><i class="fas fa-arrow-right"></i> Open demo</a>
+                    <a asp-controller="Home" asp-action="DemoFrame" asp-route-name="SkyBridgeITDemo" class="preview-cta preview-cta--wp"><i class="fas fa-arrow-right"></i> Open demo</a>
                 </div>
             </div>
             <p class="project-card__summary">B2B IT consulting & cloud landing.</p>
@@ -702,108 +696,3 @@
 
     </div>
 </section>
-
-<!-- Demo Modals -->
-<div class="demo-modal demo-modal--art-studio" id="artStudioDemoModal">
-    <div class="demo-modal__overlay" onclick="closeArtStudioDemo()"></div>
-    <div class="demo-modal__container">
-        <div class="demo-modal__header" style="background: #ffffff; border-bottom: 1px solid #000000;">
-            <div class="demo-modal__browser-dots"><span></span><span></span><span></span></div>
-            <span class="demo-modal__url" style="color: #000000; font-size: 11px; letter-spacing: 0.12em;">anastasiia.studio — catalogue (WordPress-style demo)</span>
-            <button class="demo-modal__close" onclick="closeArtStudioDemo()" title="Close" style="background: #fff; color: #000; border: 1px solid #000;"><i class="fas fa-times"></i></button>
-        </div>
-        <iframe src="/Home/ArtStudioDemo" class="demo-modal__iframe" id="artStudioDemoIframe" title="By Alisa Khru — gallery catalogue demo"></iframe>
-    </div>
-</div>
-
-<div class="demo-modal" id="cakeDemoModal">
-    <div class="demo-modal__overlay" onclick="closeCakeDemo()"></div>
-    <div class="demo-modal__container">
-        <div class="demo-modal__header">
-            <div class="demo-modal__browser-dots"><span></span><span></span><span></span></div>
-            <span class="demo-modal__url">sweetdelights.demo - Sweet Delights Bakery</span>
-            <button class="demo-modal__close" onclick="closeCakeDemo()" title="Close"><i class="fas fa-times"></i></button>
-        </div>
-        <iframe src="/Home/CakeShopDemo" class="demo-modal__iframe" id="cakeDemoIframe" title="Sweet Delights Bakery Demo"></iframe>
-    </div>
-</div>
-
-<div class="demo-modal demo-modal--gym" id="gymDemoModal">
-    <div class="demo-modal__overlay" onclick="closeGymDemo()"></div>
-    <div class="demo-modal__container">
-        <div class="demo-modal__header" style="background: linear-gradient(90deg, #1e1b4b, #312e81);">
-            <div class="demo-modal__browser-dots"><span></span><span></span><span></span></div>
-            <span class="demo-modal__url" style="color: #a5b4fc;">fithub.crm - Gym Management System</span>
-            <button class="demo-modal__close" onclick="closeGymDemo()" title="Close" style="background: rgba(255,255,255,0.1); color: #a5b4fc;"><i class="fas fa-times"></i></button>
-        </div>
-        <iframe src="/Home/GymCrmDemo" class="demo-modal__iframe" id="gymDemoIframe" title="FitHub Gym CRM Demo"></iframe>
-    </div>
-</div>
-
-<div class="demo-modal demo-modal--liquor" id="liquorDemoModal">
-    <div class="demo-modal__overlay" onclick="closeLiquorDemo()"></div>
-    <div class="demo-modal__container">
-        <div class="demo-modal__header" style="background: linear-gradient(90deg, #0f0f1a, #1a1a2e);">
-            <div class="demo-modal__browser-dots"><span></span><span></span><span></span></div>
-            <span class="demo-modal__url" style="color: #c9a962;">luxespirits.demo - Premium Alcohol Delivery</span>
-            <button class="demo-modal__close" onclick="closeLiquorDemo()" title="Close" style="background: rgba(201,169,98,0.2); color: #c9a962;"><i class="fas fa-times"></i></button>
-        </div>
-        <iframe src="/Home/LiquorStoreDemo" class="demo-modal__iframe" id="liquorDemoIframe" title="LUXE SPIRITS Demo"></iframe>
-    </div>
-</div>
-
-<div class="demo-modal demo-modal--event" id="eventDemoModal">
-    <div class="demo-modal__overlay" onclick="closeEventDemo()"></div>
-    <div class="demo-modal__container">
-        <div class="demo-modal__header" style="background: linear-gradient(90deg, #1e1b4b, #3730a3);">
-            <div class="demo-modal__browser-dots"><span></span><span></span><span></span></div>
-            <span class="demo-modal__url" style="color: #c4b5fd;">event.demo - Event / Webinar Landing Page</span>
-            <button class="demo-modal__close" onclick="closeEventDemo()" title="Close" style="background: rgba(196,181,253,0.2); color: #c4b5fd;"><i class="fas fa-times"></i></button>
-        </div>
-        <iframe src="/Home/EventWebinarDemo" class="demo-modal__iframe" id="eventDemoIframe" title="Event Webinar Demo"></iframe>
-    </div>
-</div>
-
-<div class="demo-modal demo-modal--brand" id="brandDemoModal">
-    <div class="demo-modal__overlay" onclick="closeBrandDemo()"></div>
-    <div class="demo-modal__container">
-        <div class="demo-modal__header" style="background: linear-gradient(90deg, #0f172a, #1e293b);">
-            <div class="demo-modal__browser-dots"><span></span><span></span><span></span></div>
-            <span class="demo-modal__url" style="color: #94a3b8;">brand.demo - Brand Refresh Case Study</span>
-            <button class="demo-modal__close" onclick="closeBrandDemo()" title="Close" style="background: rgba(148,163,184,0.2); color: #94a3b8;"><i class="fas fa-times"></i></button>
-        </div>
-        <iframe src="/Home/BrandRefreshDemo" class="demo-modal__iframe" id="brandDemoIframe" title="Brand Refresh Demo"></iframe>
-    </div>
-</div>
-
-<div class="demo-modal demo-modal--ads" id="adsDemoModal">
-    <div class="demo-modal__overlay" onclick="closeAdsDemo()"></div>
-    <div class="demo-modal__container">
-        <div class="demo-modal__header" style="background: linear-gradient(90deg, #0f172a, #334155);">
-            <div class="demo-modal__browser-dots"><span></span><span></span><span></span></div>
-            <span class="demo-modal__url" style="color: #a5b4fc;">ads.demo - Ad Creative / Banner Set</span>
-            <button class="demo-modal__close" onclick="closeAdsDemo()" title="Close" style="background: rgba(165,180,252,0.2); color: #a5b4fc;"><i class="fas fa-times"></i></button>
-        </div>
-        <iframe src="/Home/AdCreativeDemo" class="demo-modal__iframe" id="adsDemoIframe" title="Ad Creative Demo"></iframe>
-    </div>
-</div>
-
-<script>
-function openArtStudioDemo() { document.getElementById('artStudioDemoModal').classList.add('active'); document.body.style.overflow = 'hidden'; }
-function closeArtStudioDemo() { document.getElementById('artStudioDemoModal').classList.remove('active'); document.body.style.overflow = ''; }
-function openCakeDemo() { document.getElementById('cakeDemoModal').classList.add('active'); document.body.style.overflow = 'hidden'; }
-function closeCakeDemo() { document.getElementById('cakeDemoModal').classList.remove('active'); document.body.style.overflow = ''; }
-function openGymDemo() { document.getElementById('gymDemoModal').classList.add('active'); document.body.style.overflow = 'hidden'; }
-function closeGymDemo() { document.getElementById('gymDemoModal').classList.remove('active'); document.body.style.overflow = ''; }
-function openLiquorDemo() { document.getElementById('liquorDemoModal').classList.add('active'); document.body.style.overflow = 'hidden'; }
-function closeLiquorDemo() { document.getElementById('liquorDemoModal').classList.remove('active'); document.body.style.overflow = ''; }
-function openEventDemo() { document.getElementById('eventDemoModal').classList.add('active'); document.body.style.overflow = 'hidden'; }
-function closeEventDemo() { document.getElementById('eventDemoModal').classList.remove('active'); document.body.style.overflow = ''; }
-function openBrandDemo() { document.getElementById('brandDemoModal').classList.add('active'); document.body.style.overflow = 'hidden'; }
-function closeBrandDemo() { document.getElementById('brandDemoModal').classList.remove('active'); document.body.style.overflow = ''; }
-function openAdsDemo() { document.getElementById('adsDemoModal').classList.add('active'); document.body.style.overflow = 'hidden'; }
-function closeAdsDemo() { document.getElementById('adsDemoModal').classList.remove('active'); document.body.style.overflow = ''; }
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') { closeArtStudioDemo(); closeCakeDemo(); closeGymDemo(); closeLiquorDemo(); closeEventDemo(); closeBrandDemo(); closeAdsDemo(); }
-});
-</script>

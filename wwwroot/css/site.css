@@ -72,6 +72,7 @@
     --z-index-dropdown: 1000;
     --z-index-sticky: 1020;
     --z-index-fixed: 1030;
+    --navbar-height: 78px;
     --z-index-modal-backdrop: 1040;
     --z-index-modal: 1050;
     --z-index-popover: 1060;
@@ -1798,7 +1799,10 @@ a:hover {
 /* Demo Modal */
 .demo-modal {
     position: fixed;
-    inset: 0;
+    top: var(--navbar-height, 78px);
+    right: 0;
+    bottom: 0;
+    left: 0;
     z-index: 10000;
     display: none;
     align-items: center;
@@ -1821,8 +1825,8 @@ a:hover {
     position: relative;
     width: 100%;
     max-width: 1200px;
-    height: 90vh;
-    max-height: 800px;
+    height: calc(100vh - var(--navbar-height, 78px) - 2rem);
+    max-height: none;
     background: white;
     border-radius: 1rem;
     overflow: hidden;
@@ -2831,6 +2835,11 @@ a:hover {
 .navbar.scroll-up {
     transform: translateY(0);
     transition: transform 0.28s ease;
+}
+
+body.demo-modal-open .navbar {
+    transform: translateY(0) !important;
+    z-index: 10001;
 }
 
 .card,
