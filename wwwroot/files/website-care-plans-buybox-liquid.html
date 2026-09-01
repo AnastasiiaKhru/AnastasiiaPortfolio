@@ -1,0 +1,226 @@
+<style>
+/* Hide one-time */
+.tabs_wrapper .tab_label[for*="tab_otp"]{display:none!important}
+
+/* Full-width centered attached box */
+.tabs_wrapper{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  margin:.25rem 0 .85rem!important;
+  padding:0!important;
+  box-sizing:border-box!important;
+  border:1px solid #D8D0C4!important;
+  background:#FDFAF5!important;
+  float:none!important;
+  position:relative!important;
+  left:auto!important;
+  right:auto!important;
+  transform:none!important;
+}
+
+.tabs_wrapper .tab_label[for*="tab_subscribe"]{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  width:100%!important;
+  margin:0!important;
+  padding:.85rem 1.1rem!important;
+  background:transparent!important;
+  border:none!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  outline:none!important;
+  color:#1A1714!important;
+  font-family:Jost,Helvetica Neue,Arial,sans-serif!important;
+}
+
+.tabs_wrapper .tab_label[for*="tab_subscribe"]>span:first-child{
+  font-size:.6rem!important;
+  letter-spacing:.14em!important;
+  text-transform:uppercase!important;
+  color:#9C7E52!important;
+}
+
+.tabs_wrapper .tab_label[for*="tab_subscribe"] .price{
+  font-family:Cormorant Garamond,Georgia,serif!important;
+  font-size:1.15rem!important;
+  color:#1A1714!important;
+}
+
+/* Plan hours note by buy buttons */
+.kcp-buy-note{
+  width:100%;
+  max-width:100%;
+  margin:0 0 .85rem;
+  padding:.9rem 1rem;
+  border:1px solid #D8D0C4;
+  background:#FDFAF5;
+  box-sizing:border-box;
+  font-family:Jost,Helvetica Neue,Arial,sans-serif;
+  color:#1A1714;
+}
+.kcp-buy-note__label{
+  display:block;
+  font-size:.58rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:#9C7E52;
+  margin-bottom:.35rem;
+  font-weight:500;
+}
+.kcp-buy-note__hours{
+  display:block;
+  font-family:Cormorant Garamond,Georgia,serif;
+  font-size:1.15rem;
+  line-height:1.25;
+  color:#1A1714;
+  margin-bottom:.35rem;
+}
+.kcp-buy-note__hours strong{
+  font-weight:500;
+  color:#2E2926;
+}
+.kcp-buy-note__text{
+  display:block;
+  font-size:.78rem;
+  line-height:1.5;
+  color:#4A4440;
+  margin:0;
+}
+
+/* Hide "Auto-renews..." via JS only — keep this selector empty intentionally */
+</style>
+
+<script>
+(function(){
+  var PLANS = {
+    essential: {
+      match: /essential/i,
+      hours: 4,
+      label: 'Essential Care',
+      line: '4 support hours each month'
+    },
+    growth: {
+      match: /growth/i,
+      hours: 8,
+      label: 'Growth Care',
+      line: '8 support hours each month'
+    },
+    elite: {
+      match: /elite/i,
+      hours: 12,
+      label: 'Elite Care',
+      line: '12 support hours each month'
+    }
+  };
+
+  function hideRenewText(){
+    var root = document.getElementById('ProductInformation-template--20842523852952__main') || document;
+    root.querySelectorAll('p,span,small,div,label').forEach(function(el){
+      if (el.closest && el.closest('.kcp-buy-note')) return;
+      var t = (el.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      if (!t) return;
+      if (t.indexOf('auto-renew') > -1 || t.indexOf('skip or cancel') > -1 || t === 'auto-renews, skip or cancel anytime.' || t.indexOf('cancel anytime') > -1) {
+        if (el.children.length === 0 || t.length < 80) el.style.display = 'none';
+      }
+    });
+  }
+
+  function detectPlan(){
+    var root = document.getElementById('ProductInformation-template--20842523852952__main') || document;
+    var checked = root.querySelector('.variant-option__button-label:has(input:checked), .variant-option__button-label:has(input[checked]), input[type="radio"]:checked');
+    var text = '';
+    if (checked) {
+      text = (checked.textContent || checked.value || checked.getAttribute('aria-label') || '').trim();
+      if (!text && checked.closest) {
+        var lab = checked.closest('label') || checked.closest('.variant-option__button-label');
+        if (lab) text = (lab.textContent || '').trim();
+      }
+    }
+    if (!text) {
+      var active = root.querySelector('.variant-option__button-label[aria-checked="true"], .variant-option__button-label.is-selected');
+      if (active) text = (active.textContent || '').trim();
+    }
+    for (var key in PLANS) {
+      if (PLANS[key].match.test(text)) return PLANS[key];
+    }
+    return PLANS.essential;
+  }
+
+  function ensureNote(){
+    var root = document.getElementById('ProductInformation-template--20842523852952__main');
+    if (!root) return null;
+    var existing = root.querySelector('.kcp-buy-note');
+    if (existing) return existing;
+
+    var note = document.createElement('div');
+    note.className = 'kcp-buy-note';
+    note.setAttribute('aria-live', 'polite');
+    note.innerHTML =
+      '<span class="kcp-buy-note__label">Selected plan</span>' +
+      '<span class="kcp-buy-note__hours"></span>' +
+      '<p class="kcp-buy-note__text"></p>';
+
+    var buy =
+      root.querySelector('buy-buttons') ||
+      root.querySelector('.buy-buttons') ||
+      root.querySelector('.product-form-buttons') ||
+      root.querySelector('button[name="add"]') ||
+      root.querySelector('.add-to-cart-button');
+
+    var anchor = buy;
+    if (buy && buy.tagName && buy.tagName.toLowerCase() === 'button') {
+      anchor = buy.closest('buy-buttons, .buy-buttons, .product-form-buttons, form') || buy.parentElement;
+    }
+
+    var sub = root.querySelector('.shopify_subscriptions_app_container, .tabs_wrapper');
+    if (anchor && anchor.parentNode) {
+      anchor.parentNode.insertBefore(note, anchor);
+    } else if (sub && sub.parentNode) {
+      if (sub.nextSibling) sub.parentNode.insertBefore(note, sub.nextSibling);
+      else sub.parentNode.appendChild(note);
+    } else {
+      root.appendChild(note);
+    }
+    return note;
+  }
+
+  function updateNote(){
+    var note = ensureNote();
+    if (!note) return;
+    var plan = detectPlan();
+    var hoursEl = note.querySelector('.kcp-buy-note__hours');
+    var textEl = note.querySelector('.kcp-buy-note__text');
+    if (hoursEl) {
+      hoursEl.innerHTML = '<strong>' + plan.label + '</strong> — ' + plan.line;
+    }
+    if (textEl) {
+      textEl.textContent = 'Full plan details are below.';
+    }
+  }
+
+  function forceSubscribe(){
+    var root = document.getElementById('ProductInformation-template--20842523852952__main') || document;
+    var sub = root.querySelector('input[id*="tab_subscribe"]');
+    if (sub && !sub.checked) {
+      try { sub.click(); } catch (e) {}
+      sub.checked = true;
+      sub.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  }
+
+  function run(){
+    forceSubscribe();
+    hideRenewText();
+    updateNote();
+  }
+
+  run();
+  document.addEventListener('change', run);
+  document.addEventListener('click', function(){ setTimeout(run, 50); });
+  setTimeout(run, 400);
+  setTimeout(run, 1200);
+  setTimeout(run, 2500);
+})();
+</script>

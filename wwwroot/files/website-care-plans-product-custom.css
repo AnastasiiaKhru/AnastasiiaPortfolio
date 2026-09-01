@@ -1,0 +1,201 @@
+/* ============================================
+   Website Care Plans — Product buy box
+   Paste in: Theme settings → Custom CSS
+   Matches cream / gold / espresso care-plans look
+   ============================================ */
+
+#ProductInformation-template--20842523852952__main.product-details,
+#ProductInformation-template--20842523852952__main {
+  --kcp-cream: #F4F0E8;
+  --kcp-ink: #1A1714;
+  --kcp-ink-lt: #4A4440;
+  --kcp-espresso: #2E2926;
+  --kcp-gold: #9C7E52;
+  --kcp-gold-lt: #C4A882;
+  --kcp-border: #D8D0C4;
+  --kcp-card: #FDFAF5;
+  --kcp-muted: #7A7068;
+
+  background: var(--kcp-cream) !important;
+  color: var(--kcp-ink) !important;
+  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif !important;
+  padding: 1.5rem 1.25rem !important;
+  border: 1px solid var(--kcp-border) !important;
+  border-radius: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Hide tiny duplicate title link if present */
+#ProductInformation-template--20842523852952__main .view-product-title {
+  display: none !important;
+}
+
+/* Main H1 */
+#ProductInformation-template--20842523852952__main .text-block h1,
+#ProductInformation-template--20842523852952__main h1 {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-weight: 300 !important;
+  font-size: clamp(1.75rem, 3vw, 2.4rem) !important;
+  letter-spacing: 0.02em !important;
+  color: var(--kcp-ink) !important;
+  text-align: center !important;
+  line-height: 1.15 !important;
+  margin: 0 !important;
+}
+
+#ProductInformation-template--20842523852952__main .text-block {
+  --padding-block-start: 0px !important;
+  padding-top: 0 !important;
+}
+
+/* Divider line → gold */
+#ProductInformation-template--20842523852952__main .divider__line {
+  background: var(--kcp-gold) !important;
+  border-color: var(--kcp-gold) !important;
+  opacity: 0.55 !important;
+}
+
+/* Variant picker legend */
+#ProductInformation-template--20842523852952__main .variant-option legend,
+#ProductInformation-template--20842523852952__main variant-picker legend {
+  font-size: 0.58rem !important;
+  letter-spacing: 0.22em !important;
+  text-transform: uppercase !important;
+  color: var(--kcp-gold) !important;
+  font-weight: 600 !important;
+  text-align: center !important;
+  width: 100% !important;
+  margin-bottom: 0.85rem !important;
+}
+
+/* Variant buttons — Essential / Growth / Elite */
+#ProductInformation-template--20842523852952__main .variant-option__button-label {
+  border: 1px solid var(--kcp-border) !important;
+  background: var(--kcp-card) !important;
+  color: var(--kcp-ink) !important;
+  border-radius: 0 !important;
+  font-family: 'Jost', sans-serif !important;
+  font-size: 0.8rem !important;
+  letter-spacing: 0.04em !important;
+  transition: background 0.2s, border-color 0.2s, color 0.2s !important;
+}
+
+#ProductInformation-template--20842523852952__main .variant-option__button-label:hover {
+  border-color: var(--kcp-gold) !important;
+}
+
+#ProductInformation-template--20842523852952__main .variant-option__button-label:has(input:checked),
+#ProductInformation-template--20842523852952__main .variant-option__button-label:has(input[checked]) {
+  background: var(--kcp-espresso) !important;
+  border-color: var(--kcp-espresso) !important;
+  color: var(--kcp-cream) !important;
+}
+
+#ProductInformation-template--20842523852952__main .variant-option__button-label__text {
+  color: inherit !important;
+}
+
+#ProductInformation-template--20842523852952__main .variant-option__button-label__pill {
+  background: transparent !important;
+}
+
+/* Add to cart */
+#ProductInformation-template--20842523852952__main .add-to-cart-button,
+#ProductInformation-template--20842523852952__main button[type="submit"].button {
+  background: var(--kcp-espresso) !important;
+  color: var(--kcp-cream) !important;
+  border: 1px solid var(--kcp-espresso) !important;
+  border-radius: 0 !important;
+  font-family: 'Jost', sans-serif !important;
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  padding: 1rem 1.5rem !important;
+  width: 100% !important;
+  transition: background 0.2s, color 0.2s !important;
+}
+
+#ProductInformation-template--20842523852952__main .add-to-cart-button:hover,
+#ProductInformation-template--20842523852952__main button[type="submit"].button:hover {
+  background: var(--kcp-gold) !important;
+  border-color: var(--kcp-gold) !important;
+  color: var(--kcp-cream) !important;
+}
+
+/* Shop Pay / more options */
+#ProductInformation-template--20842523852952__main .shopify-payment-button__more-options,
+#ProductInformation-template--20842523852952__main #more-payment-options-link {
+  color: var(--kcp-gold) !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 0.06em !important;
+}
+
+/* Accordion (where plan details live) */
+#ProductInformation-template--20842523852952__main .accordion,
+#ProductInformation-template--20842523852952__main accordion-custom {
+  border-top: 1px solid var(--kcp-border) !important;
+  margin-top: 0.5rem !important;
+}
+
+#ProductInformation-template--20842523852952__main .details__header {
+  font-family: 'Jost', sans-serif !important;
+  font-size: 0.65rem !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  color: var(--kcp-gold) !important;
+  padding: 1rem 0 !important;
+}
+
+#ProductInformation-template--20842523852952__main .details-content {
+  padding: 0 !important;
+}
+
+/* Kill accordion text-block max-width so .kcp can breathe a bit */
+#ProductInformation-template--20842523852952__main .details-content .text-block {
+  --max-width: none !important;
+  max-width: none !important;
+  width: 100% !important;
+}
+
+/* Inside accordion: don't force 100vw (breaks sidebar) — stay contained */
+#ProductInformation-template--20842523852952__main .kcp {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  left: 0 !important;
+  transform: none !important;
+  margin: 0 !important;
+  position: relative !important;
+}
+
+#ProductInformation-template--20842523852952__main .kcp .inner {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+#ProductInformation-template--20842523852952__main .kcp .hero {
+  text-align: center !important;
+}
+
+#ProductInformation-template--20842523852952__main .kcp .hero .inner {
+  align-items: center !important;
+}
+
+#ProductInformation-template--20842523852952__main .kcp .hero__title,
+#ProductInformation-template--20842523852952__main .kcp .eyebrow,
+#ProductInformation-template--20842523852952__main .kcp .hero__desc {
+  text-align: center !important;
+}
+
+#ProductInformation-template--20842523852952__main .kcp .hero__desc {
+  max-width: 100% !important;
+}
+
+#ProductInformation-template--20842523852952__main .kcp .hours-notice {
+  max-width: 100% !important;
+}
+
+#ProductInformation-template--20842523852952__main .kcp .plans-grid {
+  grid-template-columns: 1fr !important;
+}

@@ -68,6 +68,7 @@ public class HomeController : Controller
     public IActionResult WPBusinessDemo() => View();
     public IActionResult WPLifestyleDemo() => View();
     public IActionResult WPWellnessDemo() => View();
+    public IActionResult WPConstructionDemo() => View();
     public IActionResult ValentineDemo() => View();
     public IActionResult SkyBridgeITDemo() => View();
 

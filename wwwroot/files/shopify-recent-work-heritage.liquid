@@ -1,0 +1,120 @@
+{% comment %}
+  Recent Work — WordPress 13–15. Héritage theme. Click card → demo popup.
+  Set demo_1 … demo_6 to your live URLs.
+{% endcomment %}
+{% assign heading_main = 'Explore' %}
+{% assign heading_em = 'Recent Work' %}
+{% assign subheading = 'Click a project to view the full demo' %}
+{% assign demo_1 = 'https://anastasiiaportfolio-production-47da.up.railway.app/Home/WPBusinessDemo' %}
+{% assign demo_2 = 'https://anastasiiaportfolio-production-47da.up.railway.app/Home/WPLifestyleDemo' %}
+{% assign demo_3 = 'https://anastasiiaportfolio-production-47da.up.railway.app/Home/WPWellnessDemo' %}
+{% assign demo_4 = 'https://anastasiiaportfolio-production-47da.up.railway.app/Home/CakeShopDemo' %}
+{% assign demo_5 = 'https://anastasiiaportfolio-production-47da.up.railway.app/Home/ArtStudioDemo' %}
+{% assign demo_6 = 'https://anastasiiaportfolio-production-47da.up.railway.app/Home/WPConstructionDemo' %}
+{% assign project_titles = 'ConsultPro,WanderLens,NurtureWell,Sweet Delights,The Abstract,Northline' | split: ',' %}
+{% assign project_descs = 'Corporate WordPress theme for consulting & B2B,Editorial magazine theme for travel & lifestyle,Wellness & spa theme with booking & WooCommerce,Bakery WordPress theme with WooCommerce & custom ordering,Contemporary art gallery WordPress site with curated exhibitions & artist portfolios,Modern construction company theme with project galleries & quote forms' | split: ',' %}
+{% assign project_domains = 'consultpro.theme,wanderlens.blog,nurturewell.studio,sweetdelights.bakery,theabstract.gallery,northline.build' | split: ',' %}
+{% assign project_images = 'https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80,https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80,https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=800&q=80,https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=800&q=80,https://images.unsplash.com/photo-1536924940846-227afb31e2a5?auto=format&fit=crop&w=800&q=80,https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80' | split: ',' %}
+{% assign project_tags = 'Gutenberg • FSE • ACF,Query Loop • Cover • Gallery,WooCommerce • Appointments • ACF,WooCommerce • Custom Orders • ACF,Gutenberg • CPT • Full Site Editing,Gutenberg • Projects CPT • Quote Forms' | split: ',' %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600&family=Inter:wght@400;500;600&display=swap">
+
+<style>
+.rw{--i:#1a1a1a;--s:#5c5c5c;--m:#888;--g:#9a8465;--p:#EDE4D8;--c:#fff;--b:rgba(26,26,26,.1);--sh:0 8px 28px rgba(0,0,0,.06);--fd:'Playfair Display',Georgia,serif;--fb:'Inter',-apple-system,sans-serif;
+  padding:3rem 0 4rem;background:var(--p);font-family:var(--fb);}
+.rw__in{max-width:1480px;margin:0 auto;padding:0 1.25rem;}
+.rw__label{display:block;text-align:center;font-size:.65rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--m);margin-bottom:.75rem;}
+.rw__head{text-align:center;margin-bottom:2rem;}
+.rw__title{font-family:var(--fd);font-size:clamp(1.75rem,3.5vw,2.25rem);font-weight:500;letter-spacing:.02em;color:var(--i);margin:0 0 .4rem;line-height:1.2;}
+.rw__title em{color:var(--g);font-style:italic;}
+.rw__sub{font-size:.9375rem;color:var(--s);margin:0;letter-spacing:.01em;}
+.rw__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
+@media(max-width:1100px){.rw__grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:600px){.rw__grid{grid-template-columns:1fr}.rw{padding:2.5rem 0 3.5rem;}}
+.rw__card{background:var(--c);overflow:hidden;border:1px solid var(--b);border-radius:.4rem;box-shadow:0 2px 12px rgba(0,0,0,.04);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;display:flex;flex-direction:column;}
+.rw__card:hover{transform:translateY(-3px);box-shadow:var(--sh);border-color:rgba(26,26,26,.12);}
+.rw__card a{text-decoration:none;color:inherit;display:flex;flex-direction:column;flex:1;cursor:pointer;}
+.rw__imgw{aspect-ratio:4/3;overflow:hidden;background:#f5f3ef;}
+.rw__img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease;}
+.rw__card:hover .rw__img{transform:scale(1.03);}
+.rw__body{padding:1.15rem 1.2rem;flex:1;display:flex;flex-direction:column;}
+.rw__domain{font-size:.6rem;text-transform:uppercase;letter-spacing:.22em;color:var(--m);margin-bottom:.4rem;display:block;}
+.rw__name{font-family:var(--fd);font-size:1.1rem;font-weight:500;letter-spacing:.02em;color:var(--i);margin:0 0 .35rem;}
+.rw__desc{font-size:.8125rem;line-height:1.55;color:var(--s);margin:0 0 .5rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.rw__tags{font-size:.7rem;color:var(--m);margin:0 0 .5rem;}
+.rw__demo{display:inline-flex;align-items:center;gap:.25rem;font-size:.75rem;font-weight:500;letter-spacing:.04em;color:var(--g);transition:gap .2s ease;margin-top:auto;}
+.rw__card:hover .rw__demo{gap:.4rem;}
+/* Popup — Héritage: cream, gold bar */
+.rw__ov{display:none;position:fixed;inset:0;z-index:99999;background:rgba(26,26,26,.45);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:1.5rem;box-sizing:border-box;}
+.rw__ov.is-open{display:flex;}
+.rw__mod{width:100%;max-width:1300px;height:88vh;max-height:820px;background:#FAF9F7;border:1px solid var(--b);border-radius:.5rem;box-shadow:0 24px 64px rgba(0,0,0,.12);display:flex;flex-direction:column;overflow:hidden;}
+.rw__mod::before{content:'';height:3px;background:linear-gradient(90deg,var(--g),#b39b76);flex-shrink:0;}
+.rw__mod-h{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:.75rem 1.25rem;background:#fff;border-bottom:1px solid var(--b);}
+.rw__mod-title{font-family:var(--fd);font-size:.9375rem;font-weight:500;letter-spacing:.03em;color:var(--i);}
+.rw__mod-close{width:36px;height:36px;border:none;background:var(--p);color:var(--i);cursor:pointer;border-radius:50%;font-size:1.25rem;line-height:1;display:flex;align-items:center;justify-content:center;transition:background .2s,color .2s;}
+.rw__mod-close:hover{background:var(--g);color:#fff;}
+.rw__mod-f{flex:1;min-height:0;background:#fff;}
+.rw__mod-f iframe{width:100%;height:100%;border:none;display:block;}
+</style>
+
+<section class="rw" id="recent-work-wp">
+  <div class="rw__in">
+    <header class="rw__head">
+      <h2 class="rw__title">{{ heading_main }} <em>{{ heading_em }}</em></h2>
+      <p class="rw__sub">{{ subheading }}</p>
+    </header>
+    <div class="rw__grid">
+      {% for i in (1..6) %}
+        {% assign idx = forloop.index0 %}
+        {% assign title = project_titles[idx] %}
+        {% assign desc = project_descs[idx] %}
+        {% assign domain = project_domains[idx] %}
+        {% assign img = project_images[idx] %}
+        {% assign tags = project_tags[idx] %}
+        {% if idx == 0 %}{% assign url = demo_1 %}
+        {% elsif idx == 1 %}{% assign url = demo_2 %}
+        {% elsif idx == 2 %}{% assign url = demo_3 %}
+        {% elsif idx == 3 %}{% assign url = demo_4 %}
+        {% elsif idx == 4 %}{% assign url = demo_5 %}
+        {% else %}{% assign url = demo_6 %}{% endif %}
+        <article class="rw__card" data-demo-url="{{ url }}" data-demo-title="{{ title }}">
+          <a href="#" role="button" data-recent-work-open>
+            <div class="rw__imgw"><img class="rw__img" src="{{ img }}" alt="{{ title }} — {{ desc }}" loading="lazy" width="800" height="600"></div>
+            <div class="rw__body">
+              <span class="rw__domain">{{ domain }}</span>
+              <h3 class="rw__name">{{ title }}</h3>
+              <p class="rw__desc">{{ desc }}</p>
+              <p class="rw__tags">{{ tags }}</p>
+              <span class="rw__demo">View demo →</span>
+            </div>
+          </a>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<div class="rw__ov" id="recentWorkDemoOverlay" aria-hidden="true">
+  <div class="rw__mod">
+    <div class="rw__mod-h">
+      <span class="rw__mod-title" id="recentWorkModalTitle">Demo</span>
+      <button type="button" class="rw__mod-close" id="recentWorkDemoClose" aria-label="Close">×</button>
+    </div>
+    <div class="rw__mod-f"><iframe id="recentWorkDemoFrame" title="Project demo"></iframe></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var ov=document.getElementById('recentWorkDemoOverlay'),fr=document.getElementById('recentWorkDemoFrame'),tl=document.getElementById('recentWorkModalTitle'),cl=document.getElementById('recentWorkDemoClose');
+  if(!ov||!fr)return;
+  function openDemo(url,title){fr.src=url&&url!=='#'?url:'about:blank';tl.textContent=url&&url!=='#'?title:title+' — Set demo URL';ov.classList.add('is-open');ov.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
+  function closeDemo(){ov.classList.remove('is-open');ov.setAttribute('aria-hidden','true');document.body.style.overflow='';fr.src='about:blank';}
+  document.querySelectorAll('[data-recent-work-open]').forEach(function(btn){btn.addEventListener('click',function(e){e.preventDefault();var c=this.closest('[data-demo-url]');if(c)openDemo(c.getAttribute('data-demo-url'),c.getAttribute('data-demo-title')||'Demo');});});
+  cl&&cl.addEventListener('click',closeDemo);
+  ov.addEventListener('click',function(e){if(e.target===ov)closeDemo();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&ov.classList.contains('is-open'))closeDemo();});
+})();
+</script>
