@@ -331,28 +331,6 @@
     transform: translateY(-1px);
 }
 
-/* —— Bento grid (Projects) —— */
-.page-inner--projects .projects-grid--bento {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 1.25rem;
-}
-
-.page-inner--projects .projects-grid--bento .project-card-modern[data-project="1"] {
-    grid-column: span 3;
-    grid-row: span 2;
-}
-
-.page-inner--projects .projects-grid--bento .project-card-modern[data-project="2"],
-.page-inner--projects .projects-grid--bento .project-card-modern[data-project="3"] {
-    grid-column: span 3;
-}
-
-.page-inner--projects .projects-grid--bento .project-card-modern[data-project="4"],
-.page-inner--projects .projects-grid--bento .project-card-modern[data-project="5"],
-.page-inner--projects .projects-grid--bento .project-card-modern[data-project="6"] {
-    grid-column: span 2;
-}
-
 /* —— Resume sticky bar —— */
 .resume-sticky-bar {
     position: fixed;
@@ -438,15 +416,6 @@
     .project-switcher__tabs {
         flex-direction: row;
         flex-wrap: wrap;
-    }
-
-    .page-inner--projects .projects-grid--bento {
-        grid-template-columns: 1fr;
-    }
-
-    .page-inner--projects .projects-grid--bento .project-card-modern[data-project] {
-        grid-column: auto;
-        grid-row: auto;
     }
 }
 
