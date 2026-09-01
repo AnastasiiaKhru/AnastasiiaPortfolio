@@ -199,6 +199,30 @@
         color: #111827;
     }
 
+    .resume-bottom-actions {
+        margin-top: 2rem;
+        padding-top: 0.25rem;
+        display: flex;
+        justify-content: center;
+    }
+
+    .resume-download-btn--references {
+        width: auto;
+        min-width: min(100%, 320px);
+        padding-inline: 1.35rem;
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid rgba(191, 161, 106, 0.35);
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+        color: #334155;
+    }
+
+    .resume-download-btn--references:hover {
+        background: rgba(255, 248, 230, 0.98);
+        border-color: rgba(245, 158, 11, 0.45);
+        box-shadow: 0 14px 28px rgba(15, 23, 42, 0.1);
+        color: #111827;
+    }
+
     .resume-skill-group + .resume-skill-group {
         margin-top: 1rem;
         padding-top: 1rem;
@@ -386,7 +410,7 @@
 <div class="page-inner page-inner--resume">
     <header class="page-header">
         <div class="container">
-            <h1 class="page-header__title" data-typewriter data-typewriter-text="Anastasiia Khrustaleva" data-typewriter-speed="54"></h1>
+            <h1 class="page-header__title text-gradient-motion" data-typewriter data-typewriter-text="Anastasiia Khrustaleva" data-typewriter-speed="54"></h1>
             <p class="page-header__lead" data-motion-after-typewriter>Software Developer · Web &amp; Product Designer — experience across web development, Shopify, WordPress, UI/UX, and client-facing digital products.</p>
         </div>
     </header>
@@ -584,6 +608,24 @@
                     </div>
                 </div>
             </div>
+
+            <div class="resume-bottom-actions">
+                <a asp-action="DownloadReferences" asp-controller="Home" class="resume-download-btn resume-download-btn--references" target="_blank" rel="noopener">
+                    <i class="fas fa-file-pdf" aria-hidden="true"></i>Download References
+                </a>
+            </div>
         </div>
     </section>
 </div>
+
+<aside class="resume-sticky-bar" id="resumeStickyBar" aria-label="Quick resume actions">
+    <a asp-action="DownloadResume" asp-controller="Home" class="resume-sticky-bar__btn resume-sticky-bar__btn--primary" target="_blank" rel="noopener">
+        <i class="fas fa-download" aria-hidden="true"></i>Resume
+    </a>
+    <a asp-action="DownloadReferences" asp-controller="Home" class="resume-sticky-bar__btn resume-sticky-bar__btn--secondary" target="_blank" rel="noopener">
+        <i class="fas fa-file-pdf" aria-hidden="true"></i>References
+    </a>
+    <a asp-controller="Home" asp-action="Contact" class="resume-sticky-bar__btn resume-sticky-bar__btn--secondary">
+        <i class="fas fa-envelope" aria-hidden="true"></i>Contact
+    </a>
+</aside>
