@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const initMagneticButtons = () => {
         if (prefersReduced) return;
 
-        const magneticSelector = '.hero-btn-group .btn, .hero-section .social-link, .page-header .btn, .filter-btn, .project-switcher__tab, .btn-primary';
+        const magneticSelector = '.hero-btn-group .btn, .hero-section .social-link, .page-header .btn, .filter-btn, .btn-primary';
         document.querySelectorAll(magneticSelector).forEach((btn) => {
             btn.addEventListener('mousemove', (event) => {
                 const rect = btn.getBoundingClientRect();
@@ -267,26 +267,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { threshold: 0.55, rootMargin: '-18% 0px -32% 0px' });
 
         steps.forEach((step) => storyObserver.observe(step));
-    };
-
-    const initProjectSwitcher = () => {
-        const root = document.getElementById('projectSwitcher');
-        if (!root) return;
-
-        const tabs = root.querySelectorAll('.project-switcher__tab[data-switcher]');
-        const slides = root.querySelectorAll('.project-switcher__slide[data-switcher-panel]');
-
-        tabs.forEach((tab) => {
-            tab.addEventListener('click', () => {
-                const id = tab.dataset.switcher;
-                tabs.forEach((item) => {
-                    const isActive = item === tab;
-                    item.classList.toggle('is-active', isActive);
-                    item.setAttribute('aria-selected', isActive ? 'true' : 'false');
-                });
-                slides.forEach((slide) => slide.classList.toggle('is-active', slide.dataset.switcherPanel === id));
-            });
-        });
     };
 
     const initProjectFilters = () => {
@@ -355,7 +335,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollTextFade();
     initPreviewReveal();
     initStoryScroll();
-    initProjectSwitcher();
     initProjectFilters();
     initResumeStickyBar();
 
@@ -449,8 +428,9 @@ document.addEventListener('DOMContentLoaded', () => {
             '.soft-skill',
             '.stat-card',
             '.home-stat-card',
+            '.home-stats__header',
+            '.home-stats__knowhow',
             '.story-step',
-            '.project-switcher',
             '.contact-info-card',
             '.contact-form-card',
             '.timeline-item',
