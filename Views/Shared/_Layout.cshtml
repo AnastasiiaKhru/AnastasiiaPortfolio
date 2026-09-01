@@ -46,6 +46,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/AnastasiiaPortfolio.styles.css" asp-append-version="true" />
+    <style>
+        [data-typewriter]:not(.typewriter-host):not(.typewriter-complete) { visibility: hidden; }
+        [data-motion-before-typewriter],
+        [data-motion-after-typewriter] { opacity: 0; }
+    </style>
     @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>

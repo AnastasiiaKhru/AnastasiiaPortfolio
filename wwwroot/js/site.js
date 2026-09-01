@@ -4,6 +4,126 @@ document.addEventListener('DOMContentLoaded', () => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isDemoPage = /Demo|PlayZone|GymCrm|Liquor|Cake|ArtStudio|Snake|Maze|WP/i.test(window.location.pathname);
 
+    const escapeHtml = (value) => value
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+
+    const revealAfterTypewriter = (el) => {
+        const scope = el.closest('.hero-section, .page-header') || document;
+        scope.querySelectorAll('[data-motion-after-typewriter]').forEach((node, index) => {
+            node.classList.add('motion-after-typewriter');
+            node.style.setProperty('--motion-delay', `${index * 110 + 90}ms`);
+        });
+
+        const floatTarget = document.querySelector('[data-motion-float]');
+        if (floatTarget) {
+            floatTarget.classList.add('motion-float-in');
+        }
+    };
+
+    const initTypewriters = () => {
+        document.querySelectorAll('[data-typewriter]').forEach((el, index) => {
+            const text = (el.getAttribute('data-typewriter-text') || el.textContent || '').trim();
+            const speed = parseInt(el.getAttribute('data-typewriter-speed') || '52', 10);
+            const delay = parseInt(el.getAttribute('data-typewriter-delay') || String(220 + index * 60), 10);
+
+            if (!text) return;
+
+            el.textContent = '';
+
+            if (prefersReduced) {
+                el.textContent = text;
+                el.classList.add('typewriter-complete');
+                revealAfterTypewriter(el);
+                return;
+            }
+
+            el.classList.add('typewriter-host');
+            el.setAttribute('aria-label', text);
+            el.innerHTML = `
+                <span class="typewriter-measure" aria-hidden="true">${escapeHtml(text)}</span>
+                <span class="typewriter-line">
+                    <span class="typewriter-output"></span><span class="typewriter-cursor" aria-hidden="true"></span>
+                </span>
+            `;
+
+            const output = el.querySelector('.typewriter-output');
+            const cursor = el.querySelector('.typewriter-cursor');
+            let charIndex = 0;
+
+            const typeNext = () => {
+                if (charIndex < text.length) {
+                    output.textContent = text.slice(0, charIndex + 1);
+                    charIndex += 1;
+                    const currentChar = text.charAt(charIndex - 1);
+                    const pause = currentChar === '.' || currentChar === '—' ? speed * 2.8
+                        : currentChar === ',' || currentChar === ' ' ? speed * 1.35
+                        : speed;
+                    window.setTimeout(typeNext, pause + Math.random() * 16);
+                    return;
+                }
+
+                cursor.classList.add('is-done');
+                el.classList.add('typewriter-complete');
+                window.setTimeout(() => cursor.remove(), 1200);
+                revealAfterTypewriter(el);
+            };
+
+            window.setTimeout(() => requestAnimationFrame(typeNext), delay);
+        });
+
+        document.querySelectorAll('[data-motion-before-typewriter]').forEach((el) => {
+            if (prefersReduced) {
+                el.classList.add('motion-before-typewriter');
+                return;
+            }
+            window.setTimeout(() => el.classList.add('motion-before-typewriter'), 80);
+        });
+    };
+
+    const initMagneticButtons = () => {
+        if (prefersReduced) return;
+
+        const magneticSelector = '.hero-btn-group .btn, .hero-section .social-link, .page-header .btn, .filter-btn, .btn-primary';
+        document.querySelectorAll(magneticSelector).forEach((btn) => {
+            btn.addEventListener('mousemove', (event) => {
+                const rect = btn.getBoundingClientRect();
+                const x = event.clientX - rect.left - rect.width / 2;
+                const y = event.clientY - rect.top - rect.height / 2;
+                btn.style.setProperty('--magnetic-x', `${x * 0.16}px`);
+                btn.style.setProperty('--magnetic-y', `${y * 0.2}px`);
+                btn.classList.add('is-magnetic');
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                btn.classList.remove('is-magnetic');
+                btn.style.removeProperty('--magnetic-x');
+                btn.style.removeProperty('--magnetic-y');
+            });
+        });
+    };
+
+    const initScrollTextFade = () => {
+        if (prefersReduced) return;
+
+        document.querySelectorAll('.page-header__lead:not([data-motion-after-typewriter])').forEach((lead) => {
+            const header = lead.closest('.page-header');
+            if (!header) return;
+
+            window.addEventListener('scroll', () => {
+                const rect = header.getBoundingClientRect();
+                const progress = Math.min(1, Math.max(0, (120 - rect.top) / 180));
+                lead.style.opacity = String(1 - progress * 0.35);
+                lead.style.transform = `translateY(${progress * 10}px)`;
+            }, { passive: true });
+        });
+    };
+
+    initTypewriters();
+    initMagneticButtons();
+    initScrollTextFade();
+
     // Scroll progress bar
     const scrollProgress = document.createElement('div');
     scrollProgress.className = 'scroll-progress';
@@ -22,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loading.className = 'loading';
     loading.innerHTML = '<div class="loading-spinner"></div>';
     document.body.appendChild(loading);
-    setTimeout(() => loading.classList.add('hide'), 700);
+    setTimeout(() => loading.classList.add('hide'), 350);
 
     // Floating background orbs (Shopify-style ambient motion)
     if (!prefersReduced && !isDemoPage) {
@@ -100,7 +220,6 @@ document.addEventListener('DOMContentLoaded', () => {
             '.experience-stat',
             '.experience-stats',
             '.skills-stats',
-            '.page-header .container > *',
             '.footer-brand',
             '.footer-links',
             '.footer-socials'

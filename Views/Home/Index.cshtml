@@ -72,6 +72,9 @@
             background: rgba(255, 250, 240, 0.78);
             font-size: 0.85rem;
             margin-bottom: 0.9rem;
+        }
+
+        .hero-kicker:not([data-motion-before-typewriter]) {
             animation: heroFadeUp 0.7s ease both;
         }
 
@@ -82,7 +85,15 @@
             letter-spacing: -0.04em;
             margin-bottom: 1rem;
             text-shadow: 0 8px 20px rgba(148, 163, 184, 0.22);
+        }
+
+        .hero-section .display-4:not(.typewriter-host) {
             animation: heroFadeUp 0.8s ease 0.08s both;
+        }
+
+        [data-motion-after-typewriter] {
+            opacity: 0;
+            transform: translateY(20px);
         }
 
         .hero-section .lead {
@@ -91,6 +102,9 @@
             line-height: 1.72;
             max-width: 560px;
             text-shadow: none;
+        }
+
+        .hero-section .lead:not([data-motion-after-typewriter]) {
             animation: heroFadeUp 0.85s ease 0.14s both;
         }
 
@@ -156,6 +170,9 @@
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 0.65rem;
+        }
+
+        .hero-section .hero-btn-group:not([data-motion-after-typewriter]) {
             animation: heroFadeUp 0.95s ease 0.28s both;
         }
 
@@ -346,11 +363,11 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-7 col-md-7 order-lg-1">
-                <div class="hero-kicker">Portfolio 2026</div>
-                <h1 class="display-4">Building elegant digital experiences that perform.</h1>
-                <p class="lead">Transforming complex ideas into elegant, high-performance web solutions.</p>
-                <p class="lead mb-0">Full-stack developer with 5+ years of experience and a foundation in customer service, operations, and management.</p>
-                <div class="hero-btn-group">
+                <div class="hero-kicker" data-motion-before-typewriter>Portfolio 2026</div>
+                <h1 class="display-4" data-typewriter data-typewriter-text="Building elegant digital experiences that perform." data-typewriter-speed="52" data-typewriter-delay="400"></h1>
+                <p class="lead" data-motion-after-typewriter>Transforming complex ideas into elegant, high-performance web solutions.</p>
+                <p class="lead mb-0" data-motion-after-typewriter>Full-stack developer with 5+ years of experience and a foundation in customer service, operations, and management.</p>
+                <div class="hero-btn-group" data-motion-after-typewriter>
                     <a asp-controller="Home" asp-action="Projects" class="btn btn-primary">
                         <i class="fas fa-code"></i>View My Work
                     </a>
@@ -368,7 +385,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-lg-5 col-md-5 order-lg-2 mt-3 mt-md-0">
+            <div class="col-lg-5 col-md-5 order-lg-2 mt-3 mt-md-0" data-motion-float>
                 <div class="hero-image">
                     <div class="hero-portrait" role="img" aria-label="Portrait photo of Anastasiia">
                         <img src="/images/hero-image.png" alt="Anastasiia portrait photo">

@@ -3629,9 +3629,18 @@ body.motion-enabled::after {
 }
 
 /* Typewriter + Shopify-style page entrance motion */
+[data-typewriter]:not(.typewriter-host):not(.typewriter-complete) {
+    visibility: hidden;
+}
+
 .typewriter-host {
+    visibility: visible;
     display: grid;
     position: relative;
+}
+
+.typewriter-complete {
+    visibility: visible;
 }
 
 .typewriter-measure,
