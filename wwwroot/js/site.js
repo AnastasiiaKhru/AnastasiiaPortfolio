@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     document.documentElement.classList.add('js-enhanced');
 
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isDemoPage = /Demo|PlayZone|GymCrm|Liquor|Cake|ArtStudio|Snake|Maze|WP/i.test(window.location.pathname);
+
     // Scroll progress bar
     const scrollProgress = document.createElement('div');
     scrollProgress.className = 'scroll-progress';
@@ -21,13 +24,33 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(loading);
     setTimeout(() => loading.classList.add('hide'), 700);
 
-    // Smooth hash navigation
+    // Floating background orbs (Shopify-style ambient motion)
+    if (!prefersReduced && !isDemoPage) {
+        document.body.classList.add('motion-enabled');
+        const motionBg = document.createElement('div');
+        motionBg.className = 'motion-bg';
+        motionBg.setAttribute('aria-hidden', 'true');
+        motionBg.innerHTML = `
+            <span class="motion-orb motion-orb--amber"></span>
+            <span class="motion-orb motion-orb--violet"></span>
+            <span class="motion-orb motion-orb--mint"></span>
+        `;
+        document.body.prepend(motionBg);
+    }
+
+    // Smooth hash navigation with navbar offset
+    const navbarHeight = () => {
+        const navbar = document.querySelector('.navbar');
+        return navbar ? navbar.offsetHeight : 78;
+    };
+
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener('click', function (e) {
             const target = document.querySelector(this.getAttribute('href'));
             if (!target) return;
             e.preventDefault();
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const top = target.getBoundingClientRect().top + window.scrollY - navbarHeight() - 12;
+            window.scrollTo({ top, behavior: prefersReduced ? 'auto' : 'smooth' });
         });
     });
 
@@ -52,16 +75,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
     }
 
-    // Section reveal animations (excluding PlayZone game pages)
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Subtle parallax on inner page headers
+    const parallaxHeader = document.querySelector('.page-header .container');
+    if (!prefersReduced && parallaxHeader) {
+        window.addEventListener('scroll', () => {
+            const offset = Math.min(window.scrollY * 0.05, 36);
+            parallaxHeader.style.transform = `translate3d(0, ${offset}px, 0)`;
+        }, { passive: true });
+    }
+
     if (!prefersReduced) {
-        const revealTargets = document.querySelectorAll(
-            '.project-card-modern, .skill-section, .tool-card, .soft-skill, .stat-card, .contact-info-card, .contact-form-card, .timeline-item, .card'
-        );
+        const revealSelector = [
+            '.project-card-modern',
+            '.skill-section',
+            '.skill-category',
+            '.skill-section__header',
+            '.tool-card',
+            '.soft-skill',
+            '.stat-card',
+            '.contact-info-card',
+            '.contact-form-card',
+            '.timeline-item',
+            '.card',
+            '.experience-stat',
+            '.experience-stats',
+            '.skills-stats',
+            '.page-header .container > *',
+            '.footer-brand',
+            '.footer-links',
+            '.footer-socials'
+        ].join(', ');
+
+        const revealTargets = document.querySelectorAll(revealSelector);
         revealTargets.forEach((el, i) => {
             el.classList.add('reveal-ready');
-            // Keep stagger subtle so large skills grids appear quickly.
-            el.style.setProperty('--reveal-delay', `${Math.min((i % 10) * 12, 108)}ms`);
+            el.style.setProperty('--reveal-delay', `${Math.min((i % 12) * 45, 360)}ms`);
         });
 
         const observer = new IntersectionObserver((entries) => {
@@ -71,8 +119,58 @@ document.addEventListener('DOMContentLoaded', () => {
                     observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.05, rootMargin: '0px 0px -10% 0px' });
+        }, { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
 
         revealTargets.forEach((el) => observer.observe(el));
+
+        // Count-up stats (Skills / Experience)
+        const countObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                const el = entry.target;
+                const text = el.textContent.trim();
+                const match = text.match(/^(\d+)(\+?)$/);
+                if (!match) {
+                    countObserver.unobserve(el);
+                    return;
+                }
+
+                const target = parseInt(match[1], 10);
+                const suffix = match[2] || '';
+                const duration = 1400;
+                const start = performance.now();
+                el.classList.add('is-counting');
+
+                const step = (now) => {
+                    const progress = Math.min(1, (now - start) / duration);
+                    const eased = 1 - Math.pow(1 - progress, 4);
+                    el.textContent = `${Math.round(target * eased)}${suffix}`;
+                    if (progress < 1) {
+                        requestAnimationFrame(step);
+                    }
+                };
+
+                requestAnimationFrame(step);
+                countObserver.unobserve(el);
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stat-number').forEach((el) => countObserver.observe(el));
+
+        // 3D tilt on project cards (Shopify-style hover depth)
+        document.querySelectorAll('.project-card-modern').forEach((card) => {
+            card.addEventListener('mousemove', (event) => {
+                const rect = card.getBoundingClientRect();
+                const x = (event.clientX - rect.left) / rect.width - 0.5;
+                const y = (event.clientY - rect.top) / rect.height - 0.5;
+                card.classList.add('is-tilting');
+                card.style.transform = `perspective(900px) rotateX(${y * -5}deg) rotateY(${x * 6}deg) translateY(-8px) scale(1.02)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.classList.remove('is-tilting');
+                card.style.transform = '';
+            });
+        });
     }
 });
