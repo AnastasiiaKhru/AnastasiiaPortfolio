@@ -110,25 +110,40 @@ document.addEventListener('DOMContentLoaded', () => {
         const previews = document.querySelectorAll('.project-card__preview');
         if (!previews.length) return;
 
+        const revealPreview = (preview) => {
+            preview.classList.add('is-revealed');
+        };
+
         previews.forEach((preview, index) => {
             preview.classList.add('preview-reveal');
             preview.style.setProperty('--preview-reveal-delay', `${Math.min(index % 8, 7) * 70}ms`);
         });
 
         if (prefersReduced) {
-            previews.forEach((preview) => preview.classList.add('is-revealed'));
+            previews.forEach(revealPreview);
             return;
         }
+
+        const isInViewport = (el) => {
+            const rect = el.getBoundingClientRect();
+            return rect.top < window.innerHeight * 0.92 && rect.bottom > 0;
+        };
 
         const previewObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (!entry.isIntersecting) return;
-                entry.target.classList.add('is-revealed');
+                revealPreview(entry.target);
                 previewObserver.unobserve(entry.target);
             });
-        }, { threshold: 0.2, rootMargin: '0px 0px -6% 0px' });
+        }, { threshold: 0.05, rootMargin: '0px 0px 8% 0px' });
 
-        previews.forEach((preview) => previewObserver.observe(preview));
+        previews.forEach((preview) => {
+            if (isInViewport(preview)) {
+                revealPreview(preview);
+            } else {
+                previewObserver.observe(preview);
+            }
+        });
     };
 
     const initTypewriters = () => {

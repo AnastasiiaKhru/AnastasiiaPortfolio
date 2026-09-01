@@ -756,7 +756,7 @@ a:hover {
     z-index: 10;
     background: linear-gradient(180deg, var(--bg-subtle) 70%, transparent);
     padding-bottom: var(--spacing-6);
-    margin-bottom: var(--spacing-2);
+    margin-bottom: var(--spacing-6);
 }
 
 .filter-btn {
@@ -989,20 +989,32 @@ a:hover {
     border: 1px solid var(--border-subtle);
     box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
     background: var(--bg-subtle);
-    min-height: 230px;
-    height: 230px;
+    min-height: 250px;
+    height: 250px;
     display: flex;
     align-items: stretch;
 }
 
+.project-card__preview > .project-preview__frame-wrap,
+.project-card__preview > .game-preview-link {
+    flex: 1 1 auto;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+}
+
 .js-enhanced .project-card__preview.preview-reveal {
-    clip-path: inset(100% 0 0 0 round var(--radius-lg));
-    transition: clip-path 0.85s var(--ease-motion);
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+    transition:
+        opacity 0.65s var(--ease-motion),
+        transform 0.65s var(--ease-motion);
     transition-delay: var(--preview-reveal-delay, 0ms);
 }
 
 .js-enhanced .project-card__preview.preview-reveal.is-revealed {
-    clip-path: inset(0 round var(--radius-lg));
+    opacity: 1;
+    transform: none;
 }
 
 .project-card__preview img,
@@ -1074,9 +1086,8 @@ a:hover {
 .project-preview__frame-wrap {
     position: relative;
     width: 100%;
-    height: 220px;
+    height: 100%;
     min-height: 220px;
-    max-height: 220px;
     background: #fff;
 }
 
@@ -1091,9 +1102,8 @@ a:hover {
 .project-preview__frame-wrap--img {
     position: relative;
     overflow: hidden;
-    height: 220px;
+    height: 100%;
     min-height: 220px;
-    max-height: 220px;
 }
 
 .portfolio-preview-scene {
@@ -1215,12 +1225,14 @@ a:hover {
 }
 
 .project-preview__img {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    height: 100%;
+    height: 100% !important;
     min-height: 100%;
     max-width: none;
     object-fit: cover;
-    object-position: center top;
+    object-position: center center;
     display: block;
     transition: opacity var(--transition-fast);
 }
@@ -3204,15 +3216,14 @@ textarea:focus-visible {
 
 /* Ensure preview area has consistent height so Features align across all cards */
 .project-card--wordpress .project-card__preview {
-    min-height: 240px;
-    height: 240px;
+    min-height: 250px;
+    height: 250px;
 }
 
 /* All cards use same frame dimensions when inside project-card--wordpress */
 .project-card--wordpress .project-preview__frame-wrap {
-    height: 240px;
-    min-height: 240px;
-    max-height: 240px;
+    height: 100%;
+    min-height: 250px;
     padding: 0;
     border-radius: 14px;
     position: relative;
@@ -3225,9 +3236,9 @@ textarea:focus-visible {
 .project-preview__frame-wrap--wp-consult,
 .project-preview__frame-wrap--wp-lifestyle,
 .project-preview__frame-wrap--wp-wellness {
-    height: 240px;
-    min-height: 240px;
-    max-height: 240px;
+    height: 100%;
+    min-height: 250px;
+    max-height: none;
     padding: 0;
     border-radius: 14px;
     position: relative;
@@ -3348,12 +3359,14 @@ textarea:focus-visible {
 }
 
 .wp-preview__img {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    height: 100%;
+    height: 100% !important;
     min-height: 100%;
     max-width: none;
     object-fit: cover;
-    object-position: center top;
+    object-position: center center;
     display: block;
     transition: transform 0.4s ease;
 }
@@ -3653,7 +3666,8 @@ body.motion-enabled::after {
     }
 
     .js-enhanced .project-card__preview.preview-reveal {
-        clip-path: none !important;
+        opacity: 1 !important;
+        transform: none !important;
     }
 
     .btn::before {
