@@ -74,7 +74,7 @@
     --z-index-dropdown: 1000;
     --z-index-sticky: 1020;
     --z-index-fixed: 1030;
-    --navbar-height: 84px;
+    --navbar-height: 92px;
     --z-index-modal-backdrop: 1040;
     --z-index-modal: 1050;
     --z-index-popover: 1060;
@@ -112,7 +112,7 @@ body {
     color: var(--pepper);
     margin: 0;
     padding: 0;
-    padding-top: 84px;
+    padding-top: 92px;
     padding-left: env(safe-area-inset-left, 0);
     padding-right: env(safe-area-inset-right, 0);
     overflow-x: hidden;
@@ -285,7 +285,7 @@ a:hover {
     z-index: var(--z-index-fixed);
     padding: 0.55rem max(var(--spacing-4), env(safe-area-inset-right, 0px)) 0.55rem max(var(--spacing-4), env(safe-area-inset-left, 0px));
     padding-top: max(0.55rem, env(safe-area-inset-top, 0px));
-    min-height: 84px;
+    min-height: 92px;
     transition: background var(--transition-medium), box-shadow var(--transition-medium), border-color var(--transition-medium);
 }
 
@@ -345,7 +345,7 @@ a:hover {
 .navbar-brand-center {
     position: absolute;
     left: 50%;
-    top: calc(50% + 10px);
+    top: calc(50% + 18px);
     transform: translate(-50%, -50%);
     padding: 0;
     margin: 0;
@@ -359,7 +359,7 @@ a:hover {
 }
 
 .navbar-logo {
-    height: 80px;
+    height: 92px;
     width: auto;
     max-width: none !important;
     display: block;
