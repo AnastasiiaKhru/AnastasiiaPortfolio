@@ -7,23 +7,9 @@
     .page-inner--resume {
         position: relative;
         background:
-            radial-gradient(circle at 12% 15%, rgba(148, 163, 184, 0.1), transparent 40%),
-            radial-gradient(circle at 88% 5%, rgba(203, 213, 225, 0.11), transparent 36%),
-            linear-gradient(160deg, #f8fafc 0%, #f8f7f4 52%, #f7f5f0 100%);
-    }
-
-    .page-inner--resume::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0));
-        z-index: 0;
-    }
-
-    .page-inner--resume > * {
-        position: relative;
-        z-index: 1;
+            radial-gradient(circle at 10% 16%, rgba(245, 158, 11, 0.09), transparent 38%),
+            radial-gradient(circle at 88% 8%, rgba(217, 119, 6, 0.08), transparent 34%),
+            linear-gradient(180deg, #faf8f4 0%, #f6f2ea 100%);
     }
 
     .page-inner--resume .page-header__title {
@@ -55,24 +41,25 @@
     }
 
     .resume-card {
-        background: linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(255, 250, 242, 0.88));
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 249, 240, 0.8));
         backdrop-filter: blur(14px);
-        border: 1px solid rgba(191, 161, 106, 0.22);
-        border-radius: 1.35rem;
-        box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+        border: 1px solid rgba(191, 161, 106, 0.2);
+        border-radius: 1.125rem;
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
         padding: 1.5rem;
-        transition: transform 0.35s var(--ease-motion), box-shadow 0.35s var(--ease-motion);
+        transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
     }
 
     .resume-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 22px 48px rgba(15, 23, 42, 0.11);
+        transform: translateY(-2px);
+        border-color: rgba(191, 161, 106, 0.42);
+        box-shadow: 0 16px 34px rgba(15, 23, 42, 0.12);
     }
 
     .resume-card__title {
         font-size: 1.05rem;
         font-weight: 700;
-        color: #0f172a;
+        color: #111827;
         margin: 0 0 1rem;
         display: flex;
         align-items: center;
@@ -107,21 +94,21 @@
     .resume-profile__name {
         font-size: 1.25rem;
         font-weight: 800;
-        color: #0f172a;
+        color: #111827;
         margin: 0 0 0.35rem;
         letter-spacing: -0.03em;
     }
 
     .resume-profile__role {
         font-size: 0.92rem;
-        color: #64748b;
+        color: #7a6650;
         margin: 0 0 0.2rem;
         font-weight: 600;
     }
 
     .resume-profile__location {
         font-size: 0.85rem;
-        color: #64748b;
+        color: #7a6650;
         margin: 0 0 1rem;
     }
 
@@ -137,9 +124,9 @@
         align-items: center;
         gap: 0.65rem;
         font-size: 0.88rem;
-        color: #475569;
+        color: #334155;
         padding: 0.45rem 0;
-        border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
     }
 
     .resume-contact-list li:last-child {
@@ -223,7 +210,7 @@
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.08em;
-        color: #64748b;
+        color: #7a6650;
         margin: 0 0 0.55rem;
     }
 
@@ -236,13 +223,13 @@
     .resume-skill-tag {
         display: inline-flex;
         align-items: center;
-        padding: 0.32rem 0.65rem;
+        padding: 0.28rem 0.55rem;
         border-radius: 999px;
-        font-size: 0.76rem;
+        font-size: 0.73rem;
         font-weight: 600;
-        color: #334155;
-        background: rgba(100, 116, 139, 0.1);
-        border: 1px solid rgba(100, 116, 139, 0.16);
+        color: #5b4f42;
+        background: rgba(255, 255, 255, 0.74);
+        border: 1px solid rgba(191, 161, 106, 0.28);
     }
 
     .resume-main {
@@ -254,7 +241,7 @@
     .resume-profile-text {
         font-size: 0.98rem;
         line-height: 1.75;
-        color: #475569;
+        color: #334155;
         margin: 0;
     }
 
@@ -307,27 +294,27 @@
     .resume-job__title {
         font-size: 1rem;
         font-weight: 700;
-        color: #0f172a;
+        color: #111827;
         margin: 0 0 0.15rem;
     }
 
     .resume-job__company {
         font-size: 0.86rem;
-        color: #64748b;
+        color: #7a6650;
         margin: 0;
-        font-weight: 500;
+        font-weight: 600;
     }
 
     .resume-date-badge {
         display: inline-flex;
         align-items: center;
-        padding: 0.28rem 0.7rem;
+        padding: 0.28rem 0.55rem;
         border-radius: 999px;
-        font-size: 0.74rem;
-        font-weight: 700;
-        color: #78350f;
-        background: rgba(251, 191, 36, 0.18);
-        border: 1px solid rgba(245, 158, 11, 0.28);
+        font-size: 0.73rem;
+        font-weight: 600;
+        color: #5b4f42;
+        background: rgba(255, 255, 255, 0.74);
+        border: 1px solid rgba(191, 161, 106, 0.28);
         white-space: nowrap;
     }
 
@@ -335,7 +322,7 @@
     .resume-projects {
         margin: 0;
         padding-left: 1.1rem;
-        color: #475569;
+        color: #334155;
         font-size: 0.9rem;
         line-height: 1.65;
     }
@@ -354,18 +341,19 @@
     .resume-edu-item h4 {
         font-size: 0.95rem;
         font-weight: 700;
-        color: #0f172a;
+        color: #111827;
         margin: 0 0 0.2rem;
     }
 
     .resume-edu-item p {
         font-size: 0.84rem;
-        color: #64748b;
+        color: #7a6650;
         margin: 0;
+        font-weight: 600;
     }
 
     .resume-projects li strong {
-        color: #0f172a;
+        color: #111827;
     }
 
     @@media (max-width: 991.98px) {
