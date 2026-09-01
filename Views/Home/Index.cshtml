@@ -122,33 +122,27 @@
             border-radius: 30px;
             overflow: hidden;
             aspect-ratio: 4/5;
-            border: 1px solid rgba(255, 255, 255, 0.35);
-            box-shadow: 0 30px 70px -20px rgba(2, 6, 23, 0.88), 0 0 0 1px rgba(255, 255, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            box-shadow: 0 30px 70px -20px rgba(2, 6, 23, 0.88);
             transform: perspective(1100px) rotateY(-8deg) rotateX(2deg);
             transition: transform 0.4s ease, box-shadow 0.4s ease;
-            background: linear-gradient(180deg, #f8fafc, #e2e8f0);
+            background: #ece8e4;
             animation: heroFadeUp 0.9s ease 0.22s both;
         }
 
         .hero-portrait:hover {
             transform: perspective(1100px) rotateY(-3deg) rotateX(0deg) translateY(-2px);
-            box-shadow: 0 38px 92px -16px rgba(2, 6, 23, 0.95), 0 0 0 1px rgba(125, 211, 252, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.26);
-        }
-
-        .hero-portrait::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, rgba(15, 23, 42, 0) 55%, rgba(15, 23, 42, 0.2) 100%);
-            pointer-events: none;
-            z-index: 1;
+            box-shadow: 0 38px 92px -16px rgba(2, 6, 23, 0.95);
         }
 
         .hero-portrait img {
+            position: absolute;
+            inset: 0;
             width: 100%;
             height: 100%;
+            max-width: none;
             object-fit: cover;
-            object-position: center 26%;
+            object-position: center 22%;
             display: block;
         }
 
@@ -388,7 +382,7 @@
             <div class="col-lg-5 col-md-5 order-lg-2 mt-3 mt-md-0" data-motion-float>
                 <div class="hero-image">
                     <div class="hero-portrait" role="img" aria-label="Portrait photo of Anastasiia">
-                        <img src="/images/hero-image.png" alt="Anastasiia portrait photo">
+                        <img src="/images/hero-image.png" alt="Anastasiia portrait photo" class="hero-portrait-img" data-skip-global-img>
                     </div>
                     <div class="hero-portrait-glow" aria-hidden="true"></div>
                 </div>
