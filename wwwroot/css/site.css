@@ -305,6 +305,7 @@ a:hover {
     -webkit-backdrop-filter: none;
     border-bottom-color: transparent;
     box-shadow: none;
+    z-index: 1100;
 }
 
 .navbar-toggler {
