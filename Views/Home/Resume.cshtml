@@ -2,263 +2,583 @@
     ViewData["Title"] = "Resume";
 }
 
-<div class="container py-5">
-    <div class="row mb-5">
-        <div class="col-lg-8 mx-auto text-center">
-            <h1 class="display-4 fw-bold mb-3">Resume</h1>
-            <p class="lead text-secondary">Software Developer · Web &amp; Product Designer</p>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="card mb-4">
-                <div class="card-body text-center">
-                    <img src="~/images/hero-image.png" alt="Anastasiia Khrustaleva" class="rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
-                    <h2 class="h4 mb-2">Anastasiia Khrustaleva</h2>
-                    <p class="text-secondary small mb-1">Software Developer · Web &amp; Product Designer</p>
-                    <p class="text-secondary small mb-3">Ontario, Canada</p>
-                    <p class="text-secondary small mb-1"><i class="fas fa-phone me-2"></i>(905) 324-1507</p>
-                    <p class="text-secondary small mb-4"><i class="fas fa-envelope me-2"></i><a href="mailto:anastasiiakhrustaleva@gmail.com" class="text-secondary">anastasiiakhrustaleva@gmail.com</a></p>
-                    <div class="d-flex justify-content-center gap-3 mb-4">
-                        <a href="https://github.com/AnastasiiaKhru" target="_blank" rel="noopener" class="text-muted" title="GitHub"><i class="fab fa-github fa-lg"></i></a>
-                        <a href="https://www.linkedin.com/in/anastasiia-khrus-29a180100/" target="_blank" rel="noopener" class="text-muted" title="LinkedIn"><i class="fab fa-linkedin fa-lg"></i></a>
-                    </div>
-                    <a asp-action="DownloadResume" asp-controller="Home" class="btn btn-primary" target="_blank" rel="noopener">
-                        <i class="fas fa-download me-2"></i>Download PDF
-                    </a>
-                </div>
-            </div>
-
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h3 class="h5 mb-3">Core Skills</h3>
-                    <div class="mb-3">
-                        <h4 class="h6 text-secondary mb-2">Development</h4>
-                        <div class="d-flex flex-wrap gap-2">
-                            <span class="badge bg-primary">C#</span>
-                            <span class="badge bg-primary">ASP.NET Core MVC</span>
-                            <span class="badge bg-primary">JavaScript</span>
-                            <span class="badge bg-primary">HTML5</span>
-                            <span class="badge bg-primary">CSS3</span>
-                            <span class="badge bg-primary">SQL</span>
-                            <span class="badge bg-primary">REST APIs</span>
-                            <span class="badge bg-primary">Git</span>
-                            <span class="badge bg-primary">Docker</span>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <h4 class="h6 text-secondary mb-2">Web / CMS</h4>
-                        <div class="d-flex flex-wrap gap-2">
-                            <span class="badge bg-primary">WordPress</span>
-                            <span class="badge bg-primary">Shopify</span>
-                            <span class="badge bg-primary">Liquid</span>
-                            <span class="badge bg-primary">WooCommerce</span>
-                            <span class="badge bg-primary">Responsive Development</span>
-                            <span class="badge bg-primary">Hosting &amp; Deployment</span>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <h4 class="h6 text-secondary mb-2">Design</h4>
-                        <div class="d-flex flex-wrap gap-2">
-                            <span class="badge bg-primary">UI/UX</span>
-                            <span class="badge bg-primary">Product Design</span>
-                            <span class="badge bg-primary">Brand Design</span>
-                            <span class="badge bg-primary">Web Design</span>
-                            <span class="badge bg-primary">Wireframes</span>
-                            <span class="badge bg-primary">Visual Systems</span>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <h4 class="h6 text-secondary mb-2">Creative Tools</h4>
-                        <div class="d-flex flex-wrap gap-2">
-                            <span class="badge bg-primary">Photoshop</span>
-                            <span class="badge bg-primary">Canva</span>
-                            <span class="badge bg-primary">CapCut</span>
-                            <span class="badge bg-primary">Figma-style prototyping</span>
-                            <span class="badge bg-primary">AI-assisted design</span>
-                        </div>
-                    </div>
-                    <div>
-                        <h4 class="h6 text-secondary mb-2">Data / Tools</h4>
-                        <div class="d-flex flex-wrap gap-2">
-                            <span class="badge bg-primary">MongoDB</span>
-                            <span class="badge bg-primary">SQLite</span>
-                            <span class="badge bg-primary">Entity Framework Core</span>
-                            <span class="badge bg-primary">Visual Studio</span>
-                            <span class="badge bg-primary">VS Code</span>
-                            <span class="badge bg-primary">Postman</span>
-                            <span class="badge bg-primary">Railway</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-body">
-                    <h2 class="h4 mb-4 text-center">Education</h2>
-                    <div class="timeline">
-                        <div class="timeline-item mb-4">
-                            <h4 class="h6 mb-1">Computer Programming Diploma</h4>
-                            <p class="text-secondary small mb-0">Niagara College · 2025</p>
-                        </div>
-                        <div class="timeline-item">
-                            <h4 class="h6 mb-1">Hospitality Management Diploma</h4>
-                            <p class="text-secondary small mb-0">Niagara College</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-8">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h3 class="h5 mb-3">Professional Profile</h3>
-                    <p class="text-secondary mb-0">
-                        Multidisciplinary developer and designer with 5+ years of experience building websites, digital products,
-                        brand experiences, and client-facing solutions. Computer Programming graduate with hands-on experience in
-                        C#, ASP.NET Core, JavaScript, SQL, REST APIs, WordPress, Shopify, UI/UX, responsive design, branding,
-                        and deployment. Combines technical problem-solving with strong visual judgment to take projects from
-                        concept and interface design through development, testing, launch, and ongoing improvement.
-                    </p>
-                </div>
-            </div>
-
-            <div class="card mb-4 work-experience-section">
-                <div class="card-body">
-                    <h3 class="h5 mb-4">Professional Experience</h3>
-                    <div class="timeline">
-                        <div class="timeline-item mb-4">
-                            <div class="d-flex justify-content-between align-items-start mb-2 flex-wrap gap-2">
-                                <div>
-                                    <h4 class="h6 mb-1">Web Designer / Analyst</h4>
-                                    <p class="text-secondary small mb-0">CodeNest · Remote</p>
-                                </div>
-                                <span class="badge bg-primary">Apr 2020 – Present</span>
-                            </div>
-                            <ul class="text-secondary small mb-0 ps-3">
-                                <li>Design and develop responsive websites and digital experiences using HTML, CSS, JavaScript, C#, SQL, WordPress, Shopify, and Liquid.</li>
-                                <li>Translate business goals into page structure, visual direction, user flows, branded interfaces, and production-ready web solutions.</li>
-                                <li>Manage hosting, domains, deployments, integrations, troubleshooting, SEO improvements, content updates, and ongoing client support.</li>
-                            </ul>
-                        </div>
-                        <div class="timeline-item mb-4">
-                            <div class="d-flex justify-content-between align-items-start mb-2 flex-wrap gap-2">
-                                <div>
-                                    <h4 class="h6 mb-1">Machine Learning Specialist</h4>
-                                    <p class="text-secondary small mb-0">Outlier · Remote</p>
-                                </div>
-                                <span class="badge bg-primary">Oct 2024 – Present</span>
-                            </div>
-                            <ul class="text-secondary small mb-0 ps-3">
-                                <li>Review AI-generated code and technical content for correctness, logic, clarity, and quality.</li>
-                                <li>Identify software issues and improve technical responses through structured evaluation and problem-solving.</li>
-                            </ul>
-                        </div>
-                        <div class="timeline-item mb-4">
-                            <div class="d-flex justify-content-between align-items-start mb-2 flex-wrap gap-2">
-                                <div>
-                                    <h4 class="h6 mb-1">Operations Manager</h4>
-                                    <p class="text-secondary small mb-0">LA Fitness</p>
-                                </div>
-                                <span class="badge bg-primary">Dec 2024 – Sep 2025</span>
-                            </div>
-                            <ul class="text-secondary small mb-0 ps-3">
-                                <li>Managed daily operations, staff coordination, scheduling, customer experience, and issue resolution in a fast-paced environment.</li>
-                                <li>Led team workflows and communicated across staff and customers, strengthening project ownership and stakeholder-management skills.</li>
-                            </ul>
-                        </div>
-                        <div class="timeline-item mb-4">
-                            <div class="d-flex justify-content-between align-items-start mb-2 flex-wrap gap-2">
-                                <div>
-                                    <h4 class="h6 mb-1">IT Support / Software Technician</h4>
-                                    <p class="text-secondary small mb-0">Niagara College</p>
-                                </div>
-                                <span class="badge bg-primary">Jan 2024 – Apr 2025</span>
-                            </div>
-                            <ul class="text-secondary small mb-0 ps-3">
-                                <li>Provided software troubleshooting, technical support, documentation, and application assistance.</li>
-                                <li>Applied programming and debugging skills to diagnose technical issues and support reliable technology use.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="h5 mb-4">Selected Projects</h3>
-                    <ul class="text-secondary small mb-0 ps-3">
-                        <li class="mb-3"><strong>FitHub / Gym Management Platform</strong> — designed and developed a management interface for members, schedules, classes, trainers, and operational workflows.</li>
-                        <li class="mb-3"><strong>NIA CRM</strong> — built a business-management application using .NET, C#, Entity Framework Core, and database-driven CRUD workflows.</li>
-                        <li class="mb-3"><strong>ONE80 Revolution</strong> — developed and refined a Shopify e-commerce experience including product pages, mobile UX, checkout-related configuration, redirects, and post-launch updates.</li>
-                        <li><strong>Student Transportation Website Demo</strong> — created an accessible public-service website concept with responsive UI and modern application architecture.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
+@section Styles {
 <style>
-    .card {
-        border: none;
-        box-shadow: var(--shadow);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .card:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-md);
-    }
-
-    .timeline-item {
+    .page-inner--resume {
         position: relative;
-        padding-left: 1.5rem;
+        background:
+            radial-gradient(circle at 10% 12%, rgba(251, 191, 36, 0.08), transparent 38%),
+            radial-gradient(circle at 90% 4%, rgba(148, 163, 184, 0.1), transparent 34%),
+            linear-gradient(160deg, #f8fafc 0%, #f8f7f4 52%, #f7f5f0 100%);
     }
 
-    .timeline-item::before {
+    .page-inner--resume .page-header__lead {
+        max-width: 720px;
+        color: #5b4f42;
+    }
+
+    .resume-page {
+        padding: 2rem 0 4.5rem;
+    }
+
+    .resume-layout {
+        display: grid;
+        grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+        gap: 1.5rem;
+        align-items: start;
+    }
+
+    .resume-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        position: sticky;
+        top: calc(var(--navbar-height, 80px) + 1rem);
+    }
+
+    .resume-card {
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(255, 250, 242, 0.88));
+        backdrop-filter: blur(14px);
+        border: 1px solid rgba(191, 161, 106, 0.22);
+        border-radius: 1.35rem;
+        box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+        padding: 1.5rem;
+        transition: transform 0.35s var(--ease-motion), box-shadow 0.35s var(--ease-motion);
+    }
+
+    .resume-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 22px 48px rgba(15, 23, 42, 0.11);
+    }
+
+    .resume-card__title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin: 0 0 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        letter-spacing: -0.02em;
+    }
+
+    .resume-card__title::before {
+        content: '';
+        width: 4px;
+        height: 1.15rem;
+        border-radius: 999px;
+        background: linear-gradient(180deg, #f59e0b, #fbbf24);
+        flex-shrink: 0;
+    }
+
+    .resume-profile {
+        text-align: center;
+    }
+
+    .resume-profile__photo {
+        width: 132px;
+        height: 132px;
+        object-fit: cover;
+        object-position: center 26%;
+        border-radius: 1.25rem;
+        border: 3px solid rgba(255, 255, 255, 0.9);
+        box-shadow: 0 14px 32px rgba(15, 23, 42, 0.14);
+        margin-bottom: 1rem;
+    }
+
+    .resume-profile__name {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin: 0 0 0.35rem;
+        letter-spacing: -0.03em;
+    }
+
+    .resume-profile__role {
+        font-size: 0.92rem;
+        color: #64748b;
+        margin: 0 0 0.2rem;
+        font-weight: 600;
+    }
+
+    .resume-profile__location {
+        font-size: 0.85rem;
+        color: #64748b;
+        margin: 0 0 1rem;
+    }
+
+    .resume-contact-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 1.1rem;
+        text-align: left;
+    }
+
+    .resume-contact-list li {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        font-size: 0.88rem;
+        color: #475569;
+        padding: 0.45rem 0;
+        border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+    }
+
+    .resume-contact-list li:last-child {
+        border-bottom: none;
+    }
+
+    .resume-contact-list i {
+        width: 1.1rem;
+        color: #b45309;
+        text-align: center;
+    }
+
+    .resume-contact-list a {
+        color: #334155;
+        text-decoration: none;
+    }
+
+    .resume-contact-list a:hover {
+        color: #0f172a;
+        text-decoration: underline;
+    }
+
+    .resume-socials {
+        display: flex;
+        justify-content: center;
+        gap: 0.75rem;
+        margin-bottom: 1.1rem;
+    }
+
+    .resume-socials a {
+        width: 42px;
+        height: 42px;
+        border-radius: 0.85rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #334155;
+        background: rgba(255, 255, 255, 0.85);
+        border: 1px solid rgba(148, 163, 184, 0.28);
+        transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .resume-socials a:hover {
+        transform: translateY(-2px);
+        border-color: rgba(245, 158, 11, 0.45);
+        background: rgba(255, 248, 230, 0.95);
+        color: #0f172a;
+    }
+
+    .resume-download-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        width: 100%;
+        padding: 0.8rem 1rem;
+        border: none;
+        border-radius: 0.9rem;
+        font-weight: 700;
+        color: #1f2937;
+        background: linear-gradient(135deg, #fde68a 0%, #fcd34d 45%, #f59e0b 100%);
+        box-shadow: 0 12px 24px rgba(245, 158, 11, 0.28);
+        text-decoration: none;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .resume-download-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 16px 30px rgba(245, 158, 11, 0.34);
+        color: #111827;
+    }
+
+    .resume-skill-group + .resume-skill-group {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(15, 23, 42, 0.06);
+    }
+
+    .resume-skill-group__label {
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #64748b;
+        margin: 0 0 0.55rem;
+    }
+
+    .resume-skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+    }
+
+    .resume-skill-tag {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.32rem 0.65rem;
+        border-radius: 999px;
+        font-size: 0.76rem;
+        font-weight: 600;
+        color: #334155;
+        background: rgba(100, 116, 139, 0.1);
+        border: 1px solid rgba(100, 116, 139, 0.16);
+    }
+
+    .resume-main {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    .resume-profile-text {
+        font-size: 0.98rem;
+        line-height: 1.75;
+        color: #475569;
+        margin: 0;
+    }
+
+    .resume-timeline {
+        display: flex;
+        flex-direction: column;
+        gap: 1.35rem;
+    }
+
+    .resume-job {
+        position: relative;
+        padding-left: 1.35rem;
+    }
+
+    .resume-job::before {
+        content: '';
+        position: absolute;
+        left: 0.28rem;
+        top: 0.45rem;
+        bottom: -1.35rem;
+        width: 2px;
+        background: linear-gradient(180deg, rgba(245, 158, 11, 0.55), rgba(148, 163, 184, 0.2));
+    }
+
+    .resume-job:last-child::before {
+        bottom: 0.45rem;
+    }
+
+    .resume-job::after {
         content: '';
         position: absolute;
         left: 0;
-        top: 0;
-        bottom: 0;
-        width: 2px;
-        background-color: var(--pepper, #0f172a);
-    }
-
-    .timeline-item::after {
-        content: '';
-        position: absolute;
-        left: -4px;
-        top: 0;
-        width: 10px;
-        height: 10px;
+        top: 0.35rem;
+        width: 12px;
+        height: 12px;
         border-radius: 50%;
-        background-color: var(--pepper, #0f172a);
+        background: linear-gradient(135deg, #f59e0b, #fbbf24);
+        box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.18);
     }
 
-    .badge {
+    .resume-job__head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin-bottom: 0.55rem;
+    }
+
+    .resume-job__title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin: 0 0 0.15rem;
+    }
+
+    .resume-job__company {
+        font-size: 0.86rem;
+        color: #64748b;
+        margin: 0;
         font-weight: 500;
     }
 
-    .work-experience-section {
-        margin: 20px auto;
-        padding: 20px;
-        max-width: 800px;
-        background-color: rgba(255, 255, 255, 0.8);
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    .resume-date-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.28rem 0.7rem;
+        border-radius: 999px;
+        font-size: 0.74rem;
+        font-weight: 700;
+        color: #78350f;
+        background: rgba(251, 191, 36, 0.18);
+        border: 1px solid rgba(245, 158, 11, 0.28);
+        white-space: nowrap;
     }
 
-    .lead.text-secondary,
-    .text-secondary {
-        color: #5b6472;
+    .resume-job ul,
+    .resume-projects {
+        margin: 0;
+        padding-left: 1.1rem;
+        color: #475569;
+        font-size: 0.9rem;
+        line-height: 1.65;
     }
 
-    .bg-primary {
-        background-color: #2B2B2B;
-        color: #FFFFFF;
+    .resume-job li + li,
+    .resume-projects li + li {
+        margin-top: 0.35rem;
+    }
+
+    .resume-edu-item + .resume-edu-item {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(15, 23, 42, 0.06);
+    }
+
+    .resume-edu-item h4 {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin: 0 0 0.2rem;
+    }
+
+    .resume-edu-item p {
+        font-size: 0.84rem;
+        color: #64748b;
+        margin: 0;
+    }
+
+    .resume-projects li strong {
+        color: #0f172a;
+    }
+
+    @@media (max-width: 991.98px) {
+        .resume-layout {
+            grid-template-columns: 1fr;
+        }
+
+        .resume-sidebar {
+            position: static;
+        }
+    }
+
+    @@media (max-width: 575.98px) {
+        .resume-page {
+            padding-top: 1.25rem;
+        }
+
+        .resume-card {
+            padding: 1.15rem;
+        }
+
+        .resume-job__head {
+            flex-direction: column;
+            align-items: flex-start;
+        }
     }
 </style>
+}
+
+<div class="page-inner page-inner--resume">
+    <header class="page-header">
+        <div class="container">
+            <p class="page-header__label">Resume</p>
+            <h1 class="page-header__title">Anastasiia Khrustaleva</h1>
+            <p class="page-header__lead">Software Developer · Web &amp; Product Designer — building polished digital products from concept through launch.</p>
+        </div>
+    </header>
+
+    <section class="resume-page">
+        <div class="container">
+            <div class="resume-layout">
+                <aside class="resume-sidebar">
+                    <div class="resume-card resume-profile">
+                        <img src="~/images/hero-image.png" alt="Anastasiia Khrustaleva" class="resume-profile__photo">
+                        <h2 class="resume-profile__name">Anastasiia Khrustaleva</h2>
+                        <p class="resume-profile__role">Software Developer · Web &amp; Product Designer</p>
+                        <p class="resume-profile__location">Ontario, Canada</p>
+
+                        <ul class="resume-contact-list">
+                            <li><i class="fas fa-phone" aria-hidden="true"></i><span>(905) 324-1507</span></li>
+                            <li>
+                                <i class="fas fa-envelope" aria-hidden="true"></i>
+                                <a href="mailto:anastasiiakhrustaleva@gmail.com">anastasiiakhrustaleva@gmail.com</a>
+                            </li>
+                        </ul>
+
+                        <div class="resume-socials">
+                            <a href="https://github.com/AnastasiiaKhru" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="https://www.linkedin.com/in/anastasiia-khrus-29a180100/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+
+                        <a asp-action="DownloadResume" asp-controller="Home" class="resume-download-btn" target="_blank" rel="noopener">
+                            <i class="fas fa-download" aria-hidden="true"></i>Download PDF
+                        </a>
+                    </div>
+
+                    <div class="resume-card">
+                        <h3 class="resume-card__title">Core Skills</h3>
+
+                        <div class="resume-skill-group">
+                            <p class="resume-skill-group__label">Development</p>
+                            <div class="resume-skill-tags">
+                                <span class="resume-skill-tag">C#</span>
+                                <span class="resume-skill-tag">ASP.NET Core MVC</span>
+                                <span class="resume-skill-tag">JavaScript</span>
+                                <span class="resume-skill-tag">HTML5</span>
+                                <span class="resume-skill-tag">CSS3</span>
+                                <span class="resume-skill-tag">SQL</span>
+                                <span class="resume-skill-tag">REST APIs</span>
+                                <span class="resume-skill-tag">Git</span>
+                                <span class="resume-skill-tag">Docker</span>
+                            </div>
+                        </div>
+
+                        <div class="resume-skill-group">
+                            <p class="resume-skill-group__label">Web / CMS</p>
+                            <div class="resume-skill-tags">
+                                <span class="resume-skill-tag">WordPress</span>
+                                <span class="resume-skill-tag">Shopify</span>
+                                <span class="resume-skill-tag">Liquid</span>
+                                <span class="resume-skill-tag">WooCommerce</span>
+                                <span class="resume-skill-tag">Responsive Development</span>
+                                <span class="resume-skill-tag">Hosting &amp; Deployment</span>
+                            </div>
+                        </div>
+
+                        <div class="resume-skill-group">
+                            <p class="resume-skill-group__label">Design</p>
+                            <div class="resume-skill-tags">
+                                <span class="resume-skill-tag">UI/UX</span>
+                                <span class="resume-skill-tag">Product Design</span>
+                                <span class="resume-skill-tag">Brand Design</span>
+                                <span class="resume-skill-tag">Web Design</span>
+                                <span class="resume-skill-tag">Wireframes</span>
+                                <span class="resume-skill-tag">Visual Systems</span>
+                            </div>
+                        </div>
+
+                        <div class="resume-skill-group">
+                            <p class="resume-skill-group__label">Creative Tools</p>
+                            <div class="resume-skill-tags">
+                                <span class="resume-skill-tag">Photoshop</span>
+                                <span class="resume-skill-tag">Canva</span>
+                                <span class="resume-skill-tag">CapCut</span>
+                                <span class="resume-skill-tag">Figma-style prototyping</span>
+                                <span class="resume-skill-tag">AI-assisted design</span>
+                            </div>
+                        </div>
+
+                        <div class="resume-skill-group">
+                            <p class="resume-skill-group__label">Data / Tools</p>
+                            <div class="resume-skill-tags">
+                                <span class="resume-skill-tag">MongoDB</span>
+                                <span class="resume-skill-tag">SQLite</span>
+                                <span class="resume-skill-tag">Entity Framework Core</span>
+                                <span class="resume-skill-tag">Visual Studio</span>
+                                <span class="resume-skill-tag">VS Code</span>
+                                <span class="resume-skill-tag">Postman</span>
+                                <span class="resume-skill-tag">Railway</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resume-card">
+                        <h3 class="resume-card__title">Education</h3>
+                        <div class="resume-edu-item">
+                            <h4>Computer Programming Diploma</h4>
+                            <p>Niagara College · 2025</p>
+                        </div>
+                        <div class="resume-edu-item">
+                            <h4>Hospitality Management Diploma</h4>
+                            <p>Niagara College</p>
+                        </div>
+                    </div>
+                </aside>
+
+                <div class="resume-main">
+                    <div class="resume-card">
+                        <h3 class="resume-card__title">Professional Profile</h3>
+                        <p class="resume-profile-text">
+                            Multidisciplinary developer and designer with 5+ years of experience building websites, digital products,
+                            brand experiences, and client-facing solutions. Computer Programming graduate with hands-on experience in
+                            C#, ASP.NET Core, JavaScript, SQL, REST APIs, WordPress, Shopify, UI/UX, responsive design, branding,
+                            and deployment. Combines technical problem-solving with strong visual judgment to take projects from
+                            concept and interface design through development, testing, launch, and ongoing improvement.
+                        </p>
+                    </div>
+
+                    <div class="resume-card">
+                        <h3 class="resume-card__title">Professional Experience</h3>
+                        <div class="resume-timeline">
+                            <article class="resume-job">
+                                <div class="resume-job__head">
+                                    <div>
+                                        <h4 class="resume-job__title">Web Designer / Analyst</h4>
+                                        <p class="resume-job__company">CodeNest · Remote</p>
+                                    </div>
+                                    <span class="resume-date-badge">Apr 2020 – Present</span>
+                                </div>
+                                <ul>
+                                    <li>Design and develop responsive websites and digital experiences using HTML, CSS, JavaScript, C#, SQL, WordPress, Shopify, and Liquid.</li>
+                                    <li>Translate business goals into page structure, visual direction, user flows, branded interfaces, and production-ready web solutions.</li>
+                                    <li>Manage hosting, domains, deployments, integrations, troubleshooting, SEO improvements, content updates, and ongoing client support.</li>
+                                </ul>
+                            </article>
+
+                            <article class="resume-job">
+                                <div class="resume-job__head">
+                                    <div>
+                                        <h4 class="resume-job__title">Machine Learning Specialist</h4>
+                                        <p class="resume-job__company">Outlier · Remote</p>
+                                    </div>
+                                    <span class="resume-date-badge">Oct 2024 – Present</span>
+                                </div>
+                                <ul>
+                                    <li>Review AI-generated code and technical content for correctness, logic, clarity, and quality.</li>
+                                    <li>Identify software issues and improve technical responses through structured evaluation and problem-solving.</li>
+                                </ul>
+                            </article>
+
+                            <article class="resume-job">
+                                <div class="resume-job__head">
+                                    <div>
+                                        <h4 class="resume-job__title">Operations Manager</h4>
+                                        <p class="resume-job__company">LA Fitness</p>
+                                    </div>
+                                    <span class="resume-date-badge">Dec 2024 – Sep 2025</span>
+                                </div>
+                                <ul>
+                                    <li>Managed daily operations, staff coordination, scheduling, customer experience, and issue resolution in a fast-paced environment.</li>
+                                    <li>Led team workflows and communicated across staff and customers, strengthening project ownership and stakeholder-management skills.</li>
+                                </ul>
+                            </article>
+
+                            <article class="resume-job">
+                                <div class="resume-job__head">
+                                    <div>
+                                        <h4 class="resume-job__title">IT Support / Software Technician</h4>
+                                        <p class="resume-job__company">Niagara College</p>
+                                    </div>
+                                    <span class="resume-date-badge">Jan 2024 – Apr 2025</span>
+                                </div>
+                                <ul>
+                                    <li>Provided software troubleshooting, technical support, documentation, and application assistance.</li>
+                                    <li>Applied programming and debugging skills to diagnose technical issues and support reliable technology use.</li>
+                                </ul>
+                            </article>
+                        </div>
+                    </div>
+
+                    <div class="resume-card">
+                        <h3 class="resume-card__title">Selected Projects</h3>
+                        <ul class="resume-projects">
+                            <li><strong>FitHub / Gym Management Platform</strong> — designed and developed a management interface for members, schedules, classes, trainers, and operational workflows.</li>
+                            <li><strong>NIA CRM</strong> — built a business-management application using .NET, C#, Entity Framework Core, and database-driven CRUD workflows.</li>
+                            <li><strong>ONE80 Revolution</strong> — developed and refined a Shopify e-commerce experience including product pages, mobile UX, checkout-related configuration, redirects, and post-launch updates.</li>
+                            <li><strong>Student Transportation Website Demo</strong> — created an accessible public-service website concept with responsive UI and modern application architecture.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
