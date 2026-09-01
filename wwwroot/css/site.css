@@ -74,7 +74,7 @@
     --z-index-dropdown: 1000;
     --z-index-sticky: 1020;
     --z-index-fixed: 1030;
-    --navbar-height: 80px;
+    --navbar-height: 84px;
     --z-index-modal-backdrop: 1040;
     --z-index-modal: 1050;
     --z-index-popover: 1060;
@@ -112,7 +112,7 @@ body {
     color: var(--pepper);
     margin: 0;
     padding: 0;
-    padding-top: 80px;
+    padding-top: 84px;
     padding-left: env(safe-area-inset-left, 0);
     padding-right: env(safe-area-inset-right, 0);
     overflow-x: hidden;
@@ -285,7 +285,7 @@ a:hover {
     z-index: var(--z-index-fixed);
     padding: 0.55rem max(var(--spacing-4), env(safe-area-inset-right, 0px)) 0.55rem max(var(--spacing-4), env(safe-area-inset-left, 0px));
     padding-top: max(0.55rem, env(safe-area-inset-top, 0px));
-    min-height: 80px;
+    min-height: 84px;
     transition: background var(--transition-medium), box-shadow var(--transition-medium), border-color var(--transition-medium);
 }
 
@@ -311,21 +311,12 @@ a:hover {
 }
 
 .navbar-container {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
-}
-
-.navbar-brand-portfolio {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-    padding: 0;
-    margin: 0;
-    line-height: 0;
-    z-index: 2;
 }
 
 .navbar-nav--main {
@@ -367,12 +358,14 @@ a:hover {
     opacity: 0.85;
 }
 
-.navbar-brand-portfolio .navbar-logo {
-    display: block;
-    height: 56px;
+.navbar-logo {
+    height: 80px;
     width: auto;
     max-width: none !important;
+    display: block;
     object-fit: contain;
+    margin-top: 0;
+    filter: saturate(0.85) contrast(1.06);
 }
 
 .nav-link {
@@ -2821,8 +2814,9 @@ a:hover {
         font-size: var(--font-size-lg);
     }
 
-    .navbar-brand-portfolio .navbar-logo {
-        height: 44px;
+    .navbar-logo {
+        height: 64px;
+        margin-top: 0;
     }
 
     .card {
