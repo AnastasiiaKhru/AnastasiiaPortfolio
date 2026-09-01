@@ -92,7 +92,22 @@
             letter-spacing: -0.04em;
             margin-bottom: 1rem;
             text-shadow: 0 8px 20px rgba(148, 163, 184, 0.22);
-            line-height: 1.12;
+            line-height: 1.18;
+        }
+
+        .hero-headline__line {
+            display: block;
+        }
+
+        .hero-headline__line--accent {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            column-gap: 0.35em;
+        }
+
+        .hero-headline__suffix {
+            white-space: nowrap;
         }
 
         .hero-headline:not(.motion-before-typewriter) {
@@ -100,20 +115,17 @@
         }
 
         .hero-rotate {
-            display: inline-block;
-            position: relative;
-            vertical-align: bottom;
-            min-width: min(100%, 14ch);
-            height: 1.12em;
+            display: inline-grid;
+            vertical-align: baseline;
+            height: 1.15em;
             overflow: hidden;
             color: #b45309;
+            flex: 0 0 auto;
         }
 
         .hero-rotate__word {
-            display: block;
-            position: absolute;
-            left: 0;
-            right: 0;
+            grid-area: 1 / 1;
+            align-self: end;
             white-space: nowrap;
             opacity: 0;
             transform: translateY(110%);
@@ -403,11 +415,12 @@
             <div class="col-lg-7 col-md-7 order-lg-1">
                 <div class="hero-kicker" data-motion-before-typewriter>Portfolio 2026</div>
                 <h1 class="display-4 hero-headline" data-motion-before-typewriter>
-                    Building elegant
-                    <span class="hero-rotate" data-rotate-words="digital experiences|Shopify storefronts|web applications|high-performance sites" aria-live="polite">
-                        <span class="hero-rotate__word is-active">digital experiences</span>
+                    <span class="hero-headline__line">Building elegant</span>
+                    <span class="hero-headline__line hero-headline__line--accent">
+                        <span class="hero-rotate" data-rotate-words="digital experiences|Shopify storefronts|web applications|high-performance sites" aria-live="polite">
+                            <span class="hero-rotate__word is-active">digital experiences</span>
+                        </span><span class="hero-headline__suffix">that perform.</span>
                     </span>
-                    that perform.
                 </h1>
                 <p class="lead" data-motion-after-typewriter>Transforming complex ideas into elegant, high-performance web solutions.</p>
                 <p class="lead mb-0" data-motion-after-typewriter>Full-stack developer with 5+ years of experience and a foundation in customer service, operations, and management.</p>

@@ -35,21 +35,41 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const initRotatingWords = () => {
-        if (prefersReduced) return;
-
         document.querySelectorAll('[data-rotate-words]').forEach((container) => {
             const words = (container.getAttribute('data-rotate-words') || '')
                 .split('|')
                 .map((word) => word.trim())
                 .filter(Boolean);
 
-            if (words.length <= 1) return;
+            if (!words.length) return;
+
+            const headline = container.closest('.hero-headline');
+            const measure = document.createElement('span');
+            measure.setAttribute('aria-hidden', 'true');
+            measure.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;pointer-events:none;';
+            if (headline) {
+                const styles = window.getComputedStyle(headline);
+                measure.style.font = styles.font;
+                measure.style.letterSpacing = styles.letterSpacing;
+            }
+            document.body.appendChild(measure);
+
+            let maxWidth = 0;
+            words.forEach((word) => {
+                measure.textContent = word;
+                maxWidth = Math.max(maxWidth, measure.offsetWidth);
+            });
+            measure.remove();
+
+            container.style.width = `${maxWidth}px`;
 
             let index = 0;
             const firstWord = container.querySelector('.hero-rotate__word');
             if (firstWord) {
                 firstWord.textContent = words[0];
             }
+
+            if (prefersReduced || words.length <= 1) return;
 
             window.setInterval(() => {
                 const current = container.querySelector('.hero-rotate__word.is-active');
