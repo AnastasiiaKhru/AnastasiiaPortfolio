@@ -1,21 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 96" fill="none" role="img" aria-label="AK">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 76" fill="none" role="img" aria-label="AK">
   <g fill="#0f172a">
-    <!-- A left stroke -->
-    <path d="M20 82 L20 77.5 L25.5 77.5 L76 14 L81.5 14 L30.5 77.5 L94 77.5 L94 82 Z"/>
-    <!-- A crossbar -->
-    <path d="M42 49.5 L42 45.5 L96 45.5 L96 49.5 Z"/>
-    <!-- Shared vertical stem -->
-    <path d="M93.5 14 L98.5 14 L98.5 82 L93.5 82 Z"/>
-    <!-- K upper -->
-    <path d="M96 46.5 L100.5 46.5 L188 13.5 L188 18.5 L100.5 50.5 Z"/>
-    <!-- K lower -->
-    <path d="M96 49.5 L100.5 49.5 L198 82 L198 77 L100.5 45.5 Z"/>
-    <!-- Serifs -->
-    <path d="M16 82 L24 82 L24 77.5 L16 77.5 Z"/>
-    <path d="M73.5 14 L84 14 L84 9.5 L73.5 9.5 Z"/>
-    <path d="M38 49.5 L46 49.5 L46 45.5 L38 45.5 Z"/>
-    <path d="M92 82 L101 82 L101 77.5 L92 77.5 Z"/>
-    <path d="M184 13.5 L192 13.5 L192 18.5 L184 18.5 Z"/>
-    <path d="M192 77 L200 77 L200 82 L192 82 Z"/>
+    <path d="M18 64.5 L18 62 L21.5 62 L68.5 10.5 L72.5 10.5 L24.5 62 L88.5 62 L88.5 64.5 Z"/>
+    <path d="M66 10.5 L75 10.5 L75 8 L66 8 Z"/>
+    <path d="M14 64.5 L22 64.5 L22 62 L14 62 Z"/>
+    <path d="M36 37.5 L36 35.5 L92 35.5 L92 37.5 Z"/>
+    <path d="M32 37.5 L40 37.5 L40 35.5 L32 35.5 Z"/>
+    <path d="M89.5 10.5 L93.5 10.5 L93.5 64.5 L89.5 64.5 Z"/>
+    <path d="M85 64.5 L98 64.5 L98 62 L85 62 Z"/>
+    <path d="M91 36 L94 36 L174 8.5 L174 11.5 L94 38.5 Z"/>
+    <path d="M170 8.5 L178 8.5 L178 11.5 L170 11.5 Z"/>
+    <path d="M91 38.5 L94 38.5 L184 64.5 L184 61.5 L94 35.5 Z"/>
+    <path d="M176 61.5 L184 61.5 L184 64.5 L176 64.5 Z"/>
   </g>
 </svg>
