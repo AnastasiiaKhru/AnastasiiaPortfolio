@@ -44,24 +44,28 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!words.length) return;
 
             const headline = container.closest('.hero-headline');
+            const wordSample = container.querySelector('.hero-rotate__word') || headline;
             const measure = document.createElement('span');
             measure.setAttribute('aria-hidden', 'true');
             measure.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;pointer-events:none;';
-            if (headline) {
-                const styles = window.getComputedStyle(headline);
+            if (wordSample) {
+                const styles = window.getComputedStyle(wordSample);
                 measure.style.font = styles.font;
                 measure.style.letterSpacing = styles.letterSpacing;
+                measure.style.fontWeight = styles.fontWeight;
             }
             document.body.appendChild(measure);
 
-            let maxWidth = 0;
-            words.forEach((word) => {
-                measure.textContent = word;
-                maxWidth = Math.max(maxWidth, measure.offsetWidth);
-            });
-            measure.remove();
+            const setRotateWidth = () => {
+                let maxWidth = 0;
+                words.forEach((word) => {
+                    measure.textContent = word;
+                    maxWidth = Math.max(maxWidth, measure.offsetWidth);
+                });
+                container.style.width = `${Math.ceil(maxWidth * 1.03) + 10}px`;
+            };
 
-            container.style.width = `${maxWidth}px`;
+            setRotateWidth();
 
             let index = 0;
             const firstWord = container.querySelector('.hero-rotate__word');
@@ -70,6 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (prefersReduced || words.length <= 1) return;
+
+            window.addEventListener('resize', setRotateWidth, { passive: true });
 
             window.setInterval(() => {
                 const current = container.querySelector('.hero-rotate__word.is-active');
