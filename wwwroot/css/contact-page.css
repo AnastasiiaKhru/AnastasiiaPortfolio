@@ -270,43 +270,6 @@
     text-align: center;
 }
 
-/* Help topics */
-.contact-help {
-    margin-top: 1.75rem;
-    padding: 1.35rem 1.4rem;
-    border-radius: 1.35rem;
-    background: rgba(255, 255, 255, 0.88);
-    border: 1px solid rgba(148, 163, 184, 0.2);
-    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
-    max-width: 1040px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.contact-help__title {
-    margin: 0 0 0.85rem;
-    font-size: 1rem;
-    font-weight: 700;
-    color: #0f172a;
-}
-
-.contact-help__tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.45rem;
-}
-
-.contact-help__tag {
-    display: inline-flex;
-    padding: 0.42rem 0.8rem;
-    border-radius: 999px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: #334155;
-    background: rgba(248, 250, 252, 0.95);
-    border: 1px solid rgba(148, 163, 184, 0.28);
-}
-
 /* Social */
 .social-section {
     text-align: center;
@@ -421,7 +384,6 @@
 
     .contact-highlight:hover,
     .contact-item:hover,
-    .contact-help__tag:hover,
     .quick-action:hover,
     .social-btn:hover {
         transform: none;

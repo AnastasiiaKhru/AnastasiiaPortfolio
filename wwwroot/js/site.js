@@ -745,7 +745,6 @@ document.addEventListener('DOMContentLoaded', () => {
             '.story-step',
             '.contact-info-card',
             '.contact-highlight',
-            '.contact-help',
             '.timeline-item',
             '.card',
             '.experience-stat',

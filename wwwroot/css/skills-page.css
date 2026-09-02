@@ -95,6 +95,14 @@
     border: 1px solid rgba(245, 158, 11, 0.25);
 }
 
+.skills-highlight-card__icon i,
+.skills-pillar__icon i,
+.skill-section__icon i {
+    display: inline-block;
+    line-height: 1;
+    font-style: normal;
+}
+
 .skills-highlight-card__number {
     font-size: clamp(1.75rem, 1.5rem + 1vw, 2.25rem);
     font-weight: 800;
@@ -414,7 +422,7 @@
     height: 3.25rem;
     background: linear-gradient(135deg, #f59e0b, #fbbf24);
     border-radius: 1rem;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     color: #fff;
