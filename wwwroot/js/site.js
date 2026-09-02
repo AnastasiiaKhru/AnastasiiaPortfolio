@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const initMagneticButtons = () => {
         if (prefersReduced) return;
 
-        const magneticSelector = '.hero-btn-group .btn, .hero-section .social-link, .page-header .btn, .filter-btn, .btn-primary, .home-stats__filter-btn, .home-stats__skills-link, .skills-jump-nav__btn, .quick-action, .contact-form__submit, .social-btn';
+        const magneticSelector = '.hero-btn-group .btn, .hero-section .social-link, .page-header .btn, .filter-btn, .btn-primary, .home-stats__filter-btn, .home-stats__skills-link, .skills-jump-nav__btn, .quick-action, .social-btn';
         document.querySelectorAll(magneticSelector).forEach((btn) => {
             btn.addEventListener('mousemove', (event) => {
                 const rect = btn.getBoundingClientRect();
@@ -631,59 +631,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    const initContactPageMotion = () => {
-        const page = document.querySelector('.page-inner--contact');
-        const form = document.getElementById('contactForm');
-        const messageField = document.getElementById('contactMessage');
-        const topicField = document.getElementById('contactTopic');
-        if (!page || !form || !messageField) return;
-
-        page.querySelectorAll('.contact-help__tag[data-contact-topic]').forEach((tag) => {
-            tag.setAttribute('role', 'button');
-            tag.setAttribute('tabindex', '0');
-            tag.addEventListener('click', () => {
-                const line = tag.dataset.contactTopic || tag.textContent.trim();
-                tag.classList.toggle('is-selected');
-                const prefix = messageField.value.trim();
-                if (tag.classList.contains('is-selected')) {
-                    messageField.value = prefix ? `${prefix}\n• ${line}` : `• ${line}`;
-                } else {
-                    messageField.value = prefix
-                        .split('\n')
-                        .filter((row) => row.trim() !== `• ${line}`)
-                        .join('\n')
-                        .trim();
-                }
-                messageField.focus();
-            });
-            tag.addEventListener('keydown', (event) => {
-                if (event.key === 'Enter' || event.key === ' ') {
-                    event.preventDefault();
-                    tag.click();
-                }
-            });
-        });
-
-        form.addEventListener('submit', (event) => {
-            event.preventDefault();
-            const name = (document.getElementById('contactName')?.value || '').trim();
-            const email = (document.getElementById('contactEmail')?.value || '').trim();
-            const topic = topicField?.value || 'General inquiry';
-            const message = messageField.value.trim();
-
-            if (!name || !email || !message) {
-                form.reportValidity();
-                return;
-            }
-
-            const subject = encodeURIComponent(`Portfolio inquiry: ${topic}`);
-            const body = encodeURIComponent(
-                `Hi Anastasiia,\n\n${message}\n\n—\n${name}\n${email}\nProject type: ${topic}`
-            );
-            window.location.href = `mailto:nastiakhru@gmail.com?subject=${subject}&body=${body}`;
-        });
-    };
-
     initTypewriters();
     initRotatingWords();
     initHomeHeroMotion();
@@ -695,7 +642,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initResumeStickyBar();
     initHomeStatsMotion();
     initSkillsPageMotion();
-    initContactPageMotion();
 
     // Scroll progress bar
     const scrollProgress = document.createElement('div');
@@ -798,7 +744,6 @@ document.addEventListener('DOMContentLoaded', () => {
             '.home-stats__knowhow-group',
             '.story-step',
             '.contact-info-card',
-            '.contact-form-card',
             '.contact-highlight',
             '.contact-help',
             '.timeline-item',
