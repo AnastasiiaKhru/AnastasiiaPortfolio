@@ -32,6 +32,74 @@
             <a class="skills-jump-nav__btn" href="#skills-learning" data-skills-jump="skills-learning"><i class="fas fa-graduation-cap"></i> Learning</a>
         </nav>
 
+        <div class="skills-toolbar reveal-ready">
+            <label class="skills-search" for="skillsSearch">
+                <i class="fas fa-search" aria-hidden="true"></i>
+                <input type="search" id="skillsSearch" class="skills-search__input" placeholder="Search my skills — Shopify, C#, Figma, SEO..." autocomplete="off" />
+                <span class="skills-search__meta" id="skillsSearchMeta" aria-live="polite">75+ skills</span>
+            </label>
+        </div>
+
+        <div class="skills-pillars reveal-ready">
+            <article class="skills-pillar" data-pillar="fullstack">
+                <span class="skills-pillar__icon" aria-hidden="true"><i class="fas fa-code"></i></span>
+                <h3 class="skills-pillar__title">Full-stack development</h3>
+                <p class="skills-pillar__text">ASP.NET Core, APIs, databases, auth, and interactive web apps.</p>
+                <div class="skills-pillar__tags">
+                    <span>C#</span><span>ASP.NET</span><span>MongoDB</span><span>SignalR</span>
+                </div>
+            </article>
+            <article class="skills-pillar" data-pillar="shopify">
+                <span class="skills-pillar__icon" aria-hidden="true"><i class="fab fa-shopify"></i></span>
+                <h3 class="skills-pillar__title">E-commerce &amp; Shopify</h3>
+                <p class="skills-pillar__text">Storefronts, Liquid themes, checkout UX, and merchant support.</p>
+                <div class="skills-pillar__tags">
+                    <span>Shopify</span><span>Liquid</span><span>WooCommerce</span><span>Checkout</span>
+                </div>
+            </article>
+            <article class="skills-pillar" data-pillar="wordpress">
+                <span class="skills-pillar__icon" aria-hidden="true"><i class="fab fa-wordpress"></i></span>
+                <h3 class="skills-pillar__title">WordPress &amp; CMS</h3>
+                <p class="skills-pillar__text">Custom themes, Gutenberg, WooCommerce, ACF, and SEO-ready builds.</p>
+                <div class="skills-pillar__tags">
+                    <span>WordPress</span><span>Gutenberg</span><span>ACF</span><span>Rank Math</span>
+                </div>
+            </article>
+            <article class="skills-pillar" data-pillar="design">
+                <span class="skills-pillar__icon" aria-hidden="true"><i class="fas fa-palette"></i></span>
+                <h3 class="skills-pillar__title">UI/UX &amp; creative</h3>
+                <p class="skills-pillar__text">Figma, brand systems, video, marketing visuals, and polished interfaces.</p>
+                <div class="skills-pillar__tags">
+                    <span>Figma</span><span>Photoshop</span><span>UI/UX</span><span>CapCut</span>
+                </div>
+            </article>
+        </div>
+
+        <div class="skills-core reveal-ready" aria-label="Core technologies">
+            <div class="skills-core__header">
+                <h3 class="skills-core__title">Core stack at a glance</h3>
+                <p class="skills-core__lead">The technologies I use most across client projects — click any skill to highlight it.</p>
+            </div>
+            <div class="skills-core__tags">
+                <span class="skill-tag skill-tag--core"><i class="fab fa-microsoft"></i> C# / .NET</span>
+                <span class="skill-tag skill-tag--core"><i class="fab fa-shopify"></i> Shopify</span>
+                <span class="skill-tag skill-tag--core"><i class="fab fa-js-square"></i> JavaScript</span>
+                <span class="skill-tag skill-tag--core"><i class="fab fa-wordpress"></i> WordPress</span>
+                <span class="skill-tag skill-tag--core"><i class="fab fa-figma"></i> Figma</span>
+                <span class="skill-tag skill-tag--core"><i class="fas fa-database"></i> SQL Server</span>
+                <span class="skill-tag skill-tag--core"><i class="fas fa-leaf"></i> MongoDB</span>
+                <span class="skill-tag skill-tag--core"><i class="fab fa-html5"></i> HTML / CSS</span>
+                <span class="skill-tag skill-tag--core"><i class="fab fa-react"></i> React</span>
+                <span class="skill-tag skill-tag--core"><i class="fas fa-bolt"></i> Tailwind</span>
+                <span class="skill-tag skill-tag--core"><i class="fab fa-git-alt"></i> Git / GitHub</span>
+                <span class="skill-tag skill-tag--core"><i class="fab fa-docker"></i> Docker</span>
+                <span class="skill-tag skill-tag--core"><i class="fas fa-train"></i> Railway</span>
+                <span class="skill-tag skill-tag--core"><i class="fas fa-chart-line"></i> SEO</span>
+                <span class="skill-tag skill-tag--core"><i class="fas fa-palette"></i> UI/UX</span>
+                <span class="skill-tag skill-tag--core"><i class="fas fa-film"></i> Premiere Pro</span>
+            </div>
+        </div>
+
         <!-- Technical Skills -->
         <div class="skill-section" id="skills-dev">
             <div class="skill-section__panel">
@@ -45,7 +113,7 @@
             
             <div class="skill-grid">
                 <!-- Languages -->
-                <div class="skill-category">
+                <div class="skill-category skill-category--code">
                     <h3 class="skill-category__title"><i class="fas fa-terminal"></i> Languages</h3>
                     <p class="skill-category__desc">Backend, frontend, and data-layer languages</p>
                     <div class="skill-tags">
@@ -65,7 +133,7 @@
                 </div>
 
                 <!-- Frameworks -->
-                <div class="skill-category">
+                <div class="skill-category skill-category--code">
                     <h3 class="skill-category__title"><i class="fas fa-layer-group"></i> Frameworks & Libraries</h3>
                     <p class="skill-category__desc">Web frameworks, ORM, UI libraries</p>
                     <div class="skill-tags">
@@ -85,7 +153,7 @@
                 </div>
 
                 <!-- Platforms -->
-                <div class="skill-category">
+                <div class="skill-category skill-category--cms">
                     <h3 class="skill-category__title"><i class="fas fa-globe"></i> Platforms & CMS</h3>
                     <p class="skill-category__desc">E-commerce, CMS, databases</p>
                     <div class="skill-tags">
@@ -105,7 +173,7 @@
                 </div>
 
                 <!-- E-Commerce -->
-                <div class="skill-category">
+                <div class="skill-category skill-category--commerce">
                     <h3 class="skill-category__title"><i class="fas fa-shopping-bag"></i> E-Commerce & Merchants</h3>
                     <p class="skill-category__desc">Storefronts, checkout, product pages, and conversion UX</p>
                     <div class="skill-tags">
@@ -123,7 +191,7 @@
                 </div>
 
                 <!-- DevOps -->
-                <div class="skill-category">
+                <div class="skill-category skill-category--cloud">
                     <h3 class="skill-category__title"><i class="fas fa-cloud"></i> DevOps & Tools</h3>
                     <p class="skill-category__desc">Version control, containers, deployment</p>
                     <div class="skill-tags">
@@ -159,7 +227,7 @@
             </div>
 
             <div class="skill-grid">
-                <div class="skill-category">
+                <div class="skill-category skill-category--design">
                     <h3 class="skill-category__title"><i class="fas fa-pen-ruler"></i> UX & Product</h3>
                     <p class="skill-category__desc">Research, structure, and interface decisions</p>
                     <div class="skill-tags">
@@ -176,7 +244,7 @@
                     </div>
                 </div>
 
-                <div class="skill-category">
+                <div class="skill-category skill-category--design">
                     <h3 class="skill-category__title"><i class="fas fa-swatchbook"></i> Brand & Visual</h3>
                     <p class="skill-category__desc">Brand identity, marketing visuals, and polished presentation</p>
                     <div class="skill-tags">

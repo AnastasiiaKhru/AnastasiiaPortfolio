@@ -463,6 +463,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const page = document.querySelector('.page-inner--skills');
         if (!page) return;
 
+        const searchInput = document.getElementById('skillsSearch');
+        const searchMeta = document.getElementById('skillsSearchMeta');
+        const allTags = Array.from(page.querySelectorAll('.skill-tag'));
+        const allTools = Array.from(page.querySelectorAll('.tool-card'));
+        const allCategories = Array.from(page.querySelectorAll('.skill-category'));
+        const allSections = Array.from(page.querySelectorAll('.skill-section'));
+
+        allCategories.forEach((category) => {
+            const title = category.querySelector('.skill-category__title');
+            const tags = category.querySelectorAll('.skill-tag');
+            if (!title || !tags.length || title.querySelector('.skill-category__count')) return;
+            const count = document.createElement('span');
+            count.className = 'skill-category__count';
+            count.textContent = `${tags.length}`;
+            title.appendChild(count);
+        });
+
         const toggleSkillTag = (tag) => {
             tag.classList.toggle('is-selected');
             tag.setAttribute('aria-pressed', tag.classList.contains('is-selected') ? 'true' : 'false');
@@ -481,9 +498,79 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
+        const pillarTargets = {
+            fullstack: 'skills-dev',
+            shopify: 'skills-dev',
+            wordpress: 'skills-dev',
+            design: 'skills-product-design'
+        };
+
+        page.querySelectorAll('.skills-pillar[data-pillar]').forEach((pillar) => {
+            pillar.setAttribute('role', 'button');
+            pillar.setAttribute('tabindex', '0');
+            const go = () => {
+                const targetId = pillarTargets[pillar.dataset.pillar || ''] || 'skills-dev';
+                const target = document.getElementById(targetId);
+                page.querySelectorAll('.skills-pillar').forEach((p) => p.classList.remove('is-active'));
+                pillar.classList.add('is-active');
+                if (!target) return;
+                const navbar = document.querySelector('.navbar');
+                const offset = navbar ? navbar.offsetHeight + 16 : 88;
+                const top = target.getBoundingClientRect().top + window.scrollY - offset;
+                window.scrollTo({ top, behavior: prefersReduced ? 'auto' : 'smooth' });
+            };
+            pillar.addEventListener('click', go);
+            pillar.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    go();
+                }
+            });
+        });
+
+        const filterSkills = (query) => {
+            const term = query.trim().toLowerCase();
+            let visibleTags = 0;
+
+            allTags.forEach((tag) => {
+                const text = tag.textContent.trim().toLowerCase();
+                const match = !term || text.includes(term);
+                tag.classList.toggle('is-hidden', !match);
+                tag.classList.toggle('is-match', Boolean(term && match));
+                if (match) visibleTags += 1;
+            });
+
+            allTools.forEach((card) => {
+                const text = card.textContent.trim().toLowerCase();
+                const match = !term || text.includes(term);
+                card.classList.toggle('is-hidden', !match);
+                card.classList.toggle('is-match', Boolean(term && match));
+            });
+
+            allCategories.forEach((category) => {
+                const visibleInCategory = Array.from(category.querySelectorAll('.skill-tag')).some((tag) => !tag.classList.contains('is-hidden'));
+                category.classList.toggle('is-empty', Boolean(term) && !visibleInCategory);
+            });
+
+            allSections.forEach((section) => {
+                const hasVisibleTag = Array.from(section.querySelectorAll('.skill-tag')).some((tag) => !tag.classList.contains('is-hidden'));
+                const hasVisibleTool = Array.from(section.querySelectorAll('.tool-card')).some((card) => !card.classList.contains('is-hidden'));
+                const hasVisibleSoft = section.querySelector('.soft-skill') && !term;
+                const hasLearning = section.querySelector('.learning-tag') && !term;
+                section.classList.toggle('is-empty', Boolean(term) && !hasVisibleTag && !hasVisibleTool && !hasVisibleSoft && !hasLearning);
+            });
+
+            if (searchMeta) {
+                searchMeta.textContent = term ? `${visibleTags} matches` : '75+ skills';
+            }
+        };
+
+        if (searchInput) {
+            searchInput.addEventListener('input', () => filterSkills(searchInput.value));
+        }
+
         const jumpBtns = page.querySelectorAll('.skills-jump-nav__btn[data-skills-jump]');
         const jumpSections = page.querySelectorAll('.skill-section[id], .learning-section[id]');
-        if (!jumpBtns.length || !jumpSections.length) return;
 
         const setActiveJump = (id) => {
             jumpBtns.forEach((btn) => {
@@ -504,14 +591,16 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        const jumpObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (!entry.isIntersecting) return;
-                setActiveJump(entry.target.id);
-            });
-        }, { threshold: 0.35, rootMargin: '-20% 0px -55% 0px' });
+        if (jumpSections.length) {
+            const jumpObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return;
+                    setActiveJump(entry.target.id);
+                });
+            }, { threshold: 0.35, rootMargin: '-20% 0px -55% 0px' });
 
-        jumpSections.forEach((section) => jumpObserver.observe(section));
+            jumpSections.forEach((section) => jumpObserver.observe(section));
+        }
 
         if (prefersReduced) return;
 
@@ -524,6 +613,20 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             card.addEventListener('mouseleave', () => {
                 card.style.transform = '';
+            });
+        });
+
+        page.querySelectorAll('.skills-pillar').forEach((pillar) => {
+            pillar.addEventListener('mousemove', (event) => {
+                const rect = pillar.getBoundingClientRect();
+                const x = (event.clientX - rect.left) / rect.width - 0.5;
+                const y = (event.clientY - rect.top) / rect.height - 0.5;
+                pillar.style.transform = `perspective(900px) rotateX(${y * -5}deg) rotateY(${x * 6}deg) translateY(-5px)`;
+            });
+            pillar.addEventListener('mouseleave', () => {
+                if (!pillar.classList.contains('is-active')) {
+                    pillar.style.transform = '';
+                }
             });
         });
     };
@@ -680,6 +783,9 @@ document.addEventListener('DOMContentLoaded', () => {
             '.skill-section',
             '.skills-highlight-card',
             '.skills-jump-nav',
+            '.skills-toolbar',
+            '.skills-pillars',
+            '.skills-core',
             '.skill-category',
             '.skill-section__header',
             '.tool-card',
