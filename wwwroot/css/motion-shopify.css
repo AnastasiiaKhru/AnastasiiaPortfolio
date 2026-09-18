@@ -502,6 +502,166 @@
     transition: gap 0.25s ease, color 0.25s ease, transform 0.25s ease;
 }
 
+/* —— Featured Shopify case (under tools) —— */
+.home-case {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: clamp(1.25rem, 3vw, 2.25rem);
+    align-items: center;
+    margin-top: 1.5rem;
+    padding: 1.15rem;
+    border-radius: 1.45rem;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+}
+
+.home-case__media {
+    position: relative;
+    border-radius: 1.15rem;
+    overflow: hidden;
+    background: #0f172a;
+    aspect-ratio: 16 / 11;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.14);
+}
+
+.home-case__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    transition: transform 0.55s var(--ease-motion);
+}
+
+.home-case:hover .home-case__media img {
+    transform: scale(1.04);
+}
+
+.home-case__badge {
+    position: absolute;
+    left: 0.85rem;
+    top: 0.85rem;
+    z-index: 1;
+    display: inline-flex;
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #0f172a;
+    background: rgba(253, 230, 138, 0.95);
+    border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.home-case__eyebrow {
+    margin: 0 0 0.45rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #b45309;
+}
+
+.home-case__title {
+    margin: 0 0 0.65rem;
+    font-size: clamp(1.35rem, 1.15rem + 0.8vw, 1.75rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #0f172a;
+    line-height: 1.15;
+}
+
+.home-case__lead {
+    margin: 0 0 1rem;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: #5b4f42;
+}
+
+.home-case__points {
+    margin: 0 0 1.1rem;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.55rem;
+}
+
+.home-case__points li {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: #475569;
+    padding: 0.65rem 0.8rem;
+    border-radius: 0.75rem;
+    background: rgba(248, 250, 252, 0.95);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.home-case__points strong {
+    color: #0f172a;
+    margin-right: 0.25rem;
+}
+
+.home-case__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-bottom: 1.15rem;
+}
+
+.home-case__stack span {
+    display: inline-flex;
+    padding: 0.28rem 0.58rem;
+    border-radius: 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #5b4f42;
+    background: rgba(255, 248, 230, 0.95);
+    border: 1px solid rgba(191, 161, 106, 0.28);
+}
+
+.home-case__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+}
+
+.home-case__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.65rem 1.1rem;
+    border-radius: 999px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.25s var(--ease-motion), box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.home-case__btn:hover {
+    transform: translateY(-1px);
+}
+
+.home-case__btn--primary {
+    color: #0f172a;
+    background: linear-gradient(135deg, #f59e0b, #fbbf24);
+    box-shadow: 0 8px 20px rgba(245, 158, 11, 0.28);
+}
+
+.home-case__btn--ghost {
+    color: #334155;
+    background: #fff;
+    border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+@media (max-width: 900px) {
+    .home-case {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+}
+
 /* —— Scroll storytelling —— */
 .story-scroll {
     padding: clamp(0.75rem, 1.5vw, 1.25rem) 0 clamp(2.5rem, 5vw, 3.5rem);

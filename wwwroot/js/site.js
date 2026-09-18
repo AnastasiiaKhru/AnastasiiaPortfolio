@@ -752,6 +752,7 @@ document.addEventListener('DOMContentLoaded', () => {
             '.home-stats__knowhow',
             '.home-stats__delivered',
             '.home-stats__knowhow-group',
+            '.home-case',
             '.story-step',
             '.contact-info-card',
             '.contact-highlight',

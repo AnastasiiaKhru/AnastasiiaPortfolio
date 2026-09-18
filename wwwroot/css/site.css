@@ -90,7 +90,7 @@ html {
     -webkit-text-size-adjust: 100%;
 }
 
-img:not(.navbar-logo):not([data-skip-global-img]):not(.wp-preview__img):not(.project-preview__img):not(.hero-portrait-img), video, svg, canvas {
+img:not(.navbar-logo):not([data-skip-global-img]):not(.wp-preview__img):not(.project-preview__img):not(.hero-portrait-img):not(.home-case__img), video, svg, canvas {
     max-width: 100%;
     height: auto;
 }
