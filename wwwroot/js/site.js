@@ -10,6 +10,15 @@ document.addEventListener('DOMContentLoaded', () => {
         .replace(/>/g, '&gt;');
 
     const revealAfterTypewriter = (el) => {
+        // Portrait signature: only unlock the role under the photo.
+        if (el.classList.contains('hero-portrait-signature')) {
+            const caption = el.closest('.hero-portrait-caption');
+            caption?.querySelectorAll('[data-motion-after-signature]').forEach((node) => {
+                node.classList.add('motion-after-signature');
+            });
+            return;
+        }
+
         const scope = el.closest('.hero-section, .page-header') || document;
         scope.querySelectorAll('[data-motion-after-typewriter]').forEach((node, index) => {
             node.classList.add('motion-after-typewriter');
@@ -146,9 +155,86 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    const initSignatureTypewriter = () => {
+        document.querySelectorAll('[data-signature-typewriter]').forEach((el) => {
+            const first = (el.getAttribute('data-signature-first') || '').trim();
+            const last = (el.getAttribute('data-signature-last') || '').trim();
+            const speed = parseInt(el.getAttribute('data-typewriter-speed') || '54', 10);
+            const delay = parseInt(el.getAttribute('data-typewriter-delay') || '220', 10);
+
+            if (!first && !last) return;
+
+            el.classList.add('is-signature-typing');
+            el.setAttribute('aria-label', `${first} ${last}`.trim());
+
+            if (prefersReduced) {
+                el.innerHTML = `
+                    <span class="signature-type-line">${escapeHtml(first)}</span>
+                    <span class="signature-type-line">${escapeHtml(last)}</span>
+                `;
+                el.classList.add('typewriter-complete');
+                revealAfterTypewriter(el);
+                return;
+            }
+
+            // Only the first-name line exists until it finishes — then last name is added.
+            el.innerHTML = `
+                <span class="signature-type-line" data-signature-line="first">
+                    <span class="signature-type-output"></span><span class="typewriter-cursor" aria-hidden="true"></span>
+                </span>
+            `;
+
+            const firstLine = el.querySelector('[data-signature-line="first"]');
+            const firstOut = firstLine.querySelector('.signature-type-output');
+            let cursor = firstLine.querySelector('.typewriter-cursor');
+
+            const typeWord = (word, output, onDone) => {
+                let i = 0;
+                output.textContent = '';
+                const step = () => {
+                    if (i >= word.length) {
+                        onDone();
+                        return;
+                    }
+                    output.textContent += word.charAt(i);
+                    i += 1;
+                    window.setTimeout(step, speed + 18 + Math.random() * 28);
+                };
+                step();
+            };
+
+            window.setTimeout(() => {
+                typeWord(first, firstOut, () => {
+                    if (cursor) cursor.remove();
+
+                    const lastLine = document.createElement('span');
+                    lastLine.className = 'signature-type-line';
+                    lastLine.setAttribute('data-signature-line', 'last');
+                    lastLine.innerHTML = '<span class="signature-type-output"></span><span class="typewriter-cursor" aria-hidden="true"></span>';
+                    el.appendChild(lastLine);
+
+                    const lastOut = lastLine.querySelector('.signature-type-output');
+                    cursor = lastLine.querySelector('.typewriter-cursor');
+
+                    window.setTimeout(() => {
+                        typeWord(last, lastOut, () => {
+                            cursor?.classList.add('is-done');
+                            el.classList.add('typewriter-complete');
+                            window.setTimeout(() => cursor?.remove(), 1200);
+                            revealAfterTypewriter(el);
+                        });
+                    }, 180);
+                });
+            }, delay);
+        });
+    };
+
     const initTypewriters = () => {
+        const formatTypewriterHtml = (value) => escapeHtml(value).replace(/\n/g, '<br>');
+
         document.querySelectorAll('[data-typewriter]').forEach((el, index) => {
-            const text = (el.getAttribute('data-typewriter-text') || el.textContent || '').trim();
+            const rawText = (el.getAttribute('data-typewriter-text') || el.textContent || '').trim();
+            const text = rawText.replace(/\\n/g, '\n').replace(/\|/g, '\n');
             const speed = parseInt(el.getAttribute('data-typewriter-speed') || '52', 10);
             const delay = parseInt(el.getAttribute('data-typewriter-delay') || String(220 + index * 60), 10);
 
@@ -157,16 +243,16 @@ document.addEventListener('DOMContentLoaded', () => {
             el.textContent = '';
 
             if (prefersReduced) {
-                el.textContent = text;
+                el.innerHTML = formatTypewriterHtml(text);
                 el.classList.add('typewriter-complete');
                 revealAfterTypewriter(el);
                 return;
             }
 
             el.classList.add('typewriter-host');
-            el.setAttribute('aria-label', text);
+            el.setAttribute('aria-label', text.replace(/\n+/g, ' '));
             el.innerHTML = `
-                <span class="typewriter-measure" aria-hidden="true">${escapeHtml(text)}</span>
+                <span class="typewriter-measure" aria-hidden="true">${formatTypewriterHtml(text)}</span>
                 <span class="typewriter-line">
                     <span class="typewriter-output"></span><span class="typewriter-cursor" aria-hidden="true"></span>
                 </span>
@@ -178,10 +264,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const typeNext = () => {
                 if (charIndex < text.length) {
-                    output.textContent = text.slice(0, charIndex + 1);
+                    output.innerHTML = formatTypewriterHtml(text.slice(0, charIndex + 1));
                     charIndex += 1;
                     const currentChar = text.charAt(charIndex - 1);
-                    const pause = currentChar === '.' || currentChar === '—' ? speed * 2.8
+                    const pause = currentChar === '\n' ? speed * 3.2
+                        : currentChar === '.' || currentChar === '—' ? speed * 2.8
                         : currentChar === ',' || currentChar === ' ' ? speed * 1.35
                         : speed;
                     window.setTimeout(typeNext, pause + Math.random() * 16);
@@ -641,6 +728,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    initSignatureTypewriter();
     initTypewriters();
     initRotatingWords();
     initHomeHeroMotion();

@@ -200,30 +200,83 @@
         .hero-portrait-caption::before {
             content: '';
             display: block;
-            width: 2.75rem;
-            height: 2px;
-            margin: 0 auto 0.7rem;
+            width: 3.25rem;
+            height: 3px;
+            margin: 0 auto 0.85rem;
             border-radius: 999px;
-            background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.85), transparent);
+            background: linear-gradient(90deg, transparent, #f59e0b 20%, #fbbf24 50%, #f59e0b 80%, transparent);
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.45);
         }
 
         .hero-portrait-signature {
             margin: 0;
             font-family: 'Great Vibes', cursive;
-            font-size: clamp(2rem, 1.35rem + 2.4vw, 2.85rem);
+            font-size: clamp(2.15rem, 1.5rem + 2.6vw, 3rem);
             font-weight: 400;
             line-height: 1.05;
-            color: #0f172a;
             letter-spacing: 0.01em;
+            text-align: center;
+            color: #0f172a;
+        }
+
+        .hero-portrait-signature.is-signature-typing {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: none !important;
+            -webkit-text-fill-color: #0f172a !important;
+            color: #0f172a !important;
+            animation: none !important;
+        }
+
+        .hero-portrait-signature .signature-type-line {
+            display: block;
+            min-height: 1.05em;
+            white-space: nowrap;
+            color: #0f172a;
+            -webkit-text-fill-color: #0f172a;
+            font-family: 'Great Vibes', cursive;
+        }
+
+        .hero-portrait-signature .signature-type-output {
+            color: #0f172a;
+            -webkit-text-fill-color: #0f172a;
+            background: none;
+        }
+
+        .hero-portrait-signature .signature-type-line .typewriter-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 0.75em;
+            margin-left: 2px;
+            vertical-align: -0.05em;
+            border-radius: 2px;
+            -webkit-text-fill-color: initial;
+            color: initial;
+            background: linear-gradient(180deg, #d97706, #fbbf24);
+            -webkit-background-clip: border-box;
+            background-clip: border-box;
+            animation: typewriterBlink 0.72s step-end infinite;
         }
 
         .hero-portrait-role {
-            margin: 0.4rem 0 0;
+            margin: 0.45rem 0 0;
             font-size: clamp(0.78rem, 0.72rem + 0.25vw, 0.9rem);
             font-weight: 600;
             color: #64748b;
             letter-spacing: 0.03em;
             line-height: 1.45;
+        }
+
+        .hero-portrait-role[data-motion-after-signature] {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .hero-portrait-role[data-motion-after-signature].motion-after-signature {
+            opacity: 1;
+            transform: none;
+            transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .hero-portrait {
@@ -416,7 +469,7 @@
                 width: 100%;
             }
             .hero-portrait-signature {
-                font-size: clamp(1.85rem, 1.4rem + 2vw, 2.25rem);
+                font-size: clamp(1.95rem, 1.45rem + 2.2vw, 2.5rem);
             }
             .hero-portrait,
             .hero-portrait:hover { transform: none; }
@@ -484,9 +537,15 @@
                         <div class="hero-portrait" role="img" aria-label="Portrait photo of Anastasiia">
                             <img src="/images/hero-image.png?v=2" alt="Anastasiia portrait photo" class="hero-portrait-img" data-skip-global-img>
                         </div>
-                        <div class="hero-portrait-caption" data-motion-after-typewriter>
-                            <p class="hero-portrait-signature">Anastasiia Khrustaleva</p>
-                            <p class="hero-portrait-role">Software Developer · Web &amp; Product Designer</p>
+                        <div class="hero-portrait-caption">
+                            <p class="hero-portrait-signature"
+                               data-signature-typewriter
+                               data-signature-first="Anastasiia"
+                               data-signature-last="Khrustaleva"
+                               data-typewriter-speed="78"
+                               data-typewriter-delay="400"
+                               aria-label="Anastasiia Khrustaleva"></p>
+                            <p class="hero-portrait-role" data-motion-after-signature>Software Developer · Web &amp; Product Designer</p>
                         </div>
                     </div>
                     <div class="hero-portrait-glow" aria-hidden="true"></div>
@@ -621,24 +680,48 @@
         </div>
 
         <div class="home-stats__delivered reveal-ready" data-home-stats-chips>
-            <h3 class="home-stats__knowhow-title">Types of work I've done</h3>
-            <div class="home-stats__delivered-tags">
-                <span>Client websites &amp; rebrands</span>
-                <span>Shopify storefronts &amp; theme builds</span>
-                <span>WordPress &amp; WooCommerce sites</span>
-                <span>CRM &amp; dashboard apps</span>
-                <span>Playable web games</span>
-                <span>Event &amp; landing pages</span>
-                <span>Marketing &amp; ad creative</span>
-                <span>Portfolio &amp; demo sites</span>
-                <span>Email campaigns &amp; automation</span>
-                <span>SEO &amp; performance tuning</span>
-                <span>Social content &amp; video edits</span>
-                <span>Hosting, DNS &amp; deployment</span>
-                <span>Merchant &amp; client support</span>
-                <span>Brand systems &amp; visual identity</span>
-                <span>Admin panels &amp; internal tools</span>
-                <span>IT troubleshooting &amp; QA</span>
+            <div class="home-stats__delivered-head">
+                <p class="home-stats__delivered-eyebrow">Delivered</p>
+                <h3 class="home-stats__delivered-title">Types of work I've done</h3>
+                <p class="home-stats__delivered-lead">Real project shapes — not just tools. Click a type to highlight it.</p>
+            </div>
+            <div class="home-stats__delivered-grid">
+                <div class="home-stats__delivered-group" data-accent="amber">
+                    <p class="home-stats__delivered-label"><i class="fas fa-globe" aria-hidden="true"></i> Sites &amp; brands</p>
+                    <div class="home-stats__delivered-tags">
+                        <span>Client websites &amp; rebrands</span>
+                        <span>Event &amp; landing pages</span>
+                        <span>Portfolio &amp; demo sites</span>
+                        <span>Brand systems &amp; visual identity</span>
+                    </div>
+                </div>
+                <div class="home-stats__delivered-group" data-accent="mint">
+                    <p class="home-stats__delivered-label"><i class="fas fa-bag-shopping" aria-hidden="true"></i> E-commerce</p>
+                    <div class="home-stats__delivered-tags">
+                        <span>Shopify storefronts &amp; theme builds</span>
+                        <span>WordPress &amp; WooCommerce sites</span>
+                        <span>Merchant &amp; client support</span>
+                    </div>
+                </div>
+                <div class="home-stats__delivered-group" data-accent="ink">
+                    <p class="home-stats__delivered-label"><i class="fas fa-table-cells" aria-hidden="true"></i> Apps &amp; products</p>
+                    <div class="home-stats__delivered-tags">
+                        <span>CRM &amp; dashboard apps</span>
+                        <span>Admin panels &amp; internal tools</span>
+                        <span>Playable web games</span>
+                    </div>
+                </div>
+                <div class="home-stats__delivered-group" data-accent="sky">
+                    <p class="home-stats__delivered-label"><i class="fas fa-rocket" aria-hidden="true"></i> Growth &amp; ops</p>
+                    <div class="home-stats__delivered-tags">
+                        <span>Marketing &amp; ad creative</span>
+                        <span>Email campaigns &amp; automation</span>
+                        <span>SEO &amp; performance tuning</span>
+                        <span>Social content &amp; video edits</span>
+                        <span>Hosting, DNS &amp; deployment</span>
+                        <span>IT troubleshooting &amp; QA</span>
+                    </div>
+                </div>
             </div>
         </div>
 
