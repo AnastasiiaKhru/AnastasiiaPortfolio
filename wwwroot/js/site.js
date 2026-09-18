@@ -266,7 +266,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }, { threshold: 0.55, rootMargin: '-18% 0px -32% 0px' });
 
-        steps.forEach((step) => storyObserver.observe(step));
+        steps.forEach((step) => {
+            storyObserver.observe(step);
+            const activateFromInteraction = () => activate(step.dataset.storyStep);
+            step.addEventListener('click', activateFromInteraction);
+            step.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    activateFromInteraction();
+                }
+            });
+        });
     };
 
     const initProjectFilters = () => {
