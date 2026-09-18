@@ -542,6 +542,27 @@
                 </article>
             </div>
         </div>
+
+        <article class="home-case home-case--after-process" aria-labelledby="home-case-one80-title">
+            <div class="home-case__body">
+                <p class="home-case__eyebrow">Featured Shopify work</p>
+                <h3 class="home-case__title" id="home-case-one80-title">ONE80 Revolution</h3>
+                <p class="home-case__lead">Precision hydration brand storefront — product pages, mobile UX, checkout setup, redirects, and post-launch merchant support.</p>
+                <ul class="home-case__points">
+                    <li><strong>Problem</strong> Make a technical product feel simple to buy on mobile.</li>
+                    <li><strong>Approach</strong> Design the purchase path, then ship it in Shopify theme code.</li>
+                    <li><strong>Result</strong> Live storefront with clearer PDPs and ongoing updates.</li>
+                </ul>
+                <div class="home-case__stack" aria-label="Stack">
+                    <span>Shopify</span><span>Liquid</span><span>JavaScript</span><span>CSS</span><span>Checkout UX</span>
+                </div>
+                <a asp-controller="Home" asp-action="Projects" class="home-case__link">See all projects <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+            </div>
+            <div class="home-case__media">
+                <img class="home-case__img" src="~/images/one80/storefront.png" alt="ONE80 Revolution Shopify storefront" loading="lazy" asp-append-version="true" />
+                <span class="home-case__badge">Shopify case study</span>
+            </div>
+        </article>
     </div>
 </section>
 
@@ -552,9 +573,12 @@
         <span class="home-stats__orb home-stats__orb--mint"></span>
     </div>
     <div class="container">
-        <header class="home-stats__header reveal-ready">
+        <header class="home-stats__header">
             <p class="home-stats__eyebrow">What I do</p>
-            <h2 class="home-stats__title text-gradient-motion">Developer, designer &amp; digital problem-solver</h2>
+            <h2 class="home-stats__title text-gradient-motion">
+                <span class="home-stats__title-line">Developer, designer</span>
+                <span class="home-stats__title-line">&amp; digital problem-solver</span>
+            </h2>
             <p class="home-stats__lead">
                 <span class="home-stats__experience">5+ years of experience</span>
                 building client websites, e-commerce stores, web apps, WordPress themes, CRM tools, games, branding, and marketing experiences — from idea and design through development, launch, and ongoing support.
@@ -618,10 +642,14 @@
             </div>
         </div>
 
-        <div class="home-stats__knowhow reveal-ready">
+        <div class="home-stats__knowhow">
             <div class="home-stats__knowhow-head">
-                <h3 class="home-stats__knowhow-title">Technologies &amp; tools I work with</h3>
-                <a asp-controller="Home" asp-action="Skills" class="home-stats__skills-link home-stats__skills-link--top">See the full skills breakdown <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                <div class="home-stats__knowhow-intro">
+                    <p class="home-stats__knowhow-eyebrow">Toolbox</p>
+                    <h3 class="home-stats__knowhow-title">Technologies &amp; tools I work with</h3>
+                    <p class="home-stats__knowhow-lead">Filter by lane — languages, Shopify, design, cloud, workflow.</p>
+                </div>
+                <a asp-controller="Home" asp-action="Skills" class="home-stats__skills-link home-stats__skills-link--top">Full skills <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
             </div>
             <div class="home-stats__filter" role="tablist" aria-label="Filter technology categories">
                 <button type="button" class="home-stats__filter-btn is-active" data-knowhow-filter="all" role="tab" aria-selected="true">All</button>
@@ -635,79 +663,55 @@
                 <button type="button" class="home-stats__filter-btn" data-knowhow-filter="collaboration" role="tab" aria-selected="false">Workflow</button>
             </div>
             <div class="home-stats__knowhow-grid" data-home-stats-chips>
-                <div class="home-stats__knowhow-group reveal-ready" data-knowhow-group="languages">
-                    <p class="home-stats__knowhow-label">Languages</p>
+                <div class="home-stats__knowhow-group" data-knowhow-group="languages" data-accent="amber">
+                    <p class="home-stats__knowhow-label"><i class="fas fa-code" aria-hidden="true"></i> Languages</p>
                     <div class="home-stats__knowhow-tags">
                         <span>C# / .NET</span><span>JavaScript</span><span>TypeScript</span><span>HTML5</span><span>CSS3</span><span>SQL</span><span>Python</span><span>Java</span><span>PHP</span><span>Liquid</span><span>SCSS / Sass</span><span>Razor</span><span>JSON / YAML</span>
                     </div>
                 </div>
-                <div class="home-stats__knowhow-group reveal-ready" data-knowhow-group="frameworks">
-                    <p class="home-stats__knowhow-label">Frameworks &amp; libraries</p>
+                <div class="home-stats__knowhow-group" data-knowhow-group="frameworks" data-accent="ink">
+                    <p class="home-stats__knowhow-label"><i class="fas fa-cubes" aria-hidden="true"></i> Frameworks &amp; libraries</p>
                     <div class="home-stats__knowhow-tags">
                         <span>ASP.NET Core MVC</span><span>Entity Framework Core</span><span>ASP.NET Identity</span><span>Razor Pages</span><span>REST APIs</span><span>SignalR</span><span>Bootstrap</span><span>Tailwind CSS</span><span>React</span><span>Next.js</span><span>jQuery</span><span>Three.js</span><span>LINQ</span>
                     </div>
                 </div>
-                <div class="home-stats__knowhow-group reveal-ready" data-knowhow-group="cms">
-                    <p class="home-stats__knowhow-label">CMS &amp; e-commerce</p>
+                <div class="home-stats__knowhow-group home-stats__knowhow-group--wide" data-knowhow-group="cms" data-accent="mint">
+                    <p class="home-stats__knowhow-label"><i class="fab fa-shopify" aria-hidden="true"></i> CMS &amp; e-commerce</p>
                     <div class="home-stats__knowhow-tags">
                         <span>Shopify</span><span>Shopify Themes</span><span>Shopify Admin</span><span>Subscriptions</span><span>WordPress</span><span>Gutenberg / FSE</span><span>WooCommerce</span><span>ACF</span><span>WPForms</span><span>Block Patterns</span><span>Rank Math</span><span>Kinsta</span>
                     </div>
                 </div>
-                <div class="home-stats__knowhow-group reveal-ready" data-knowhow-group="databases">
-                    <p class="home-stats__knowhow-label">Databases &amp; cloud</p>
+                <div class="home-stats__knowhow-group" data-knowhow-group="databases" data-accent="sky">
+                    <p class="home-stats__knowhow-label"><i class="fas fa-cloud" aria-hidden="true"></i> Databases &amp; cloud</p>
                     <div class="home-stats__knowhow-tags">
                         <span>SQL Server</span><span>SQLite</span><span>MongoDB</span><span>MongoDB Atlas</span><span>Firebase</span><span>Railway</span><span>Azure</span><span>AWS</span><span>Google Cloud</span><span>Docker</span><span>Cloudinary</span>
                     </div>
                 </div>
-                <div class="home-stats__knowhow-group reveal-ready" data-knowhow-group="devops">
-                    <p class="home-stats__knowhow-label">DevOps &amp; tooling</p>
+                <div class="home-stats__knowhow-group" data-knowhow-group="devops" data-accent="stone">
+                    <p class="home-stats__knowhow-label"><i class="fas fa-terminal" aria-hidden="true"></i> DevOps &amp; tooling</p>
                     <div class="home-stats__knowhow-tags">
                         <span>Git / GitHub</span><span>GitLab</span><span>Bitbucket</span><span>GitHub Actions</span><span>CI/CD</span><span>npm / yarn</span><span>Postman</span><span>VS Code</span><span>Visual Studio</span><span>dotnet CLI</span><span>cPanel</span><span>DNS / SSL</span><span>Vercel</span><span>Netlify</span><span>Linux basics</span>
                     </div>
                 </div>
-                <div class="home-stats__knowhow-group reveal-ready" data-knowhow-group="design">
-                    <p class="home-stats__knowhow-label">Design &amp; creative</p>
+                <div class="home-stats__knowhow-group" data-knowhow-group="design" data-accent="rose">
+                    <p class="home-stats__knowhow-label"><i class="fas fa-pen-nib" aria-hidden="true"></i> Design &amp; creative</p>
                     <div class="home-stats__knowhow-tags">
                         <span>Figma</span><span>Photoshop</span><span>Illustrator</span><span>Premiere Pro</span><span>After Effects</span><span>Lightroom</span><span>Sketch</span><span>Canva</span><span>CapCut</span><span>Midjourney</span><span>Adobe Firefly</span><span>Wireframes</span><span>Prototyping</span><span>Brand systems</span><span>AI-assisted design</span>
                     </div>
                 </div>
-                <div class="home-stats__knowhow-group reveal-ready" data-knowhow-group="marketing">
-                    <p class="home-stats__knowhow-label">Marketing &amp; analytics</p>
+                <div class="home-stats__knowhow-group" data-knowhow-group="marketing" data-accent="orange">
+                    <p class="home-stats__knowhow-label"><i class="fas fa-chart-line" aria-hidden="true"></i> Marketing &amp; analytics</p>
                     <div class="home-stats__knowhow-tags">
                         <span>Google Analytics</span><span>Search Console</span><span>Semrush</span><span>SEO audits</span><span>Zoho CRM</span><span>Mailchimp</span><span>Meta / social ads</span><span>Conversion UX</span><span>Core Web Vitals</span>
                     </div>
                 </div>
-                <div class="home-stats__knowhow-group reveal-ready" data-knowhow-group="collaboration">
-                    <p class="home-stats__knowhow-label">Collaboration &amp; workflow</p>
+                <div class="home-stats__knowhow-group home-stats__knowhow-group--wide" data-knowhow-group="collaboration" data-accent="clay">
+                    <p class="home-stats__knowhow-label"><i class="fas fa-people-group" aria-hidden="true"></i> Collaboration &amp; workflow</p>
                     <div class="home-stats__knowhow-tags">
                         <span>Jira</span><span>Trello</span><span>Slack</span><span>Notion</span><span>Agile / sprints</span><span>Client communication</span><span>Technical docs</span><span>Launch &amp; post-launch QA</span>
                     </div>
                 </div>
             </div>
         </div>
-
-        <article class="home-case" aria-labelledby="home-case-one80-title">
-            <div class="home-case__media">
-                <img class="home-case__img" src="~/images/one80/storefront.png" alt="ONE80 Revolution Shopify storefront" loading="lazy" asp-append-version="true" />
-                <span class="home-case__badge">Shopify case study</span>
-            </div>
-            <div class="home-case__body">
-                <p class="home-case__eyebrow">Featured Shopify work</p>
-                <h3 class="home-case__title" id="home-case-one80-title">ONE80 Revolution</h3>
-                <p class="home-case__lead">Precision hydration brand storefront — product pages, mobile UX, checkout setup, redirects, and post-launch merchant support.</p>
-                <ul class="home-case__points">
-                    <li><strong>Problem</strong> Make a technical product feel simple to buy on mobile.</li>
-                    <li><strong>Approach</strong> Design the purchase path, then ship it in Shopify theme code.</li>
-                    <li><strong>Result</strong> Live storefront with clearer PDPs and ongoing updates.</li>
-                </ul>
-                <div class="home-case__stack" aria-label="Stack">
-                    <span>Shopify</span><span>Liquid</span><span>JavaScript</span><span>CSS</span><span>Checkout UX</span>
-                </div>
-                <div class="home-case__actions">
-                    <a href="https://www.one80revolution.com/" class="home-case__btn home-case__btn--primary" target="_blank" rel="noopener">View live store</a>
-                    <a asp-controller="Home" asp-action="Projects" asp-fragment="project-one80" class="home-case__btn home-case__btn--ghost">See in projects</a>
-                </div>
-            </div>
-        </article>
     </div>
 </section>

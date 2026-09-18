@@ -898,6 +898,7 @@ a:hover {
 .project-card-modern[data-project="16"] { animation-delay: 0.8s; }
 .project-card-modern[data-project="17"] { animation-delay: 0.85s; }
 .project-card-modern[data-project="18"] { animation-delay: 0.9s; }
+.project-card-modern[data-project="19"] { animation-delay: 0.95s; }
 
 .project-card-modern::before {
     content: '';
