@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="description" content="Anastasiia Khrustaleva — Full-stack developer portfolio. Skills, projects, experience, and contact." />
+    <meta name="description" content="Anastasiia Khrustaleva — Full-stack developer & product designer. Shopify, ASP.NET, and high-converting digital experiences built end to end." />
     <title>@ViewData["Title"] - Anastasiia Portfolio</title>
     @{
         var configBase = Configuration["BaseUrl"]?.Trim();
@@ -20,7 +20,7 @@
         var path = string.IsNullOrEmpty(Context.Request.Path.Value) ? "/" : Context.Request.Path.Value!;
         var ogUrl = ViewData["OgUrl"] as string ?? $"{baseUrl}{path}{Context.Request.QueryString}";
         var ogTitle = ViewData["OgTitle"] as string ?? $"{ViewData["Title"]} - Anastasiia Portfolio";
-        var ogDescription = ViewData["OgDescription"] as string ?? "Anastasiia Khrustaleva — Full-stack developer portfolio. Skills, projects, experience, and contact.";
+        var ogDescription = ViewData["OgDescription"] as string ?? "Anastasiia Khrustaleva — Full-stack developer & product designer. Shopify, ASP.NET, and high-converting digital experiences.";
     }
     <meta property="og:image" content="@ogImage" />
     <meta property="og:image:url" content="@ogImage" />
@@ -47,12 +47,13 @@
     <link rel="shortcut icon" href="~/favicon.ico" asp-append-version="true" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/motion-shopify.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/hire-ready.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/AnastasiiaPortfolio.styles.css" asp-append-version="true" />
     <style>
         [data-typewriter]:not(.typewriter-host):not(.typewriter-complete) { visibility: hidden; }
@@ -72,7 +73,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <p class="footer-tagline">Designing and building modern, high-converting digital experiences.</p>
+                    <p class="footer-tagline">Built for clarity, conversion, and craft — websites, Shopify, and products that ship.</p>
                 </div>
                 <nav class="footer-links" aria-label="Footer navigation">
                     <a asp-controller="Home" asp-action="Projects">Projects</a>

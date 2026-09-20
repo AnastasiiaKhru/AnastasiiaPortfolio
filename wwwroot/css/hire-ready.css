@@ -1,0 +1,347 @@
+/* Hire-ready elevation — modern motion, commerce craft, professional clarity */
+
+:root {
+    --font-family-display: "Syne", "Plus Jakarta Sans", system-ui, sans-serif;
+    --font-family-base: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+    --ink: #0b1220;
+    --ink-soft: #1e293b;
+    --paper: #faf8f5;
+    --paper-deep: #f3efe8;
+    --line: rgba(15, 23, 42, 0.1);
+    --gold: #d97706;
+    --gold-bright: #f59e0b;
+    --gold-soft: rgba(245, 158, 11, 0.14);
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html.js-enhanced body {
+    background:
+        radial-gradient(ellipse 80% 50% at 10% -10%, rgba(245, 158, 11, 0.07), transparent 50%),
+        radial-gradient(ellipse 60% 40% at 100% 0%, rgba(15, 23, 42, 0.04), transparent 45%),
+        linear-gradient(180deg, #fbfaf8 0%, #f6f3ee 48%, #f8fafc 100%);
+}
+
+/* —— Display type —— */
+h1, h2, .hero-headline, .page-header__title, .home-stats__title,
+.home-case__title, .story-scroll__copy h3 {
+    font-family: var(--font-family-display);
+    letter-spacing: -0.035em;
+    color: var(--ink);
+}
+
+/* —— Navbar —— */
+.navbar-portfolio {
+    backdrop-filter: blur(18px) saturate(1.2);
+    -webkit-backdrop-filter: blur(18px) saturate(1.2);
+    transition: background 0.35s var(--ease-soft), box-shadow 0.35s var(--ease-soft), border-color 0.35s ease;
+}
+
+.page-home .navbar:not(.navbar-scrolled) {
+    background: transparent;
+    border-bottom-color: transparent;
+}
+
+.navbar-scrolled {
+    background: rgba(255, 252, 248, 0.88) !important;
+    border-bottom: 1px solid rgba(191, 161, 106, 0.22);
+    box-shadow: 0 10px 40px rgba(15, 23, 42, 0.06);
+}
+
+.navbar-brand-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    text-decoration: none;
+    margin-right: auto;
+}
+
+.navbar-brand-mark__img {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+    transition: transform 0.35s var(--ease-out-expo);
+}
+
+.navbar-brand-mark:hover .navbar-brand-mark__img {
+    transform: scale(1.06) rotate(-2deg);
+}
+
+.navbar-brand-mark__text {
+    font-family: var(--font-family-display);
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+}
+
+.navbar-nav--main .nav-link {
+    position: relative;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: -0.01em;
+    color: var(--ink-soft) !important;
+    padding: 0.45rem 0.85rem !important;
+    transition: color 0.25s ease;
+}
+
+.navbar-nav--main .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0.85rem;
+    right: 0.85rem;
+    bottom: 0.15rem;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease-out-expo);
+}
+
+.navbar-nav--main .nav-link:hover,
+.navbar-nav--main .nav-link.active {
+    color: var(--ink) !important;
+}
+
+.navbar-nav--main .nav-link:hover::after,
+.navbar-nav--main .nav-link.active::after {
+    transform: scaleX(1);
+}
+
+@media (max-width: 991.98px) {
+    .navbar-brand-mark__text { display: none; }
+    .navbar-nav--main .nav-link::after { display: none; }
+}
+
+/* —— Page headers (Projects / Resume / Skills / Contact) —— */
+.page-header {
+    position: relative;
+    padding: clamp(2.5rem, 6vw, 4.5rem) 0 clamp(1.75rem, 3vw, 2.5rem);
+    overflow: hidden;
+}
+
+.page-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 55% 70% at 15% 20%, rgba(245, 158, 11, 0.11), transparent 55%),
+        radial-gradient(ellipse 40% 50% at 90% 10%, rgba(15, 23, 42, 0.05), transparent 50%);
+    pointer-events: none;
+}
+
+.page-header .container {
+    position: relative;
+    z-index: 1;
+}
+
+.page-header__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.85rem;
+}
+
+.page-header__label::before {
+    content: "";
+    width: 1.5rem;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--gold-bright), transparent);
+}
+
+.page-header__title {
+    font-size: clamp(2.1rem, 1.4rem + 2.4vw, 3.4rem) !important;
+    font-weight: 800;
+    line-height: 1.05;
+    margin-bottom: 1rem !important;
+    max-width: 16ch;
+}
+
+.page-header__lead {
+    font-size: clamp(1.02rem, 0.95rem + 0.35vw, 1.18rem) !important;
+    line-height: 1.65 !important;
+    color: #475569 !important;
+    max-width: 42rem !important;
+}
+
+/* —— Footer —— */
+.site-footer {
+    margin-top: clamp(3rem, 8vw, 6rem);
+    padding: clamp(2.5rem, 5vw, 3.75rem) 0;
+    background:
+        radial-gradient(ellipse 50% 80% at 50% 0%, rgba(245, 158, 11, 0.08), transparent 55%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(243, 239, 232, 0.95));
+    border-top: 1px solid rgba(191, 161, 106, 0.28);
+}
+
+.footer-tagline {
+    font-family: var(--font-family-display);
+    font-weight: 700;
+    font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.25rem);
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    max-width: 28rem;
+}
+
+.footer-links a {
+    font-weight: 600;
+    position: relative;
+    transition: color 0.25s ease;
+}
+
+.footer-links a:hover {
+    color: var(--gold) !important;
+}
+
+.footer-socials .social-icon {
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid var(--line);
+    transition: transform 0.3s var(--ease-out-expo), border-color 0.25s ease, box-shadow 0.3s ease;
+}
+
+.footer-socials .social-icon:hover {
+    transform: translateY(-3px);
+    border-color: rgba(245, 158, 11, 0.45);
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1);
+}
+
+/* —— Stronger reveals —— */
+.js-enhanced .reveal-ready {
+    opacity: 0;
+    transform: translateY(28px) scale(0.985);
+    filter: blur(6px);
+    transition:
+        opacity 0.8s var(--ease-out-expo),
+        transform 0.8s var(--ease-out-expo),
+        filter 0.8s ease;
+    transition-delay: var(--reveal-delay, 0ms);
+}
+
+.js-enhanced .reveal-ready.is-visible {
+    opacity: 1;
+    transform: none;
+    filter: none;
+}
+
+/* —— Home hero polish —— */
+.page-home .hero-kicker {
+    font-family: var(--font-family-display);
+    letter-spacing: 0.14em;
+}
+
+.page-home .hero-headline {
+    font-family: var(--font-family-display);
+    font-weight: 800;
+}
+
+.page-home .hero-section .hero-btn-group .btn {
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    transition: transform 0.35s var(--ease-out-expo), box-shadow 0.35s ease, background 0.25s ease;
+}
+
+.page-home .hero-section .hero-btn-group .btn:hover {
+    transform: translateY(-3px);
+}
+
+.page-home .hero-section .hero-btn-group .btn-primary {
+    box-shadow: 0 12px 28px rgba(245, 158, 11, 0.28);
+}
+
+.page-home .hero-section .hero-btn-group .btn-primary:hover {
+    box-shadow: 0 16px 36px rgba(245, 158, 11, 0.36);
+}
+
+/* —— Story / process —— */
+.story-scroll--after-hero {
+    position: relative;
+}
+
+.story-scroll__copy h3 {
+    font-size: clamp(1.35rem, 1.15rem + 0.7vw, 1.75rem);
+}
+
+.story-step {
+    transition: transform 0.4s var(--ease-out-expo), border-color 0.3s ease, box-shadow 0.35s ease;
+}
+
+.story-step.is-active {
+    transform: translateX(4px);
+}
+
+/* —— Featured case —— */
+.home-case {
+    transition: transform 0.45s var(--ease-out-expo), box-shadow 0.45s ease;
+}
+
+.home-case:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 28px 60px rgba(15, 23, 42, 0.12);
+}
+
+.home-case__link {
+    font-family: var(--font-family-display);
+    font-weight: 700;
+}
+
+/* —— Tone down purple ambient (keep warm craft palette) —— */
+.home-stats__orb--violet {
+    background: radial-gradient(circle, rgba(180, 83, 9, 0.18), transparent 70%) !important;
+}
+
+.motion-orb--violet {
+    background: radial-gradient(circle, rgba(217, 119, 6, 0.2), transparent 70%) !important;
+}
+
+/* —— Contact / skills / projects surface —— */
+.page-inner {
+    position: relative;
+}
+
+.page-inner--projects,
+.page-inner--skills,
+.page-inner--contact,
+.page-inner--resume {
+    background:
+        radial-gradient(ellipse 60% 40% at 0% 0%, rgba(245, 158, 11, 0.06), transparent 50%),
+        transparent;
+}
+
+/* —— Magnetic hover utility already used; refine chips —— */
+.home-stats__chip:hover,
+.filter-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+}
+
+/* —— Reduced motion —— */
+@media (prefers-reduced-motion: reduce) {
+    .js-enhanced .reveal-ready {
+        opacity: 1;
+        transform: none;
+        filter: none;
+        transition: none;
+    }
+
+    .navbar-brand-mark__img,
+    .page-home .hero-section .hero-btn-group .btn,
+    .home-case,
+    .footer-socials .social-icon {
+        transition: none;
+    }
+}

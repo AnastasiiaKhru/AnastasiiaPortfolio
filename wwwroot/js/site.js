@@ -728,10 +728,40 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    const initHireReadyMotion = () => {
+        if (prefersReduced) return;
+
+        // Soft parallax on featured home case media
+        const caseMedia = document.querySelector('.home-case__media img');
+        if (caseMedia) {
+            window.addEventListener('scroll', () => {
+                const rect = caseMedia.getBoundingClientRect();
+                if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+                const progress = (window.innerHeight / 2 - (rect.top + rect.height / 2)) / window.innerHeight;
+                caseMedia.style.transform = `scale(1.04) translate3d(0, ${progress * 18}px, 0)`;
+            }, { passive: true });
+        }
+
+        // Stagger page-header children when typewriter absent
+        document.querySelectorAll('.page-header').forEach((header) => {
+            if (header.querySelector('[data-typewriter]')) return;
+            header.querySelectorAll('.page-header__label, .page-header__title, .page-header__lead').forEach((node, i) => {
+                node.style.opacity = '0';
+                node.style.transform = 'translateY(16px)';
+                window.setTimeout(() => {
+                    node.style.transition = 'opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)';
+                    node.style.opacity = '1';
+                    node.style.transform = 'none';
+                }, 90 + i * 110);
+            });
+        });
+    };
+
     initSignatureTypewriter();
     initTypewriters();
     initRotatingWords();
     initHomeHeroMotion();
+    initHireReadyMotion();
     initMagneticButtons();
     initScrollTextFade();
     initPreviewReveal();
