@@ -19,7 +19,7 @@
     
     /* Typography – fluid-ready */
     --font-family-base: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-    --font-family-display: 'Syne', 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-family-display: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     --font-size-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
     --font-size-sm: 0.875rem;
     --font-size-lg: 1.125rem;

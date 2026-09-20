@@ -1,7 +1,7 @@
 /* Hire-ready elevation — modern motion, commerce craft, professional clarity */
 
 :root {
-    --font-family-display: "Syne", "Plus Jakarta Sans", system-ui, sans-serif;
+    --font-family-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
     --font-family-base: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
     --ink: #0b1220;
     --ink-soft: #1e293b;
@@ -51,7 +51,6 @@ h1, h2, .hero-headline, .page-header__title, .home-stats__title,
 .navbar-brand-mark {
     display: inline-flex;
     align-items: center;
-    gap: 0.65rem;
     text-decoration: none;
     margin-right: auto;
 }
@@ -68,14 +67,6 @@ h1, h2, .hero-headline, .page-header__title, .home-stats__title,
 
 .navbar-brand-mark:hover .navbar-brand-mark__img {
     transform: scale(1.06) rotate(-2deg);
-}
-
-.navbar-brand-mark__text {
-    font-family: var(--font-family-display);
-    font-weight: 700;
-    font-size: 0.95rem;
-    letter-spacing: -0.03em;
-    color: var(--ink);
 }
 
 .navbar-nav--main .nav-link {
@@ -113,7 +104,6 @@ h1, h2, .hero-headline, .page-header__title, .home-stats__title,
 }
 
 @media (max-width: 991.98px) {
-    .navbar-brand-mark__text { display: none; }
     .navbar-nav--main .nav-link::after { display: none; }
 }
 
