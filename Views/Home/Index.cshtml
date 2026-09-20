@@ -631,21 +631,30 @@
         <span class="home-stats__orb home-stats__orb--mint"></span>
     </div>
     <div class="container">
-        <header class="home-stats__header">
+        <header class="home-stats__header home-stats__header--open">
             <p class="home-stats__eyebrow">What I do</p>
-            <h2 class="home-stats__title text-gradient-motion">
+            <h2 class="home-stats__title">
                 <span class="home-stats__title-line">Developer who designs,</span>
-                <span class="home-stats__title-line">designer who ships</span>
+                <span class="home-stats__title-line home-stats__title-line--accent">designer who ships</span>
             </h2>
             <p class="home-stats__lead">
                 <span class="home-stats__experience">5+ years</span>
                 building Shopify storefronts, full-stack apps, WordPress themes, and brand systems — from first sketch to production and support.
             </p>
+            <div class="home-stats__metrics" aria-label="Highlights">
+                <div class="home-stats__metric"><strong>Shopify</strong><span>storefronts &amp; themes</span></div>
+                <div class="home-stats__metric"><strong>Full-stack</strong><span>APIs to UI</span></div>
+                <div class="home-stats__metric"><strong>Design</strong><span>brand to pixels</span></div>
+                <div class="home-stats__metric"><strong>Launch</strong><span>hosting &amp; support</span></div>
+            </div>
         </header>
 
-        <div class="home-stats__grid">
+        <div class="home-stats__grid home-stats__grid--bento">
             <article class="home-stat-card reveal-ready" tabindex="0" data-stat-card="fullstack">
-                <p class="home-stat-card__icon" aria-hidden="true"><i class="fas fa-laptop-code"></i></p>
+                <div class="home-stat-card__top">
+                    <p class="home-stat-card__icon" aria-hidden="true"><i class="fas fa-laptop-code"></i></p>
+                    <span class="home-stat-card__num">01</span>
+                </div>
                 <h3 class="home-stat-card__label">Full-stack development</h3>
                 <p class="home-stat-card__detail">Business logic, APIs, databases, auth, admin panels, and interactive features — not just front-end mockups.</p>
                 <div class="home-stat-card__tags" aria-label="Development skills">
@@ -653,7 +662,10 @@
                 </div>
             </article>
             <article class="home-stat-card reveal-ready" tabindex="0" data-stat-card="ecommerce">
-                <p class="home-stat-card__icon" aria-hidden="true"><i class="fab fa-shopify"></i></p>
+                <div class="home-stat-card__top">
+                    <p class="home-stat-card__icon" aria-hidden="true"><i class="fab fa-shopify"></i></p>
+                    <span class="home-stat-card__num">02</span>
+                </div>
                 <h3 class="home-stat-card__label">E-commerce &amp; Shopify</h3>
                 <p class="home-stat-card__detail">Storefronts, product pages, checkout flows, Liquid themes, mobile UX, redirects, subscriptions, and post-launch merchant support.</p>
                 <div class="home-stat-card__tags" aria-label="E-commerce skills">
@@ -661,7 +673,10 @@
                 </div>
             </article>
             <article class="home-stat-card reveal-ready" tabindex="0" data-stat-card="wordpress">
-                <p class="home-stat-card__icon" aria-hidden="true"><i class="fab fa-wordpress"></i></p>
+                <div class="home-stat-card__top">
+                    <p class="home-stat-card__icon" aria-hidden="true"><i class="fab fa-wordpress"></i></p>
+                    <span class="home-stat-card__num">03</span>
+                </div>
                 <h3 class="home-stat-card__label">WordPress &amp; CMS builds</h3>
                 <p class="home-stat-card__detail">Custom themes, Gutenberg blocks, WooCommerce, ACF, block patterns, SEO plugins, and production-ready site structure.</p>
                 <div class="home-stat-card__tags" aria-label="CMS skills">
@@ -669,7 +684,10 @@
                 </div>
             </article>
             <article class="home-stat-card reveal-ready" tabindex="0" data-stat-card="design">
-                <p class="home-stat-card__icon" aria-hidden="true"><i class="fas fa-palette"></i></p>
+                <div class="home-stat-card__top">
+                    <p class="home-stat-card__icon" aria-hidden="true"><i class="fas fa-palette"></i></p>
+                    <span class="home-stat-card__num">04</span>
+                </div>
                 <h3 class="home-stat-card__label">UI/UX, brand &amp; creative</h3>
                 <p class="home-stat-card__detail">Wireframes, visual systems, landing pages, ad creative, social content, and polished interfaces that match the brand.</p>
                 <div class="home-stat-card__tags" aria-label="Design skills">
@@ -682,10 +700,10 @@
             <div class="home-stats__delivered-head">
                 <p class="home-stats__delivered-eyebrow">Delivered</p>
                 <h3 class="home-stats__delivered-title">Types of work I've done</h3>
-                <p class="home-stats__delivered-lead">Real project shapes — not just tools. Click a type to highlight it.</p>
+                <p class="home-stats__delivered-lead">Real project shapes — click any to highlight.</p>
             </div>
-            <div class="home-stats__delivered-grid">
-                <div class="home-stats__delivered-group" data-accent="amber">
+            <div class="home-stats__delivered-lanes">
+                <div class="home-stats__delivered-lane" data-accent="amber">
                     <p class="home-stats__delivered-label"><i class="fas fa-globe" aria-hidden="true"></i> Sites &amp; brands</p>
                     <div class="home-stats__delivered-tags">
                         <span>Client websites &amp; rebrands</span>
@@ -694,7 +712,7 @@
                         <span>Brand systems &amp; visual identity</span>
                     </div>
                 </div>
-                <div class="home-stats__delivered-group" data-accent="mint">
+                <div class="home-stats__delivered-lane" data-accent="mint">
                     <p class="home-stats__delivered-label"><i class="fas fa-bag-shopping" aria-hidden="true"></i> E-commerce</p>
                     <div class="home-stats__delivered-tags">
                         <span>Shopify storefronts &amp; theme builds</span>
@@ -702,7 +720,7 @@
                         <span>Merchant &amp; client support</span>
                     </div>
                 </div>
-                <div class="home-stats__delivered-group" data-accent="ink">
+                <div class="home-stats__delivered-lane" data-accent="ink">
                     <p class="home-stats__delivered-label"><i class="fas fa-table-cells" aria-hidden="true"></i> Apps &amp; products</p>
                     <div class="home-stats__delivered-tags">
                         <span>CRM &amp; dashboard apps</span>
@@ -710,7 +728,7 @@
                         <span>Playable web games</span>
                     </div>
                 </div>
-                <div class="home-stats__delivered-group" data-accent="sky">
+                <div class="home-stats__delivered-lane" data-accent="sky">
                     <p class="home-stats__delivered-label"><i class="fas fa-rocket" aria-hidden="true"></i> Growth &amp; ops</p>
                     <div class="home-stats__delivered-tags">
                         <span>Marketing &amp; ad creative</span>
