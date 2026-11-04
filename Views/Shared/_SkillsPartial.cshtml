@@ -1,651 +1,313 @@
 <section class="skills-showcase">
 <section class="skills-modern">
     <div class="container">
-        <div class="skills-highlights">
-            <article class="skills-highlight-card reveal-ready">
-                <span class="skills-highlight-card__icon" aria-hidden="true"><i class="fas fa-briefcase"></i></span>
-                <p class="skills-highlight-card__number stat-number">5+</p>
-                <p class="skills-highlight-card__label">Years experience</p>
-                <p class="skills-highlight-card__detail">Freelance &amp; agency delivery since 2020</p>
-            </article>
-            <article class="skills-highlight-card reveal-ready">
-                <span class="skills-highlight-card__icon" aria-hidden="true"><i class="fas fa-layer-group"></i></span>
-                <p class="skills-highlight-card__number stat-number">75+</p>
-                <p class="skills-highlight-card__label">Technologies</p>
-                <p class="skills-highlight-card__detail">Dev, design, CMS, cloud &amp; marketing tools</p>
-            </article>
-            <article class="skills-highlight-card reveal-ready">
-                <span class="skills-highlight-card__icon" aria-hidden="true"><i class="fas fa-laptop-code"></i></span>
-                <p class="skills-highlight-card__number">Web &amp; product</p>
-                <p class="skills-highlight-card__label">Roles</p>
-                <p class="skills-highlight-card__detail">Developer, designer &amp; analyst on client websites, stores &amp; apps</p>
-            </article>
-        </div>
+        <ul class="skills-facts">
+            <li><span>01</span> Five years shipping websites and applications</li>
+            <li><span>02</span> English and Russian</li>
+        </ul>
 
-        <nav class="skills-jump-nav reveal-ready" aria-label="Jump to skill sections">
-            <a class="skills-jump-nav__btn is-active" href="#skills-dev" data-skills-jump="skills-dev"><i class="fas fa-code"></i> Development</a>
-            <a class="skills-jump-nav__btn" href="#skills-product-design" data-skills-jump="skills-product-design"><i class="fas fa-compass-drafting"></i> Product design</a>
-            <a class="skills-jump-nav__btn" href="#skills-creative" data-skills-jump="skills-creative"><i class="fas fa-paint-brush"></i> Creative tools</a>
-            <a class="skills-jump-nav__btn" href="#skills-platforms" data-skills-jump="skills-platforms"><i class="fas fa-toolbox"></i> Platforms</a>
-            <a class="skills-jump-nav__btn" href="#skills-marketing" data-skills-jump="skills-marketing"><i class="fas fa-chart-line"></i> Marketing</a>
-            <a class="skills-jump-nav__btn" href="#skills-soft" data-skills-jump="skills-soft"><i class="fas fa-user-tie"></i> Professional</a>
-            <a class="skills-jump-nav__btn" href="#skills-learning" data-skills-jump="skills-learning"><i class="fas fa-graduation-cap"></i> Learning</a>
-        </nav>
-
-        <div class="skills-toolbar reveal-ready">
+        <div class="skills-toolbar">
             <label class="skills-search" for="skillsSearch">
                 <i class="fas fa-search" aria-hidden="true"></i>
-                <input type="search" id="skillsSearch" class="skills-search__input" placeholder="Search my skills — Shopify, C#, Figma, SEO..." autocomplete="off" />
-                <span class="skills-search__meta" id="skillsSearchMeta" aria-live="polite">75+ skills</span>
+                <input type="search" id="skillsSearch" class="skills-search__input" placeholder="Search skills" aria-label="Search skills" autocomplete="off" />
+                <span class="skills-search__meta" id="skillsSearchMeta" aria-live="polite"></span>
             </label>
         </div>
 
-        <div class="skills-pillars reveal-ready">
-            <article class="skills-pillar" data-pillar="fullstack">
-                <span class="skills-pillar__icon" aria-hidden="true"><i class="fas fa-code"></i></span>
-                <h3 class="skills-pillar__title">Full-stack development</h3>
-                <p class="skills-pillar__text">ASP.NET Core, APIs, databases, auth, and interactive web apps.</p>
-                <div class="skills-pillar__tags">
-                    <span>C#</span><span>ASP.NET</span><span>MongoDB</span><span>SignalR</span>
-                </div>
-            </article>
-            <article class="skills-pillar" data-pillar="shopify">
-                <span class="skills-pillar__icon" aria-hidden="true"><i class="fab fa-shopify"></i></span>
-                <h3 class="skills-pillar__title">E-commerce &amp; Shopify</h3>
-                <p class="skills-pillar__text">Storefronts, Liquid themes, checkout UX, and merchant support.</p>
-                <div class="skills-pillar__tags">
-                    <span>Shopify</span><span>Liquid</span><span>WooCommerce</span><span>Checkout</span>
-                </div>
-            </article>
-            <article class="skills-pillar" data-pillar="wordpress">
-                <span class="skills-pillar__icon" aria-hidden="true"><i class="fab fa-wordpress"></i></span>
-                <h3 class="skills-pillar__title">WordPress &amp; CMS</h3>
-                <p class="skills-pillar__text">Custom themes, Gutenberg, WooCommerce, ACF, and SEO-ready builds.</p>
-                <div class="skills-pillar__tags">
-                    <span>WordPress</span><span>Gutenberg</span><span>ACF</span><span>Rank Math</span>
-                </div>
-            </article>
-            <article class="skills-pillar" data-pillar="design">
-                <span class="skills-pillar__icon" aria-hidden="true"><i class="fas fa-palette"></i></span>
-                <h3 class="skills-pillar__title">UI/UX &amp; creative</h3>
-                <p class="skills-pillar__text">Figma, brand systems, video, marketing visuals, and polished interfaces.</p>
-                <div class="skills-pillar__tags">
-                    <span>Figma</span><span>Photoshop</span><span>UI/UX</span><span>CapCut</span>
-                </div>
-            </article>
-        </div>
+        <nav class="skills-jump-nav" aria-label="Jump to skill sections">
+            <a class="skills-jump-nav__btn is-active" href="#skills-front" data-skills-jump="skills-front">Front end</a>
+            <a class="skills-jump-nav__btn" href="#skills-back" data-skills-jump="skills-back">Back end</a>
+            <a class="skills-jump-nav__btn" href="#skills-commerce" data-skills-jump="skills-commerce">Commerce</a>
+            <a class="skills-jump-nav__btn" href="#skills-ship" data-skills-jump="skills-ship">Ship</a>
+            <a class="skills-jump-nav__btn" href="#skills-design" data-skills-jump="skills-design">Design</a>
+            <a class="skills-jump-nav__btn" href="#skills-soft" data-skills-jump="skills-soft">Professional</a>
+            <a class="skills-jump-nav__btn" href="#skills-learning" data-skills-jump="skills-learning">Learning</a>
+        </nav>
 
-        <div class="skills-core reveal-ready" aria-label="Core technologies">
-            <div class="skills-core__header">
-                <h3 class="skills-core__title">Core stack at a glance</h3>
-                <p class="skills-core__lead">The technologies I use most across client projects — click any skill to highlight it.</p>
-            </div>
-            <div class="skills-core__tags">
-                <span class="skill-tag skill-tag--core"><i class="fab fa-microsoft"></i> C# / .NET</span>
-                <span class="skill-tag skill-tag--core"><i class="fab fa-shopify"></i> Shopify</span>
-                <span class="skill-tag skill-tag--core"><i class="fab fa-js-square"></i> JavaScript</span>
-                <span class="skill-tag skill-tag--core"><i class="fab fa-wordpress"></i> WordPress</span>
-                <span class="skill-tag skill-tag--core"><i class="fab fa-figma"></i> Figma</span>
-                <span class="skill-tag skill-tag--core"><i class="fas fa-database"></i> SQL Server</span>
-                <span class="skill-tag skill-tag--core"><i class="fas fa-leaf"></i> MongoDB</span>
-                <span class="skill-tag skill-tag--core"><i class="fab fa-html5"></i> HTML / CSS</span>
-                <span class="skill-tag skill-tag--core"><i class="fab fa-react"></i> React</span>
-                <span class="skill-tag skill-tag--core"><i class="fas fa-bolt"></i> Tailwind</span>
-                <span class="skill-tag skill-tag--core"><i class="fab fa-git-alt"></i> Git / GitHub</span>
-                <span class="skill-tag skill-tag--core"><i class="fab fa-docker"></i> Docker</span>
-                <span class="skill-tag skill-tag--core"><i class="fas fa-train"></i> Railway</span>
-                <span class="skill-tag skill-tag--core"><i class="fas fa-chart-line"></i> SEO</span>
-                <span class="skill-tag skill-tag--core"><i class="fas fa-palette"></i> UI/UX</span>
-                <span class="skill-tag skill-tag--core"><i class="fas fa-film"></i> Premiere Pro</span>
-            </div>
-        </div>
-
-        <!-- Technical Skills -->
-        <div class="skill-section" id="skills-dev">
-            <div class="skill-section__panel">
+        <div class="skill-section" id="skills-front">
             <div class="skill-section__header">
-                <div class="skill-section__icon"><i class="fas fa-code"></i></div>
+                <span class="skill-section__index">01</span>
                 <div>
-                    <h2 class="skill-section__title">Technical Development</h2>
-                    <p class="skill-section__subtitle">Languages, frameworks, platforms, and DevOps — full-stack development stack</p>
+                    <h2 class="skill-section__title">Front end</h2>
+                    <p class="skill-section__subtitle">Interfaces shipped in React, Razor, and game canvases.</p>
                 </div>
             </div>
-            
             <div class="skill-grid">
-                <!-- Languages -->
-                <div class="skill-category skill-category--code">
-                    <h3 class="skill-category__title"><i class="fas fa-terminal"></i> Languages</h3>
-                    <p class="skill-category__desc">Backend, frontend, and data-layer languages</p>
+                <div class="skill-category">
+                    <h3 class="skill-category__title">Languages</h3>
                     <div class="skill-tags">
-                        <span class="skill-tag">C# / .NET</span>
+                        <span class="skill-tag">HTML5</span>
+                        <span class="skill-tag">CSS3</span>
+                        <span class="skill-tag">SCSS / Sass</span>
                         <span class="skill-tag">JavaScript</span>
                         <span class="skill-tag">TypeScript</span>
-                        <span class="skill-tag">HTML5 / CSS3</span>
-                        <span class="skill-tag">SQL</span>
-                        <span class="skill-tag">Razor Syntax (CSHTML)</span>
-                        <span class="skill-tag">JSON / YAML / TOML</span>
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">Java</span>
-                        <span class="skill-tag">Liquid (Shopify)</span>
-                        <span class="skill-tag">PHP</span>
-                        <span class="skill-tag">SCSS / Sass</span>
+                        <span class="skill-tag">Razor / CSHTML</span>
+                        <span class="skill-tag">Liquid</span>
                     </div>
                 </div>
-
-                <!-- Frameworks -->
-                <div class="skill-category skill-category--code">
-                    <h3 class="skill-category__title"><i class="fas fa-layer-group"></i> Frameworks & Libraries</h3>
-                    <p class="skill-category__desc">Web frameworks, ORM, UI libraries</p>
+                <div class="skill-category">
+                    <h3 class="skill-category__title">UI</h3>
                     <div class="skill-tags">
-                        <span class="skill-tag">ASP.NET Core MVC</span>
-                        <span class="skill-tag">Entity Framework Core</span>
-                        <span class="skill-tag">Razor Pages & Partial Views</span>
-                        <span class="skill-tag">SignalR (Real-time)</span>
-                        <span class="skill-tag">REST APIs</span>
-                        <span class="skill-tag">ASP.NET Identity</span>
-                        <span class="skill-tag">Bootstrap</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Vite</span>
                         <span class="skill-tag">Tailwind CSS</span>
+                        <span class="skill-tag">Bootstrap</span>
                         <span class="skill-tag">jQuery</span>
-                        <span class="skill-tag">React (UI Components)</span>
-                        <span class="skill-tag">Three.js</span>
-                        <span class="skill-tag">LINQ</span>
+                        <span class="skill-tag">Recharts</span>
+                        <span class="skill-tag">Responsive layouts</span>
+                        <span class="skill-tag">Component UI</span>
                     </div>
                 </div>
+                <div class="skill-category">
+                    <h3 class="skill-category__title">Real-time and graphics</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Pixi.js</span>
+                        <span class="skill-tag">Three.js</span>
+                        <span class="skill-tag">WebSockets</span>
+                        <span class="skill-tag">TikTok Live connector</span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                <!-- Platforms -->
-                <div class="skill-category skill-category--cms">
-                    <h3 class="skill-category__title"><i class="fas fa-globe"></i> Platforms & CMS</h3>
-                    <p class="skill-category__desc">E-commerce, CMS, databases</p>
+        <div class="skill-section" id="skills-back">
+            <div class="skill-section__header">
+                <span class="skill-section__index">02</span>
+                <div>
+                    <h2 class="skill-section__title">Back end</h2>
+                    <p class="skill-section__subtitle">ASP.NET Core and Node services, data, and auth.</p>
+                </div>
+            </div>
+            <div class="skill-grid">
+                <div class="skill-category">
+                    <h3 class="skill-category__title">.NET</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">C#</span>
+                        <span class="skill-tag">.NET 6</span>
+                        <span class="skill-tag">ASP.NET Core MVC</span>
+                        <span class="skill-tag">Razor Pages</span>
+                        <span class="skill-tag">LINQ</span>
+                        <span class="skill-tag">Dependency injection</span>
+                        <span class="skill-tag">Middleware</span>
+                        <span class="skill-tag">MVC controllers</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3 class="skill-category__title">Services</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">REST APIs</span>
+                        <span class="skill-tag">JSON</span>
+                        <span class="skill-tag">SignalR</span>
+                        <span class="skill-tag">ASP.NET Identity</span>
+                        <span class="skill-tag">BCrypt</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">Unit tests</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3 class="skill-category__title">Data</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">MongoDB</span>
+                        <span class="skill-tag">MongoDB Atlas</span>
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">SQL Server</span>
+                        <span class="skill-tag">SQLite</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="skill-section" id="skills-commerce">
+            <div class="skill-section__header">
+                <span class="skill-section__index">03</span>
+                <div>
+                    <h2 class="skill-section__title">Commerce and CMS</h2>
+                    <p class="skill-section__subtitle">Storefronts and the content systems behind them.</p>
+                </div>
+            </div>
+            <div class="skill-grid">
+                <div class="skill-category">
+                    <h3 class="skill-category__title">Shopify</h3>
                     <div class="skill-tags">
                         <span class="skill-tag">Shopify</span>
                         <span class="skill-tag">Shopify Liquid</span>
-                        <span class="skill-tag">Shopify Themes</span>
-                        <span class="skill-tag">Shopify Subscriptions</span>
+                        <span class="skill-tag">Shopify themes</span>
+                        <span class="skill-tag">Subscriptions</span>
+                        <span class="skill-tag">Shopify Admin</span>
+                        <span class="skill-tag">Checkout UX</span>
+                        <span class="skill-tag">Product pages</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3 class="skill-category__title">WordPress</h3>
+                    <div class="skill-tags">
                         <span class="skill-tag">WordPress</span>
                         <span class="skill-tag">Gutenberg / FSE</span>
                         <span class="skill-tag">WooCommerce</span>
-                        <span class="skill-tag">MongoDB</span>
-                        <span class="skill-tag">MongoDB Atlas</span>
-                        <span class="skill-tag">SQL Server / SQLite</span>
-                        <span class="skill-tag">Firebase</span>
-                        <span class="skill-tag">Cloudinary</span>
+                        <span class="skill-tag">PHP</span>
                     </div>
                 </div>
-
-                <!-- E-Commerce -->
-                <div class="skill-category skill-category--commerce">
-                    <h3 class="skill-category__title"><i class="fas fa-shopping-bag"></i> E-Commerce & Merchants</h3>
-                    <p class="skill-category__desc">Storefronts, checkout, product pages, and conversion UX</p>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Product Page Design</span>
-                        <span class="skill-tag">Checkout UX</span>
-                        <span class="skill-tag">Shopping Cart Flows</span>
-                        <span class="skill-tag">Subscription Products</span>
-                        <span class="skill-tag">Buy Box / Pricing UI</span>
-                        <span class="skill-tag">Theme Customization</span>
-                        <span class="skill-tag">Mobile Commerce</span>
-                        <span class="skill-tag">Redirects & Launch QA</span>
-                        <span class="skill-tag">Merchant Support</span>
-                        <span class="skill-tag">Care Plans & Services</span>
-                    </div>
-                </div>
-
-                <!-- DevOps -->
-                <div class="skill-category skill-category--cloud">
-                    <h3 class="skill-category__title"><i class="fas fa-cloud"></i> DevOps & Tools</h3>
-                    <p class="skill-category__desc">Version control, containers, deployment</p>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Git / GitHub</span>
-                        <span class="skill-tag">Docker</span>
-                        <span class="skill-tag">Railway Deployment</span>
-                        <span class="skill-tag">GitHub Actions</span>
-                        <span class="skill-tag">Environment Configuration</span>
-                        <span class="skill-tag">CLI Tooling (dotnet / npm)</span>
-                        <span class="skill-tag">Postman</span>
-                        <span class="skill-tag">VS Code / Visual Studio</span>
-                        <span class="skill-tag">Vercel / Netlify</span>
-                        <span class="skill-tag">cPanel / DNS / SSL</span>
-                        <span class="skill-tag">Linux Basics</span>
-                        <span class="skill-tag">Railway / Azure</span>
-                        <span class="skill-tag">CI/CD Pipelines</span>
-                        <span class="skill-tag">Hosting & Deployment</span>
-                    </div>
-                </div>
-            </div>
             </div>
         </div>
 
-        <!-- Product & Brand Design -->
-        <div class="skill-section" id="skills-product-design">
-            <div class="skill-section__panel">
+        <div class="skill-section" id="skills-ship">
             <div class="skill-section__header">
-                <div class="skill-section__icon"><i class="fas fa-compass-drafting"></i></div>
+                <span class="skill-section__index">04</span>
                 <div>
-                    <h2 class="skill-section__title">Product & Brand Design</h2>
-                    <p class="skill-section__subtitle">UI/UX, product thinking, visual systems, and interface design for web and commerce</p>
+                    <h2 class="skill-section__title">How it ships</h2>
+                    <p class="skill-section__subtitle">The tools around the code, from the editor to production.</p>
                 </div>
             </div>
-
             <div class="skill-grid">
-                <div class="skill-category skill-category--design">
-                    <h3 class="skill-category__title"><i class="fas fa-pen-ruler"></i> UX & Product</h3>
-                    <p class="skill-category__desc">Research, structure, and interface decisions</p>
+                <div class="skill-category">
+                    <h3 class="skill-category__title">Engineering</h3>
                     <div class="skill-tags">
-                        <span class="skill-tag">UI/UX Design</span>
-                        <span class="skill-tag">Product Design</span>
-                        <span class="skill-tag">User Flows</span>
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">GitHub</span>
+                        <span class="skill-tag">GitHub Actions</span>
+                        <span class="skill-tag">npm</span>
+                        <span class="skill-tag">dotnet CLI</span>
+                        <span class="skill-tag">Visual Studio</span>
+                        <span class="skill-tag">VS Code</span>
+                        <span class="skill-tag">Postman</span>
+                        <span class="skill-tag">Docker</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3 class="skill-category__title">Hosting</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Azure</span>
+                        <span class="skill-tag">Railway</span>
+                        <span class="skill-tag">CI/CD</span>
+                        <span class="skill-tag">Environment config</span>
+                        <span class="skill-tag">DNS / SSL</span>
+                        <span class="skill-tag">cPanel</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3 class="skill-category__title">Team</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Jira</span>
+                        <span class="skill-tag">Slack</span>
+                        <span class="skill-tag">Notion</span>
+                        <span class="skill-tag">Trello</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="skill-section" id="skills-design">
+            <div class="skill-section__header">
+                <span class="skill-section__index">05</span>
+                <div>
+                    <h2 class="skill-section__title">Design and growth</h2>
+                    <p class="skill-section__subtitle">The interface, the brand, and how the work gets measured.</p>
+                </div>
+            </div>
+            <div class="skill-grid">
+                <div class="skill-category">
+                    <h3 class="skill-category__title">Product</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">UI/UX</span>
+                        <span class="skill-tag">User flows</span>
                         <span class="skill-tag">Wireframes</span>
-                        <span class="skill-tag">Information Architecture</span>
-                        <span class="skill-tag">Responsive Layouts</span>
-                        <span class="skill-tag">Design Systems</span>
-                        <span class="skill-tag">Accessibility Basics</span>
-                        <span class="skill-tag">Usability Testing</span>
                         <span class="skill-tag">Prototyping</span>
+                        <span class="skill-tag">Design systems</span>
+                        <span class="skill-tag">Accessibility</span>
+                        <span class="skill-tag">Figma</span>
                     </div>
                 </div>
-
-                <div class="skill-category skill-category--design">
-                    <h3 class="skill-category__title"><i class="fas fa-swatchbook"></i> Brand & Visual</h3>
-                    <p class="skill-category__desc">Brand identity, marketing visuals, and polished presentation</p>
+                <div class="skill-category">
+                    <h3 class="skill-category__title">Visual</h3>
                     <div class="skill-tags">
-                        <span class="skill-tag">Brand Design</span>
-                        <span class="skill-tag">Web Design</span>
-                        <span class="skill-tag">Visual Systems</span>
+                        <span class="skill-tag">Photoshop</span>
+                        <span class="skill-tag">Illustrator</span>
+                        <span class="skill-tag">Premiere Pro</span>
+                        <span class="skill-tag">After Effects</span>
+                        <span class="skill-tag">Canva</span>
                         <span class="skill-tag">Typography</span>
-                        <span class="skill-tag">Color Systems</span>
-                        <span class="skill-tag">Landing Pages</span>
-                        <span class="skill-tag">Marketing Creatives</span>
-                        <span class="skill-tag">Social Graphics</span>
-                        <span class="skill-tag">Presentation Design</span>
-                        <span class="skill-tag">AI-assisted Design</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3 class="skill-category__title">Measurement</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Google Analytics</span>
+                        <span class="skill-tag">Search Console</span>
+                        <span class="skill-tag">Semrush</span>
+                        <span class="skill-tag">Email marketing</span>
+                        <span class="skill-tag">Conversion UX</span>
                     </div>
                 </div>
             </div>
-            </div>
         </div>
 
-        <!-- Design & Creative Tools -->
-        <div class="skill-section" id="skills-creative">
-            <div class="skill-section__panel">
-            <div class="skill-section__header">
-                <div class="skill-section__icon"><i class="fas fa-paint-brush"></i></div>
-                <div>
-                    <h2 class="skill-section__title">Design & Creative</h2>
-                    <p class="skill-section__subtitle">UI/UX, visual design, content production, and AI creative workflow (2026 stack)</p>
-                </div>
-            </div>
-            
-            <div class="skill-tools-grid skill-tools-grid--design">
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fab fa-figma"></i></div>
-                    <h4 class="tool-card__name">Figma</h4>
-                    <p class="tool-card__desc">Wireframes, prototypes, design systems</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-image"></i></div>
-                    <h4 class="tool-card__name">Photoshop</h4>
-                    <p class="tool-card__desc">Photo editing, compositing, graphics</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-vector-square"></i></div>
-                    <h4 class="tool-card__name">Illustrator</h4>
-                    <p class="tool-card__desc">Vector art, logos, illustrations</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-palette"></i></div>
-                    <h4 class="tool-card__name">Canva</h4>
-                    <p class="tool-card__desc">Social graphics, presentations, quick layouts</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-film"></i></div>
-                    <h4 class="tool-card__name">Premiere Pro</h4>
-                    <p class="tool-card__desc">Professional timeline editing and social ad videos</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-magic"></i></div>
-                    <h4 class="tool-card__name">After Effects</h4>
-                    <p class="tool-card__desc">Motion graphics, product promos, kinetic typography</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-photo-video"></i></div>
-                    <h4 class="tool-card__name">Lightroom</h4>
-                    <p class="tool-card__desc">Color grading, batch enhancement, photo sets</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fab fa-sketch"></i></div>
-                    <h4 class="tool-card__name">Sketch</h4>
-                    <p class="tool-card__desc">Interface design and reusable component libraries</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-video"></i></div>
-                    <h4 class="tool-card__name">CapCut</h4>
-                    <p class="tool-card__desc">Video editing, short-form content</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fab fa-tiktok"></i></div>
-                    <h4 class="tool-card__name">TikTok Creative Tools</h4>
-                    <p class="tool-card__desc">Short-form vertical content and trend-first edits</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fab fa-youtube"></i></div>
-                    <h4 class="tool-card__name">YouTube Studio</h4>
-                    <p class="tool-card__desc">Publishing workflow, thumbnails, performance insights</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-crop-alt"></i></div>
-                    <h4 class="tool-card__name">InShot</h4>
-                    <p class="tool-card__desc">Quick mobile editing for reels, stories, and shorts</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-bezier-curve"></i></div>
-                    <h4 class="tool-card__name">Spline</h4>
-                    <p class="tool-card__desc">Interactive 3D scenes for modern web interfaces</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-robot"></i></div>
-                    <h4 class="tool-card__name">Midjourney</h4>
-                    <p class="tool-card__desc">AI-generated visuals and concepts</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-wand-magic-sparkles"></i></div>
-                    <h4 class="tool-card__name">Jasper AI</h4>
-                    <p class="tool-card__desc">AI copywriting and content creation</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-brain"></i></div>
-                    <h4 class="tool-card__name">ChatGPT / Claude</h4>
-                    <p class="tool-card__desc">Creative ideation, UX writing, and design exploration</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-image"></i></div>
-                    <h4 class="tool-card__name">Adobe Firefly</h4>
-                    <p class="tool-card__desc">Generative fills, visual variants, concept art</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-palette"></i></div>
-                    <h4 class="tool-card__name">Coolors / Color Tools</h4>
-                    <p class="tool-card__desc">Palette generation, brand systems, contrast checks</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-font"></i></div>
-                    <h4 class="tool-card__name">Google Fonts Pairing</h4>
-                    <p class="tool-card__desc">Readable typography systems for web and product UI</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-mobile-alt"></i></div>
-                    <h4 class="tool-card__name">UI/UX Design</h4>
-                    <p class="tool-card__desc">User flows, interfaces, usability</p>
-                </div>
-            </div>
-            </div>
-        </div>
-
-        <!-- Platforms & Tooling Ecosystem -->
-        <div class="skill-section" id="skills-platforms">
-            <div class="skill-section__panel">
-            <div class="skill-section__header">
-                <div class="skill-section__icon"><i class="fas fa-toolbox"></i></div>
-                <div>
-                    <h2 class="skill-section__title">Platforms & Tooling Ecosystem</h2>
-                    <p class="skill-section__subtitle">Developer, product, cloud, automation, and collaboration platforms used across modern projects</p>
-                </div>
-            </div>
-
-            <div class="skill-tools-grid skill-tools-grid--platforms">
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fab fa-github"></i></div>
-                    <h4 class="tool-card__name">GitHub</h4>
-                    <p class="tool-card__desc">Version control, PR workflows, Actions automation</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fab fa-gitlab"></i></div>
-                    <h4 class="tool-card__name">GitLab</h4>
-                    <p class="tool-card__desc">Repo management, CI/CD pipelines, issue tracking</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fab fa-bitbucket"></i></div>
-                    <h4 class="tool-card__name">Bitbucket</h4>
-                    <p class="tool-card__desc">Private repos and team-based branching workflow</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fab fa-docker"></i></div>
-                    <h4 class="tool-card__name">Docker</h4>
-                    <p class="tool-card__desc">Containerized builds and consistent local environments</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fab fa-microsoft"></i></div>
-                    <h4 class="tool-card__name">Azure</h4>
-                    <p class="tool-card__desc">Cloud resources, app hosting, and integrations</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fab fa-aws"></i></div>
-                    <h4 class="tool-card__name">AWS</h4>
-                    <p class="tool-card__desc">Storage, deployment, and managed cloud services</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fab fa-google"></i></div>
-                    <h4 class="tool-card__name">Google Cloud</h4>
-                    <p class="tool-card__desc">Cloud APIs, auth tools, and analytics integrations</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-train"></i></div>
-                    <h4 class="tool-card__name">Railway</h4>
-                    <p class="tool-card__desc">Fast deployment pipeline for full-stack apps</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-paper-plane"></i></div>
-                    <h4 class="tool-card__name">Postman</h4>
-                    <p class="tool-card__desc">API testing, mock responses, endpoint validation</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fab fa-npm"></i></div>
-                    <h4 class="tool-card__name">npm / yarn</h4>
-                    <p class="tool-card__desc">Package management and modern JS workflows</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fab fa-jira"></i></div>
-                    <h4 class="tool-card__name">Jira</h4>
-                    <p class="tool-card__desc">Sprint planning, tickets, and delivery tracking</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fab fa-trello"></i></div>
-                    <h4 class="tool-card__name">Trello</h4>
-                    <p class="tool-card__desc">Kanban organization for features and content flow</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fab fa-slack"></i></div>
-                    <h4 class="tool-card__name">Slack</h4>
-                    <p class="tool-card__desc">Team communication and cross-functional sync</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-sticky-note"></i></div>
-                    <h4 class="tool-card__name">Notion</h4>
-                    <p class="tool-card__desc">Documentation, roadmaps, and design/dev briefs</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-server"></i></div>
-                    <h4 class="tool-card__name">cPanel / Hosting</h4>
-                    <p class="tool-card__desc">Domain setup, DNS, SSL, and website operations</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-shield-alt"></i></div>
-                    <h4 class="tool-card__name">Security & Performance</h4>
-                    <p class="tool-card__desc">Core Web Vitals, optimization, and secure deployments</p>
-                </div>
-            </div>
-            </div>
-        </div>
-
-        <!-- Marketing & Analytics -->
-        <div class="skill-section" id="skills-marketing">
-            <div class="skill-section__panel">
-            <div class="skill-section__header">
-                <div class="skill-section__icon"><i class="fas fa-chart-line"></i></div>
-                <div>
-                    <h2 class="skill-section__title">Marketing & Analytics</h2>
-                    <p class="skill-section__subtitle">SEO, analytics, CRM, email automation, and conversion tracking</p>
-                </div>
-            </div>
-            
-            <div class="skill-tools-grid skill-tools-grid--marketing">
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-chart-pie"></i></div>
-                    <h4 class="tool-card__name">Google Analytics</h4>
-                    <p class="tool-card__desc">Traffic analysis, conversion tracking, user behavior insights</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-search"></i></div>
-                    <h4 class="tool-card__name">Semrush</h4>
-                    <p class="tool-card__desc">SEO audits, keyword research, competitive analysis</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-users-cog"></i></div>
-                    <h4 class="tool-card__name">Zoho CRM</h4>
-                    <p class="tool-card__desc">Lead management, pipeline tracking, customer segmentation</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-envelope-open-text"></i></div>
-                    <h4 class="tool-card__name">Email Marketing</h4>
-                    <p class="tool-card__desc">Mailchimp, Constant Contact — automation & campaigns</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fab fa-shopify"></i></div>
-                    <h4 class="tool-card__name">Shopify Admin</h4>
-                    <p class="tool-card__desc">Theme edits, product setup, subscriptions, and store operations</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-bullhorn"></i></div>
-                    <h4 class="tool-card__name">Google Search Console</h4>
-                    <p class="tool-card__desc">Indexing, search performance, and technical SEO monitoring</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-ad"></i></div>
-                    <h4 class="tool-card__name">Meta / Social Ads</h4>
-                    <p class="tool-card__desc">Campaign creatives, audience targeting, and conversion tracking</p>
-                </div>
-                <div class="tool-card tool-card--wide">
-                    <div class="tool-card__icon"><i class="fas fa-tags"></i></div>
-                    <h4 class="tool-card__name">Conversion Optimization</h4>
-                    <p class="tool-card__desc">CTA testing, landing page refinement, and funnel improvements</p>
-                </div>
-            </div>
-            </div>
-        </div>
-
-        <!-- Professional Skills -->
         <div class="skill-section" id="skills-soft">
-            <div class="skill-section__panel">
             <div class="skill-section__header">
-                <div class="skill-section__icon"><i class="fas fa-user-tie"></i></div>
+                <span class="skill-section__index">06</span>
                 <div>
-                    <h2 class="skill-section__title">Professional & Soft Skills</h2>
-                    <p class="skill-section__subtitle">Communication, leadership, and collaboration abilities</p>
+                    <h2 class="skill-section__title">Professional</h2>
+                    <p class="skill-section__subtitle">How the work gets explained, launched, and supported.</p>
                 </div>
             </div>
-            
             <div class="soft-skills-grid">
                 <div class="soft-skill">
                     <div class="soft-skill__icon"><i class="fas fa-language"></i></div>
                     <div class="soft-skill__content">
-                        <h4>Bilingual Communication</h4>
-                        <p>Fluent in English & Russian — written and verbal</p>
-                    </div>
-                </div>
-                <div class="soft-skill">
-                    <div class="soft-skill__icon"><i class="fas fa-headset"></i></div>
-                    <div class="soft-skill__content">
-                        <h4>Customer Service Excellence</h4>
-                        <p>Client relations, conflict resolution, satisfaction-focused approach</p>
-                    </div>
-                </div>
-                <div class="soft-skill">
-                    <div class="soft-skill__icon"><i class="fas fa-user-tie"></i></div>
-                    <div class="soft-skill__content">
-                        <h4>Management & Leadership</h4>
-                        <p>Team supervision, staff scheduling, performance management</p>
-                    </div>
-                </div>
-                <div class="soft-skill">
-                    <div class="soft-skill__icon"><i class="fas fa-concierge-bell"></i></div>
-                    <div class="soft-skill__content">
-                        <h4>Hospitality Industry</h4>
-                        <p>Guest services, front desk operations, service standards</p>
-                    </div>
-                </div>
-                <div class="soft-skill">
-                    <div class="soft-skill__icon"><i class="fas fa-tasks"></i></div>
-                    <div class="soft-skill__content">
-                        <h4>Project Management</h4>
-                        <p>Campaign coordination, deadline management, multi-project handling</p>
+                        <h4>Bilingual communication</h4>
+                        <p>Fluent in English and Russian, written and spoken.</p>
                     </div>
                 </div>
                 <div class="soft-skill">
                     <div class="soft-skill__icon"><i class="fas fa-users"></i></div>
                     <div class="soft-skill__content">
-                        <h4>Team Collaboration</h4>
-                        <p>Cross-functional teamwork, Agile methodologies, remote collaboration</p>
-                    </div>
-                </div>
-                <div class="soft-skill">
-                    <div class="soft-skill__icon"><i class="fas fa-chalkboard-teacher"></i></div>
-                    <div class="soft-skill__content">
-                        <h4>Staff Training</h4>
-                        <p>Onboarding, mentoring, process documentation</p>
+                        <h4>Collaboration</h4>
+                        <p>Cross-functional teamwork, Agile habits, and remote work.</p>
                     </div>
                 </div>
                 <div class="soft-skill">
                     <div class="soft-skill__icon"><i class="fas fa-store"></i></div>
                     <div class="soft-skill__content">
-                        <h4>Client & Merchant Communication</h4>
-                        <p>Translating business goals into design, structure, and production-ready solutions</p>
+                        <h4>Client communication</h4>
+                        <p>Turning a business goal into design, structure, and a build.</p>
                     </div>
                 </div>
                 <div class="soft-skill">
                     <div class="soft-skill__icon"><i class="fas fa-code-branch"></i></div>
                     <div class="soft-skill__content">
-                        <h4>Technical Documentation</h4>
-                        <p>Clear handoffs, troubleshooting notes, and support documentation</p>
-                    </div>
-                </div>
-                <div class="soft-skill">
-                    <div class="soft-skill__icon"><i class="fas fa-rocket"></i></div>
-                    <div class="soft-skill__content">
-                        <h4>Launch & Post-Launch Support</h4>
-                        <p>Deployments, QA, content updates, SEO fixes, and ongoing improvements</p>
+                        <h4>Documentation</h4>
+                        <p>Clear handoffs, troubleshooting notes, and support write-ups.</p>
                     </div>
                 </div>
                 <div class="soft-skill">
                     <div class="soft-skill__icon"><i class="fas fa-lightbulb"></i></div>
                     <div class="soft-skill__content">
-                        <h4>Problem Solving</h4>
-                        <p>Analytical thinking, debugging, creative solutions</p>
+                        <h4>Problem solving</h4>
+                        <p>Debugging, tradeoffs, and a practical next step.</p>
                     </div>
                 </div>
                 <div class="soft-skill">
-                    <div class="soft-skill__icon"><i class="fas fa-clock"></i></div>
+                    <div class="soft-skill__icon"><i class="fas fa-rocket"></i></div>
                     <div class="soft-skill__content">
-                        <h4>Time Management</h4>
-                        <p>Remote work discipline, prioritization, efficient workflows</p>
+                        <h4>Launch support</h4>
+                        <p>Deployments, QA, content updates, and fixes after go-live.</p>
                     </div>
                 </div>
             </div>
-            </div>
         </div>
 
-        <!-- Currently Learning -->
-        <div class="learning-section" id="skills-learning">
-            <div class="learning-section__header">
-                <i class="fas fa-graduation-cap"></i>
-                <h3>Currently Learning & Exploring</h3>
+        <div class="skill-section learning-section" id="skills-learning">
+            <div class="skill-section__header learning-section__header">
+                <span class="skill-section__index">07</span>
+                <div>
+                    <h2 class="skill-section__title">Currently learning</h2>
+                    <p class="skill-section__subtitle">In progress, not claimed as shipped work.</p>
+                </div>
             </div>
             <div class="learning-tags">
-                <span class="learning-tag"><i class="fas fa-brain"></i> Machine Learning Basics</span>
-                <span class="learning-tag"><i class="fab fa-react"></i> React & Next.js</span>
-                <span class="learning-tag"><i class="fab fa-shopify"></i> Advanced Shopify Theme Dev</span>
-                <span class="learning-tag"><i class="fas fa-wand-magic-sparkles"></i> AI Product Workflows</span>
-                <span class="learning-tag"><i class="fas fa-cloud"></i> Cloud Architecture</span>
-                <span class="learning-tag"><i class="fas fa-cube"></i> WebGL & 3D Graphics</span>
+                <span class="learning-tag"><i class="fab fa-react"></i> Next.js</span>
+                <span class="learning-tag"><i class="fas fa-cloud"></i> Azure architecture</span>
                 <span class="learning-tag"><i class="fas fa-server"></i> Microservices</span>
+                <span class="learning-tag"><i class="fas fa-brain"></i> Machine learning basics</span>
             </div>
         </div>
     </div>

@@ -1,0 +1,434 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ExperimentFlow — A/B experimentation platform</title>
+    <meta name="description" content="Browser experimentation workspace. Traffic splits, one conversion per user, and a 95% Wilson interval before a leader is named." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        :root {
+            --amber: #7c9cff;
+            --amber-dark: #4f6fe0;
+            --amber-light: #c9d6ff;
+            --text: #e8eefc;
+            --text-muted: #9aa8c7;
+            --bg: #0c1222;
+            --surface: #141b2e;
+            --border: rgba(124,156,255,0.22);
+            --radius: 12px;
+            --radius-lg: 18px;
+            --radius-xl: 24px;
+            --shadow: 0 4px 20px rgba(0,0,0,0.28);
+            --shadow-lg: 0 20px 48px rgba(0,0,0,0.35);
+            --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+        body { font-family: Outfit, "Segoe UI", sans-serif; color: var(--text); line-height: 1.7; background: var(--bg); }
+        .wp-demo-badge { position: fixed; top: 0; right: 1rem; z-index: 250; padding: 0.4rem 0.75rem; background: #10182b; color: #fff; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.05em; border-radius: 0 0 6px 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.35); }
+        .wp-demo-badge i { margin-right: 0.35rem; color: var(--amber); }
+        .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--amber-dark), var(--amber-light)); z-index: 300; width: 0%; }
+        header { background: rgba(12,18,34,0.94); backdrop-filter: blur(20px); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); }
+        header.scrolled { box-shadow: 0 4px 20px rgba(0,0,0,0.35); }
+        .header-inner { max-width: 1140px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; height: 72px; }
+        .logo { font-family: Fraunces, Georgia, serif; font-size: 1.55rem; font-weight: 560; color: var(--text); letter-spacing: -0.03em; text-decoration: none; }
+        nav ul { list-style: none; display: flex; gap: 1.6rem; }
+        nav a { text-decoration: none; color: var(--text-muted); font-weight: 600; font-size: 0.95rem; }
+        nav a:hover, nav a.active { color: var(--amber-light); }
+        .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
+        .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--text); margin: 5px 0; }
+        .hero-full { position: relative; min-height: 78vh; display: flex; align-items: flex-end; overflow: hidden; }
+        .hero-slider { position: absolute; inset: 0; z-index: 0; }
+        .hero-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1s ease; }
+        .hero-slide.active { opacity: 1; z-index: 1; }
+        .hero-slide img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.7); }
+        .hero-full::after { content: ""; position: absolute; inset: 0; z-index: 2; background: linear-gradient(180deg, rgba(12,18,34,0.2) 10%, rgba(12,18,34,0.88) 100%); }
+        .hero-dots { position: absolute; bottom: 7.5rem; left: 50%; transform: translateX(-50%); display: flex; gap: 0.5rem; z-index: 4; }
+        .hero-dot { width: 8px; height: 8px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.6); background: transparent; cursor: pointer; }
+        .hero-dot.active { background: var(--amber); border-color: var(--amber); }
+        .hero-content { position: relative; z-index: 3; padding: 4rem 1.5rem 3.5rem; max-width: 1140px; margin: 0 auto; width: 100%; }
+        .hero-tag { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.18em; color: var(--amber-light); margin-bottom: 0.75rem; }
+        .hero-full h1 { font-family: Fraunces, Georgia, serif; font-size: clamp(2.6rem, 6vw, 4.1rem); font-weight: 560; color: #fff; margin: 0 0 1rem; line-height: 1.12; max-width: 760px; letter-spacing: -0.03em; }
+        .hero-meta { display: flex; gap: 1.6rem; flex-wrap: wrap; color: rgba(255,255,255,0.9); font-size: 0.92rem; font-weight: 500; }
+        .hero-meta span { display: flex; align-items: center; gap: 0.45rem; }
+        .categories-bar { padding: 1.5rem 0; border-bottom: 1px solid var(--border); }
+        .categories-inner { max-width: 1140px; margin: 0 auto; padding: 0 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+        .cat-pill { padding: 0.6rem 1.35rem; border-radius: 100px; font-size: 0.9rem; font-weight: 600; color: var(--text-muted); background: rgba(124,156,255,0.08); cursor: pointer; border: none; font-family: inherit; }
+        .cat-pill:hover, .cat-pill.active { background: var(--amber-dark); color: #fff; }
+        .bento { max-width: 1140px; margin: 0 auto; padding: 3.5rem 1.5rem; }
+        .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.25rem; }
+        .bento-item { border-radius: var(--radius-lg); overflow: hidden; position: relative; background: var(--surface); border: 1px solid var(--border); }
+        .bento-item a { display: block; height: 100%; text-decoration: none; color: inherit; }
+        .bento-item img { width: 100%; height: 100%; object-fit: cover; }
+        .bento-item .overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 20%, rgba(8,12,24,0.92) 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem; }
+        .bento-item .tag { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.16em; color: var(--amber-light); margin-bottom: 0.35rem; text-transform: uppercase; }
+        .bento-item h3 { font-family: Fraunces, Georgia, serif; font-size: 1.45rem; color: #fff; font-weight: 560; }
+        .bento-item .meta { font-size: 0.82rem; color: rgba(255,255,255,0.78); margin-top: 0.3rem; }
+        .bento-item.lg { grid-column: span 8; min-height: 380px; }
+        .bento-item.md, .bento-item.sm { grid-column: span 4; min-height: 220px; }
+        .bento-item.hidden { display: none; }
+        .latest { background: var(--surface); padding: 4rem 0 3rem; border-top: 1px solid var(--border); }
+        .latest-inner { max-width: 1140px; margin: 0 auto; padding: 0 1.5rem; }
+        .section-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.6rem; gap: 1rem; flex-wrap: wrap; }
+        .section-title { font-family: Fraunces, Georgia, serif; font-size: 2rem; font-weight: 560; }
+        .section-link { color: var(--amber-light); font-weight: 700; text-decoration: none; }
+        .posts-carousel { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+        .posts-carousel::-webkit-scrollbar { display: none; }
+        .posts-grid { display: flex; gap: 1.25rem; }
+        .post-card { flex: 0 0 340px; scroll-snap-align: start; background: #10182b; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; text-decoration: none; color: inherit; }
+        .post-card__img { width: 100%; height: 160px; object-fit: cover; display: block; }
+        .post-card__body { padding: 1.1rem 1.15rem 1.25rem; }
+        .post-card h3 { font-family: Fraunces, Georgia, serif; font-size: 1.2rem; margin: 0.35rem 0; }
+        .post-card p { color: var(--text-muted); font-size: 0.92rem; }
+        .posts-carousel-wrap { position: relative; }
+        .posts-nav, .testimonial-nav-wl { position: absolute; top: 42%; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border); background: #10182b; color: #fff; cursor: pointer; z-index: 2; }
+        .posts-nav.prev, .testimonial-nav-wl.prev { left: -0.2rem; }
+        .posts-nav.next, .testimonial-nav-wl.next { right: -0.2rem; }
+        .testimonials-wrap { position: relative; }
+        .testimonials-track-wl { display: flex; overflow: hidden; }
+        .testimonial-slide-wl { min-width: 100%; padding: 0.4rem 3rem 0.2rem; }
+        .quote { font-family: Fraunces, Georgia, serif; font-size: 1.35rem; line-height: 1.45; margin-bottom: 0.8rem; }
+        .about-section { padding: 3.5rem 0 4rem; }
+        .about-inner { max-width: 1140px; margin: 0 auto; padding: 0 1.5rem; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.5rem; }
+        .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.4rem; }
+        .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.7rem; margin-top: 1rem; }
+        .metric { background: #10182b; border-radius: 12px; padding: 0.8rem; }
+        .metric b { display: block; font-size: 1.35rem; font-variant-numeric: tabular-nums; }
+        .metric span { color: var(--text-muted); font-size: 0.75rem; letter-spacing: 0.04em; text-transform: uppercase; }
+        .stream-actions { display: flex; gap: 0.6rem; margin-top: 1rem; }
+        .stream-actions button, .newsletter button { border: 0; border-radius: 999px; padding: 0.75rem 1.1rem; background: var(--amber-dark); color: #fff; font: 650 0.92rem Outfit, sans-serif; cursor: pointer; }
+        .stream-actions button.ghost { background: transparent; border: 1px solid var(--border); }
+        .newsletter form { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.8rem; }
+        .newsletter input, .newsletter select { flex: 1; min-width: 140px; padding: 0.8rem 0.9rem; border-radius: 12px; border: 1px solid var(--border); background: #10182b; color: #fff; font: inherit; }
+        .newsletter-success, .exp-note { display: none; margin-top: 0.7rem; color: #b7f7c8; }
+        .newsletter.submitted .newsletter-success, .exp-note.show { display: block; }
+        .added { margin-top: 0.8rem; display: grid; gap: 0.45rem; }
+        .added li { list-style: none; padding: 0.55rem 0.7rem; border-radius: 10px; background: #10182b; display: flex; justify-content: space-between; gap: 0.6rem; }
+        .tech-bar, .wp-features-bar { max-width: 1140px; margin: 0 auto; padding: 0 1.5rem 1rem; display: flex; flex-wrap: wrap; gap: 0.45rem; }
+        .tech-bar span, .wp-features-wrap span { border: 1px solid var(--border); border-radius: 999px; padding: 0.28rem 0.7rem; font-size: 0.78rem; color: var(--text-muted); }
+        .wp-features-title { width: 100%; color: var(--text-muted); font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; }
+        .back-to-top { position: fixed; right: 1rem; bottom: 1rem; width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--border); background: #10182b; color: #fff; cursor: pointer; opacity: 0; pointer-events: none; }
+        .back-to-top.show { opacity: 1; pointer-events: auto; }
+        footer { padding: 1.4rem 1.5rem 2rem; color: var(--text-muted); text-align: center; }
+        @@media (max-width: 800px) {
+            .nav-toggle { display: block; }
+            nav ul { display: none; position: absolute; top: 72px; left: 0; right: 0; background: var(--bg); flex-direction: column; padding: 1rem 1.4rem 1.2rem; border-bottom: 1px solid var(--border); }
+            nav ul.show { display: flex; }
+            .bento-item.lg, .bento-item.md, .bento-item.sm { grid-column: span 12; }
+            .about-inner, .metrics { grid-template-columns: 1fr 1fr; }
+            .about-inner { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="wp-demo-badge"><i class="fas fa-flask"></i> Experimentation demo</div>
+    <div class="progress-bar" id="progressBar"></div>
+    <header>
+        <div class="header-inner">
+            <a href="#overview" class="logo">ExperimentFlow</a>
+            <nav>
+                <button class="nav-toggle" type="button" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul>
+                    <li><a href="#overview">Overview</a></li>
+                    <li><a href="#experiments">Experiments</a></li>
+                    <li><a href="#analytics">Analytics</a></li>
+                    <li><a href="#assistant">Assistant</a></li>
+                    <li><a href="#stream">Stream</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-full" id="overview">
+        <div class="hero-slider" id="heroSlider">
+            <div class="hero-slide active"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80" alt="Analytics overview" /></div>
+            <div class="hero-slide"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1600&q=80" alt="Experiment charts" /></div>
+            <div class="hero-slide"><img src="https://images.unsplash.com/photo-1518186285589-2f7649de83e0?auto=format&fit=crop&w=1600&q=80" alt="Live event stream" /></div>
+        </div>
+        <div class="hero-dots" id="heroDots"></div>
+        <div class="hero-content">
+            <div class="hero-tag">React · TypeScript · local event stream</div>
+            <h1>Ship the variant the numbers can defend.</h1>
+            <div class="hero-meta">
+                <span><i class="fas fa-code-branch"></i> Control and treatment</span>
+                <span><i class="fas fa-user-check"></i> One conversion per user</span>
+                <span><i class="fas fa-chart-area"></i> 95% Wilson interval</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="categories-bar" id="experiments">
+        <div class="categories-inner">
+            <button type="button" class="cat-pill active" data-filter="all">All</button>
+            <button type="button" class="cat-pill" data-filter="running">Running</button>
+            <button type="button" class="cat-pill" data-filter="analytics">Analytics</button>
+            <button type="button" class="cat-pill" data-filter="reliability">Reliability</button>
+        </div>
+    </div>
+
+    <section class="bento">
+        <div class="bento-grid">
+            <div class="bento-item lg" data-category="running analytics">
+                <a href="#analytics">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80" alt="AI Copilot Onboarding" />
+                    <div class="overlay">
+                        <span class="tag">Running · 50 / 50</span>
+                        <h3>AI Copilot Onboarding</h3>
+                        <span class="meta">Goal: first successful prompt. Leader waits for 200 participants a side.</span>
+                    </div>
+                </a>
+            </div>
+            <div class="bento-item md" data-category="running">
+                <a href="#analytics">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="Search ranking" />
+                    <div class="overlay">
+                        <span class="tag">Running</span>
+                        <h3>Search Ranking Optimization</h3>
+                        <span class="meta">Assignment is sticky. A user is not counted twice.</span>
+                    </div>
+                </a>
+            </div>
+            <div class="bento-item sm" data-category="reliability">
+                <a href="#stream">
+                    <img src="https://images.unsplash.com/photo-1518186285589-2f7649de83e0?auto=format&fit=crop&w=800&q=80" alt="Event stream" />
+                    <div class="overlay">
+                        <span class="tag">Reliability</span>
+                        <h3>Teams Meeting Experience</h3>
+                        <span class="meta">Errors raise latency and do not create a conversion.</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="latest" id="analytics">
+        <div class="latest-inner">
+            <div class="section-head">
+                <h2 class="section-title">How a result is allowed</h2>
+                <a href="#stream" class="section-link">Open the stream →</a>
+            </div>
+            <div class="posts-carousel-wrap">
+                <button type="button" class="posts-nav prev" id="postsPrev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+                <button type="button" class="posts-nav next" id="postsNext" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+                <div class="posts-carousel" id="postsCarousel">
+                    <div class="posts-grid">
+                        <a class="post-card" href="#stream">
+                            <img class="post-card__img" src="https://images.unsplash.com/photo-1543286386-713bdd548da4?auto=format&fit=crop&w=800&q=80" alt="" />
+                            <div class="post-card__body"><span class="tag">Assignment</span><h3>Each user joins one variant</h3><p>The split decides the assignment. Later events for that user stay on the same side.</p></div>
+                        </a>
+                        <a class="post-card" href="#stream">
+                            <img class="post-card__img" src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=800&q=80" alt="" />
+                            <div class="post-card__body"><span class="tag">Conversion</span><h3>One conversion, then stop</h3><p>A later conversion attempt cannot inflate the rate. Rate is conversions divided by participants.</p></div>
+                        </a>
+                        <a class="post-card" href="#assistant">
+                            <img class="post-card__img" src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=800&q=80" alt="" />
+                            <div class="post-card__body"><span class="tag">Decision</span><h3>No winner on a small sample</h3><p>A leader is named only after 200 participants on both sides, and only when the 95% Wilson intervals do not overlap.</p></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="latest" id="assistant" style="background:transparent">
+        <div class="latest-inner">
+            <div class="section-head">
+                <h2 class="section-title">Assistant notes</h2>
+                <p class="section-link">Rules over stored metrics. No external model.</p>
+            </div>
+            <div class="testimonials-wrap">
+                <button type="button" class="testimonial-nav-wl prev" id="wlTPrev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+                <button type="button" class="testimonial-nav-wl next" id="wlTNext" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+                <div class="testimonials-track-wl" id="wlTestimonialsTrack">
+                    <div class="testimonial-slide-wl"><p class="quote">Sample is still small. Keep the test running. Do not call a winner from the current gap.</p><strong>Sample guard</strong><span>Fires before either side reaches 200 participants.</span></div>
+                    <div class="testimonial-slide-wl"><p class="quote">Treatment is behind and the intervals have separated. Pause the test and review the change.</p><strong>Pause recommendation</strong><span>Only after both variants are large enough to compare.</span></div>
+                    <div class="testimonial-slide-wl"><p class="quote">About 4.5% of events are processing errors. They count toward latency, not toward conversion.</p><strong>Reliability</strong><span>The error path cannot create a participant.</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section" id="stream">
+        <div class="about-inner">
+            <div class="panel">
+                <h2 class="section-title">Live stream</h2>
+                <p>Running tests receive assignments, clicks, and at most one conversion per user. This demo keeps the totals in the page.</p>
+                <div class="metrics">
+                    <div class="metric"><b id="mParticipants">128</b><span>Participants</span></div>
+                    <div class="metric"><b id="mConversions">17</b><span>Conversions</span></div>
+                    <div class="metric"><b id="mRate">13.3%</b><span>Rate</span></div>
+                    <div class="metric"><b id="mErrors">6</b><span>Errors</span></div>
+                </div>
+                <div class="stream-actions">
+                    <button type="button" id="streamToggle">Start stream</button>
+                    <button type="button" class="ghost" id="streamReset">Reset demo</button>
+                </div>
+                <p class="exp-note" id="streamNote" aria-live="polite"></p>
+            </div>
+            <div class="panel newsletter" id="create">
+                <h2 class="section-title">New experiment</h2>
+                <p>Name, split, and goal. The store is the only place that would change workspace data.</p>
+                <form id="expForm">
+                    <input id="expName" type="text" placeholder="Experiment name" required maxlength="60" />
+                    <select id="expSplit" aria-label="Traffic split">
+                        <option value="50 / 50">50 / 50</option>
+                        <option value="70 / 30">70 / 30</option>
+                        <option value="90 / 10">90 / 10</option>
+                    </select>
+                    <input id="expGoal" type="text" placeholder="Conversion goal" required maxlength="60" />
+                    <button type="submit">Create</button>
+                </form>
+                <p class="newsletter-success" aria-live="polite">Saved in this demo. It is paused until you start it.</p>
+                <ul class="added" id="addedList"></ul>
+            </div>
+        </div>
+    </section>
+
+    <div class="tech-bar">
+        <span>React</span><span>TypeScript</span><span>Vite</span><span>localStorage</span><span>Wilson 95%</span><span>useReducer</span>
+    </div>
+    <div class="wp-features-bar">
+        <p class="wp-features-title">What this build does</p>
+        <div class="wp-features-wrap">
+            <span><i class="fas fa-play"></i> Start, pause, archive</span>
+            <span><i class="fas fa-random"></i> Traffic split</span>
+            <span><i class="fas fa-user"></i> Sticky assignment</span>
+            <span><i class="fas fa-check"></i> One conversion per user</span>
+            <span><i class="fas fa-chart-line"></i> Lift and rate</span>
+            <span><i class="fas fa-ruler"></i> 95% Wilson interval</span>
+            <span><i class="fas fa-comment-dots"></i> Rule assistant</span>
+            <span><i class="fas fa-file-export"></i> JSON export</span>
+            <span><i class="fas fa-plug"></i> API, Kafka, Azure — not connected</span>
+        </div>
+    </div>
+    <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
+    <footer>
+        <span class="logo">ExperimentFlow</span>
+        <p>Local A/B workspace · portfolio demo of the React and TypeScript app</p>
+    </footer>
+    <script>
+        window.addEventListener('scroll', function () {
+            var h = document.documentElement.scrollHeight - window.innerHeight;
+            if (h > 0) document.getElementById('progressBar').style.width = (window.scrollY / h * 100) + '%';
+            document.getElementById('backToTop').classList.toggle('show', window.scrollY > 400);
+            document.querySelector('header').classList.toggle('scrolled', window.scrollY > 50);
+        });
+        document.getElementById('backToTop').addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+        document.querySelector('.nav-toggle').addEventListener('click', function () { document.querySelector('nav ul').classList.toggle('show'); });
+        document.querySelectorAll('nav a').forEach(function (a) { a.addEventListener('click', function () { document.querySelector('nav ul').classList.remove('show'); }); });
+        document.querySelectorAll('.cat-pill').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                document.querySelectorAll('.cat-pill').forEach(function (b) { b.classList.remove('active'); });
+                this.classList.add('active');
+                var filter = this.getAttribute('data-filter').toLowerCase();
+                document.querySelectorAll('.bento-item').forEach(function (item) {
+                    var cats = (item.getAttribute('data-category') || '').toLowerCase();
+                    item.classList.toggle('hidden', filter !== 'all' && cats.indexOf(filter) === -1);
+                });
+            });
+        });
+        function updateNavActive() {
+            var sections = ['overview', 'experiments', 'analytics', 'assistant', 'stream'];
+            var scrollY = window.scrollY + 120;
+            document.querySelectorAll('nav a[href^="#"]').forEach(function (a) { a.classList.remove('active'); });
+            sections.forEach(function (id) {
+                var el = document.getElementById(id);
+                var link = document.querySelector('nav a[href="#' + id + '"]');
+                if (!el || !link) return;
+                if (scrollY >= el.offsetTop && scrollY < el.offsetTop + el.offsetHeight) link.classList.add('active');
+            });
+        }
+        window.addEventListener('scroll', updateNavActive);
+        updateNavActive();
+        (function () {
+            var slides = document.querySelectorAll('.hero-slide');
+            var dotsEl = document.getElementById('heroDots');
+            var idx = 0;
+            for (var i = 0; i < slides.length; i++) {
+                var d = document.createElement('button');
+                d.type = 'button';
+                d.className = 'hero-dot' + (i === 0 ? ' active' : '');
+                d.setAttribute('aria-label', 'Slide ' + (i + 1));
+                d.addEventListener('click', (function (k) { return function () { goTo(k); }; })(i));
+                dotsEl.appendChild(d);
+            }
+            function goTo(i) {
+                idx = i;
+                slides.forEach(function (s, j) { s.classList.toggle('active', j === idx); });
+                dotsEl.querySelectorAll('.hero-dot').forEach(function (dot, j) { dot.classList.toggle('active', j === idx); });
+            }
+            setInterval(function () { goTo((idx + 1) % slides.length); }, 5000);
+        })();
+        (function () {
+            var carousel = document.getElementById('postsCarousel');
+            document.getElementById('postsPrev').addEventListener('click', function () { carousel.scrollBy({ left: -360, behavior: 'smooth' }); });
+            document.getElementById('postsNext').addEventListener('click', function () { carousel.scrollBy({ left: 360, behavior: 'smooth' }); });
+            var track = document.getElementById('wlTestimonialsTrack');
+            var slides = track.children;
+            var t = 0;
+            function show(n) { t = (n + slides.length) % slides.length; track.style.transform = 'translateX(' + (-t * 100) + '%)'; }
+            track.style.transition = 'transform 0.35s ease';
+            document.getElementById('wlTPrev').addEventListener('click', function () { show(t - 1); });
+            document.getElementById('wlTNext').addEventListener('click', function () { show(t + 1); });
+        })();
+        (function () {
+            var participants = 128, conversions = 17, errors = 6, timer = 0, running = false;
+            var pEl = document.getElementById('mParticipants');
+            var cEl = document.getElementById('mConversions');
+            var rEl = document.getElementById('mRate');
+            var eEl = document.getElementById('mErrors');
+            var note = document.getElementById('streamNote');
+            var toggle = document.getElementById('streamToggle');
+            function paint() {
+                pEl.textContent = String(participants);
+                cEl.textContent = String(conversions);
+                rEl.textContent = (participants ? (conversions / participants * 100) : 0).toFixed(1) + '%';
+                eEl.textContent = String(errors);
+            }
+            function tick() {
+                if (Math.random() < 0.045) { errors += 1; note.textContent = 'Processing error. No participant and no conversion were recorded.'; note.classList.add('show'); paint(); return; }
+                participants += 1;
+                if (Math.random() < 0.16) conversions += 1;
+                var ready = participants >= 400;
+                note.textContent = ready ? 'Both sides can be compared once each has 200 participants. Overlapping intervals still mean no leader.' : 'Sample is still small. The assistant will not name a leader yet.';
+                note.classList.add('show');
+                paint();
+            }
+            toggle.addEventListener('click', function () {
+                running = !running;
+                toggle.textContent = running ? 'Pause stream' : 'Start stream';
+                if (running) timer = window.setInterval(tick, 700);
+                else window.clearInterval(timer);
+            });
+            document.getElementById('streamReset').addEventListener('click', function () {
+                running = false;
+                window.clearInterval(timer);
+                toggle.textContent = 'Start stream';
+                participants = 128; conversions = 17; errors = 6;
+                note.classList.remove('show');
+                paint();
+            });
+            document.getElementById('expForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+                var name = document.getElementById('expName').value.trim();
+                var split = document.getElementById('expSplit').value;
+                var goal = document.getElementById('expGoal').value.trim();
+                var li = document.createElement('li');
+                li.innerHTML = '<strong></strong><span></span>';
+                li.querySelector('strong').textContent = name;
+                li.querySelector('span').textContent = split + ' · ' + goal + ' · paused';
+                document.getElementById('addedList').prepend(li);
+                this.classList.add('submitted');
+                this.reset();
+            });
+        })();
+    </script>
+</body>
+</html>

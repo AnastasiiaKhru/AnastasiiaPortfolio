@@ -1,5 +1,6 @@
 @{
     ViewData["Title"] = "Skills";
+    ViewData["BodyClass"] = "page-skills theme-editorial";
 }
 @section Styles {
     <link rel="stylesheet" href="~/css/skills-page.css" asp-append-version="true" />
@@ -7,9 +8,12 @@
 <div class="page-inner page-inner--skills">
     <header class="page-header">
         <div class="container">
-            <p class="page-header__label" data-motion-before-typewriter>Capabilities</p>
-            <h1 class="page-header__title text-gradient-motion" data-typewriter data-typewriter-text="Stack, craft and delivery" data-typewriter-speed="48"></h1>
-            <p class="page-header__lead" data-motion-after-typewriter>Shopify Liquid, ASP.NET, JavaScript, design systems, and the ops that keep products live — tools I use to ship, not collect.</p>
+            <p class="page-header__label">Skills</p>
+            <h1 class="page-header__title">Front end and back end.</h1>
+            <p class="page-header__lead">Websites and applications. Interface, ASP.NET, APIs, and Shopify.</p>
+            <div class="page-hero__actions">
+                <a class="gbtn gbtn--fill" asp-controller="Home" asp-action="Projects">See the work</a>
+            </div>
         </div>
     </header>
 
@@ -50,5 +54,7 @@
         </div>
     </div>
 
-    <partial name="_SkillsPartial" />
+    <div id="skills-list">
+        <partial name="_SkillsPartial" />
+    </div>
 </div>

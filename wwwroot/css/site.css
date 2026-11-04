@@ -91,7 +91,7 @@ html {
     -webkit-text-size-adjust: 100%;
 }
 
-img:not(.navbar-logo):not([data-skip-global-img]):not(.wp-preview__img):not(.project-preview__img):not(.hero-portrait-img):not(.home-case__img), video, svg, canvas {
+img:not(.navbar-logo):not([data-skip-global-img]):not(.wp-preview__img):not(.project-preview__img):not(.hero-portrait-img):not(.home-case__img):not(.home-frame__img), video, svg, canvas {
     max-width: 100%;
     height: auto;
 }
@@ -926,6 +926,7 @@ a:hover {
 .project-card-modern[data-project="17"] { animation-delay: 0.85s; }
 .project-card-modern[data-project="18"] { animation-delay: 0.9s; }
 .project-card-modern[data-project="19"] { animation-delay: 0.95s; }
+.project-card-modern[data-project="20"] { animation-delay: 1s; }
 
 .project-card-modern::before {
     content: '';

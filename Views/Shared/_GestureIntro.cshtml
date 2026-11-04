@@ -1,0 +1,159 @@
+@{
+    var gesture = ViewData["Gesture"] as string ?? "";
+}
+@if (gesture == "hold")
+{
+<section class="ghero" data-ghero aria-label="Hold to clear">
+    <div class="ghero__panels">
+        <div class="gpanel gframe g2" data-gesture="2">
+            <div class="gframe__main">
+                <p class="gframe__hint">Keep holding</p>
+                <h1>Hold to clear the page.</h1>
+                <p>Press the product. The clutter falls away.</p>
+                <button type="button" class="gbtn gbtn--line" data-clear hidden aria-pressed="false">Clear the page</button>
+            </div>
+            <div class="gframe__stage">
+                <div class="gphone" data-phone>
+                    <div class="gphone__screen">
+                        <div class="gphone__top">
+                            <span>FitHub</span>
+                            <span class="gphone__mark" aria-hidden="true"></span>
+                        </div>
+                        <button type="button" class="gphone__hold" data-hold aria-label="Hold to clear the FitHub page">
+                            <span class="gphone__photo">
+                                <img src="~/images/project-crm-og.png" asp-append-version="true" alt="FitHub CRM dashboard" data-skip-global-img draggable="false" />
+                            </span>
+                            <span class="gphone__noise" aria-hidden="true">
+                                <span class="gtag gtag--hot">Upgrade to Pro</span>
+                                <span class="gtag">3 payments overdue</span>
+                                <span class="gtag">Webhook failed</span>
+                                <span class="gtag">18 new leads</span>
+                                <span class="gtag">Sync now</span>
+                                <span class="gtag">40% off annual</span>
+                                <span class="gbanner">Trial ends tomorrow. Add a card.</span>
+                                <span class="gspec">Members · Classes · Staff · Reports · Billing</span>
+                            </span>
+                        </button>
+                        <p class="gphone__name">FitHub</p>
+                        <a class="gcta" asp-controller="Home" asp-action="DemoFrame" asp-route-name="GymCrmDemo" target="_blank" rel="noopener">Open dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ghero__foot">
+        <p class="ghero__sign">Projects · Anastasiia Khrustaleva</p>
+    </div>
+</section>
+}
+else if (gesture == "word")
+{
+<section class="ghero" data-ghero aria-label="Contact">
+    <div class="ghero__panels">
+        <div class="gpanel gframe g3" data-gesture="3">
+            <div class="gframe__main">
+                <p class="g3__line">
+                    <span class="g3__lead">For work,</span>
+                    <span class="g3__row">
+                        <span class="g3__track" data-track>
+                            <span class="g3__dots" data-dots aria-hidden="true"></span>
+                            <button type="button" class="g3__chip" data-chip aria-describedby="g3-hint">write</button>
+                        </span>
+                        <span class="g3__period">.</span>
+                    </span>
+                </p>
+                <p class="g3__hint" id="g3-hint">Drag write along the dots.</p>
+            </div>
+            <div class="gframe__stage">
+                <div class="gwell g3__well">
+                <article class="g3__card g3__card--form" data-card>
+                    <form class="g3__form" data-contact-form autocomplete="off">
+                        <label>
+                            <span>Name</span>
+                            <input name="name" type="text" required autocomplete="off" />
+                        </label>
+                        <label>
+                            <span>Email</span>
+                            <input name="email" type="email" required autocomplete="off" />
+                        </label>
+                        <label>
+                            <span>Message</span>
+                            <textarea name="message" rows="3" required autocomplete="off"></textarea>
+                        </label>
+                        <button type="submit" class="gcta">Send</button>
+                        <p class="g3__form-note" data-form-note>Opens your email to nastiakhru@gmail.com</p>
+                    </form>
+                </article>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ghero__foot">
+        <p class="ghero__sign">Contact · Anastasiia Khrustaleva</p>
+    </div>
+</section>
+}
+else if (gesture == "seam")
+{
+<section class="ghero" data-ghero aria-label="Pull the seam">
+    <div class="ghero__panels">
+        <div class="gpanel gframe g4" data-gesture="4">
+            <div class="gframe__main">
+                <p class="gframe__hint">Pull the seam.</p>
+                <h1>The clear side is the one I ship.</h1>
+                <button type="button" class="gbtn gbtn--line" data-open hidden>Open it fully</button>
+            </div>
+            <div class="gframe__stage">
+                <div class="gwell g4__stage" data-seam>
+                    <div class="g4__crowd">
+                        <header class="kdense__bar">
+                            <strong>Also listed</strong>
+                            <p>Tools · Apps · Extras</p>
+                        </header>
+                        <p class="kdense__tabs"><span>All of it</span> Side work · One-offs</p>
+                        <div class="kdense__pills">
+                            <span class="is-hot">75+ names</span>
+                            <span>Canva</span>
+                            <span>CapCut</span>
+                            <span>Notion</span>
+                            <span>Trello</span>
+                            <span>Jasper</span>
+                            <span>Midjourney</span>
+                            <span>InShot</span>
+                        </div>
+                        <div class="kdense__body g4__mess">
+                            <div>
+                                <p class="kdense__kicker">Collected, not chosen</p>
+                                <h2>A long list is not a practice.</h2>
+                                <ul>
+                                    <li>TikTok edits</li>
+                                    <li>Coolors</li>
+                                    <li>Mailchimp</li>
+                                    <li>Semrush</li>
+                                    <li>cPanel</li>
+                                    <li>Firebase</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="g4__clear">
+                        <p class="g4__kicker">What I ship with</p>
+                        <ol class="g4__craft">
+                            <li><span>01</span> Shopify and commerce</li>
+                            <li><span>02</span> ASP.NET and APIs</li>
+                            <li><span>03</span> Interface and brand</li>
+                        </ol>
+                    </div>
+                    <button type="button" class="g4__seam" data-handle aria-label="Pull the seam">
+                        <span class="g4__knob" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ghero__foot">
+        <p class="ghero__sign">Skills · Anastasiia Khrustaleva</p>
+        <p class="g4__more">Scroll for the full list</p>
+    </div>
+</section>
+}

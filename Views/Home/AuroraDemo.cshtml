@@ -1,0 +1,219 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aurora — TikTok live game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; background: #05060a; color: #fff; font-family: Outfit, "Segoe UI", sans-serif; }
+        .stage {
+            position: relative;
+            height: 100%;
+            min-height: 100vh;
+            overflow: hidden;
+            background: #05060a url("/images/aurora/poster-scene.jpg") center 42% / cover no-repeat;
+        }
+        .shade {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(180deg, rgba(5, 6, 10, 0.55) 0%, transparent 28%, transparent 62%, rgba(5, 6, 10, 0.72) 100%);
+        }
+        .hud { position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column; padding: 1.1rem 1rem 1rem; }
+        .meters { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.7rem; align-items: center; }
+        .meter { display: flex; align-items: center; gap: 0.45rem; min-width: 0; }
+        .meter.right { flex-direction: row-reverse; }
+        .orb { font-size: 1.35rem; }
+        .bar {
+            position: relative;
+            flex: 1;
+            height: 1.7rem;
+            border-radius: 999px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .bar i { display: block; height: 100%; width: 50%; }
+        .bar.red i { background: linear-gradient(90deg, #7f1d1d, #ef4444); }
+        .bar.blue i { margin-left: auto; background: linear-gradient(90deg, #60a5fa, #1d4ed8); }
+        .bar b {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+        .vs {
+            font-family: Oswald, sans-serif;
+            font-size: 1.35rem;
+            letter-spacing: 0.08em;
+            text-align: center;
+        }
+        .vs span { display: block; font-size: 0.85rem; }
+        .banners {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 0.6rem;
+            align-items: start;
+            margin-top: 0.65rem;
+        }
+        .ribbon, .sign {
+            font-family: Oswald, sans-serif;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            line-height: 1.05;
+        }
+        .ribbon {
+            padding: 0.45rem 0.6rem;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.45);
+            font-size: 0.82rem;
+        }
+        .ribbon.blue { text-align: right; }
+        .sign { text-align: center; font-size: 1.15rem; text-shadow: 0 2px 10px #000; }
+        .timer {
+            margin: 0.8rem auto 0;
+            padding: 0.2rem 0.7rem;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, 0.55);
+            font-family: Oswald, sans-serif;
+            letter-spacing: 0.12em;
+        }
+        .feed {
+            align-self: center;
+            margin-top: 0.45rem;
+            padding: 0.22rem 0.7rem;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, 0.55);
+            text-align: center;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.92);
+        }
+        .gifts {
+            margin-top: auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            justify-content: center;
+        }
+        .gifts button {
+            border: 0;
+            border-radius: 999px;
+            padding: 0.45rem 0.8rem;
+            background: rgba(255, 255, 255, 0.92);
+            color: #111;
+            font: 600 0.82rem Outfit, sans-serif;
+            cursor: pointer;
+        }
+        .gifts button.blue { background: #dbeafe; }
+        .note { margin-top: 0.55rem; text-align: center; font-size: 0.75rem; color: rgba(255, 255, 255, 0.8); }
+        .alisa {
+            position: absolute;
+            left: 0.8rem;
+            bottom: 4.6rem;
+            z-index: 2;
+            display: flex;
+            align-items: flex-end;
+            gap: 0.35rem;
+            max-width: 11rem;
+        }
+        .alisa img { width: 72px; height: auto; }
+        .alisa p {
+            background: #fff;
+            color: #111;
+            border-radius: 12px;
+            padding: 0.35rem 0.5rem;
+            font-size: 0.72rem;
+            line-height: 1.25;
+        }
+        @@media (max-width: 700px) {
+            .banners { display: none; }
+            .alisa { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="stage">
+        <div class="shade"></div>
+        <div class="alisa">
+            <img src="/images/aurora/alisa-sticker.png" alt="" />
+            <p>Hi! I'm Alisa<br />I built this game!</p>
+        </div>
+        <div class="hud">
+            <div class="meters">
+                <div class="meter">
+                    <span class="orb" aria-hidden="true">🧻</span>
+                    <div class="bar red"><i id="redBar"></i><b id="redLabel">62.00%</b></div>
+                </div>
+                <div class="vs"><span>👑</span>VS</div>
+                <div class="meter right">
+                    <span class="orb" aria-hidden="true">📵</span>
+                    <div class="bar blue"><i id="blueBar"></i><b id="blueLabel">48.00%</b></div>
+                </div>
+            </div>
+            <div class="banners">
+                <p class="ribbon">A · No toilet paper<br />for a month</p>
+                <p class="sign">Would you<br />rather?</p>
+                <p class="ribbon blue">No phone<br />for a month · B</p>
+            </div>
+            <p class="timer" id="timer">02:00</p>
+            <p class="feed" id="feed">Send a gift to move the match.</p>
+            <div class="gifts">
+                <button type="button" data-team="red" data-hit="6">Rose · red</button>
+                <button type="button" data-team="red" data-hit="14">Galaxy · red</button>
+                <button type="button" class="blue" data-team="blue" data-hit="6">Rose · blue</button>
+                <button type="button" class="blue" data-team="blue" data-hit="14">Galaxy · blue</button>
+            </div>
+            <p class="note">This demo does not simulate viewers. On TikTok Live, gift events and chat commands do this through the connector.</p>
+        </div>
+    </div>
+    <script>
+        var red = 62;
+        var blue = 48;
+        var left = 120;
+        var redBar = document.getElementById("redBar");
+        var blueBar = document.getElementById("blueBar");
+        var redLabel = document.getElementById("redLabel");
+        var blueLabel = document.getElementById("blueLabel");
+        var timer = document.getElementById("timer");
+        function paint() {
+            redBar.style.width = red + "%";
+            blueBar.style.width = blue + "%";
+            redLabel.textContent = red.toFixed(2) + "%";
+            blueLabel.textContent = blue.toFixed(2) + "%";
+        }
+        paint();
+        var feed = document.getElementById("feed");
+        document.querySelectorAll(".gifts button").forEach(function (button) {
+            button.addEventListener("click", function () {
+                var hit = Number(button.getAttribute("data-hit"));
+                var team = button.getAttribute("data-team");
+                if (team === "red") {
+                    red = Math.min(100, red + hit);
+                    blue = Math.max(0, blue - hit * 0.35);
+                } else {
+                    blue = Math.min(100, blue + hit);
+                    red = Math.max(0, red - hit * 0.35);
+                }
+                paint();
+                feed.textContent = button.textContent.trim() + " moved the match.";
+            });
+        });
+        setInterval(function () {
+            if (left <= 0) return;
+            left -= 1;
+            var m = String(Math.floor(left / 60)).padStart(2, "0");
+            var s = String(left % 60).padStart(2, "0");
+            timer.textContent = m + ":" + s;
+        }, 1000);
+    </script>
+</body>
+</html>
