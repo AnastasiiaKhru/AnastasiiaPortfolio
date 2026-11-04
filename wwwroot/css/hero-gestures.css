@@ -754,6 +754,8 @@
     border-radius: 999px;
     font-size: 1.02rem;
     letter-spacing: 0.01em;
+    line-height: 1;
+    white-space: nowrap;
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
@@ -778,13 +780,26 @@
 }
 
 .g1.is-locked .gbtn__arr {
-    display: inline-block;
-    margin-left: 0.45rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0.4rem;
+    font-size: 0.92em;
+    line-height: 1;
+    transform: translateY(0.02em);
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .g1.is-locked .gbtn:hover .gbtn__arr {
-    transform: translateX(3px);
+    transform: translate(3px, 0.02em);
+}
+
+.g1.is-locked .gbtn--line .gbtn__arr {
+    transform: translateY(-0.04em);
+}
+
+.g1.is-locked .gbtn--line:hover .gbtn__arr {
+    transform: translate(3px, -0.04em);
 }
 
 .g1.is-locked .gbtn:focus-visible,
@@ -1049,11 +1064,89 @@
     min-height: calc(100dvh - 4.5rem);
 }
 
+.g3__phone {
+    margin: 0 0 1rem;
+    font-family: Fraunces, "Iowan Old Style", Palatino, Georgia, serif;
+    font-size: clamp(2.6rem, 5vw, 4.2rem);
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+}
+
+.g3__phone a {
+    color: var(--cream, #FCF3EE);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.g3__phone a:hover {
+    color: var(--blush, #E8B7B7);
+}
+
+.g3__details {
+    list-style: none;
+    margin: 0 0 1.15rem;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+    max-width: 22rem;
+}
+
+.g3__details li {
+    display: grid;
+    gap: 0.18rem;
+    padding-top: 0.7rem;
+    border-top: 1px solid rgba(232, 183, 183, 0.28);
+}
+
+.g3__details span {
+    color: var(--blush, #E8B7B7);
+    font-family: Outfit, "Segoe UI", sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.g3__details a,
+.g3__details p {
+    margin: 0;
+    color: var(--cream, #FCF3EE);
+    font-size: 1.05rem;
+    font-weight: 560;
+    text-decoration: none;
+}
+
+.g3__details a:hover {
+    color: var(--blush, #E8B7B7);
+}
+
+.g3__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin: 0 0 1.5rem;
+}
+
 .g3__line {
     display: flex;
     flex-direction: column;
     align-items: stretch;
     max-width: 12em;
+    margin-top: 0.35rem;
+}
+
+.g3 .g3__card--form {
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.g3.is-settled .g3__card--form {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
 }
 
 .g3__lead,
@@ -1648,6 +1741,65 @@
     .gframe h1,
     .g3__line {
         font-size: clamp(2rem, 9vw, 2.7rem);
+    }
+
+    .g1.is-locked .gframe__body {
+        padding: 0.75rem 0.35rem;
+        width: 100%;
+    }
+
+    .g1.is-locked .gframe__body::before {
+        inset: -2rem -1rem;
+    }
+
+    .g1.is-locked .gframe__body > h1 {
+        font-size: clamp(2.45rem, 11vw, 3.4rem);
+    }
+
+    .g1.is-locked .gframe__actions {
+        display: grid;
+        grid-template-columns: 1fr;
+        width: min(100%, 18.5rem);
+        margin: 1.25rem auto 0;
+        gap: 0.55rem;
+    }
+
+    .g1.is-locked .gbtn {
+        width: 100%;
+        min-height: 48px;
+        padding: 0 1.1rem;
+        font-size: 0.95rem;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+    }
+
+    .g1.is-locked .gbtn--line {
+        background: rgba(252, 243, 238, 0.14);
+        border: 1.5px solid rgba(232, 183, 183, 0.88);
+        color: var(--cream);
+        box-shadow: none;
+    }
+
+    .g1.is-locked .gbtn--line:hover,
+    .g1.is-locked .gbtn--line:active {
+        background: rgba(252, 243, 238, 0.2);
+        border-color: var(--cream);
+        transform: none;
+    }
+
+    .g1.is-locked .gframe__actions .gbtn[hidden] {
+        display: none !important;
+    }
+
+    .g1.is-locked .gbtn__arr {
+        margin-left: 0.32rem;
+        font-size: 0.88em;
+    }
+
+    .g1.is-locked .g1__lane {
+        width: min(280px, 72%);
+        margin-top: 1.1rem;
     }
 
     .ghero__foot {
