@@ -801,6 +801,12 @@ body.theme-editorial .g3__card--form {
     padding: 1rem 1rem 0.85rem;
     background: #FCF3EE;
     color: #421C2C;
+    pointer-events: none;
+    transform: translateY(12px);
+    opacity: 0;
+}
+
+body.theme-editorial .g3.is-settled .g3__card--form {
     pointer-events: auto;
     transform: none;
     opacity: 1;
@@ -809,6 +815,38 @@ body.theme-editorial .g3__card--form {
 body.theme-editorial .g3__card--form .gcta {
     width: 100%;
     margin-top: 0.75rem;
+}
+
+body.theme-editorial .g3__phone a {
+    color: var(--paper);
+}
+
+body.theme-editorial .g3__phone a:hover,
+body.theme-editorial .g3__details a:hover {
+    color: var(--blush);
+}
+
+body.theme-editorial .g3__details a,
+body.theme-editorial .g3__details p {
+    color: var(--paper);
+}
+
+body.theme-editorial .g3__details span {
+    color: var(--blush);
+}
+
+body.theme-editorial .g3__actions .gbtn--fill {
+    background: var(--blush);
+    border-color: var(--blush);
+    color: var(--ink);
+}
+
+body.theme-editorial .g3:not(.is-settled) .gframe__stage {
+    display: none;
+}
+
+body.theme-editorial .g3.is-settled .gframe__stage {
+    display: flex;
 }
 
 /* Skills page */

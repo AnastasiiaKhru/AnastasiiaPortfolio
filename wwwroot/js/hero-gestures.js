@@ -1147,7 +1147,7 @@
             panel.classList.toggle("is-settled", settled);
             chip.setAttribute("aria-valuenow", String(Math.round(progress * 100)));
             chip.setAttribute("aria-valuetext", settled ? wordLabel + ", in place" : wordLabel);
-            if (!card.classList.contains("g3__card--form")) card.toggleAttribute("inert", !settled);
+            card.toggleAttribute("inert", !settled);
             card.style.setProperty("--write", progress.toFixed(3));
             if (settled && !wasSettled) fillExample();
             if (!settled && wasSettled) clearExample();
