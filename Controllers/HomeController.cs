@@ -73,6 +73,9 @@ public class HomeController : Controller
     public IActionResult SkyBridgeITDemo() => View();
     public IActionResult AuroraDemo() => View();
     public IActionResult ExperimentFlowDemo() => View();
+    public IActionResult FieldbookDemo() => View();
+    public IActionResult OakEmberDemo() => View();
+    public IActionResult LindenHomesDemo() => View();
 
     private record DemoFrameMeta(string Title, string UrlLabel);
 
@@ -93,6 +96,9 @@ public class HomeController : Controller
         ["SkyBridgeITDemo"] = new("SkyBridge IT Solutions", "skybridgeit.demo - IT Consulting"),
         ["AuroraDemo"] = new("Aurora — TikTok live game", "aurora.live - TikTok live game"),
         ["ExperimentFlowDemo"] = new("ExperimentFlow — Experimentation platform", "experimentflow.app - A/B experiments"),
+        ["FieldbookDemo"] = new("Fieldbook — PHP job desk", "fieldbook.php - PHP and MySQL"),
+        ["OakEmberDemo"] = new("Oak and Ember — WordPress", "oakandember.demo - WordPress restaurant"),
+        ["LindenHomesDemo"] = new("Linden Homes — WordPress", "lindenhomes.demo - WordPress listings"),
     };
 
     [HttpGet("/Home/DemoFrame/{name}")]
@@ -102,6 +108,7 @@ public class HomeController : Controller
             return NotFound();
 
         ViewBag.ForceActiveAction = "Projects";
+        ViewBag.DemoName = name;
         ViewBag.DemoSrc = Url.Action(name)!;
         ViewBag.DemoTitle = meta.Title;
         ViewBag.DemoUrlLabel = meta.UrlLabel;

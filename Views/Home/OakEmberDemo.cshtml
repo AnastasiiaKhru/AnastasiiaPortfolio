@@ -1,0 +1,258 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Oak and Ember</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            font-family: Outfit, "Segoe UI", sans-serif;
+            color: #24170f;
+            background: #f6efe6;
+        }
+        a { color: inherit; text-decoration: none; }
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.9rem 1.25rem;
+            background: rgba(246, 239, 230, 0.94);
+            backdrop-filter: blur(10px);
+        }
+        .mark { font-family: Fraunces, Georgia, serif; font-size: 1.3rem; }
+        nav { display: flex; gap: 1rem; font-size: 0.92rem; }
+        .hero {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            min-height: 540px;
+            margin: 0 1rem 2.2rem;
+            border-radius: 1.3rem;
+            overflow: hidden;
+            background: #140e0a;
+            color: #f6efe6;
+        }
+        .hero-copy {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            gap: 0.85rem;
+            padding: 2rem;
+        }
+        .kicker {
+            margin: 0;
+            font-size: 0.72rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+        h1, h2, h3 { font-family: Fraunces, Georgia, serif; font-weight: 500; }
+        h1 {
+            margin: 0;
+            font-size: clamp(2.7rem, 5vw, 4.6rem);
+            letter-spacing: -0.04em;
+            line-height: 0.95;
+        }
+        .hero-copy p { margin: 0; max-width: 28rem; }
+        .hero-photo {
+            background: url("/images/wordpress/oak-ember-card.jpg") 100% 68% / 250% auto no-repeat;
+        }
+        .btn {
+            display: inline-block;
+            width: fit-content;
+            border: 0;
+            border-radius: 999px;
+            background: #f6efe6;
+            color: #24170f;
+            font: inherit;
+            font-weight: 600;
+            padding: 0.75rem 1.15rem;
+            cursor: pointer;
+        }
+        .block { padding: 0 1.25rem 2.4rem; }
+        .block-head { margin-bottom: 1rem; }
+        .block-head h2 { margin: 0.2rem 0 0; font-size: clamp(1.8rem, 3vw, 2.4rem); letter-spacing: -0.03em; }
+        .courses {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.4rem;
+            background: #fffaf3;
+            border-radius: 1.3rem;
+            padding: 1.4rem 1.4rem 1.5rem;
+        }
+        .course h3 { margin: 0 0 0.9rem; font-size: 1.45rem; }
+        .course ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.95rem; }
+        .course li {
+            display: grid;
+            grid-template-columns: 4.25rem 1fr auto;
+            gap: 0.15rem 0.75rem;
+            align-items: center;
+        }
+        .course img {
+            width: 4.25rem;
+            height: 4.25rem;
+            object-fit: cover;
+            border-radius: 0.75rem;
+        }
+        .course b { display: block; font-weight: 600; }
+        .course span { display: block; margin-top: 0.15rem; color: #6d5c4e; font-size: 0.88rem; }
+        .course em { font-style: normal; font-weight: 600; }
+        .visit {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 1.5rem;
+            margin: 0 1rem 2.4rem;
+            padding: 1.6rem;
+            border-radius: 1.3rem;
+            background: #1a120c;
+            color: #f6efe6;
+        }
+        .visit h2 { margin: 0.2rem 0 0.6rem; font-size: clamp(1.8rem, 3vw, 2.4rem); letter-spacing: -0.03em; }
+        .hours { list-style: none; margin: 0; padding: 0; }
+        .hours li {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-top: 1px solid rgba(246, 239, 230, 0.16);
+        }
+        .reserve {
+            display: grid;
+            grid-template-columns: 0.85fr 1.15fr;
+            gap: 1.5rem;
+            background: #fffaf3;
+            border-radius: 1.3rem;
+            padding: 1.5rem;
+        }
+        .reserve h2 { margin: 0.2rem 0 0.5rem; font-size: clamp(1.8rem, 3vw, 2.4rem); letter-spacing: -0.03em; }
+        .reserve > div > p { margin: 0; color: #6d5c4e; }
+        form { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+        label { display: grid; gap: 0.3rem; font-size: 0.78rem; color: #6d5c4e; }
+        label.wide { grid-column: 1 / -1; }
+        input, select {
+            width: 100%;
+            border: 1px solid #e4d8c8;
+            border-radius: 0.75rem;
+            padding: 0.75rem;
+            font: inherit;
+            color: #24170f;
+            background: #fff;
+        }
+        form .btn { background: #1a120c; color: #f6efe6; }
+        .note { min-height: 1.2rem; margin: 0; color: #1f6b4a; }
+        footer { padding: 0 1.25rem 2rem; color: #6d5c4e; font-size: 0.85rem; }
+        @@media (max-width: 800px) {
+            header { align-items: flex-start; flex-direction: column; gap: 0.55rem; }
+            .hero, .courses, .visit, .reserve, form { grid-template-columns: 1fr; }
+            .hero-photo { min-height: 230px; }
+            label.wide { grid-column: auto; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a class="mark" href="#top">Oak and Ember</a>
+        <nav>
+            <a href="#menu">Menu</a>
+            <a href="#visit">Visit</a>
+            <a href="#reserve">Reserve</a>
+        </nav>
+    </header>
+    <section class="hero" id="top">
+        <div class="hero-copy">
+            <p class="kicker">Niagara dining room</p>
+            <h1>Supper, slowly.</h1>
+            <p>Wood fired plates, a short menu, and tables from Thursday to Sunday.</p>
+            <a class="btn" href="#reserve">Reserve a table</a>
+        </div>
+        <div class="hero-photo" role="img" aria-label="Candlelit dining room"></div>
+    </section>
+    <section class="block" id="menu">
+        <div class="block-head">
+            <p class="kicker">Menu</p>
+            <h2>From the hearth</h2>
+        </div>
+        <div class="courses">
+            <section class="course">
+                <h3>To start</h3>
+                <ul>
+                    <li><img src="/images/wordpress/menu-bread.jpg" alt="" /><div><b>Hearth bread</b><span>Brown butter, smoked salt, and cultured cream.</span></div><em>$14</em></li>
+                    <li><img src="/images/wordpress/menu-carrots.jpg" alt="" /><div><b>Fire carrots</b><span>Honey, chili, and toasted sesame.</span></div><em>$16</em></li>
+                    <li><img src="/images/wordpress/menu-olives.jpg" alt="" /><div><b>Warm olives</b><span>Orange peel, rosemary, and chili.</span></div><em>$9</em></li>
+                </ul>
+            </section>
+            <section class="course">
+                <h3>From the hearth</h3>
+                <ul>
+                    <li><img src="/images/wordpress/menu-trout.jpg" alt="" /><div><b>Ember trout</b><span>Charred lemon, dill, and new potatoes.</span></div><em>$34</em></li>
+                    <li><img src="/images/wordpress/menu-chicken.jpg" alt="" /><div><b>Wood chicken</b><span>Garlic jus, charred onion, and greens.</span></div><em>$32</em></li>
+                    <li><img src="/images/wordpress/menu-mushrooms.jpg" alt="" /><div><b>Coal mushrooms</b><span>Brown butter, thyme, and toast.</span></div><em>$26</em></li>
+                </ul>
+            </section>
+            <section class="course">
+                <h3>After</h3>
+                <ul>
+                    <li><img src="/images/wordpress/menu-custard.jpg" alt="" /><div><b>Burnt honey custard</b><span>Sea salt and olive oil.</span></div><em>$12</em></li>
+                    <li><img src="/images/wordpress/menu-chocolate.jpg" alt="" /><div><b>Dark chocolate</b><span>Hazelnut and crème fraîche.</span></div><em>$13</em></li>
+                </ul>
+            </section>
+        </div>
+    </section>
+    <section class="visit" id="visit">
+        <div>
+            <p class="kicker">Visit</p>
+            <h2>Queen Street, Niagara</h2>
+            <p>Supper starts at 5. The bar keeps a few seats for walk-ins.</p>
+        </div>
+        <ul class="hours">
+            <li><span>Thursday – Sunday</span><span>5 pm – 10 pm</span></li>
+            <li><span>Monday – Wednesday</span><span>Closed</span></li>
+            <li><span>Kitchen</span><span>Last seating 9 pm</span></li>
+        </ul>
+    </section>
+    <section class="block" id="reserve">
+        <div class="reserve">
+            <div>
+                <p class="kicker">Reservations</p>
+                <h2>Request a table</h2>
+                <p>Send a name, a night, and how many seats. The request is saved for the dining room.</p>
+            </div>
+            <form id="book">
+                <label>Name
+                    <input name="name" placeholder="Your name" required />
+                </label>
+                <label>Party
+                    <select name="party" aria-label="Party size">
+                        <option>2 guests</option>
+                        <option>4 guests</option>
+                        <option>6 guests</option>
+                    </select>
+                </label>
+                <label class="wide">Night
+                    <input name="when" placeholder="Thursday, 7 pm" required />
+                </label>
+                <button class="btn" type="submit">Request a table</button>
+                <p class="note" id="note"></p>
+            </form>
+        </div>
+    </section>
+    <footer>PHP WordPress theme. Menu, hours, and reservations.</footer>
+    <script>
+        document.getElementById("book").onsubmit = function (event) {
+            event.preventDefault();
+            var data = new FormData(event.target);
+            document.getElementById("note").textContent = "Request saved for " + data.get("name") + ", " + data.get("party").toLowerCase() + ".";
+            event.target.reset();
+        };
+    </script>
+</body>
+</html>

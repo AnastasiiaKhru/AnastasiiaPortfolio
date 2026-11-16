@@ -3872,3 +3872,25 @@ body.motion-enabled::after {
 .page-inner--skills .tech-marquee {
     margin-top: -0.5rem;
 }
+
+/* Keep the shared card frame, and show the whole Fieldbook and Oak screenshots inside it. */
+.project-card--wordpress:has(img[src*="fieldbook-card"]) .project-preview__frame-wrap,
+.project-card--wordpress:has(img[src*="oak-ember-card"]) .project-preview__frame-wrap {
+    background: #100c0a;
+}
+
+.project-card--wordpress:has(img[src*="fieldbook-card"]) .project-preview__frame-wrap {
+    background: #ebe3d6;
+}
+
+.project-card--wordpress:has(img[src*="fieldbook-card"]) .wp-preview__img,
+.project-card--wordpress:has(img[src*="oak-ember-card"]) .wp-preview__img {
+    object-fit: contain;
+    object-position: center center;
+    background: transparent;
+}
+
+.project-card--wordpress:has(img[src*="fieldbook-card"]) .project-preview__frame-wrap--wp-img:hover .wp-preview__img,
+.project-card--wordpress:has(img[src*="oak-ember-card"]) .project-preview__frame-wrap--wp-img:hover .wp-preview__img {
+    transform: none;
+}

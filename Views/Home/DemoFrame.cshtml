@@ -3,6 +3,7 @@
     var demoTitle = ViewBag.DemoTitle as string ?? "Project Demo";
     var demoSrc = ViewBag.DemoSrc as string ?? "/";
     var demoUrlLabel = ViewBag.DemoUrlLabel as string ?? demoTitle;
+    var demoName = ViewBag.DemoName as string ?? "";
 }
 
 <div class="demo-page-shell">
@@ -10,7 +11,7 @@
         <div class="demo-modal__header demo-page-popup__header">
             <div class="demo-modal__browser-dots" aria-hidden="true"><span></span><span></span><span></span></div>
             <span class="demo-modal__url">@demoUrlLabel</span>
-            <a asp-controller="Home" asp-action="Projects" class="demo-modal__close" title="Back to Projects"><i class="fas fa-times"></i></a>
+            <a asp-controller="Home" asp-action="Projects" asp-fragment="@("demo-" + demoName)" class="demo-modal__close" title="Back to this project"><i class="fas fa-times"></i></a>
         </div>
         <iframe class="demo-modal__iframe demo-page-popup__iframe" src="@demoSrc" title="@demoTitle"></iframe>
     </div>

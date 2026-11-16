@@ -431,6 +431,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const initial = new URLSearchParams(window.location.search).get('filter') || 'all';
         applyFilter(initial, false);
 
+        const returnToProject = () => {
+            const hash = decodeURIComponent(window.location.hash || '').replace(/^#/, '');
+            if (!hash.startsWith('demo-')) return;
+            const demo = hash.slice(5);
+            if (!demo) return;
+            const link = document.querySelector('a[href*="/DemoFrame/' + CSS.escape(demo) + '"]');
+            const card = link && link.closest('.project-card-modern');
+            if (!card) return;
+            const nav = document.querySelector('.navbar');
+            const filter = document.querySelector('.projects-filter');
+            const offset = (nav ? nav.getBoundingClientRect().height : 72) + (filter ? filter.getBoundingClientRect().height : 0) + 16;
+            const top = card.getBoundingClientRect().top + window.scrollY - offset;
+            window.scrollTo(0, Math.max(0, top));
+        };
+        returnToProject();
+        window.addEventListener('load', returnToProject);
+        window.addEventListener('hashchange', returnToProject);
+
         const scrollHint = document.querySelector('.projects-scroll-hint');
         if (scrollHint) {
             const hero = document.querySelector('.page-projects .ghero');

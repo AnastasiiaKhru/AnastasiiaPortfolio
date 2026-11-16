@@ -1,0 +1,375 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fieldbook — PHP job desk</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+        * { box-sizing: border-box; }
+        html, body { margin: 0; height: 100%; }
+        body {
+            font-family: Outfit, "Segoe UI", sans-serif;
+            color: #1c1915;
+            background: #e7e0d4;
+        }
+        .desk {
+            display: grid;
+            grid-template-columns: 220px minmax(0, 1fr);
+            min-height: 100%;
+        }
+        .side {
+            background: #1c1915;
+            color: #f3eee6;
+            padding: 1.4rem 1.1rem;
+        }
+        .side strong {
+            display: block;
+            font-family: Fraunces, Georgia, serif;
+            font-size: 1.45rem;
+            font-weight: 500;
+            letter-spacing: -0.03em;
+        }
+        .side em {
+            display: block;
+            margin-top: 0.2rem;
+            font-style: normal;
+            color: #c8b8a2;
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+        .nav {
+            display: grid;
+            gap: 0.35rem;
+            margin-top: 1.6rem;
+        }
+        .nav button {
+            text-align: left;
+            border: 0;
+            border-radius: 0.7rem;
+            padding: 0.65rem 0.75rem;
+            background: transparent;
+            color: #f3eee6;
+            font: inherit;
+            cursor: pointer;
+        }
+        .nav button.is-on { background: #f3eee6; color: #1c1915; }
+        .main { padding: 1.4rem clamp(1rem, 3vw, 2rem) 2rem; }
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 1rem;
+            margin-bottom: 1.1rem;
+        }
+        h1 {
+            margin: 0;
+            font-family: Fraunces, Georgia, serif;
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            font-weight: 500;
+            letter-spacing: -0.03em;
+        }
+        .lead { margin: 0.25rem 0 0; color: #6b5e50; font-size: 0.92rem; }
+        .btn {
+            border: 0;
+            border-radius: 999px;
+            background: #1f6b4a;
+            color: #f3eee6;
+            font: inherit;
+            font-weight: 600;
+            padding: 0.65rem 1rem;
+            cursor: pointer;
+        }
+        .btn-quiet {
+            background: transparent;
+            color: #1c1915;
+            border: 1px solid #d9cbb8;
+        }
+        .row-actions { white-space: nowrap; }
+        .ghost, .danger {
+            border: 0;
+            border-radius: 999px;
+            font: inherit;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.35rem 0.7rem;
+            cursor: pointer;
+        }
+        .ghost { background: #efe8dc; color: #1c1915; }
+        .danger { background: #f6e4dc; color: #8a3a2a; margin-left: 0.35rem; }
+        .empty { color: #6b5e50; }
+        .panel {
+            background: #fffdf8;
+            border-radius: 1rem;
+            overflow: auto;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 0.85rem 1rem; font-size: 0.92rem; }
+        th {
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            color: #6b5e50;
+            background: #efe8dc;
+        }
+        tr + tr td { border-top: 1px solid #efe8dc; }
+        .pill {
+            display: inline-block;
+            border-radius: 999px;
+            padding: 0.2rem 0.55rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .pill.active { background: #e5f2ea; color: #1f6b4a; }
+        .pill.review { background: #f6ead2; color: #8a5a12; }
+        .pill.queued { background: #ece7f4; color: #4c3d78; }
+        .form {
+            display: none;
+            grid-template-columns: 1fr 1fr 9rem auto auto;
+            gap: 0.6rem;
+            margin-bottom: 0.8rem;
+        }
+        .form.is-open { display: grid; }
+        input, select {
+            border: 1px solid #e4d8c8;
+            border-radius: 0.7rem;
+            padding: 0.7rem 0.75rem;
+            font: inherit;
+            background: #fff;
+        }
+        .note {
+            display: none;
+            margin: 0 0 0.8rem;
+            color: #1f6b4a;
+            font-size: 0.85rem;
+        }
+        .note.is-on { display: block; }
+        .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; }
+        .card {
+            background: #fffdf8;
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+        .card img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+        }
+        .card div { padding: 0.9rem 1rem 1.05rem; }
+        .card b { display: block; font-size: 1.05rem; }
+        .card span { color: #6b5e50; font-size: 0.88rem; }
+        @@media (max-width: 720px) {
+            .desk { grid-template-columns: 1fr; }
+            .form.is-open { grid-template-columns: 1fr; }
+            .row-actions { white-space: normal; }
+            .side { padding-bottom: 0.6rem; }
+            .nav { grid-template-columns: repeat(3, 1fr); margin-top: 1rem; }
+            .cards { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="desk">
+        <aside class="side">
+            <strong>Fieldbook</strong>
+            <em>PHP · MySQL</em>
+            <nav class="nav">
+                <button type="button" class="is-on" data-view="jobs">Jobs</button>
+                <button type="button" data-view="clients">Clients</button>
+                <button type="button" data-view="invoices">Invoices</button>
+            </nav>
+        </aside>
+        <main class="main">
+            <section data-screen="jobs">
+                <div class="top">
+                    <div>
+                        <h1>Open jobs</h1>
+                        <p class="lead">Add a job, change a row, or remove it from the board.</p>
+                    </div>
+                    <button type="button" class="btn" id="newJob">New job</button>
+                </div>
+                <form class="form" id="jobForm">
+                    <input name="client" id="jobClient" placeholder="Client" required />
+                    <input name="work" id="jobWork" placeholder="Work" required />
+                    <select name="status" id="jobStatus" aria-label="Status">
+                        <option value="queued">Queued</option>
+                        <option value="active">Active</option>
+                        <option value="review">Review</option>
+                    </select>
+                    <button class="btn" type="submit" id="saveJob">Save</button>
+                    <button class="btn btn-quiet" type="button" id="cancelJob">Cancel</button>
+                </form>
+                <p class="note" id="note"></p>
+                <div class="panel">
+                    <table>
+                        <thead>
+                            <tr><th>Client</th><th>Work</th><th>Status</th><th>Actions</th></tr>
+                        </thead>
+                        <tbody id="jobs"></tbody>
+                    </table>
+                </div>
+            </section>
+            <section data-screen="clients" hidden>
+                <div class="top"><div><h1>Clients</h1><p class="lead">One row per client, joined to open jobs.</p></div></div>
+                <div class="cards">
+                    <article class="card">
+                        <img src="/images/php/harrow-studio.jpg" alt="Harrow Studio desk" />
+                        <div><b>Harrow Studio</b><span>2 open jobs · Toronto</span></div>
+                    </article>
+                    <article class="card">
+                        <img src="/images/php/lumen-clinic.jpg" alt="Lumen Clinic waiting room" />
+                        <div><b>Lumen Clinic</b><span>1 open job · Niagara</span></div>
+                    </article>
+                    <article class="card">
+                        <img src="/images/php/north-pier.jpg" alt="North Pier on the water" />
+                        <div><b>North Pier</b><span>1 open job · Hamilton</span></div>
+                    </article>
+                </div>
+            </section>
+            <section data-screen="invoices" hidden>
+                <div class="top"><div><h1>Invoices</h1><p class="lead">Status comes from the invoices table.</p></div></div>
+                <div class="panel">
+                    <table>
+                        <thead><tr><th>Number</th><th>Client</th><th>Status</th></tr></thead>
+                        <tbody>
+                            <tr><td>FB-104</td><td>Harrow Studio</td><td><span class="pill active">Paid</span></td></tr>
+                            <tr><td>FB-105</td><td>Lumen Clinic</td><td><span class="pill review">Sent</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script>
+        const buttons = document.querySelectorAll(".nav button");
+        const screens = document.querySelectorAll("[data-screen]");
+        buttons.forEach(function (button) {
+            button.addEventListener("click", function () {
+                buttons.forEach(function (item) { item.classList.remove("is-on"); });
+                button.classList.add("is-on");
+                screens.forEach(function (screen) {
+                    screen.hidden = screen.dataset.screen !== button.dataset.view;
+                });
+            });
+        });
+        const form = document.getElementById("jobForm");
+        const note = document.getElementById("note");
+        const saveJob = document.getElementById("saveJob");
+        const labels = { active: "Active", review: "Review", queued: "Queued" };
+        let jobs = [
+            { client: "Harrow Studio", work: "Brand site", status: "active" },
+            { client: "Lumen Clinic", work: "Booking form", status: "review" },
+            { client: "North Pier", work: "Menu page", status: "queued" }
+        ];
+        let editing = -1;
+
+        function showNote(text) {
+            note.textContent = text;
+            note.classList.add("is-on");
+        }
+
+        function closeForm() {
+            editing = -1;
+            form.reset();
+            saveJob.textContent = "Save";
+            form.classList.remove("is-open");
+        }
+
+        function renderJobs() {
+            const body = document.getElementById("jobs");
+            body.replaceChildren();
+            if (!jobs.length) {
+                const row = document.createElement("tr");
+                const cell = document.createElement("td");
+                cell.colSpan = 4;
+                cell.className = "empty";
+                cell.textContent = "No jobs yet. Add one to put it on the board.";
+                row.appendChild(cell);
+                body.appendChild(row);
+                return;
+            }
+            jobs.forEach(function (job, index) {
+                const row = document.createElement("tr");
+                const client = document.createElement("td");
+                const work = document.createElement("td");
+                const status = document.createElement("td");
+                const actions = document.createElement("td");
+                const pill = document.createElement("span");
+                const edit = document.createElement("button");
+                const remove = document.createElement("button");
+                client.textContent = job.client;
+                work.textContent = job.work;
+                pill.className = "pill " + job.status;
+                pill.textContent = labels[job.status] || job.status;
+                status.appendChild(pill);
+                edit.type = "button";
+                edit.className = "ghost";
+                edit.textContent = "Edit";
+                remove.type = "button";
+                remove.className = "danger";
+                remove.textContent = "Delete";
+                edit.addEventListener("click", function () { startEdit(index); });
+                remove.addEventListener("click", function () { removeJob(index); });
+                actions.className = "row-actions";
+                actions.append(edit, remove);
+                row.append(client, work, status, actions);
+                body.appendChild(row);
+            });
+        }
+
+        function startEdit(index) {
+            const job = jobs[index];
+            editing = index;
+            document.getElementById("jobClient").value = job.client;
+            document.getElementById("jobWork").value = job.work;
+            document.getElementById("jobStatus").value = job.status;
+            saveJob.textContent = "Update";
+            form.classList.add("is-open");
+            document.getElementById("jobClient").focus();
+        }
+
+        function removeJob(index) {
+            const name = jobs[index].client;
+            jobs.splice(index, 1);
+            if (editing === index) closeForm();
+            else if (editing > index) editing -= 1;
+            renderJobs();
+            showNote(name + " was deleted.");
+        }
+
+        document.getElementById("newJob").addEventListener("click", function () {
+            if (form.classList.contains("is-open") && editing === -1) {
+                closeForm();
+                return;
+            }
+            closeForm();
+            form.classList.add("is-open");
+            document.getElementById("jobClient").focus();
+        });
+        document.getElementById("cancelJob").addEventListener("click", closeForm);
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const job = {
+                client: document.getElementById("jobClient").value.trim(),
+                work: document.getElementById("jobWork").value.trim(),
+                status: document.getElementById("jobStatus").value
+            };
+            if (editing === -1) {
+                jobs.unshift(job);
+                showNote(job.client + " was added as " + labels[job.status].toLowerCase() + ".");
+            } else {
+                jobs[editing] = job;
+                showNote(job.client + " was updated.");
+            }
+            closeForm();
+            renderJobs();
+        });
+        renderJobs();
+    </script>
+</body>
+</html>
