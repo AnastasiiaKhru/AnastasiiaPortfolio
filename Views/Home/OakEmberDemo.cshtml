@@ -150,6 +150,65 @@
         form .btn { background: #1a120c; color: #f6efe6; }
         .note { min-height: 1.2rem; margin: 0; color: #1f6b4a; }
         footer { padding: 0 1.25rem 2rem; color: #6d5c4e; font-size: 0.85rem; }
+        .divi-bar {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            min-height: 42px;
+            padding: 0.4rem 0.8rem;
+            background: #2b2150;
+            color: #fff;
+            font-size: 0.82rem;
+        }
+        .divi-mark {
+            width: 1.35rem;
+            height: 1.35rem;
+            display: grid;
+            place-items: center;
+            border-radius: 0.35rem;
+            background: #7c3aed;
+            font-weight: 700;
+        }
+        .divi-mode { color: #d6c7ff; }
+        .divi-page { margin-right: auto; }
+        .divi-bar button {
+            border: 0;
+            border-radius: 999px;
+            background: #7c3aed;
+            color: #fff;
+            font: inherit;
+            font-weight: 600;
+            padding: 0.32rem 0.75rem;
+            cursor: pointer;
+        }
+        body.is-builder .et_pb_section,
+        body.is-builder .et_pb_row,
+        body.is-builder .et_pb_module { position: relative; }
+        body.is-builder .et_pb_section { outline: 1px dashed rgba(124, 58, 237, 0.9); }
+        body.is-builder .et_pb_row { outline: 1px dashed rgba(26, 174, 159, 0.95); }
+        body.is-builder .et_pb_module { outline: 1px dashed rgba(46, 163, 242, 0.95); }
+        body.is-builder .et_pb_section::before,
+        body.is-builder .et_pb_row::before,
+        body.is-builder .et_pb_module::before {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            z-index: 6;
+            padding: 0.12rem 0.4rem;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            pointer-events: none;
+        }
+        body.is-builder .et_pb_section::before { content: "Section"; background: #7c3aed; }
+        body.is-builder .hero.et_pb_section::before { content: "Fullwidth Header"; }
+        body.is-builder .et_pb_row::before { content: "Row"; background: #1aae9f; }
+        body.is-builder .et_pb_module::before { content: attr(data-module); left: auto; right: 6px; background: #2ea3f2; }
         @@media (max-width: 800px) {
             header { align-items: flex-start; flex-direction: column; gap: 0.55rem; }
             .hero, .courses, .visit, .reserve, form { grid-template-columns: 1fr; }
@@ -158,8 +217,15 @@
         }
     </style>
 </head>
-<body>
-    <header>
+<body class="is-builder">
+    <div class="divi-bar">
+        <span class="divi-mark">D</span>
+        <strong>Divi</strong>
+        <span class="divi-mode">Visual Builder</span>
+        <span class="divi-page">Oak and Ember</span>
+        <button type="button" id="diviView">Preview</button>
+    </div>
+    <header class="et_pb_module" data-module="Menu">
         <a class="mark" href="#top">Oak and Ember</a>
         <nav>
             <a href="#menu">Menu</a>
@@ -167,7 +233,7 @@
             <a href="#reserve">Reserve</a>
         </nav>
     </header>
-    <section class="hero" id="top">
+    <section class="hero et_pb_section" id="top" data-module="Fullwidth Header">
         <div class="hero-copy">
             <p class="kicker">Niagara dining room</p>
             <h1>Supper, slowly.</h1>
@@ -176,13 +242,13 @@
         </div>
         <div class="hero-photo" role="img" aria-label="Candlelit dining room"></div>
     </section>
-    <section class="block" id="menu">
+    <section class="block et_pb_section" id="menu">
         <div class="block-head">
             <p class="kicker">Menu</p>
             <h2>From the hearth</h2>
         </div>
-        <div class="courses">
-            <section class="course">
+        <div class="courses et_pb_row">
+            <section class="course et_pb_module" data-module="Menu">
                 <h3>To start</h3>
                 <ul>
                     <li><img src="/images/wordpress/menu-bread.jpg" alt="" /><div><b>Hearth bread</b><span>Brown butter, smoked salt, and cultured cream.</span></div><em>$14</em></li>
@@ -190,7 +256,7 @@
                     <li><img src="/images/wordpress/menu-olives.jpg" alt="" /><div><b>Warm olives</b><span>Orange peel, rosemary, and chili.</span></div><em>$9</em></li>
                 </ul>
             </section>
-            <section class="course">
+            <section class="course et_pb_module" data-module="Menu">
                 <h3>From the hearth</h3>
                 <ul>
                     <li><img src="/images/wordpress/menu-trout.jpg" alt="" /><div><b>Ember trout</b><span>Charred lemon, dill, and new potatoes.</span></div><em>$34</em></li>
@@ -198,7 +264,7 @@
                     <li><img src="/images/wordpress/menu-mushrooms.jpg" alt="" /><div><b>Coal mushrooms</b><span>Brown butter, thyme, and toast.</span></div><em>$26</em></li>
                 </ul>
             </section>
-            <section class="course">
+            <section class="course et_pb_module" data-module="Menu">
                 <h3>After</h3>
                 <ul>
                     <li><img src="/images/wordpress/menu-custard.jpg" alt="" /><div><b>Burnt honey custard</b><span>Sea salt and olive oil.</span></div><em>$12</em></li>
@@ -207,7 +273,7 @@
             </section>
         </div>
     </section>
-    <section class="visit" id="visit">
+    <section class="visit et_pb_section" id="visit">
         <div>
             <p class="kicker">Visit</p>
             <h2>Queen Street, Niagara</h2>
@@ -219,8 +285,8 @@
             <li><span>Kitchen</span><span>Last seating 9 pm</span></li>
         </ul>
     </section>
-    <section class="block" id="reserve">
-        <div class="reserve">
+    <section class="block et_pb_section" id="reserve">
+        <div class="reserve et_pb_module" data-module="Contact Form">
             <div>
                 <p class="kicker">Reservations</p>
                 <h2>Request a table</h2>
@@ -245,8 +311,12 @@
             </form>
         </div>
     </section>
-    <footer>PHP WordPress theme. Menu, hours, and reservations.</footer>
+    <footer>Built with Divi on WordPress. Menu, hours, and reservations.</footer>
     <script>
+        document.getElementById("diviView").addEventListener("click", function () {
+            var on = document.body.classList.toggle("is-builder");
+            this.textContent = on ? "Preview" : "Builder";
+        });
         document.getElementById("book").onsubmit = function (event) {
             event.preventDefault();
             var data = new FormData(event.target);

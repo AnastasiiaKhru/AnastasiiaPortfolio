@@ -110,6 +110,65 @@
         .empty { display: none; margin: 0 1.25rem 2rem; }
         .empty.is-on { display: block; }
         footer { padding: 0 1.25rem 2rem; color: #5c6b63; font-size: 0.85rem; }
+        .divi-bar {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            min-height: 42px;
+            padding: 0.4rem 0.8rem;
+            background: #2b2150;
+            color: #fff;
+            font-size: 0.82rem;
+        }
+        .divi-mark {
+            width: 1.35rem;
+            height: 1.35rem;
+            display: grid;
+            place-items: center;
+            border-radius: 0.35rem;
+            background: #7c3aed;
+            font-weight: 700;
+        }
+        .divi-mode { color: #d6c7ff; }
+        .divi-page { margin-right: auto; }
+        .divi-bar button {
+            border: 0;
+            border-radius: 999px;
+            background: #7c3aed;
+            color: #fff;
+            font: inherit;
+            font-weight: 600;
+            padding: 0.32rem 0.75rem;
+            cursor: pointer;
+        }
+        body.is-builder .et_pb_section,
+        body.is-builder .et_pb_row,
+        body.is-builder .et_pb_module { position: relative; }
+        body.is-builder .et_pb_section { outline: 1px dashed rgba(124, 58, 237, 0.9); }
+        body.is-builder .et_pb_row { outline: 1px dashed rgba(26, 174, 159, 0.95); }
+        body.is-builder .et_pb_module { outline: 1px dashed rgba(46, 163, 242, 0.95); }
+        body.is-builder .et_pb_section::before,
+        body.is-builder .et_pb_row::before,
+        body.is-builder .et_pb_module::before {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            z-index: 6;
+            padding: 0.12rem 0.4rem;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            pointer-events: none;
+        }
+        body.is-builder .et_pb_section::before { content: "Section"; background: #7c3aed; }
+        body.is-builder .hero.et_pb_section::before { content: "Fullwidth Header"; }
+        body.is-builder .et_pb_row::before { content: "Row"; background: #1aae9f; }
+        body.is-builder .et_pb_module::before { content: attr(data-module); left: auto; right: 6px; background: #2ea3f2; }
         @@media (max-width: 800px) {
             .hero, .grid { grid-template-columns: 1fr; }
             .hero-photo { min-height: 220px; }
@@ -118,12 +177,19 @@
         }
     </style>
 </head>
-<body>
-    <header>
+<body class="is-builder">
+    <div class="divi-bar">
+        <span class="divi-mark">D</span>
+        <strong>Divi</strong>
+        <span class="divi-mode">Visual Builder</span>
+        <span class="divi-page">Linden Homes</span>
+        <button type="button" id="diviView">Preview</button>
+    </div>
+    <header class="et_pb_module" data-module="Menu">
         <a class="mark" href="#top">Linden Homes</a>
         <nav><a href="#listings">Listings</a></nav>
     </header>
-    <section class="hero" id="top">
+    <section class="hero et_pb_section" id="top">
         <div class="hero-copy">
             <p class="kicker">Niagara and Hamilton</p>
             <h1>Houses with room to breathe.</h1>
@@ -134,7 +200,7 @@
             <img src="/images/wordpress/linden-hero.jpg" alt="A modern house among trees" />
         </div>
     </section>
-    <section id="listings">
+    <section class="et_pb_section" id="listings">
         <div class="toolbar">
             <div>
                 <p class="kicker">Listings</p>
@@ -149,8 +215,8 @@
             </label>
         </div>
         <p class="count" id="count">3 homes</p>
-        <div class="grid">
-            <article data-place="niagara">
+        <div class="grid et_pb_row">
+            <article class="et_pb_module" data-module="Blurb" data-place="niagara">
                 <img src="/images/wordpress/linden-maple.jpg" alt="Maple Court" />
                 <div class="body">
                     <p class="town">Niagara</p>
@@ -159,7 +225,7 @@
                     <p class="price">$829,000</p>
                 </div>
             </article>
-            <article data-place="hamilton">
+            <article class="et_pb_module" data-module="Blurb" data-place="hamilton">
                 <img src="/images/wordpress/linden-king.jpg" alt="King Street" />
                 <div class="body">
                     <p class="town">Hamilton</p>
@@ -168,7 +234,7 @@
                     <p class="price">$615,000</p>
                 </div>
             </article>
-            <article data-place="niagara">
+            <article class="et_pb_module" data-module="Blurb" data-place="niagara">
                 <img src="/images/wordpress/linden-lake.jpg" alt="Lake Lane" />
                 <div class="body">
                     <p class="town">Niagara</p>
@@ -180,8 +246,12 @@
         </div>
         <p class="empty" id="empty">No homes in that town.</p>
     </section>
-    <footer>PHP WordPress listings. Homes are filtered by town.</footer>
+    <footer>Built with Divi on WordPress. Homes are filtered by town.</footer>
     <script>
+        document.getElementById("diviView").addEventListener("click", function () {
+            var on = document.body.classList.toggle("is-builder");
+            this.textContent = on ? "Preview" : "Builder";
+        });
         var select = document.getElementById("place");
         var cards = document.querySelectorAll("#listings article");
         var count = document.getElementById("count");

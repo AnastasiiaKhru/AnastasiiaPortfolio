@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fieldbook — PHP job desk</title>
+    <title>Fieldbook — Divi</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
     <style>
@@ -19,7 +19,7 @@
         }
         .desk {
             display: grid;
-            grid-template-columns: 220px minmax(0, 1fr);
+            grid-template-columns: 232px minmax(0, 1fr);
             min-height: 100%;
         }
         .side {
@@ -43,12 +43,11 @@
             letter-spacing: 0.14em;
             text-transform: uppercase;
         }
-        .nav {
-            display: grid;
-            gap: 0.35rem;
-            margin-top: 1.6rem;
-        }
+        .nav { display: grid; gap: 0.35rem; margin-top: 1.6rem; }
         .nav button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             text-align: left;
             border: 0;
             border-radius: 0.7rem;
@@ -59,13 +58,23 @@
             cursor: pointer;
         }
         .nav button.is-on { background: #f3eee6; color: #1c1915; }
-        .main { padding: 1.4rem clamp(1rem, 3vw, 2rem) 2rem; }
+        .nav b {
+            min-width: 1.4rem;
+            border-radius: 999px;
+            padding: 0.05rem 0.4rem;
+            background: rgba(243, 238, 230, 0.14);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-align: center;
+        }
+        .nav button.is-on b { background: #1c1915; color: #f3eee6; }
+        .main { padding: 1.4rem clamp(1rem, 3vw, 2rem) 2.4rem; }
         .top {
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
             gap: 1rem;
-            margin-bottom: 1.1rem;
+            margin-bottom: 1rem;
         }
         h1 {
             margin: 0;
@@ -75,6 +84,35 @@
             letter-spacing: -0.03em;
         }
         .lead { margin: 0.25rem 0 0; color: #6b5e50; font-size: 0.92rem; }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.55rem;
+            margin-bottom: 0.9rem;
+        }
+        .stats button {
+            border: 0;
+            border-radius: 0.9rem;
+            background: #fffdf8;
+            color: #1c1915;
+            font: inherit;
+            text-align: left;
+            padding: 0.75rem 0.85rem;
+            cursor: pointer;
+        }
+        .stats button.is-on { outline: 2px solid #1c1915; }
+        .stats b {
+            display: block;
+            font-family: Fraunces, Georgia, serif;
+            font-size: 1.45rem;
+            font-weight: 500;
+        }
+        .stats span { color: #6b5e50; font-size: 0.78rem; }
+        .tools {
+            display: flex;
+            gap: 0.55rem;
+            align-items: center;
+        }
         .btn {
             border: 0;
             border-radius: 999px;
@@ -90,6 +128,14 @@
             color: #1c1915;
             border: 1px solid #d9cbb8;
         }
+        .search {
+            width: min(16rem, 46vw);
+            border: 1px solid #e4d8c8;
+            border-radius: 999px;
+            padding: 0.65rem 0.9rem;
+            font: inherit;
+            background: #fffdf8;
+        }
         .row-actions { white-space: nowrap; }
         .ghost, .danger {
             border: 0;
@@ -103,11 +149,7 @@
         .ghost { background: #efe8dc; color: #1c1915; }
         .danger { background: #f6e4dc; color: #8a3a2a; margin-left: 0.35rem; }
         .empty { color: #6b5e50; }
-        .panel {
-            background: #fffdf8;
-            border-radius: 1rem;
-            overflow: auto;
-        }
+        .panel { background: #fffdf8; border-radius: 1rem; overflow: auto; }
         table { width: 100%; border-collapse: collapse; }
         th, td { text-align: left; padding: 0.85rem 1rem; font-size: 0.92rem; }
         th {
@@ -124,8 +166,8 @@
             font-size: 0.75rem;
             font-weight: 600;
         }
-        .pill.active { background: #e5f2ea; color: #1f6b4a; }
-        .pill.review { background: #f6ead2; color: #8a5a12; }
+        .pill.active, .pill.paid { background: #e5f2ea; color: #1f6b4a; }
+        .pill.review, .pill.sent { background: #f6ead2; color: #8a5a12; }
         .pill.queued { background: #ece7f4; color: #4c3d78; }
         .form {
             display: none;
@@ -134,6 +176,7 @@
             margin-bottom: 0.8rem;
         }
         .form.is-open { display: grid; }
+        .form.client-form, .form.invoice-form { grid-template-columns: 1fr 1fr auto auto; }
         input, select {
             border: 1px solid #e4d8c8;
             border-radius: 0.7rem;
@@ -149,27 +192,33 @@
         }
         .note.is-on { display: block; }
         .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; }
-        .card {
-            background: #fffdf8;
-            border-radius: 1rem;
-            overflow: hidden;
-        }
-        .card img {
+        .card { background: #fffdf8; border-radius: 1rem; overflow: hidden; }
+        .card img, .initial {
             display: block;
             width: 100%;
             aspect-ratio: 16 / 9;
             object-fit: cover;
         }
+        .initial {
+            display: grid;
+            place-items: center;
+            background: #1c1915;
+            color: #f3eee6;
+            font-family: Fraunces, Georgia, serif;
+            font-size: 2.4rem;
+        }
         .card div { padding: 0.9rem 1rem 1.05rem; }
         .card b { display: block; font-size: 1.05rem; }
         .card span { color: #6b5e50; font-size: 0.88rem; }
-        @@media (max-width: 720px) {
+        .card .row-actions { margin-top: 0.7rem; }
+        @@media (max-width: 800px) {
             .desk { grid-template-columns: 1fr; }
-            .form.is-open { grid-template-columns: 1fr; }
+            .stats, .form.is-open, .form.client-form.is-open, .form.invoice-form.is-open, .cards { grid-template-columns: 1fr; }
+            .top, .tools { align-items: stretch; flex-direction: column; }
+            .search { width: 100%; }
             .row-actions { white-space: normal; }
             .side { padding-bottom: 0.6rem; }
             .nav { grid-template-columns: repeat(3, 1fr); margin-top: 1rem; }
-            .cards { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -177,11 +226,11 @@
     <div class="desk">
         <aside class="side">
             <strong>Fieldbook</strong>
-            <em>PHP · MySQL</em>
+            <em>Divi · WordPress</em>
             <nav class="nav">
-                <button type="button" class="is-on" data-view="jobs">Jobs</button>
-                <button type="button" data-view="clients">Clients</button>
-                <button type="button" data-view="invoices">Invoices</button>
+                <button type="button" class="is-on" data-view="jobs">Jobs <b id="jobCount">0</b></button>
+                <button type="button" data-view="clients">Clients <b id="clientCount">0</b></button>
+                <button type="button" data-view="invoices">Invoices <b id="invoiceCount">0</b></button>
             </nav>
         </aside>
         <main class="main">
@@ -189,14 +238,18 @@
                 <div class="top">
                     <div>
                         <h1>Open jobs</h1>
-                        <p class="lead">Add a job, change a row, or remove it from the board.</p>
+                        <p class="lead">Search the board, then add a job, change a row, or remove it.</p>
                     </div>
-                    <button type="button" class="btn" id="newJob">New job</button>
+                    <div class="tools">
+                        <input class="search" id="jobSearch" type="search" placeholder="Search client or work" aria-label="Search jobs" />
+                        <button type="button" class="btn" id="newJob">New job</button>
+                    </div>
                 </div>
+                <div class="stats" id="stats"></div>
                 <form class="form" id="jobForm">
-                    <input name="client" id="jobClient" placeholder="Client" required />
-                    <input name="work" id="jobWork" placeholder="Work" required />
-                    <select name="status" id="jobStatus" aria-label="Status">
+                    <input id="jobClient" placeholder="Client" required />
+                    <input id="jobWork" placeholder="Work" required />
+                    <select id="jobStatus" aria-label="Status">
                         <option value="queued">Queued</option>
                         <option value="active">Active</option>
                         <option value="review">Review</option>
@@ -204,7 +257,7 @@
                     <button class="btn" type="submit" id="saveJob">Save</button>
                     <button class="btn btn-quiet" type="button" id="cancelJob">Cancel</button>
                 </form>
-                <p class="note" id="note"></p>
+                <p class="note" id="jobNote"></p>
                 <div class="panel">
                     <table>
                         <thead>
@@ -215,97 +268,164 @@
                 </div>
             </section>
             <section data-screen="clients" hidden>
-                <div class="top"><div><h1>Clients</h1><p class="lead">One row per client, joined to open jobs.</p></div></div>
-                <div class="cards">
-                    <article class="card">
-                        <img src="/images/php/harrow-studio.jpg" alt="Harrow Studio desk" />
-                        <div><b>Harrow Studio</b><span>2 open jobs · Toronto</span></div>
-                    </article>
-                    <article class="card">
-                        <img src="/images/php/lumen-clinic.jpg" alt="Lumen Clinic waiting room" />
-                        <div><b>Lumen Clinic</b><span>1 open job · Niagara</span></div>
-                    </article>
-                    <article class="card">
-                        <img src="/images/php/north-pier.jpg" alt="North Pier on the water" />
-                        <div><b>North Pier</b><span>1 open job · Hamilton</span></div>
-                    </article>
+                <div class="top">
+                    <div>
+                        <h1>Clients</h1>
+                        <p class="lead">Add a studio, change the town, or remove one.</p>
+                    </div>
+                    <button type="button" class="btn" id="newClient">New client</button>
                 </div>
+                <form class="form client-form" id="clientForm">
+                    <input id="clientName" placeholder="Client" required />
+                    <input id="clientPlace" placeholder="Town" required />
+                    <button class="btn" type="submit" id="saveClient">Save</button>
+                    <button class="btn btn-quiet" type="button" id="cancelClient">Cancel</button>
+                </form>
+                <p class="note" id="clientNote"></p>
+                <div class="cards" id="clientCards"></div>
             </section>
             <section data-screen="invoices" hidden>
-                <div class="top"><div><h1>Invoices</h1><p class="lead">Status comes from the invoices table.</p></div></div>
+                <div class="top">
+                    <div>
+                        <h1>Invoices</h1>
+                        <p class="lead">Add an invoice, mark it paid, or remove it.</p>
+                    </div>
+                    <button type="button" class="btn" id="newInvoice">New invoice</button>
+                </div>
+                <form class="form invoice-form" id="invoiceForm">
+                    <input id="invoiceClient" placeholder="Client" required />
+                    <select id="invoiceStatus" aria-label="Invoice status">
+                        <option value="sent">Sent</option>
+                        <option value="paid">Paid</option>
+                    </select>
+                    <button class="btn" type="submit">Save</button>
+                    <button class="btn btn-quiet" type="button" id="cancelInvoice">Cancel</button>
+                </form>
+                <p class="note" id="invoiceNote"></p>
                 <div class="panel">
                     <table>
-                        <thead><tr><th>Number</th><th>Client</th><th>Status</th></tr></thead>
-                        <tbody>
-                            <tr><td>FB-104</td><td>Harrow Studio</td><td><span class="pill active">Paid</span></td></tr>
-                            <tr><td>FB-105</td><td>Lumen Clinic</td><td><span class="pill review">Sent</span></td></tr>
-                        </tbody>
+                        <thead><tr><th>Number</th><th>Client</th><th>Status</th><th>Actions</th></tr></thead>
+                        <tbody id="invoiceRows"></tbody>
                     </table>
                 </div>
             </section>
         </main>
     </div>
     <script>
-        const buttons = document.querySelectorAll(".nav button");
-        const screens = document.querySelectorAll("[data-screen]");
-        buttons.forEach(function (button) {
-            button.addEventListener("click", function () {
-                buttons.forEach(function (item) { item.classList.remove("is-on"); });
-                button.classList.add("is-on");
-                screens.forEach(function (screen) {
-                    screen.hidden = screen.dataset.screen !== button.dataset.view;
-                });
-            });
-        });
-        const form = document.getElementById("jobForm");
-        const note = document.getElementById("note");
-        const saveJob = document.getElementById("saveJob");
-        const labels = { active: "Active", review: "Review", queued: "Queued" };
-        let jobs = [
-            { client: "Harrow Studio", work: "Brand site", status: "active" },
-            { client: "Lumen Clinic", work: "Booking form", status: "review" },
-            { client: "North Pier", work: "Menu page", status: "queued" }
+        var labels = { active: "Active", review: "Review", queued: "Queued", paid: "Paid", sent: "Sent" };
+        var filters = [
+            { id: "all", label: "All jobs" },
+            { id: "active", label: "Active" },
+            { id: "review", label: "Review" },
+            { id: "queued", label: "Queued" }
         ];
-        let editing = -1;
+        var seed = {
+            jobs: [
+                { client: "Harrow Studio", work: "Brand site", status: "active" },
+                { client: "Lumen Clinic", work: "Booking form", status: "review" },
+                { client: "North Pier", work: "Menu page", status: "queued" }
+            ],
+            clients: [
+                { name: "Harrow Studio", place: "Toronto", image: "/images/php/harrow-studio.jpg" },
+                { name: "Lumen Clinic", place: "Niagara", image: "/images/php/lumen-clinic.jpg" },
+                { name: "North Pier", place: "Hamilton", image: "/images/php/north-pier.jpg" }
+            ],
+            invoices: [
+                { number: "FB-104", client: "Harrow Studio", status: "paid" },
+                { number: "FB-105", client: "Lumen Clinic", status: "sent" }
+            ],
+            nextInvoice: 106
+        };
+        var state = load();
+        var jobFilter = "all";
+        var jobQuery = "";
+        var editingJob = -1;
+        var editingClient = -1;
 
-        function showNote(text) {
+        function load() {
+            try {
+                var saved = JSON.parse(localStorage.getItem("fieldbook-desk") || "null");
+                if (saved && saved.jobs && saved.clients && saved.invoices) return saved;
+            } catch (error) {}
+            return JSON.parse(JSON.stringify(seed));
+        }
+        function save() {
+            localStorage.setItem("fieldbook-desk", JSON.stringify(state));
+        }
+        function showNote(id, text) {
+            var note = document.getElementById(id);
             note.textContent = text;
             note.classList.add("is-on");
         }
-
-        function closeForm() {
-            editing = -1;
-            form.reset();
-            saveJob.textContent = "Save";
-            form.classList.remove("is-open");
+        function openJobs(name) {
+            return state.jobs.filter(function (job) { return job.client === name; }).length;
         }
-
+        function renderCounts() {
+            document.getElementById("jobCount").textContent = state.jobs.length;
+            document.getElementById("clientCount").textContent = state.clients.length;
+            document.getElementById("invoiceCount").textContent = state.invoices.length;
+        }
+        function renderStats() {
+            var box = document.getElementById("stats");
+            box.replaceChildren();
+            filters.forEach(function (filter) {
+                var count = filter.id === "all"
+                    ? state.jobs.length
+                    : state.jobs.filter(function (job) { return job.status === filter.id; }).length;
+                var button = document.createElement("button");
+                var number = document.createElement("b");
+                var label = document.createElement("span");
+                number.textContent = count;
+                label.textContent = filter.label;
+                if (jobFilter === filter.id) button.className = "is-on";
+                button.type = "button";
+                button.append(number, label);
+                button.addEventListener("click", function () {
+                    jobFilter = filter.id;
+                    renderJobs();
+                });
+                box.appendChild(button);
+            });
+        }
+        function visibleJobs() {
+            return state.jobs.filter(function (job) {
+                var matchesStatus = jobFilter === "all" || job.status === jobFilter;
+                var haystack = (job.client + " " + job.work).toLowerCase();
+                return matchesStatus && haystack.indexOf(jobQuery) !== -1;
+            });
+        }
         function renderJobs() {
-            const body = document.getElementById("jobs");
+            renderStats();
+            renderCounts();
+            var body = document.getElementById("jobs");
+            var rows = visibleJobs();
             body.replaceChildren();
-            if (!jobs.length) {
-                const row = document.createElement("tr");
-                const cell = document.createElement("td");
+            if (!rows.length) {
+                var row = document.createElement("tr");
+                var cell = document.createElement("td");
                 cell.colSpan = 4;
                 cell.className = "empty";
-                cell.textContent = "No jobs yet. Add one to put it on the board.";
+                cell.textContent = state.jobs.length
+                    ? "No jobs match that search."
+                    : "No jobs yet. Add one to put it on the board.";
                 row.appendChild(cell);
                 body.appendChild(row);
                 return;
             }
-            jobs.forEach(function (job, index) {
-                const row = document.createElement("tr");
-                const client = document.createElement("td");
-                const work = document.createElement("td");
-                const status = document.createElement("td");
-                const actions = document.createElement("td");
-                const pill = document.createElement("span");
-                const edit = document.createElement("button");
-                const remove = document.createElement("button");
+            rows.forEach(function (job) {
+                var index = state.jobs.indexOf(job);
+                var row = document.createElement("tr");
+                var client = document.createElement("td");
+                var work = document.createElement("td");
+                var status = document.createElement("td");
+                var actions = document.createElement("td");
+                var pill = document.createElement("span");
+                var edit = document.createElement("button");
+                var remove = document.createElement("button");
                 client.textContent = job.client;
                 work.textContent = job.work;
                 pill.className = "pill " + job.status;
-                pill.textContent = labels[job.status] || job.status;
+                pill.textContent = labels[job.status];
                 status.appendChild(pill);
                 edit.type = "button";
                 edit.className = "ghost";
@@ -313,7 +433,7 @@
                 remove.type = "button";
                 remove.className = "danger";
                 remove.textContent = "Delete";
-                edit.addEventListener("click", function () { startEdit(index); });
+                edit.addEventListener("click", function () { startEditJob(index); });
                 remove.addEventListener("click", function () { removeJob(index); });
                 actions.className = "row-actions";
                 actions.append(edit, remove);
@@ -321,55 +441,261 @@
                 body.appendChild(row);
             });
         }
-
-        function startEdit(index) {
-            const job = jobs[index];
-            editing = index;
+        function closeJobForm() {
+            editingJob = -1;
+            document.getElementById("jobForm").reset();
+            document.getElementById("saveJob").textContent = "Save";
+            document.getElementById("jobForm").classList.remove("is-open");
+        }
+        function startEditJob(index) {
+            var job = state.jobs[index];
+            editingJob = index;
             document.getElementById("jobClient").value = job.client;
             document.getElementById("jobWork").value = job.work;
             document.getElementById("jobStatus").value = job.status;
-            saveJob.textContent = "Update";
-            form.classList.add("is-open");
+            document.getElementById("saveJob").textContent = "Update";
+            document.getElementById("jobForm").classList.add("is-open");
             document.getElementById("jobClient").focus();
         }
-
         function removeJob(index) {
-            const name = jobs[index].client;
-            jobs.splice(index, 1);
-            if (editing === index) closeForm();
-            else if (editing > index) editing -= 1;
+            var name = state.jobs[index].client;
+            state.jobs.splice(index, 1);
+            if (editingJob === index) closeJobForm();
+            else if (editingJob > index) editingJob -= 1;
+            save();
             renderJobs();
-            showNote(name + " was deleted.");
+            renderClients();
+            showNote("jobNote", name + " was deleted.");
         }
-
-        document.getElementById("newJob").addEventListener("click", function () {
-            if (form.classList.contains("is-open") && editing === -1) {
-                closeForm();
+        function renderClients() {
+            renderCounts();
+            var box = document.getElementById("clientCards");
+            box.replaceChildren();
+            if (!state.clients.length) {
+                var empty = document.createElement("p");
+                empty.className = "empty";
+                empty.textContent = "No clients yet. Add one to start a job.";
+                box.appendChild(empty);
                 return;
             }
-            closeForm();
-            form.classList.add("is-open");
+            state.clients.forEach(function (client, index) {
+                var card = document.createElement("article");
+                var body = document.createElement("div");
+                var name = document.createElement("b");
+                var meta = document.createElement("span");
+                var actions = document.createElement("div");
+                var edit = document.createElement("button");
+                var remove = document.createElement("button");
+                var count = openJobs(client.name);
+                card.className = "card";
+                if (client.image) {
+                    var image = document.createElement("img");
+                    image.src = client.image;
+                    image.alt = client.name;
+                    card.appendChild(image);
+                } else {
+                    var initial = document.createElement("div");
+                    initial.className = "initial";
+                    initial.textContent = client.name.slice(0, 1).toUpperCase();
+                    card.appendChild(initial);
+                }
+                name.textContent = client.name;
+                meta.textContent = count + (count === 1 ? " open job" : " open jobs") + " · " + client.place;
+                edit.type = "button";
+                edit.className = "ghost";
+                edit.textContent = "Edit";
+                remove.type = "button";
+                remove.className = "danger";
+                remove.textContent = "Delete";
+                edit.addEventListener("click", function () { startEditClient(index); });
+                remove.addEventListener("click", function () { removeClient(index); });
+                actions.className = "row-actions";
+                actions.append(edit, remove);
+                body.append(name, meta, actions);
+                card.appendChild(body);
+                box.appendChild(card);
+            });
+        }
+        function closeClientForm() {
+            editingClient = -1;
+            document.getElementById("clientForm").reset();
+            document.getElementById("saveClient").textContent = "Save";
+            document.getElementById("clientForm").classList.remove("is-open");
+        }
+        function startEditClient(index) {
+            var client = state.clients[index];
+            editingClient = index;
+            document.getElementById("clientName").value = client.name;
+            document.getElementById("clientPlace").value = client.place;
+            document.getElementById("saveClient").textContent = "Update";
+            document.getElementById("clientForm").classList.add("is-open");
+            document.getElementById("clientName").focus();
+        }
+        function removeClient(index) {
+            var name = state.clients[index].name;
+            state.clients.splice(index, 1);
+            if (editingClient === index) closeClientForm();
+            else if (editingClient > index) editingClient -= 1;
+            save();
+            renderClients();
+            showNote("clientNote", name + " was deleted.");
+        }
+        function renderInvoices() {
+            renderCounts();
+            var body = document.getElementById("invoiceRows");
+            body.replaceChildren();
+            if (!state.invoices.length) {
+                var row = document.createElement("tr");
+                var cell = document.createElement("td");
+                cell.colSpan = 4;
+                cell.className = "empty";
+                cell.textContent = "No invoices yet. Add one for a client.";
+                row.appendChild(cell);
+                body.appendChild(row);
+                return;
+            }
+            state.invoices.forEach(function (invoice, index) {
+                var row = document.createElement("tr");
+                var number = document.createElement("td");
+                var client = document.createElement("td");
+                var status = document.createElement("td");
+                var actions = document.createElement("td");
+                var pill = document.createElement("span");
+                var toggle = document.createElement("button");
+                var remove = document.createElement("button");
+                number.textContent = invoice.number;
+                client.textContent = invoice.client;
+                pill.className = "pill " + invoice.status;
+                pill.textContent = labels[invoice.status];
+                status.appendChild(pill);
+                toggle.type = "button";
+                toggle.className = "ghost";
+                toggle.textContent = invoice.status === "paid" ? "Mark sent" : "Mark paid";
+                remove.type = "button";
+                remove.className = "danger";
+                remove.textContent = "Delete";
+                toggle.addEventListener("click", function () {
+                    invoice.status = invoice.status === "paid" ? "sent" : "paid";
+                    save();
+                    renderInvoices();
+                    showNote("invoiceNote", invoice.number + " is " + labels[invoice.status].toLowerCase() + ".");
+                });
+                remove.addEventListener("click", function () {
+                    var id = invoice.number;
+                    state.invoices.splice(index, 1);
+                    save();
+                    renderInvoices();
+                    showNote("invoiceNote", id + " was deleted.");
+                });
+                actions.className = "row-actions";
+                actions.append(toggle, remove);
+                row.append(number, client, status, actions);
+                body.appendChild(row);
+            });
+        }
+
+        document.querySelectorAll(".nav button").forEach(function (button) {
+            button.addEventListener("click", function () {
+                document.querySelectorAll(".nav button").forEach(function (item) { item.classList.remove("is-on"); });
+                button.classList.add("is-on");
+                document.querySelectorAll("[data-screen]").forEach(function (screen) {
+                    screen.hidden = screen.dataset.screen !== button.dataset.view;
+                });
+            });
+        });
+        document.getElementById("jobSearch").addEventListener("input", function (event) {
+            jobQuery = event.target.value.trim().toLowerCase();
+            renderJobs();
+        });
+        document.getElementById("newJob").addEventListener("click", function () {
+            if (document.getElementById("jobForm").classList.contains("is-open") && editingJob === -1) {
+                closeJobForm();
+                return;
+            }
+            closeJobForm();
+            document.getElementById("jobForm").classList.add("is-open");
             document.getElementById("jobClient").focus();
         });
-        document.getElementById("cancelJob").addEventListener("click", closeForm);
-        form.addEventListener("submit", function (event) {
+        document.getElementById("cancelJob").addEventListener("click", closeJobForm);
+        document.getElementById("jobForm").addEventListener("submit", function (event) {
             event.preventDefault();
-            const job = {
+            var job = {
                 client: document.getElementById("jobClient").value.trim(),
                 work: document.getElementById("jobWork").value.trim(),
                 status: document.getElementById("jobStatus").value
             };
-            if (editing === -1) {
-                jobs.unshift(job);
-                showNote(job.client + " was added as " + labels[job.status].toLowerCase() + ".");
+            if (editingJob === -1) {
+                state.jobs.unshift(job);
+                showNote("jobNote", job.client + " was added as " + labels[job.status].toLowerCase() + ".");
             } else {
-                jobs[editing] = job;
-                showNote(job.client + " was updated.");
+                state.jobs[editingJob] = job;
+                showNote("jobNote", job.client + " was updated.");
             }
-            closeForm();
+            closeJobForm();
+            save();
             renderJobs();
+            renderClients();
+        });
+        document.getElementById("newClient").addEventListener("click", function () {
+            if (document.getElementById("clientForm").classList.contains("is-open") && editingClient === -1) {
+                closeClientForm();
+                return;
+            }
+            closeClientForm();
+            document.getElementById("clientForm").classList.add("is-open");
+            document.getElementById("clientName").focus();
+        });
+        document.getElementById("cancelClient").addEventListener("click", closeClientForm);
+        document.getElementById("clientForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            var client = {
+                name: document.getElementById("clientName").value.trim(),
+                place: document.getElementById("clientPlace").value.trim()
+            };
+            if (editingClient === -1) {
+                state.clients.unshift(client);
+                showNote("clientNote", client.name + " was added.");
+            } else {
+                client.image = state.clients[editingClient].image;
+                var previous = state.clients[editingClient].name;
+                state.clients[editingClient] = client;
+                state.jobs.forEach(function (job) { if (job.client === previous) job.client = client.name; });
+                state.invoices.forEach(function (invoice) { if (invoice.client === previous) invoice.client = client.name; });
+                showNote("clientNote", client.name + " was updated.");
+            }
+            closeClientForm();
+            save();
+            renderClients();
+            renderJobs();
+            renderInvoices();
+        });
+        document.getElementById("newInvoice").addEventListener("click", function () {
+            var form = document.getElementById("invoiceForm");
+            form.classList.toggle("is-open");
+            if (form.classList.contains("is-open")) document.getElementById("invoiceClient").focus();
+        });
+        document.getElementById("cancelInvoice").addEventListener("click", function () {
+            document.getElementById("invoiceForm").reset();
+            document.getElementById("invoiceForm").classList.remove("is-open");
+        });
+        document.getElementById("invoiceForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            var invoice = {
+                number: "FB-" + state.nextInvoice,
+                client: document.getElementById("invoiceClient").value.trim(),
+                status: document.getElementById("invoiceStatus").value
+            };
+            state.nextInvoice += 1;
+            state.invoices.unshift(invoice);
+            event.target.reset();
+            event.target.classList.remove("is-open");
+            save();
+            renderInvoices();
+            showNote("invoiceNote", invoice.number + " was added for " + invoice.client + ".");
         });
         renderJobs();
+        renderClients();
+        renderInvoices();
     </script>
 </body>
 </html>

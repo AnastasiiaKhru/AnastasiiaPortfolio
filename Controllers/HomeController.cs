@@ -96,9 +96,9 @@ public class HomeController : Controller
         ["SkyBridgeITDemo"] = new("SkyBridge IT Solutions", "skybridgeit.demo - IT Consulting"),
         ["AuroraDemo"] = new("Aurora — TikTok live game", "aurora.live - TikTok live game"),
         ["ExperimentFlowDemo"] = new("ExperimentFlow — Experimentation platform", "experimentflow.app - A/B experiments"),
-        ["FieldbookDemo"] = new("Fieldbook — PHP job desk", "fieldbook.php - PHP and MySQL"),
-        ["OakEmberDemo"] = new("Oak and Ember — WordPress", "oakandember.demo - WordPress restaurant"),
-        ["LindenHomesDemo"] = new("Linden Homes — WordPress", "lindenhomes.demo - WordPress listings"),
+        ["FieldbookDemo"] = new("Fieldbook — Divi", "fieldbook.demo - Divi job desk"),
+        ["OakEmberDemo"] = new("Oak and Ember — Divi", "oakandember.demo - Divi restaurant"),
+        ["LindenHomesDemo"] = new("Linden Homes — Divi", "lindenhomes.demo - Divi listings"),
     };
 
     [HttpGet("/Home/DemoFrame/{name}")]
